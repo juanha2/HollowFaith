@@ -1,0 +1,9 @@
+<!-- Save game for the game -->
+
+<game_state>
+
+  <renderer>
+    <camera x="100" y="0"/>
+  </renderer>
+
+</game_state>
