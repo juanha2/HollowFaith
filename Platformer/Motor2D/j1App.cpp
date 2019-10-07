@@ -71,6 +71,9 @@ bool j1App::Awake()
 		
 	config = LoadConfig(config_file);
 
+	save_game = "save_game.xml";
+	load_game = "save_game.xml";
+	
 	if(config.empty() == false)
 	{
 		// self-config
@@ -300,8 +303,8 @@ bool j1App::LoadGameNow()
 
 	pugi::xml_document data;
 	pugi::xml_node root;
-
-	pugi::xml_parse_result result = data.load_file(load_game.GetString());
+	//LOG("%s", load_game.GetString());
+	pugi::xml_parse_result result = data.load_file(load_game.GetString()); //load_game.GetString()
 
 	if(result != NULL)
 	{
@@ -334,7 +337,7 @@ bool j1App::LoadGameNow()
 bool j1App::SavegameNow() const
 {
 	bool ret = true;
-
+	
 	LOG("Saving Game State to %s...", save_game.GetString());
 
 	// xml object were we will store all data
@@ -353,7 +356,7 @@ bool j1App::SavegameNow() const
 
 	if(ret == true)
 	{
-		data.save_file(save_game.GetString());
+		data.save_file("save_game.xml"); //save_game.GetString()
 		LOG("... finished saving", );
 	}
 	else

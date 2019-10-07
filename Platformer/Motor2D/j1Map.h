@@ -14,12 +14,12 @@ struct MapLayer
 	uint width;
 	uint height;
 	uint *gid=nullptr;
+	float speed_x;
 
 	inline uint Get(int x, int y) const{
 	
 		return gid[x+(y*width)];
 	}
-
 };
 
 struct TileSet
@@ -40,6 +40,7 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;	
+
 
 };
 
@@ -83,9 +84,7 @@ public:
 	bool CleanUp();
 
 	// Load new map
-	bool Load(const char* path);
-
-	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
+	bool Load(const char* path);	
 
 private:
 

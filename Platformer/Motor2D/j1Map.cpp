@@ -41,19 +41,19 @@ void j1Map::Draw()
 			for (int y = 0; y < data.height; y++)
 			{
 				int gid = layer->data->Get(x, y); //We get the gid from each tile
-				//LOG("%i", gid);
+				
 				if (gid != 0) {
 
 					TileSet* tileset = GetTileset(gid);
-					//LOG("%s", tileset->name.GetString());
+					
 					if (tileset != nullptr) {
-						//LOG("%s", )
+						
 						SDL_Rect rect = tileset->GetRect(gid);
 						iPoint vec = WorldPos(x, y);
+					
+						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->speed_x);
 
-						App->render->Blit(tileset->texture, vec.x, vec.y, &rect);
 					}
-
 				}
 			}
 		}
@@ -165,6 +165,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("Layer ----");
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
+			LOG("parallax speed: %f", l->speed_x);
 			item_layer = item_layer->next;
 		}
 	}
@@ -306,11 +307,12 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret =true;
-
+	
 	layer->name.create(node.attribute("name").as_string());	
 	layer->width = node.attribute("width").as_uint();
 	layer->height = node.attribute("height").as_uint();
-	layer->gid = new uint[layer->width * layer->height];
+	layer->gid = new uint[layer->width * layer->height];	
+	layer->speed_x = node.child("properties").child("property").attribute("value").as_float();	
 
 	memset(layer->gid, 0, (layer->width * layer->height)*sizeof(uint)); //Fill with zeros
 

@@ -5035,6 +5035,9 @@
   </data>
  </layer>
  <layer name="Layer02" width="100" height="50">
+  <properties>
+   <property name="speed_x" type="float" value="0.1"/>
+  </properties>
   <data>
    <tile gid="24132"/>
    <tile gid="24133"/>
@@ -10039,6 +10042,9 @@
   </data>
  </layer>
  <layer name="Layer03" width="100" height="50">
+  <properties>
+   <property name="speed_x" type="float" value="0.3"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -15043,6 +15049,9 @@
   </data>
  </layer>
  <layer name="Layer04" width="100" height="50">
+  <properties>
+   <property name="speed_x" type="float" value="0.5"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -20047,6 +20056,9 @@
   </data>
  </layer>
  <layer name="Layer05" width="100" height="50">
+  <properties>
+   <property name="speed_x" type="float" value="0.7"/>
+  </properties>
   <data>
    <tile gid="11427"/>
    <tile gid="11428"/>
@@ -25051,6 +25063,9 @@
   </data>
  </layer>
  <layer name="Layer06" width="100" height="50">
+  <properties>
+   <property name="speed_x" type="float" value="0.9"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -30055,6 +30070,9 @@
   </data>
  </layer>
  <layer name="Layer07" width="100" height="50">
+  <properties>
+   <property name="speed_x" type="float" value="1.2"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -35059,6 +35077,9 @@
   </data>
  </layer>
  <layer name="Layer08" width="100" height="50">
+  <properties>
+   <property name="speed_x" type="float" value="1.5"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -40063,6 +40084,9 @@
   </data>
  </layer>
  <layer name="Layer08" width="100" height="50">
+  <properties>
+   <property name="speed_x" type="float" value="1.5"/>
+  </properties>
   <data>
    <tile gid="8826"/>
    <tile gid="8826"/>
@@ -45067,6 +45091,9 @@
   </data>
  </layer>
  <layer name="Forest" width="100" height="50">
+  <properties>
+   <property name="speed_x" type="float" value="1.5"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -49383,91 +49410,91 @@
    <tile gid="25780"/>
    <tile gid="25780"/>
    <tile gid="25780"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
+   <tile gid="25780"/>
    <tile gid="25805"/>
    <tile gid="25805"/>
    <tile gid="25805"/>
