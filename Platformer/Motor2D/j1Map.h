@@ -6,8 +6,6 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
-// TODO 1: Create a struct for the map layer
-// ----------------------------------------------------
 struct MapLayer
 {
 	p2SString name;
@@ -23,8 +21,7 @@ struct MapLayer
 };
 
 struct TileSet
-{
-	
+{	
 	SDL_Rect GetRect(int id);
 	
 	p2SString			name;
@@ -40,8 +37,21 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;	
+};
 
+struct ObjectsData
+{
+	uint		name;
+	int			x;
+	int			y;
+	uint		width;
+	uint		height;
+};
 
+struct ObjectsGroup
+{
+	p2SString				name;
+	p2List<ObjectsData*>	objects;
 };
 
 enum MapTypes
@@ -51,17 +61,19 @@ enum MapTypes
 	MAPTYPE_ISOMETRIC,
 	MAPTYPE_STAGGERED
 };
+
 // ----------------------------------------------------
 struct MapData
 {
-	int					width;
-	int					height;
-	int					tile_width;
-	int					tile_height;
-	SDL_Color			background_color;
-	MapTypes			type;
-	p2List<TileSet*>	tilesets;
-	p2List<MapLayer*>	layers;	
+	int						width;
+	int						height;
+	int						tile_width;
+	int						tile_height;
+	SDL_Color				background_color;
+	MapTypes				type;
+	p2List<TileSet*>		tilesets;
+	p2List<MapLayer*>		layers;	
+	p2List<ObjectsGroup*>	objectgroups;
 };
 
 // ----------------------------------------------------
@@ -90,10 +102,9 @@ private:
 
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
-	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	
-	// TODO 3: Create a method that loads a single laye
+	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);	
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+	bool LoadObjects(pugi::xml_node& node, ObjectsGroup* group);
 	TileSet* GetTileset(int id);
 	iPoint WorldPos(int x, int y);
 	

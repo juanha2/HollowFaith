@@ -60,7 +60,6 @@ void j1Map::Draw()
 	}		
 }
 
-
 // Called before quitting
 bool j1Map::CleanUp()
 {
@@ -111,21 +110,22 @@ bool j1Map::Load(const char* file_name)
 	pugi::xml_node tileset;
 	for(tileset = map_file.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
 	{
-		TileSet* set = new TileSet();
+		TileSet* set_tileset = new TileSet();
 
 		if(ret == true)
 		{
-			ret = LoadTilesetDetails(tileset, set);			
+			ret = LoadTilesetDetails(tileset, set_tileset);
 		}
 		
 		if(ret == true)
 		{
-			ret = LoadTilesetImage(tileset, set);
+			ret = LoadTilesetImage(tileset, set_tileset);
 		}
 				
-		data.tilesets.add(set);
+		data.tilesets.add(set_tileset);
 	}
 
+	// Load all layers info ----------------------------------------------
 	pugi::xml_node layernode;
 
 	for (layernode = map_file.child("map").child("layer"); layernode && ret; layernode = layernode.next_sibling("layer"))
@@ -141,21 +141,35 @@ bool j1Map::Load(const char* file_name)
 		data.layers.add(set_layer);
 	}
 
+	// Load all objects info ----------------------------------------------
+	pugi::xml_node object_group;
+	for (object_group = map_file.child("map").child("objectgroup"); object_group && ret; object_group = object_group.next_sibling("objectgroup"))
+	{
+		ObjectsGroup* set_object = new ObjectsGroup();
+
+		if (ret == true)
+		{
+			ret = LoadObjects(object_group, set_object);
+		}
+		data.objectgroups.add(set_object);
+	}
+
+	// LOG properties ----------------------------------------------
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
-		p2List_item<TileSet*>* item = data.tilesets.start;
-		while(item != NULL)
+		p2List_item<TileSet*>* item_tileset = data.tilesets.start;
+		while(item_tileset != NULL)
 		{
-			TileSet* s = item->data;
+			TileSet* s = item_tileset->data;
 			LOG("Tileset ----");
 			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
 			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
-			item = item->next;
+			item_tileset = item_tileset->next;
 		}
 
 		p2List_item<MapLayer*>* item_layer = data.layers.start;
@@ -167,6 +181,27 @@ bool j1Map::Load(const char* file_name)
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			LOG("parallax speed: %f", l->speed_x);
 			item_layer = item_layer->next;
+		}
+
+		p2List_item<ObjectsGroup*>* item_group = data.objectgroups.start;
+		while (item_group != NULL)
+		{
+			ObjectsGroup* g = item_group->data;
+			LOG("Object Layer ----");
+			LOG("name: %s", g->name.GetString());
+			
+			p2List_item<ObjectsData*>* item_object = g->objects.start;
+			while (item_object != NULL)
+			{
+				ObjectsData* o = item_object->data;
+
+				LOG("name: %d", o->name);
+				LOG("x: %d ; y: %d", o->x, o->y);
+				LOG("width: %d ; height: %d", o->width, o->height);
+				item_object = item_object->next;
+			}
+
+			item_group = item_group->next;
 		}
 	}
 
@@ -378,4 +413,25 @@ iPoint j1Map::WorldPos(int x, int y) {
 	vec.y = y * data.tile_height;
 
 	return vec;
+}
+
+bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
+
+	bool ret = true;
+
+	group->name.create(node.attribute("name").as_string());		
+
+	for (pugi::xml_node& object = node.child("object"); object && ret; object = object.next_sibling("object"))
+	{
+		ObjectsData* data = new ObjectsData;
+
+		data->name = object.attribute("name").as_uint();
+		data->x = object.attribute("x").as_uint();
+		data->y = object.attribute("y").as_uint();
+		data->height = object.attribute("height").as_uint();
+		data->width = object.attribute("width").as_uint();
+		group->objects.add(data);
+	}
+
+	return ret;
 }
