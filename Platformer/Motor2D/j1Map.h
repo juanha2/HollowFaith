@@ -108,7 +108,9 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);	
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjects(pugi::xml_node& node, ObjectsGroup* group);
+	bool CreateColliders(ObjectsData* data);
 	TileSet* GetTileset(int id);
+	void log_properties();
 	
 
 

@@ -82,16 +82,21 @@ bool j1Collision::Update()
 }
 
 bool j1Collision::PostUpdate()
-{
-	
+{	
 	DebugDraw();
 	return true;
 }
 
 void j1Collision::DebugDraw()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F1))
-		debug = !debug;
+	if (App->input->GetKey(SDL_SCANCODE_F1)) {
+		if (!debug) {
+			debug = true;
+		}
+		else if (debug) {
+			debug = false;
+		}
+	}		
 
 	if (debug == false)
 		return;

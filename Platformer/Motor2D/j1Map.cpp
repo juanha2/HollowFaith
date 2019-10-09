@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Collision.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -158,51 +159,7 @@ bool j1Map::Load(const char* file_name)
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
-		LOG("width: %d height: %d", data.width, data.height);
-		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
-
-		p2List_item<TileSet*>* item_tileset = data.tilesets.start;
-		while(item_tileset != NULL)
-		{
-			TileSet* s = item_tileset->data;
-			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
-			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
-			LOG("spacing: %d margin: %d", s->spacing, s->margin);
-			item_tileset = item_tileset->next;
-		}
-
-		p2List_item<MapLayer*>* item_layer = data.layers.start;
-		while(item_layer != NULL)
-		{
-			MapLayer* l = item_layer->data;
-			LOG("Layer ----");
-			LOG("name: %s", l->name.GetString());
-			LOG("tile width: %d tile height: %d", l->width, l->height);
-			LOG("parallax speed: %f", l->speed_x);
-			item_layer = item_layer->next;
-		}
-
-		p2List_item<ObjectsGroup*>* item_group = data.objectgroups.start;
-		while (item_group != NULL)
-		{
-			ObjectsGroup* g = item_group->data;
-			LOG("Object Layer ----");
-			LOG("name: %s", g->name.GetString());
-			
-			p2List_item<ObjectsData*>* item_object = g->objects.start;
-			while (item_object != NULL)
-			{
-				ObjectsData* o = item_object->data;
-
-				LOG("name: %d", o->name);
-				LOG("x: %d ; y: %d", o->x, o->y);
-				LOG("width: %d ; height: %d", o->width, o->height);
-				item_object = item_object->next;
-			}
-
-			item_group = item_group->next;
-		}
+		log_properties();
 	}
 
 	map_loaded = ret;
@@ -408,9 +365,7 @@ TileSet* j1Map::GetTileset(int id) {
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret(0, 0);
-	// TODO 8(old): Create a method that translates x,y coordinates from map positions to world positions
 
-	// TODO 1: Add isometric map to world coordinates
 	switch (data.type) {
 
 	case MAPTYPE_UNKNOWN:
@@ -433,7 +388,7 @@ iPoint j1Map::MapToWorld(int x, int y) const
 iPoint j1Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
-	// TODO 2: Add orthographic world to map coordinates
+
 	switch (data.type) {
 
 	case MAPTYPE_UNKNOWN:
@@ -449,9 +404,6 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		break;
 
 	}
-
-
-	// TODO 3: Add the case for isometric maps to WorldToMap
 	return ret;
 }
 
@@ -470,8 +422,81 @@ bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
 		data->y = object.attribute("y").as_uint();
 		data->height = object.attribute("height").as_uint();
 		data->width = object.attribute("width").as_uint();
+
+		CreateColliders(data); //We set a collider for each object we have
+
 		group->objects.add(data);
 	}
+
+	return ret;
+}
+
+void j1Map::log_properties() {
+
+	LOG("width: %d height: %d", data.width, data.height);
+	LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
+
+	p2List_item<TileSet*>* item_tileset = data.tilesets.start;
+	while (item_tileset != NULL)
+	{
+		TileSet* s = item_tileset->data;
+		LOG("Tileset ----");
+		LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
+		LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
+		LOG("spacing: %d margin: %d", s->spacing, s->margin);
+		item_tileset = item_tileset->next;
+	}
+
+	p2List_item<MapLayer*>* item_layer = data.layers.start;
+	while (item_layer != NULL)
+	{
+		MapLayer* l = item_layer->data;
+		LOG("Layer ----");
+		LOG("name: %s", l->name.GetString());
+		LOG("tile width: %d tile height: %d", l->width, l->height);
+		LOG("parallax speed: %f", l->speed_x);
+		item_layer = item_layer->next;
+	}
+
+	p2List_item<ObjectsGroup*>* item_group = data.objectgroups.start;
+	while (item_group != NULL)
+	{
+		ObjectsGroup* g = item_group->data;
+		LOG("Object Layer ----");
+		LOG("name: %s", g->name.GetString());
+
+		p2List_item<ObjectsData*>* item_object = g->objects.start;
+		while (item_object != NULL)
+		{
+			ObjectsData* o = item_object->data;
+
+			LOG("name: %d", o->name);
+			LOG("x: %d ; y: %d", o->x, o->y);
+			LOG("width: %d ; height: %d", o->width, o->height);
+			item_object = item_object->next;
+		}
+
+		item_group = item_group->next;
+	}
+}
+
+bool j1Map::CreateColliders(ObjectsData* data)
+{
+	bool ret = true;
+
+	SDL_Rect collider;
+
+	collider.x = data->x;
+	collider.y = data->y;
+	collider.h = data->height;
+	collider.w = data->width;
+
+	//Type of Collider
+	if (data->name == 1)
+		App->coll->AddCollider(collider, COLLIDER_PLAYER);
+
+	if (data->name == 2)
+		App->coll->AddCollider(collider, COLLIDER_NONE);
 
 	return ret;
 }
