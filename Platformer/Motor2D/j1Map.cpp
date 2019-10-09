@@ -4,11 +4,13 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Collision.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
 	name.create("map");
+	
 }
 
 // Destructor
@@ -32,8 +34,6 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;	
 
-	// TODO 5: Prepare the loop to iterate all the tiles in a layer
-
 	for (p2List_item<MapLayer*>* layer = data.layers.start; layer != NULL; layer = layer->next) {
 		
 		for (int x = 0; x < data.width; x++)
@@ -49,10 +49,8 @@ void j1Map::Draw()
 					if (tileset != nullptr) {
 						
 						SDL_Rect rect = tileset->GetRect(gid);
-						iPoint vec = WorldPos(x, y);
-					
-						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->speed_x);
-
+						iPoint vec = WorldPos(x, y);						
+						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->speed_x);						
 					}
 				}
 			}
@@ -74,13 +72,39 @@ bool j1Map::CleanUp()
 		RELEASE(item->data);
 		item = item->next;
 	}
-	data.tilesets.clear();
-	
-	// TODO 2: clean up all layer data
+
+	data.tilesets.clear();	
+
 	// Remove all layers
+
+	p2List_item<MapLayer*>* item2;
+	item2 = data.layers.start;
+
+	while (item2 != NULL)
+	{
+		RELEASE(item2->data);
+		item2 = item2->next;
+	}
+
 	data.layers.clear();
 
-	// Clean up the pugui tree
+	// Remove all object layers
+
+	p2List_item<ObjectsGroup*>* item3 = data.objectgroups.start;
+
+	p2List_item<ObjectsData*>* item4=item3->data->objects.start;
+	while (item4 != NULL)
+	{
+		RELEASE(item4->data);
+		item4 = item4->next;
+	}
+	while (item3 != NULL)
+	{
+		RELEASE(item3->data);
+		item3 = item3->next;
+	}
+	data.objectgroups.clear();
+	
 	map_file.reset();
 
 	return true;
@@ -150,6 +174,7 @@ bool j1Map::Load(const char* file_name)
 		if (ret == true)
 		{
 			ret = LoadObjects(object_group, set_object);
+			//ret = CreateColliders(object_group);
 		}
 		data.objectgroups.add(set_object);
 	}
@@ -158,51 +183,7 @@ bool j1Map::Load(const char* file_name)
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
-		LOG("width: %d height: %d", data.width, data.height);
-		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
-
-		p2List_item<TileSet*>* item_tileset = data.tilesets.start;
-		while(item_tileset != NULL)
-		{
-			TileSet* s = item_tileset->data;
-			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
-			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
-			LOG("spacing: %d margin: %d", s->spacing, s->margin);
-			item_tileset = item_tileset->next;
-		}
-
-		p2List_item<MapLayer*>* item_layer = data.layers.start;
-		while(item_layer != NULL)
-		{
-			MapLayer* l = item_layer->data;
-			LOG("Layer ----");
-			LOG("name: %s", l->name.GetString());
-			LOG("tile width: %d tile height: %d", l->width, l->height);
-			LOG("parallax speed: %f", l->speed_x);
-			item_layer = item_layer->next;
-		}
-
-		p2List_item<ObjectsGroup*>* item_group = data.objectgroups.start;
-		while (item_group != NULL)
-		{
-			ObjectsGroup* g = item_group->data;
-			LOG("Object Layer ----");
-			LOG("name: %s", g->name.GetString());
-			
-			p2List_item<ObjectsData*>* item_object = g->objects.start;
-			while (item_object != NULL)
-			{
-				ObjectsData* o = item_object->data;
-
-				LOG("name: %d", o->name);
-				LOG("x: %d ; y: %d", o->x, o->y);
-				LOG("width: %d ; height: %d", o->width, o->height);
-				item_object = item_object->next;
-			}
-
-			item_group = item_group->next;
-		}
+		//log_properties();
 	}
 
 	map_loaded = ret;
@@ -424,14 +405,88 @@ bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
 	for (pugi::xml_node& object = node.child("object"); object && ret; object = object.next_sibling("object"))
 	{
 		ObjectsData* data = new ObjectsData;
+		
 
 		data->name = object.attribute("name").as_uint();
 		data->x = object.attribute("x").as_uint();
 		data->y = object.attribute("y").as_uint();
 		data->height = object.attribute("height").as_uint();
 		data->width = object.attribute("width").as_uint();
+		
+		CreateColliders(data); //We set a collider for each object we have
+
 		group->objects.add(data);
 	}
+
+	return ret;
+}
+
+void j1Map::log_properties() {
+	
+	LOG("width: %d height: %d", data.width, data.height);
+	LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
+
+	p2List_item<TileSet*>* item_tileset = data.tilesets.start;
+	while (item_tileset != NULL)
+	{
+		TileSet* s = item_tileset->data;
+		LOG("Tileset ----");
+		LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
+		LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
+		LOG("spacing: %d margin: %d", s->spacing, s->margin);
+		item_tileset = item_tileset->next;
+	}
+
+	p2List_item<MapLayer*>* item_layer = data.layers.start;
+	while (item_layer != NULL)
+	{
+		MapLayer* l = item_layer->data;
+		LOG("Layer ----");
+		LOG("name: %s", l->name.GetString());
+		LOG("tile width: %d tile height: %d", l->width, l->height);
+		LOG("parallax speed: %f", l->speed_x);
+		item_layer = item_layer->next;
+	}
+
+	p2List_item<ObjectsGroup*>* item_group = data.objectgroups.start;
+	while (item_group != NULL)
+	{
+		ObjectsGroup* g = item_group->data;
+		LOG("Object Layer ----");
+		LOG("name: %s", g->name.GetString());
+
+		p2List_item<ObjectsData*>* item_object = g->objects.start;
+		while (item_object != NULL)
+		{
+			ObjectsData* o = item_object->data;
+
+			LOG("name: %d", o->name);
+			LOG("x: %d ; y: %d", o->x, o->y);
+			LOG("width: %d ; height: %d", o->width, o->height);
+			item_object = item_object->next;
+		}
+
+		item_group = item_group->next;
+	}
+}
+
+bool j1Map::CreateColliders(ObjectsData* data)
+{
+	bool ret = true;
+
+	SDL_Rect collider;
+
+	collider.x = data->x;
+	collider.y = data->y;
+	collider.h = data->height;
+	collider.w = data->width;
+
+	//Type of Collider
+	if (data->name == 1)		
+	App->coll->AddCollider(collider, COLLIDER_PLAYER);
+
+	if (data->name == 2)
+		App->coll->AddCollider(collider, COLLIDER_NONE);
 
 	return ret;
 }

@@ -52,6 +52,7 @@ struct ObjectsGroup
 {
 	p2SString				name;
 	p2List<ObjectsData*>	objects;
+
 };
 
 enum MapTypes
@@ -91,7 +92,7 @@ public:
 
 	// Called each loop iteration
 	void Draw();
-
+	
 	// Called before quitting
 	bool CleanUp();
 
@@ -105,8 +106,10 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);	
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjects(pugi::xml_node& node, ObjectsGroup* group);
+	bool CreateColliders(ObjectsData* data);
 	TileSet* GetTileset(int id);
 	iPoint WorldPos(int x, int y);
+	void log_properties();
 	
 
 public:
