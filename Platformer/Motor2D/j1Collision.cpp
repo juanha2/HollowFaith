@@ -2,6 +2,7 @@
 #include "j1Render.h"
 #include "j1Input.h"
 #include "j1Collision.h"
+#include "p2Log.h"
 
 j1Collision::j1Collision()
 {
@@ -25,6 +26,7 @@ j1Collision::~j1Collision()
 
 bool j1Collision::PreUpdate()
 {
+	
 	// Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -35,7 +37,6 @@ bool j1Collision::PreUpdate()
 		}
 	}
 
-
 	return true;
 }
 
@@ -43,13 +44,6 @@ bool j1Collision::PreUpdate()
 bool j1Collision::Update()
 {
 
-	DebugDraw();
-
-	return true;
-}
-
-bool j1Collision::PostUpdate()
-{
 	// Calculate collisions
 	Collider* c1;
 	Collider* c2;
@@ -84,7 +78,13 @@ bool j1Collision::PostUpdate()
 
 		}
 	}
+	return true;
+}
 
+bool j1Collision::PostUpdate()
+{
+	
+	DebugDraw();
 	return true;
 }
 
@@ -95,7 +95,7 @@ void j1Collision::DebugDraw()
 
 	if (debug == false)
 		return;
-
+	
 	Uint8 alpha = 80;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -108,15 +108,9 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 
-			//case COLLIDER_WALL: // blue
-				//App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-				//break;
-
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
-
-
 		}
 	}
 }
@@ -124,8 +118,8 @@ void j1Collision::DebugDraw()
 // Called before quitting
 bool j1Collision::CleanUp()
 {
-
 	// Limpiando todos los Colliders
+	LOG("Freeing all colliders");
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -141,13 +135,14 @@ bool j1Collision::CleanUp()
 
 Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, int damage, int delayPlayer, int delayEnemy, int attackType, j1Module* callback)
 {
+	
 	Collider* ret = nullptr;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, type, damage, delayPlayer, delayEnemy, attackType, callback);
+			ret = colliders[i] = new Collider(rect, type, damage, delayPlayer, delayEnemy, attackType, callback);			
 			break;
 		}
 	}

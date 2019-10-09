@@ -35078,7 +35078,7 @@
  </layer>
  <layer name="Layer08" width="100" height="50">
   <properties>
-   <property name="speed_x" type="float" value="1.5"/>
+   <property name="speed_x" type="float" value="1"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -40085,7 +40085,7 @@
  </layer>
  <layer name="Layer08" width="100" height="50">
   <properties>
-   <property name="speed_x" type="float" value="1.5"/>
+   <property name="speed_x" type="float" value="1"/>
   </properties>
   <data>
    <tile gid="8826"/>
@@ -45092,7 +45092,7 @@
  </layer>
  <layer name="Background" width="100" height="50">
   <properties>
-   <property name="speed_x" type="float" value="1.5"/>
+   <property name="speed_x" type="float" value="1"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -50099,7 +50099,7 @@
  </layer>
  <layer name="MainGround" width="100" height="50">
   <properties>
-   <property name="speed_x" type="float" value="1.5"/>
+   <property name="speed_x" type="float" value="1"/>
   </properties>
   <data>
    <tile gid="0"/>
