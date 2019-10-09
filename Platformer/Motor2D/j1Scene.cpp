@@ -24,6 +24,8 @@ bool j1Scene::Awake()
 	LOG("Loading Scene");
 	bool ret = true;
 
+	
+
 	return ret;
 }
 
@@ -31,6 +33,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load("level01.tmx");
+
 	return true;
 }
 
@@ -64,10 +67,14 @@ bool j1Scene::Update(float dt)
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count());
+	iPoint mouseCoord = App->map->WorldToMap((App->input->mouse_x - App->render->camera.x), (App->input->mouse_y - App->render->camera.y));
+
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Mouse Position X:%d Y:%d Mouse Tilset:%d,%d Tileset Type: ?",
+		App->map->data.width, App->map->data.height,
+		App->map->data.tile_width, App->map->data.tile_height,
+		App->map->data.tilesets.count(), App->input->mouse_x - App->render->camera.x,
+		App->input->mouse_y - App->render->camera.y,
+		mouseCoord.x, mouseCoord.y);
 
 	App->win->SetTitle(title.GetString());
 	return true;
@@ -88,6 +95,7 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	App->map->CleanUp();
 
 	return true;
 }

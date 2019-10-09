@@ -98,6 +98,9 @@ public:
 	// Load new map
 	bool Load(const char* path);	
 
+	iPoint MapToWorld(int x, int y) const;
+	iPoint WorldToMap(int x, int y) const;
+
 private:
 
 	bool LoadMap();
@@ -106,8 +109,8 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjects(pugi::xml_node& node, ObjectsGroup* group);
 	TileSet* GetTileset(int id);
-	iPoint WorldPos(int x, int y);
 	
+
 
 public:
 

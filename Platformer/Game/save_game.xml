@@ -4,9 +4,11 @@
 	<window />
 	<textures />
 	<audio />
+	<:anonymous />
 	<map />
 	<scene />
+	<:anonymous />
 	<renderer>
-		<camera x="-780" y="-707" />
+		<camera x="0" y="-700" />
 	</renderer>
 </game_state>

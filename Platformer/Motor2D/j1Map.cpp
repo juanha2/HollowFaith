@@ -49,7 +49,7 @@ void j1Map::Draw()
 					if (tileset != nullptr) {
 						
 						SDL_Rect rect = tileset->GetRect(gid);
-						iPoint vec = WorldPos(x, y);
+						iPoint vec = MapToWorld(x, y);
 					
 						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->speed_x);
 
@@ -405,14 +405,54 @@ TileSet* j1Map::GetTileset(int id) {
 
 }
 
-iPoint j1Map::WorldPos(int x, int y) {
+iPoint j1Map::MapToWorld(int x, int y) const
+{
+	iPoint ret(0, 0);
+	// TODO 8(old): Create a method that translates x,y coordinates from map positions to world positions
 
-	iPoint vec;
+	// TODO 1: Add isometric map to world coordinates
+	switch (data.type) {
 
-	vec.x = x * data.tile_width;
-	vec.y = y * data.tile_height;
+	case MAPTYPE_UNKNOWN:
+		break;
+	case MAPTYPE_ISOMETRIC:
+		ret.x = (x - y) * (data.tile_width * 0.5f);
+		ret.y = (x + y) * (data.tile_height * 0.5f);
+		break;
+	case MAPTYPE_ORTHOGONAL:
+		ret.x = x * data.tile_width;
+		ret.y = y * data.tile_height;
+		break;
+	}
 
-	return vec;
+
+	return ret;
+}
+
+
+iPoint j1Map::WorldToMap(int x, int y) const
+{
+	iPoint ret(0, 0);
+	// TODO 2: Add orthographic world to map coordinates
+	switch (data.type) {
+
+	case MAPTYPE_UNKNOWN:
+		break;
+	case MAPTYPE_ISOMETRIC:
+		ret.x = (x / (data.tile_width / 2) + y / (data.tile_height / 2)) / 2;
+		ret.y = (y / (data.tile_height / 2) - x / (data.tile_width / 2)) / 2;
+
+		break;
+	case MAPTYPE_ORTHOGONAL:
+		ret.x = x / data.tile_width;
+		ret.y = y / data.tile_height;
+		break;
+
+	}
+
+
+	// TODO 3: Add the case for isometric maps to WorldToMap
+	return ret;
 }
 
 bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
