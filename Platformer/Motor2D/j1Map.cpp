@@ -541,6 +541,4 @@ bool j1Map::CreateColliders(ObjectsData* data, int i)
 
 	return ret;
 }
-/*void j1Map::OnCollision(Collider* c1, Collider* c2) {
-	bool alredycollided = false;
-}*/
+

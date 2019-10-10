@@ -36,14 +36,15 @@ public:
 	bool PreUpdate();
 
 	// Called each loop iteration
-	bool Update();
+	bool Update(float dt);
 
 	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
 
-	//void OnCollision(Collider* c1, Collider* c2);
+	void OnCollision(Collider* c1, Collider* c2);
+
 private:
 };
 

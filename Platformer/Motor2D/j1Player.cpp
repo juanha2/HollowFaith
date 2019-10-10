@@ -77,8 +77,16 @@ bool j1Player::PreUpdate()
 }
 
 // Called each loop iteration
-bool j1Player::Update()
+bool j1Player::Update(float dt)
 {
+
+
+	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
+	{
+		colisionadores[i] = App->coll->AddCollider({ position.x, position.y, 50, 57 }, COLLIDER_PLAYER, 0, 0, 0, 0, this);
+
+	}
+
 	return true;
 }
 
@@ -86,20 +94,25 @@ bool j1Player::Update()
 bool j1Player::PostUpdate()
 {
 
+
 	SDL_Rect r = { 0, 0, 50, 57 };
-	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
-	{
-		colisionadores[i] = App->coll->AddCollider({ position.x, position.y, 50, 57 }, COLLIDER_PLAYER);
-
-	}
-
 	App->render->Blit(graphics, position.x, position.y, &r, 1.0);
 
 	return true;
 }
 
-/*void j1Player::OnCollision(Collider* c1, Collider* c2) {
+void j1Player::OnCollision(Collider* c1, Collider* c2) {
+
 
 	bool alredycollided = false;
+	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
+	{
+		if ((c2->type == COLLIDER_FLOOR))
+		{
 
-}*/
+
+
+		}
+	}
+
+}
