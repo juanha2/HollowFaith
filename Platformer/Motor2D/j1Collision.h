@@ -11,7 +11,7 @@ enum COLLIDER_TYPE
 	COLLIDER_NONE = -1,
 	COLLIDER_FLOOR,
 	COLLIDER_PLAYER,
-	COLLIDER_MAX
+	COLLIDER_MAX,
 };
 
 struct Collider
@@ -62,14 +62,14 @@ public:
 
 	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, int damage = 0, int delayPlayer = 0, int delayEnemy = 0, int attackType = 0, j1Module * callback = nullptr);
 	void DebugDraw();
-	
+
 
 private:
 
 	bool debug = false;
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
-	
+
 };
 
 #endif // __j1Collision_H__

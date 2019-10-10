@@ -10,10 +10,10 @@ j1Collision::j1Collision()
 		colliders[i] = nullptr;
 
 	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = false;
-	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_FLOOR][COLLIDER_NONE] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_NONE] = false;
 
-	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = true;
 
@@ -26,7 +26,7 @@ j1Collision::~j1Collision()
 
 bool j1Collision::PreUpdate()
 {
-	
+
 	// Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -65,16 +65,16 @@ bool j1Collision::Update()
 
 			c2 = colliders[k];
 
-			
-			/*if (c1->CheckCollision(c2->rect) == true)
+			/*
+			if (c1->CheckCollision(c2->rect) == true)
 			{
 				if (matrix[c1->type][c2->type] && c1->callback)
 					c1->callback->OnCollision(c1, c2);
 
 				if (matrix[c2->type][c1->type] && c2->callback)
 					c2->callback->OnCollision(c2, c1);
-			}*/
-			
+			}
+			*/
 
 		}
 	}
@@ -83,20 +83,20 @@ bool j1Collision::Update()
 
 bool j1Collision::PostUpdate()
 {
-	
+
 	DebugDraw();
 	return true;
 }
 
 void j1Collision::DebugDraw()
 {
-	
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 	
-		debug = !debug;			
+
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		debug = !debug;
 
 	if (debug == false)
 		return;
-	
+
 	Uint8 alpha = 80;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -109,12 +109,12 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 
-		case COLLIDER_PLAYER: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+		case COLLIDER_FLOOR: // blue
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 
-		case COLLIDER_FLOOR: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+		case COLLIDER_PLAYER: // green
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
 		}
 	}
@@ -140,14 +140,14 @@ bool j1Collision::CleanUp()
 
 Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, int damage, int delayPlayer, int delayEnemy, int attackType, j1Module* callback)
 {
-	
+
 	Collider* ret = nullptr;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, type, damage, delayPlayer, delayEnemy, attackType, callback);			
+			ret = colliders[i] = new Collider(rect, type, damage, delayPlayer, delayEnemy, attackType, callback);
 			break;
 		}
 	}

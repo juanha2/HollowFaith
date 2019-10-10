@@ -18,6 +18,7 @@ public:
 	iPoint position;
 
 	Collider* colisionadores[MAXNUMOFCOLLIDERS];
+
 	bool playerFlip = false;
 
 
@@ -26,7 +27,7 @@ public:
 	j1Player();
 
 	// Destructor
-	 ~j1Player();
+	~j1Player();
 
 	// Called before the first frame
 	bool Start();
@@ -42,9 +43,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-
 	//void OnCollision(Collider* c1, Collider* c2);
-
 private:
 };
 

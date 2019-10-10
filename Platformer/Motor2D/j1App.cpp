@@ -2,8 +2,6 @@
 
 #include "p2Defs.h"
 #include "p2Log.h"
-
-
 #include "j1Window.h"
 #include "j1Input.h"
 #include "j1Render.h"
@@ -41,8 +39,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
-	AddModule(coll);
 	
+	
+
+	AddModule(coll);
 
 	// render last to swap buffer
 	AddModule(render);

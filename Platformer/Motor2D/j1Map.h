@@ -5,38 +5,39 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1Collision.h"
 
 struct MapLayer
 {
 	p2SString name;
 	uint width;
 	uint height;
-	uint *gid=nullptr;
+	uint* gid = nullptr;
 	float speed_x;
 
-	inline uint Get(int x, int y) const{
-	
-		return gid[x+(y*width)];
+	inline uint Get(int x, int y) const {
+
+		return gid[x + (y * width)];
 	}
 };
 
 struct TileSet
-{	
+{
 	SDL_Rect GetRect(int id);
-	
+
 	p2SString			name;
 	int					firstgid;
 	int					margin;
 	int					spacing;
 	int					tile_width;
 	int					tile_height;
-	SDL_Texture			*texture=nullptr;
+	SDL_Texture* texture = nullptr;
 	int					tex_width;
 	int					tex_height;
 	int					num_tiles_width;
 	int					num_tiles_height;
 	int					offset_x;
-	int					offset_y;	
+	int					offset_y;
 };
 
 struct ObjectsData
@@ -46,6 +47,7 @@ struct ObjectsData
 	int			y;
 	uint		width;
 	uint		height;
+	Collider* colliders[100] = { nullptr };
 };
 
 struct ObjectsGroup
@@ -72,7 +74,7 @@ struct MapData
 	SDL_Color				background_color;
 	MapTypes				type;
 	p2List<TileSet*>		tilesets;
-	p2List<MapLayer*>		layers;	
+	p2List<MapLayer*>		layers;
 	p2List<ObjectsGroup*>	objectgroups;
 };
 
@@ -96,24 +98,22 @@ public:
 	bool CleanUp();
 
 	// Load new map
-	bool Load(const char* path);	
+	bool Load(const char* path);
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
-
-	//void OnCollision(Collider* c1, Collider* c2);
 
 private:
 
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
-	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);	
+	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjects(pugi::xml_node& node, ObjectsGroup* group);
-	bool CreateColliders(ObjectsData* data);
+	bool CreateColliders(ObjectsData* data, int i);
 	TileSet* GetTileset(int id);
 	void log_properties();
-	
+
 
 
 public:
@@ -124,7 +124,7 @@ private:
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
-	bool				map_loaded;	
+	bool				map_loaded;
 };
 
 #endif // __j1MAP_H__

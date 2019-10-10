@@ -12,7 +12,7 @@
 
 j1Player::j1Player() : j1Module()
 {
-	
+
 }
 
 // Called before quitting
@@ -42,7 +42,7 @@ bool j1Player::Start()
 	position.x = 30;
 	position.y = -40 - App->render->camera.y;
 
-	
+
 
 	return true;
 }
@@ -79,16 +79,12 @@ bool j1Player::PreUpdate()
 // Called each loop iteration
 bool j1Player::Update()
 {
-
-
-	
 	return true;
 }
 
 
 bool j1Player::PostUpdate()
 {
-	
 
 	SDL_Rect r = { 0, 0, 50, 57 };
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
@@ -105,5 +101,5 @@ bool j1Player::PostUpdate()
 /*void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	bool alredycollided = false;
-	
+
 }*/

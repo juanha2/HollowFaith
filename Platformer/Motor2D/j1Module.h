@@ -6,13 +6,8 @@
 #ifndef __j1MODULE_H__
 #define __j1MODULE_H__
 
-
 #include "p2SString.h"
 #include "PugiXml\src\pugixml.hpp"
-#include "SDL\include\SDL_rect.h"
-#include "SDL\include\SDL_events.h"
-#include "SDL\include\SDL.h"
-
 
 struct Collider;
 class j1App;
