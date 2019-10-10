@@ -9,18 +9,30 @@
 
 #include "j1Module.h"
 
+enum player_states
+{
+	ST_UNKNOWN,
+
+	ST_IDLE,
+	ST_AIR,
+};
+
 class j1Player : public j1Module
 {
 
 public:
+
+	SDL_Rect r = { 0, 0, 50, 57 };
 	SDL_Texture* graphics = nullptr;
+	SDL_RendererFlip playerFlip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+	player_states current_state = ST_UNKNOWN;
 
 	iPoint position;
 
 	Collider* colisionadores[MAXNUMOFCOLLIDERS];
 
-	bool playerFlip = false;
-
+	float currentTime;
+	float gravity = -50.0f;
 
 public:
 
@@ -44,6 +56,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
+	
 
 private:
 };

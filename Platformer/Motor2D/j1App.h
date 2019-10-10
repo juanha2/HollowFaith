@@ -52,6 +52,8 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
+	float DeltaTime() const;
+
 private:
 
 	// Load config file

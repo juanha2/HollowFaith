@@ -375,3 +375,9 @@ bool j1App::SavegameNow() const
 	want_to_save = false;
 	return ret;
 }
+
+float j1App::DeltaTime() const
+{
+
+	return 1.0f / 60.0f;
+}

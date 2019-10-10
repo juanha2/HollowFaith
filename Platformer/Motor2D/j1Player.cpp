@@ -59,13 +59,25 @@ bool j1Player::PreUpdate()
 		}
 	}
 
+
+	// Get and corrects time.
+	currentTime = App->DeltaTime();
+	if (currentTime > 0.16f)
+		currentTime = 0.16f;
+
 	// MEJORAREMOS ESTO EN UNA MÁQUINA DE ESTADOS
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		position.x++;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		position.x++;
+	}
+		
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+
 		position.x--;
+	}
+		
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		position.y--;
@@ -80,23 +92,32 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {
 
+	switch (current_state)
+	{
+	case ST_IDLE:
+
+
+		break;
+	case ST_AIR:
+
+
+		break;
+	}
 
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
-		colisionadores[i] = App->coll->AddCollider({ position.x, position.y, 50, 57 }, COLLIDER_PLAYER, 0, 0, 0, 0, this);
-
+		colisionadores[i] = App->coll->AddCollider({ position.x, position.y, r.w, r.h }, COLLIDER_PLAYER, 0, 0, 0, 0, this);
 	}
 
 	return true;
+
 }
 
 
 bool j1Player::PostUpdate()
 {
-
-
-	SDL_Rect r = { 0, 0, 50, 57 };
-	App->render->Blit(graphics, position.x, position.y, &r, 1.0);
+	
+	App->render->Blit(graphics, position.x, position.y, &r, 1.0, playerFlip);
 
 	return true;
 }
@@ -110,7 +131,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if ((c2->type == COLLIDER_FLOOR))
 		{
 
-
+			position.y = c2->rect.y - r.h;
 
 		}
 	}
