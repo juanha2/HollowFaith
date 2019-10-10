@@ -493,10 +493,16 @@ bool j1Map::CreateColliders(ObjectsData* data)
 
 	//Type of Collider
 	if (data->name == 1)
-		App->coll->AddCollider(collider, COLLIDER_PLAYER);
+		App->coll->AddCollider(collider, COLLIDER_FLOOR);
 
 	if (data->name == 2)
 		App->coll->AddCollider(collider, COLLIDER_NONE);
 
 	return ret;
 }
+
+/*void j1Map::OnCollision(Collider* c1, Collider* c2) {
+
+	bool alredycollided = false;
+
+}*/

@@ -101,6 +101,8 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 
+	//void OnCollision(Collider* c1, Collider* c2);
+
 private:
 
 	bool LoadMap();

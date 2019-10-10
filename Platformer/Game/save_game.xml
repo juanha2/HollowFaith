@@ -2,13 +2,13 @@
 <game_state>
 	<input />
 	<window />
+	<:anonymous />
 	<textures />
 	<audio />
-	<:anonymous />
 	<map />
 	<scene />
 	<:anonymous />
 	<renderer>
-		<camera x="-22" y="-700" />
+		<camera x="0" y="-700" />
 	</renderer>
 </game_state>

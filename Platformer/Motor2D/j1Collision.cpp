@@ -9,11 +9,11 @@ j1Collision::j1Collision()
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
-	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_WALL][COLLIDER_NONE] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_NONE] = true;
 
-	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = true;
 
@@ -65,16 +65,16 @@ bool j1Collision::Update()
 
 			c2 = colliders[k];
 
-			/*
-			if (c1->CheckCollision(c2->rect) == true)
+			
+			/*if (c1->CheckCollision(c2->rect) == true)
 			{
 				if (matrix[c1->type][c2->type] && c1->callback)
 					c1->callback->OnCollision(c1, c2);
 
 				if (matrix[c2->type][c1->type] && c2->callback)
 					c2->callback->OnCollision(c2, c1);
-			}
-			*/
+			}*/
+			
 
 		}
 	}
@@ -111,6 +111,10 @@ void j1Collision::DebugDraw()
 
 		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
+
+		case COLLIDER_FLOOR: // green
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 		}
 	}

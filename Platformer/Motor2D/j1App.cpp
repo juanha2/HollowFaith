@@ -24,24 +24,25 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	input = new j1Input();
 	win = new j1Window();
 	render = new j1Render();
+	player = new j1Player();
 	tex = new j1Textures();
 	audio = new j1Audio();
-	coll = new j1Collision();
-	player = new j1Player();
 	scene = new j1Scene();
 	map = new j1Map();
+	coll = new j1Collision();
 	
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(win);
+	AddModule(player);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(coll);
 	AddModule(map);
 	AddModule(scene);
-	AddModule(player);
+	AddModule(coll);
+	
 
 	// render last to swap buffer
 	AddModule(render);

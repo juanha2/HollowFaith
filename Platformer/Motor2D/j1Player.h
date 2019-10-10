@@ -5,6 +5,7 @@
 #define JUMP_INIT_AY 0.47568444444 //initial acceleration on the Y coord. //0.867
 
 #define JUMP_TIME 3000
+#define MAXNUMOFCOLLIDERS 1
 
 #include "j1Module.h"
 
@@ -16,6 +17,7 @@ public:
 
 	iPoint position;
 
+	Collider* colisionadores[MAXNUMOFCOLLIDERS];
 	bool playerFlip = false;
 
 
@@ -39,6 +41,9 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+
+	//void OnCollision(Collider* c1, Collider* c2);
 
 private:
 };
