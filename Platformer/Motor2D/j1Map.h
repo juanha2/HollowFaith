@@ -47,7 +47,7 @@ struct ObjectsData
 	int			y;
 	uint		width;
 	uint		height;
-	Collider* colliders[100] = { nullptr };
+	Collider*	colliders[100] = { nullptr };
 };
 
 struct ObjectsGroup
@@ -73,6 +73,7 @@ struct MapData
 	int						tile_height;
 	SDL_Color				background_color;
 	MapTypes				type;
+	p2SString				music_path;
 	p2List<TileSet*>		tilesets;
 	p2List<MapLayer*>		layers;
 	p2List<ObjectsGroup*>	objectgroups;

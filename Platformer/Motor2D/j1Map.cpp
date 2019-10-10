@@ -226,7 +226,9 @@ bool j1Map::LoadMap()
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
 		p2SString bg_color(map.attribute("backgroundcolor").as_string());
-
+		p2SString music_string(map.attribute("music").as_string());
+		data.music_path = music_string;
+		
 		data.background_color.r = 0;
 		data.background_color.g = 0;
 		data.background_color.b = 0;

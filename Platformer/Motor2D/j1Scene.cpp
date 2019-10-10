@@ -24,9 +24,7 @@ bool j1Scene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
-	
-
+	   
 	return ret;
 }
 
@@ -34,7 +32,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load("level01.tmx");
-
+	App->audio->PlayMusic(App->map->data.music_path.GetString(), 1.0f);
 	return true;
 }
 
