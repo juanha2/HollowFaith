@@ -39,9 +39,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
-	
-	
-
 	AddModule(coll);
 
 	// render last to swap buffer
@@ -376,8 +373,6 @@ bool j1App::SavegameNow() const
 	return ret;
 }
 
-float j1App::DeltaTime() const
-{
 
-	return 1.0f / 60.0f;
-}
+float j1App::DeltaTime() const { return 1.0f / 60.0f; } // Returns seconds from frames
+
