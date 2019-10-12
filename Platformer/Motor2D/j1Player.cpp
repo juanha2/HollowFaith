@@ -56,6 +56,7 @@ bool j1Player::PreUpdate()
 		}
 	}
 
+
 	//Get time from frames and it's corrected
 	previousTime = frameToSecondValue;
 	frameToSecondValue = App->DeltaTime();
@@ -63,22 +64,41 @@ bool j1Player::PreUpdate()
 		frameToSecondValue = 0.16f;
 
 
+	//		- - - - - - CAMERA FOLLOW - - - - - - 	
+
+	if (playerPosition.x > cameraFollowingPoint) // Starts to follow the player faster in X position.
+	{
+
+		if(playerPosition.x)
+		cameraSpeed.x -= playerSpeed.x;
+
+
+	}
+	else 
+		cameraSpeed.x -= playerSpeed.x / 40;
+		
+
+			
+
 	//		- - - - - - PLAYER INPUTS - - - - - - 
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		playerSpeed.x += movementForce.x;
-		braking(); // Smoothy braking when player stops running
+		braking(); // Smoothy braking for player
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 
 		playerSpeed.x -= movementForce.x;
-		braking(); // Smoothy braking when player stops running
+		braking(); // Smoothy braking for player
 
 	}
-	else
+	else {
 		braking(); // Smoothy braking when player stops running
+		cameraBraking(); // Smoothy camera braking when player is not running
+	}
+		
 	
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && current_state != ST_AT_AIR) // Jumping
@@ -98,8 +118,11 @@ bool j1Player::PreUpdate()
 
 	//Update position related to real time and puts speed limit.
 	speedLimitChecker();
-	PlayerPosUpdate(frameToSecondValue);
+	PlayerPositionUpdate(frameToSecondValue);
 
+	//Update position related to real time and player position.
+	cameraSpeedLimitChecker();
+	CameraPositionUpdate(frameToSecondValue);
 
 
 	//(Provisional floor)
@@ -151,7 +174,7 @@ bool j1Player::PostUpdate()
 	return true;
 }
 
-void j1Player::PlayerPosUpdate(float dt)
+void j1Player::PlayerPositionUpdate(float dt)
 {
 
 	// X AXIS POS
@@ -163,6 +186,14 @@ void j1Player::PlayerPosUpdate(float dt)
 
 }
 
+void j1Player::CameraPositionUpdate(float dt) {
+
+	// X AXIS POS
+	App->render->camera.x = App->render->camera.x + cameraSpeed.x * dt;
+
+	//Y AXIS POS
+	//App->render->camera.y = App->render->camera.y + cameraSpeed.y * dt;
+}
 
 void j1Player::speedLimitChecker()
 {
@@ -192,6 +223,31 @@ void j1Player::speedLimitChecker()
 
 }
 
+void j1Player::cameraSpeedLimitChecker() {
+
+	//POSITIVE
+
+	if (cameraSpeed.x > cameraSpeedLimit.x)
+		cameraSpeed.x = cameraSpeedLimit.x;
+
+	if (cameraSpeed.y > cameraSpeedLimit.y)
+	{
+		cameraSpeed.y = cameraSpeedLimit.y;
+	}
+
+
+	//NEGATIVE
+
+	if (cameraSpeed.x < -cameraSpeedLimit.x)
+		cameraSpeed.x = -cameraSpeedLimit.x;
+
+	if (cameraSpeed.y < -cameraSpeedLimit.y)
+	{
+		cameraSpeed.y = -cameraSpeedLimit.y;
+	}
+
+}
+
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 
@@ -208,6 +264,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 }
 
+
+void j1Player::cameraBraking()
+{
+
+	cameraSpeed.x /= slowlingValue; // Smoothy braking when camera stops running (We need to improve it)
+
+}
 
 void j1Player::braking()
 {

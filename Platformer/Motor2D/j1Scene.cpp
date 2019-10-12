@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "j1Player.h"
 #include "j1Collision.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -68,12 +69,14 @@ bool j1Scene::Update(float dt)
 
 	iPoint mouseCoord = App->map->WorldToMap((App->input->mouse_x - App->render->camera.x), (App->input->mouse_y - App->render->camera.y));
 
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Mouse Position X:%d Y:%d Mouse Tilset:%d,%d Tileset Type: ?",
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Mouse Position X:%d Y:%d Mouse Tilset:%d,%d Camera Position:%d,%d Player Position:%d,%d",
 		App->map->data.width, App->map->data.height,
 		App->map->data.tile_width, App->map->data.tile_height,
 		App->map->data.tilesets.count(), App->input->mouse_x - App->render->camera.x,
 		App->input->mouse_y - App->render->camera.y,
-		mouseCoord.x, mouseCoord.y);
+		mouseCoord.x, mouseCoord.y,
+		App->render->camera.x, App->render->camera.y,
+		App->player->playerPosition.x, App->player->playerPosition.y);
 
 	App->win->SetTitle(title.GetString());
 	return true;

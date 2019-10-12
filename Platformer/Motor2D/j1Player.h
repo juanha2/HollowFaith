@@ -34,6 +34,8 @@ public:
 	SDL_Texture* graphics = nullptr;
 	
 
+	iPoint playerPosition = { 0, 700 }; //Player position on the world value
+
 public:
 
 	j1Player();
@@ -67,16 +69,28 @@ private:
 	// - - - - PLAYER - - - - 
 	SDL_Rect playerTexture = { 0, 0, 50, 57 };
 	SDL_RendererFlip playerFlip = SDL_RendererFlip::SDL_FLIP_NONE;
-
-	fPoint playerPosition = { 0.0f, 700.0f }; //Player position on the world value
+	
 	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
 	float playerAcceleration = 0.0f;// Player acceleration AXIS value
 
 	fPoint movementForce = { -90.0,-300.0f }; // Force applied to the movement in AXIS value
 
-	void PlayerPosUpdate(float dt); //Update player's position
+	void PlayerPositionUpdate(float dt); //Update player's position
 	// - - - - - - - - - - - 
 
+	// - - CAMERA PLAYER - - 
+	float cameraAcceleration = 0.0f; // Camera acceleration AXIS value
+	fPoint cameraSpeed = { 0.0f,0.0f }; // Camera speed AXIS value
+	fPoint cameraSpeedLimit = { 200.0f, 250.0f }; // Camera max speed value
+
+	float cameraFollowingPoint = 340.0f;
+	float cameraFollowingGuide = 0.0f;
+
+	void cameraSpeedLimitChecker();
+	void CameraPositionUpdate(float dt);
+
+	void cameraBraking();
+	// - - - - - - - - - - - 
 
 	//  - - - - TIME - - - - 
 	float previousTime = 0.0f;
