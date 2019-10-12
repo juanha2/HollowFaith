@@ -5,11 +5,13 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Collision.h"
+#include "j1Window.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
 	name.create("map");
+	;	
 }
 
 // Destructor
@@ -23,17 +25,14 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
-
-
+	
 	return ret;
 }
 
 void j1Map::Draw()
 {
 	if (map_loaded == false)
-		return;
-
-	// TODO 5: Prepare the loop to iterate all the tiles in a layer
+		return;	
 
 	for (p2List_item<MapLayer*>* layer = data.layers.start; layer != NULL; layer = layer->next) {
 
@@ -42,16 +41,18 @@ void j1Map::Draw()
 			for (int y = 0; y < data.height; y++)
 			{
 				int gid = layer->data->Get(x, y); //We get the gid from each tile
-
+				
 				if (gid != 0) {
-
+					
 					TileSet* tileset = GetTileset(gid);
 
 					if (tileset != nullptr) {
 
 						SDL_Rect rect = tileset->GetRect(gid);
 						iPoint vec = MapToWorld(x, y);
-
+					
+						if((vec.x < (-App->render->camera.x+window_width/scale) && vec.x>=App->render->camera.x) &&
+							(vec.y <(-App->render->camera.y+window_height/scale) && vec.y >=App->render->camera.y)) // Only Blit current camera Tiles
 						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->speed_x);
 
 					}
@@ -196,6 +197,10 @@ bool j1Map::Load(const char* file_name)
 		data.objectgroups.add(set_object);
 	}
 
+	// Load window info --------------------------------------------
+	App->win->GetWindowSize(window_width, window_height);	
+	scale = App->win->GetScale();
+
 	// LOG properties ----------------------------------------------
 	if (ret == true)
 	{
@@ -203,6 +208,7 @@ bool j1Map::Load(const char* file_name)
 		log_properties();
 	}
 
+	
 	map_loaded = ret;
 
 	return ret;

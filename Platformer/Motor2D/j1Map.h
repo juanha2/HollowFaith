@@ -126,6 +126,9 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+	uint				window_width;
+	uint				window_height;
+	int					scale;
 };
 
 #endif // __j1MAP_H__
