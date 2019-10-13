@@ -358,6 +358,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			
 		}
 
+		if(playerSpeed.y >= 0)
 		if ((c2->type == COLLIDER_PLATFORM))
 		{
 			switch (dirCheck) {
