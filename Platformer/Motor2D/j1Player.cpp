@@ -442,6 +442,8 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			case IN_RIGHT_UP: state = ST_IDLE; break;
 			case IN_JUMPING: state = ST_AT_AIR;
 				break;
+			case IN_FALLING: state = ST_AT_AIR;
+				break;
 			case IN_WALK_LEFT: state = ST_IDLE;
 				break;
 
@@ -453,6 +455,8 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			{
 			case IN_LEFT_UP: state = ST_IDLE; break;
 			case IN_JUMPING: state = ST_AT_AIR;
+				break;
+			case IN_FALLING: state = ST_AT_AIR;
 				break;
 			case IN_WALK_RIGHT: state = ST_IDLE;
 				break;
