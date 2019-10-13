@@ -62,8 +62,9 @@ bool j1Player::Start()
 	jump.PushBack({ 389,34,20,29 });
 	jump.PushBack({ 420,37,22,27 });
 	jump.PushBack({ 454,38,18,26 });
-	jump.loop = false;
-	jump.speed = 0.04f;
+	jump.loop = true;
+	jump.firstLoopFrame = 5;
+	jump.speed = 0.05f;
 
 	return true;
 }
