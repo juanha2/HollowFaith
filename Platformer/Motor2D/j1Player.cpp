@@ -36,7 +36,34 @@ bool j1Player::CleanUp()
 bool j1Player::Start()
 {
 
-	graphics = App->tex->Load("Assets/Sprites/playerChar.png");
+	graphics = App->tex->Load("Assets/Sprites/Monster.png");
+
+	idle.PushBack({ 7,164,17,28 });
+	idle.PushBack({ 39,164,17,28 });
+	idle.PushBack({ 70,163,18,29 });
+	idle.PushBack({ 7,164,17,28 });
+	idle.loop = true;
+	idle.speed = 0.02f;
+
+	walk.PushBack({ 7,37,17,27 });
+	walk.PushBack({ 39,36,17,28 });
+	walk.PushBack({ 71,36,17,28 });
+	walk.PushBack({ 102,37,18,27 });
+	walk.PushBack({ 135,36,17,28 });
+	walk.PushBack({ 167,36,17,28 });	
+	walk.loop = true;
+	walk.speed = 0.02f;
+
+	jump.PushBack({ 231,36,17,28 });
+	jump.PushBack({ 261,38,20,26 });
+	jump.PushBack({ 292,38,22,26 });
+	jump.PushBack({ 327,34,17,30 });
+	jump.PushBack({ 358,32,18,29 });
+	jump.PushBack({ 389,34,20,29 });
+	jump.PushBack({ 420,37,22,27 });
+	jump.PushBack({ 454,38,18,26 });
+	jump.loop = true;
+	jump.speed = 0.02f;
 
 	return true;
 }
@@ -74,10 +101,24 @@ bool j1Player::PreUpdate()
 	
 	//		- - - - - - PLAYER INPUTS - - - - - - 
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		playerSpeed.x += movementForce.x;
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		inputs.add(IN_WALK_LEFT);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {	
+		inputs.add(IN_LEFT_UP);
+	}		
+
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		playerSpeed.x -= movementForce.x;
+		inputs.add(IN_WALK_RIGHT);
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {		
+		inputs.add(IN_RIGHT_UP);
+	}
+
+	
 	else 
 	{
 		braking(); // Smoothy braking when player stops running
@@ -116,15 +157,14 @@ bool j1Player::PreUpdate()
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
-
+	//current_animation = &idle;
 	switch (current_state)
 	{
-	case ST_AT_FLOOR:
+	case ST_IDLE:
 
 		playerAcceleration = 0;
 		playerSpeed.y = 0; // When is at the floor we don't apply any gravity force
-		
-		//current_animation = &idle; 
+		current_animation = &idle;		
 		break;
 
 
@@ -133,6 +173,14 @@ bool j1Player::Update(float dt)
 		playerAcceleration += gravityForce; // While it's in the air we apply gravity to get down the player
 	
 		break;
+
+	case ST_WALK_RIGHT:
+		current_animation = &walk;
+		break;
+	case ST_WALK_LEFT:
+		current_animation = &walk;
+		break;
+
 	}
 
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
@@ -147,7 +195,7 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 
-	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &playerTexture, 1.0, SDL_FLIP_HORIZONTAL); // Printing player texture
+	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &current_animation->GetCurrentFrame(), 1.0, SDL_FLIP_HORIZONTAL); // Printing player texture
 	return true;
 }
 
@@ -299,10 +347,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				break;
 			case -1:
 				break;
-			}
-
-
-			
+			}			
 		}
 
 	}
@@ -330,23 +375,26 @@ void j1Player::braking()
 player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 {
 
-	static player_states state = ST_AT_FLOOR;
+	static player_states state = ST_IDLE;
 	player_inputs  last_input;
 
 	while (inputs.Pop(last_input))
 	{
 		switch (state)
 		{
-		case ST_AT_FLOOR:
+		case ST_IDLE:
 		{
 			switch (last_input)
 			{
-			case IN_JUMPING: state = ST_AT_AIR; 
+			case IN_JUMPING: state = ST_AT_AIR;
 				break;
 
 			case IN_FALLING: state = ST_AT_AIR;
-				break; 
-
+				break;
+			case IN_WALK_RIGHT: state = ST_WALK_RIGHT;
+				break;
+			case IN_WALK_LEFT: state = ST_WALK_LEFT;
+				break;
 			}
 		}
 		break;
@@ -355,12 +403,37 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_AT_FLOOR; 
+			case IN_JUMP_FINISH: state = ST_IDLE;
 				break;
 
+			case IN_RIGHT_UP: state = ST_IDLE; break;
 			}
 		}
 		break;
+		
+		case ST_WALK_RIGHT:
+			switch (last_input)
+			{
+			case IN_RIGHT_UP: state = ST_IDLE; break;
+			case IN_JUMPING: state = ST_AT_AIR;
+				break;
+			case IN_WALK_LEFT: state = ST_IDLE;
+				break;
+
+			}
+			break;
+
+		case ST_WALK_LEFT:
+			switch (last_input)
+			{
+			case IN_LEFT_UP: state = ST_IDLE; break;
+			case IN_JUMPING: state = ST_AT_AIR;
+				break;
+			case IN_WALK_RIGHT: state = ST_IDLE;
+				break;
+
+			}
+			break;
 		}
 	}
 	return state;

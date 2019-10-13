@@ -8,14 +8,36 @@
 #define MAXNUMOFCOLLIDERS 1
 
 #include "j1Module.h"
+#include "p2Animation.h"
 
 enum player_states
 {
 	ST_UNKNOWN = -1,
 
-	ST_AT_FLOOR,
-	ST_AT_AIR
+	ST_IDLE,
+	ST_AT_AIR,
+	ST_WALK_RIGHT,
+	ST_WALK_LEFT,
 };
+
+
+enum player_inputs
+{
+	IN_UNKNOWN = -1,
+
+	IN_JUMPING,
+	IN_JUMP_FINISH,
+	IN_FALLING,
+	IN_WALK_RIGHT,
+	IN_WALK_LEFT,
+	
+	IN_RIGHT_UP,
+	IN_RIGHT_DOWN,
+
+	IN_LEFT_UP,
+	IN_LEFT_DOWN,
+};
+
 
 enum collDirCheck
 {
@@ -27,16 +49,6 @@ enum collDirCheck
 	DIR_DOWN,
 	DIR_MAX
 };
-
-enum player_inputs
-{
-	IN_UNKNOWN = -1,
-
-	IN_JUMPING,
-	IN_JUMP_FINISH,
-	IN_FALLING
-};
-
 class j1Player : public j1Module
 {
 
@@ -87,7 +99,7 @@ public:
 private:
 
 	// - - - - PLAYER - - - - 
-	SDL_Rect playerTexture = { 0, 0, 30, 37 };
+	SDL_Rect playerTexture = { 0, 0, 17, 27 };
 	SDL_RendererFlip playerFlip = SDL_RendererFlip::SDL_FLIP_NONE;
 	
 	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
@@ -130,7 +142,10 @@ private:
 	void braking();  //Player smoothly slow
 	// - - - - - - - - - - - 
 
-
+	Animation* current_animation;
+	Animation walk;
+	Animation idle;
+	Animation jump;
 };
 
 #endif // __j1PLAYER_H__
