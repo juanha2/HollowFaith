@@ -62,8 +62,8 @@ bool j1Player::Start()
 	jump.PushBack({ 389,34,20,29 });
 	jump.PushBack({ 420,37,22,27 });
 	jump.PushBack({ 454,38,18,26 });
-	jump.loop = true;
-	jump.speed = 0.02f;
+	jump.loop = false;
+	jump.speed = 0.04f;
 
 	return true;
 }
@@ -162,6 +162,7 @@ bool j1Player::Update(float dt)
 	{
 	case ST_IDLE:
 
+		
 		playerAcceleration = 0;
 		playerSpeed.y = 0; // When is at the floor we don't apply any gravity force
 		current_animation = &idle;		
@@ -169,12 +170,14 @@ bool j1Player::Update(float dt)
 
 
 	case ST_AT_AIR:
-
-		playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player
+		current_animation = &jump;
+		
+		playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player		
 	
 		break;
 
 	case ST_WALK_RIGHT:
+		
 		current_animation = &walk;
 		break;
 	case ST_WALK_LEFT:
@@ -332,6 +335,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				playerSpeed.y = 0;
 				playerAcceleration = 0;
 				checkingFall = false;
+				jump.Reset();
 				inputs.add(IN_JUMP_FINISH);
 				break;
 
@@ -344,6 +348,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				playerPosition.x = c2->rect.x - playerTexture.w;
 				playerSpeed.x = 0;
 				break;
+
 			case -1:
 				break;
 
