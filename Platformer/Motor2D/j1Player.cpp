@@ -130,12 +130,12 @@ bool j1Player::PreUpdate()
 	cameraSpeedLimitChecker();
 	CameraPositionUpdate(frameToSecondValue);
 
-	
+	/*
 	//(Provisional floor)
 	if (playerPosition.y > 640) {
 		playerPosition.y = 640;
 		inputs.add(IN_JUMP_FINISH);
-	}
+	}*/
 
 		return true;
 }
@@ -268,27 +268,30 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	{
 		if ((c2->type == COLLIDER_FLOOR))
 		{
+			
+			//Detection of axis x from the right
 			if (abs(playerPosition.x - (c2->rect.x + c2->rect.w)) < abs((playerPosition.x + playerTexture.w) - c2->rect.x) &&
 				abs(playerPosition.x - (c2->rect.x + c2->rect.w)) < abs(playerPosition.y - (c2->rect.y + c2->rect.h)) &&
 				abs(playerPosition.x - (c2->rect.x + c2->rect.w)) < abs(c2->rect.y - (playerPosition.y + playerTexture.h)))
 			{
 				playerPosition.x = c2->rect.x + c2->rect.w;
 			}
-				
+
+			//Detection of axis x from the left
 			else if (abs(c2->rect.x - (playerPosition.x + playerTexture.w)) < abs(c2->rect.y - (playerPosition.y + playerTexture.h))
 				&& abs(c2->rect.x - (playerPosition.x + playerTexture.w)) <abs(playerPosition.y-(c2->rect.y + c2->rect.h))) {
 				playerPosition.x = c2->rect.x - playerTexture.w;
 			}
-			
+
+			//Detection of axis y from above
 			else if (abs(c2->rect.y - (playerPosition.y + playerTexture.h)) < abs(playerPosition.y - ((c2->rect.y + c2->rect.h)))) {
 				playerPosition.y = c2->rect.y-playerTexture.h;
 			}			
 
+			//Detection of axis y from below
 			else if (abs(playerPosition.y - ((c2->rect.y + c2->rect.h))) < abs(c2->rect.x - (playerPosition.x + playerTexture.w))) {
 				playerPosition.y=	c2->rect.y + c2->rect.h;
-			}
-
-			
+			}			
 		}
 	}
 

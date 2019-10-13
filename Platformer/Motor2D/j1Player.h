@@ -35,7 +35,7 @@ public:
 	SDL_Texture* graphics1 = nullptr;
 	
 
-	iPoint playerPosition = {436, 750 }; //Player position on the world value
+	iPoint playerPosition = {0, 650 }; //Player position on the world value
 
 public:
 
