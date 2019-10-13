@@ -87,13 +87,13 @@ public:
 private:
 
 	// - - - - PLAYER - - - - 
-	SDL_Rect playerTexture = { 0, 0, 50, 57 };
+	SDL_Rect playerTexture = { 0, 0, 30, 37 };
 	SDL_RendererFlip playerFlip = SDL_RendererFlip::SDL_FLIP_NONE;
 	
 	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
 	float playerAcceleration = 0.0f;// Player acceleration AXIS value
 
-	fPoint movementForce = { -20,-80 }; // Force applied to the movement in AXIS value
+	fPoint movementForce = { -20,-40 }; // Force applied to the movement in AXIS value
 
 	void PlayerPositionUpdate(float dt); //Update player's position
 	// - - - - - - - - - - - 
@@ -122,10 +122,10 @@ private:
 	void speedLimitChecker();  // Player limit speed in AXIS
 	fPoint speedLimit = { 60.0f,300.0f }; // Player max speed value
 
-	float slowlingValue = 1.25f;
+	float slowlingValue = 1.2f;
 	int slowlingLimitValue = 200;
 
-	float gravityForce = 5.0f;// Player acceleration Y value
+	float gravityForce = 2.0f;// Player acceleration Y value
 
 	void braking();  //Player smoothly slow
 	// - - - - - - - - - - - 

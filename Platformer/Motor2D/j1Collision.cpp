@@ -49,10 +49,7 @@ bool j1Collision::Update(float dt)
 	Collider* c1;
 	Collider* c2;
 
-	if (App->player->checkingFall)
-		App->player->inputs.add(IN_FALLING);
 
-	App->player->checkingFall = true;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -85,6 +82,13 @@ bool j1Collision::Update(float dt)
 
 		}
 	}
+
+
+	if (App->player->checkingFall)
+		App->player->inputs.add(IN_FALLING);
+
+	App->player->checkingFall = true;
+
 	return true;
 }
 

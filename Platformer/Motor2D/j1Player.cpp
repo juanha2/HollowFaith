@@ -66,40 +66,20 @@ bool j1Player::PreUpdate()
 	{
 
 		if(playerPosition.x)
-		cameraSpeed.x -= playerSpeed.x;
-
-
+			cameraSpeed.x -= playerSpeed.x;
 	}
 	else 
 		cameraSpeed.x -= playerSpeed.x / 40;	
-
-	if (playerPosition.y <= 0) {
-		playerPosition.y = 0;
-			}
+		
 	
 	//		- - - - - - PLAYER INPUTS - - - - - - 
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
 		playerSpeed.x += movementForce.x;
-		braking(); // Smoothy braking for player
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		playerSpeed.y -= movementForce.y;
-		braking(); // Smoothy braking for player
-	}
-
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-
 		playerSpeed.x -= movementForce.x;
-		braking(); // Smoothy braking for player
-		
-
-	}
-	else {
+	else 
+	{
 		braking(); // Smoothy braking when player stops running
 		cameraBraking(); // Smoothy camera braking when player is not running
 	}
@@ -111,7 +91,7 @@ bool j1Player::PreUpdate()
 		inputs.add(IN_JUMPING);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		playerAcceleration += movementForce.y; // Get down while you're in the air faster
+		playerAcceleration += -movementForce.y; // Get down while you're in the air faster
 
 	//		- - - - - - - - - - - - - - - - - - 
 	
@@ -166,7 +146,6 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
-	SDL_Rect tex = { 0,0,612,768/2 };
 
 	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &playerTexture, 1.0, SDL_FLIP_HORIZONTAL); // Printing player texture
 	return true;
@@ -333,13 +312,18 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 void j1Player::cameraBraking()
 {
-	cameraSpeed.x /= slowlingValue; // Smoothy braking when camera stops running (We need to improve it)
-
+	if (cameraSpeed.x > 0)
+		cameraSpeed.x /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
+	else
+		cameraSpeed.x /= -slowlingValue;
 }
 
 void j1Player::braking()
 {
-	playerSpeed.x /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
+	if(playerSpeed.x > 0)
+		playerSpeed.x /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
+	else
+		playerSpeed.x /= -slowlingValue;
 }
 
 
