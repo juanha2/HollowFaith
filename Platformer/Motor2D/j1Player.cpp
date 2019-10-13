@@ -130,7 +130,7 @@ bool j1Player::Update(float dt)
 
 	case ST_AT_AIR:
 
-		playerAcceleration += gravityForce; // While it's in the air we apply gravity to get down the player
+		playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player
 	
 		break;
 	}
@@ -235,23 +235,23 @@ void j1Player::cameraSpeedLimitChecker() {
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
+	int detectCollDir[DIR_MAX];
+	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - playerPosition.x;
+	detectCollDir[DIR_RIGHT] = (playerPosition.x + playerTexture.w) - c2->rect.x;
+	detectCollDir[DIR_UP] = (c2->rect.y + c2->rect.h) - playerPosition.y;
+	detectCollDir[DIR_DOWN] = (playerPosition.y + playerTexture.h) - c2->rect.y;
+
+	bool collDir[DIR_MAX];
+	collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x < 0);
+	collDir[DIR_LEFT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x > 0);
+	collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && playerSpeed.y < 0);
+	collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && playerSpeed.y > 0);
+
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
 		bool alredycollided = false;
 
 		// - - - - - - - COLLISIONS LOGIC - - - - - - - 
-
-		int detectCollDir[DIR_MAX];
-		detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - playerPosition.x;
-		detectCollDir[DIR_RIGHT] = (playerPosition.x + playerTexture.w) - c2->rect.x;
-		detectCollDir[DIR_UP] = (c2->rect.y + c2->rect.h) - playerPosition.y;
-		detectCollDir[DIR_DOWN] = (playerPosition.y + playerTexture.h) - c2->rect.y;
-
-		bool collDir[DIR_MAX];
-		collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x < 0);
-		collDir[DIR_LEFT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x > 0);
-		collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && playerSpeed.y < 0);
-		collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && playerSpeed.y > 0);
 
 		int dirCheck = -1;
 

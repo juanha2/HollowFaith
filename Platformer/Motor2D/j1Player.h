@@ -93,7 +93,7 @@ private:
 	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
 	float playerAcceleration = 0.0f;// Player acceleration AXIS value
 
-	fPoint movementForce = { -20,-40 }; // Force applied to the movement in AXIS value
+	fPoint movementForce = { -20.0f, - 95.0f }; // Force applied to the movement in AXIS value
 
 	void PlayerPositionUpdate(float dt); //Update player's position
 	// - - - - - - - - - - - 
@@ -126,6 +126,7 @@ private:
 	int slowlingLimitValue = 200;
 
 	float gravityForce = 2.0f;// Player acceleration Y value
+	float minGravityConst = 5.0f;
 
 	void braking();  //Player smoothly slow
 	// - - - - - - - - - - - 

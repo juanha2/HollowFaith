@@ -83,12 +83,12 @@ bool j1Collision::Update(float dt)
 		}
 	}
 
-
+	
 	if (App->player->checkingFall)
 		App->player->inputs.add(IN_FALLING);
 
 	App->player->checkingFall = true;
-
+	
 	return true;
 }
 
