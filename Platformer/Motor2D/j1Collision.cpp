@@ -2,6 +2,7 @@
 #include "j1Render.h"
 #include "j1Input.h"
 #include "j1Collision.h"
+#include "j1Player.h"
 #include "p2Log.h"
 
 j1Collision::j1Collision()
@@ -48,7 +49,10 @@ bool j1Collision::Update(float dt)
 	Collider* c1;
 	Collider* c2;
 
-	
+	if (App->player->checkingFall)
+		App->player->inputs.add(IN_FALLING);
+
+	App->player->checkingFall = true;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{

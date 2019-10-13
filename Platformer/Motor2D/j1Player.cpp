@@ -84,11 +84,7 @@ bool j1Player::PreUpdate()
 		playerSpeed.x += movementForce.x;
 		braking(); // Smoothy braking for player
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		playerSpeed.y += movementForce.y;
-		braking(); // Smoothy braking for player
-	}
+
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		playerSpeed.y -= movementForce.y;
@@ -115,7 +111,7 @@ bool j1Player::PreUpdate()
 		inputs.add(IN_JUMPING);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		playerAcceleration += -movementForce.y; // Get down while you're in the air faster
+		playerAcceleration += movementForce.y; // Get down while you're in the air faster
 
 	//		- - - - - - - - - - - - - - - - - - 
 	
@@ -298,8 +294,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if ((c2->type == COLLIDER_FLOOR))
 		{
 
-			checkingFall = true;
-
 			switch (dirCheck) {
 
 			case DIR_UP:
@@ -329,9 +323,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 
-			if (checkingFall)
-				inputs.add(IN_FALLING);
+			
 		}
+
 	}
 
 }
@@ -339,16 +333,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 void j1Player::cameraBraking()
 {
-
 	cameraSpeed.x /= slowlingValue; // Smoothy braking when camera stops running (We need to improve it)
 
 }
 
 void j1Player::braking()
 {
-
 	playerSpeed.x /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
-
 }
 
 

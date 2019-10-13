@@ -48,6 +48,13 @@ public:
 	
 
 	iPoint playerPosition = {0, 650 }; //Player position on the world value
+	bool checkingFall = false;
+
+	// - - - - INPUT - - - - 
+	p2List<player_inputs> inputs; //Stores player related inputs
+	player_states current_state = ST_UNKNOWN; //Intializing player status
+	// - - - - - - - - - - - 
+
 
 public:
 
@@ -89,7 +96,6 @@ private:
 	fPoint movementForce = { -20,-80 }; // Force applied to the movement in AXIS value
 
 	void PlayerPositionUpdate(float dt); //Update player's position
-	bool checkingFall = false;
 	// - - - - - - - - - - - 
 
 	// - - CAMERA PLAYER - - 
@@ -122,12 +128,6 @@ private:
 	float gravityForce = 5.0f;// Player acceleration Y value
 
 	void braking();  //Player smoothly slow
-	// - - - - - - - - - - - 
-
-
-	// - - - - INPUT - - - - 
-	p2List<player_inputs> inputs; //Stores player related inputs
-	player_states current_state = ST_UNKNOWN; //Intializing player status
 	// - - - - - - - - - - - 
 
 
