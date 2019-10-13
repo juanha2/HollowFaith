@@ -78,7 +78,7 @@
  <tileset firstgid="1924" name="clouds_BG" tilewidth="16" tileheight="16" tilecount="312" columns="24">
   <image source="BackgroundLayers/clouds_BG.png" width="384" height="216"/>
  </tileset>
- <layer name="Capa de patrones 4" width="100" height="50">
+ <layer name="Layer01" width="100" height="50">
   <properties>
    <property name="speed_x" type="float" value="0"/>
   </properties>
@@ -5085,7 +5085,7 @@
    <tile gid="987"/>
   </data>
  </layer>
- <layer name="Capa de patrones 8" width="100" height="50">
+ <layer name="Layer02" width="100" height="50">
   <properties>
    <property name="speed_x" type="float" value="0.3"/>
   </properties>
@@ -10092,7 +10092,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Capa de patrones 7" width="100" height="50">
+ <layer name="Layer03" width="100" height="50">
   <properties>
    <property name="speed_x" type="float" value="0.5"/>
   </properties>
@@ -15099,7 +15099,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Capa de patrones 6" width="100" height="50">
+ <layer name="Layer04" width="100" height="50">
   <properties>
    <property name="speed_x" type="float" value="0.7"/>
   </properties>
@@ -20106,7 +20106,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Capa de patrones 5" width="100" height="50">
+ <layer name="Layer05" width="100" height="50">
   <properties>
    <property name="speed_x" type="float" value="0.9"/>
   </properties>

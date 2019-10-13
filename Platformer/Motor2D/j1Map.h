@@ -129,6 +129,7 @@ private:
 	uint				window_width;
 	uint				window_height;
 	int					scale;
+	
 };
 
 #endif // __j1MAP_H__

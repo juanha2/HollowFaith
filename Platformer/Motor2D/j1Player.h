@@ -32,9 +32,10 @@ public:
 
 	Collider* colisionadores[MAXNUMOFCOLLIDERS];	
 	SDL_Texture* graphics = nullptr;
+	SDL_Texture* graphics1 = nullptr;
 	
 
-	iPoint playerPosition = { 0, 700 }; //Player position on the world value
+	iPoint playerPosition = {436, 750 }; //Player position on the world value
 
 public:
 
@@ -73,7 +74,7 @@ private:
 	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
 	float playerAcceleration = 0.0f;// Player acceleration AXIS value
 
-	fPoint movementForce = { -90.0,-300.0f }; // Force applied to the movement in AXIS value
+	fPoint movementForce = { -20,-80 }; // Force applied to the movement in AXIS value
 
 	void PlayerPositionUpdate(float dt); //Update player's position
 	// - - - - - - - - - - - 
@@ -100,12 +101,12 @@ private:
 
 	//  - - - - SPEED - - - - 
 	void speedLimitChecker();  // Player limit speed in AXIS
-	fPoint speedLimit = { 130.0f, 250.0f }; // Player max speed value
+	fPoint speedLimit = { 60.0f,300.0f }; // Player max speed value
 
 	float slowlingValue = 1.25f;
 	int slowlingLimitValue = 200;
 
-	float gravityForce = 50.0f;// Player acceleration Y value
+	float gravityForce = 5.0f;// Player acceleration Y value
 
 	void braking();  //Player smoothly slow
 	// - - - - - - - - - - - 

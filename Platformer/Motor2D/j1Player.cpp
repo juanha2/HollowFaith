@@ -7,8 +7,7 @@
 #include "j1Render.h"
 #include "j1Collision.h"
 #include "j1Player.h"
-#include "j1Map.h"
-
+#include "j1Map.h"#include "j1Window.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -38,8 +37,6 @@ bool j1Player::Start()
 
 	graphics = App->tex->Load("Assets/Sprites/playerChar.png");
 
-
-
 	return true;
 }
 
@@ -56,13 +53,11 @@ bool j1Player::PreUpdate()
 		}
 	}
 
-
 	//Get time from frames and it's corrected
 	previousTime = frameToSecondValue;
 	frameToSecondValue = App->DeltaTime();
 	if (frameToSecondValue > 0.16)
 		frameToSecondValue = 0.16f;
-
 
 	//		- - - - - - CAMERA FOLLOW - - - - - - 	
 
@@ -75,11 +70,12 @@ bool j1Player::PreUpdate()
 
 	}
 	else 
-		cameraSpeed.x -= playerSpeed.x / 40;
-		
+		cameraSpeed.x -= playerSpeed.x / 40;	
 
-			
-
+	if (playerPosition.y <= 0) {
+		playerPosition.y = 0;
+			}
+	
 	//		- - - - - - PLAYER INPUTS - - - - - - 
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -87,18 +83,29 @@ bool j1Player::PreUpdate()
 		playerSpeed.x += movementForce.x;
 		braking(); // Smoothy braking for player
 	}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		playerSpeed.y += movementForce.y;
+		braking(); // Smoothy braking for player
+	}
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+		playerSpeed.y -= movementForce.y;
+		braking(); // Smoothy braking for player
+	}
+
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 
 		playerSpeed.x -= movementForce.x;
 		braking(); // Smoothy braking for player
+		
 
 	}
 	else {
 		braking(); // Smoothy braking when player stops running
 		cameraBraking(); // Smoothy camera braking when player is not running
 	}
-		
 	
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && current_state != ST_AT_AIR) // Jumping
@@ -110,7 +117,6 @@ bool j1Player::PreUpdate()
 		playerAcceleration += -movementForce.y; // Get down while you're in the air faster
 
 	//		- - - - - - - - - - - - - - - - - - 
-
 	
 	//Refresh the player state
 	player_states state = process_fsm(inputs);
@@ -124,15 +130,14 @@ bool j1Player::PreUpdate()
 	cameraSpeedLimitChecker();
 	CameraPositionUpdate(frameToSecondValue);
 
-
+	
 	//(Provisional floor)
 	if (playerPosition.y > 640) {
 		playerPosition.y = 640;
 		inputs.add(IN_JUMP_FINISH);
 	}
 
-
-	return true;
+		return true;
 }
 
 // Called each loop iteration
@@ -168,9 +173,9 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
+	SDL_Rect tex = { 0,0,612,768/2 };
 
 	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &playerTexture, 1.0, SDL_FLIP_HORIZONTAL); // Printing player texture
-
 	return true;
 }
 
@@ -189,10 +194,17 @@ void j1Player::PlayerPositionUpdate(float dt)
 void j1Player::CameraPositionUpdate(float dt) {
 
 	// X AXIS POS
-	App->render->camera.x = App->render->camera.x + cameraSpeed.x * dt;
+
+	if (playerPosition.x > 1024 / 4 - playerTexture.w)
+		App->render->camera.x = (-playerPosition.x+ 1024 / 4 - playerTexture.w )*2;
+	//if(playerPosition.y< 640-768/2 + playerTexture.h)
+		//App->render->camera.y = (-playerPosition.y +150 + 768 / 4 - playerTexture.h) * 2;
+
+
+	//App->render->camera.x = App->render->camera.x + cameraSpeed.x * dt;
 
 	//Y AXIS POS
-	//App->render->camera.y = App->render->camera.y + cameraSpeed.y * dt;
+	App->render->camera.y = App->render->camera.y + cameraSpeed.y * dt;
 }
 
 void j1Player::speedLimitChecker()
@@ -250,19 +262,39 @@ void j1Player::cameraSpeedLimitChecker() {
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
-
+	
 	bool alredycollided = false;
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
 		if ((c2->type == COLLIDER_FLOOR))
 		{
+			if (abs(playerPosition.x - (c2->rect.x + c2->rect.w)) < abs((playerPosition.x + playerTexture.w) - c2->rect.x) &&
+				abs(playerPosition.x - (c2->rect.x + c2->rect.w)) < abs(playerPosition.y - (c2->rect.y + c2->rect.h)) &&
+				abs(playerPosition.x - (c2->rect.x + c2->rect.w)) < abs(c2->rect.y - (playerPosition.y + playerTexture.h)))
+			{
+				playerPosition.x = c2->rect.x + c2->rect.w;
+			}
+				
+			else if (abs(c2->rect.x - (playerPosition.x + playerTexture.w)) < abs(c2->rect.y - (playerPosition.y + playerTexture.h))
+				&& abs(c2->rect.x - (playerPosition.x + playerTexture.w)) <abs(playerPosition.y-(c2->rect.y + c2->rect.h))) {
+				playerPosition.x = c2->rect.x - playerTexture.w;
+			}
+			
+			else if (abs(c2->rect.y - (playerPosition.y + playerTexture.h)) < abs(playerPosition.y - ((c2->rect.y + c2->rect.h)))) {
+				playerPosition.y = c2->rect.y-playerTexture.h;
+			}			
 
-			playerPosition.y = c2->rect.y - playerTexture.h;
+			else if (abs(playerPosition.y - ((c2->rect.y + c2->rect.h))) < abs(c2->rect.x - (playerPosition.x + playerTexture.w))) {
+				playerPosition.y=	c2->rect.y + c2->rect.h;
+			}
 
+			
 		}
 	}
 
 }
+
+
 
 
 void j1Player::cameraBraking()

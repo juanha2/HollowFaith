@@ -11,7 +11,7 @@
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
 	name.create("map");
-	;	
+	
 }
 
 // Destructor
@@ -33,7 +33,7 @@ void j1Map::Draw()
 {
 	if (map_loaded == false)
 		return;	
-
+	
 	for (p2List_item<MapLayer*>* layer = data.layers.start; layer != NULL; layer = layer->next) {
 
 		for (int x = 0; x < data.width; x++)
@@ -55,6 +55,7 @@ void j1Map::Draw()
 							(vec.y <(-App->render->camera.y+window_height/scale) && vec.y >=App->render->camera.y)) // Only Blit current camera Tiles
 						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->speed_x);
 
+						
 					}
 				}
 			}

@@ -62,8 +62,7 @@ bool j1Scene::Update(float dt)
 			App->render->camera.y += 1;
 	}		
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {	
-		//LOG("%i", App->map->data.);
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {			
 		if(App->render->camera.x>-App->map->data.width*App->map->data.tile_width)
 			App->render->camera.x -= 1;
 	}		
