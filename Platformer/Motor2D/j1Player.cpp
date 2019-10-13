@@ -103,6 +103,7 @@ bool j1Player::PreUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		playerSpeed.x += movementForce.x;
+		playerFlip = SDL_FLIP_HORIZONTAL;
 		inputs.add(IN_WALK_LEFT);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {	
@@ -111,9 +112,9 @@ bool j1Player::PreUpdate()
 
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		playerSpeed.x -= movementForce.x;
+		playerFlip = SDL_FLIP_NONE;
 		inputs.add(IN_WALK_RIGHT);
 	}
-
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {		
 		inputs.add(IN_RIGHT_UP);
 	}
@@ -198,7 +199,7 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 
-	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &current_animation->GetCurrentFrame(), 1.0, SDL_FLIP_HORIZONTAL); // Printing player texture
+	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip , NULL , playerTexture.w / 2); // Printing player texture
 	return true;
 }
 

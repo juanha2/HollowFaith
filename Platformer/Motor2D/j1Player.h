@@ -59,7 +59,7 @@ public:
 	SDL_Texture* graphics1 = nullptr;
 	
 
-	iPoint playerPosition = {0, 650 }; //Player position on the world value
+	iPoint playerPosition = {0, 670 }; //Player position on the world value
 	bool checkingFall = false;
 
 	// - - - - INPUT - - - - 
