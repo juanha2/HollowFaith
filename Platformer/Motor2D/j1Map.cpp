@@ -546,7 +546,7 @@ bool j1Map::CreateColliders(ObjectsData* data, int i)
 		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_FLOOR);
 
 	if (data->name == 2)
-		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_NONE);
+		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_PLATFORM);
 
 	return ret;
 }

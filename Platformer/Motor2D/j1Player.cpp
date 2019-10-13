@@ -272,7 +272,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 		if ((c2->type == COLLIDER_FLOOR))
 		{
-
 			switch (dirCheck) {
 
 			case DIR_UP:
@@ -300,9 +299,32 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			case -1:
 				break;
 			}
+		}
 
 
-			
+		if ((c2->type == COLLIDER_PLATFORM))
+		{
+			switch (dirCheck) {
+
+			case DIR_UP:
+				break;
+
+			case DIR_DOWN:
+				playerPosition.y = c2->rect.y - playerTexture.h;
+				playerSpeed.y = 0;
+				playerAcceleration = 0;
+				checkingFall = false;
+				inputs.add(IN_JUMP_FINISH);
+				break;
+
+			case DIR_LEFT:
+				break;
+
+			case DIR_RIGHT:
+				break;
+			case -1:
+				break;
+			}
 		}
 
 	}
