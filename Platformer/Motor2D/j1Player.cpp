@@ -7,7 +7,8 @@
 #include "j1Render.h"
 #include "j1Collision.h"
 #include "j1Player.h"
-#include "j1Map.h"#include "j1Window.h"
+#include "j1Map.h"
+#include "j1Window.h"
 
 j1Player::j1Player() : j1Module()
 {
@@ -108,7 +109,7 @@ bool j1Player::PreUpdate()
 	}
 	
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && current_state != ST_AT_AIR) // Jumping
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR) // Jumping
 	{
 		playerSpeed.y = movementForce.y; 
 		inputs.add(IN_JUMPING);
@@ -126,16 +127,12 @@ bool j1Player::PreUpdate()
 	speedLimitChecker();
 	PlayerPositionUpdate(frameToSecondValue);
 
+
+
 	//Update position related to real time and player position.
 	cameraSpeedLimitChecker();
 	CameraPositionUpdate(frameToSecondValue);
 
-	/*
-	//(Provisional floor)
-	if (playerPosition.y > 640) {
-		playerPosition.y = 640;
-		inputs.add(IN_JUMP_FINISH);
-	}*/
 
 		return true;
 }
@@ -150,7 +147,7 @@ bool j1Player::Update(float dt)
 
 		playerAcceleration = 0;
 		playerSpeed.y = 0; // When is at the floor we don't apply any gravity force
-
+		
 		//current_animation = &idle; 
 		break;
 
@@ -182,13 +179,14 @@ bool j1Player::PostUpdate()
 void j1Player::PlayerPositionUpdate(float dt)
 {
 
+
 	// X AXIS POS
 	playerPosition.x = playerPosition.x + playerSpeed.x * dt;
 
 	// Y AXIS POS
 	playerPosition.y = playerPosition.y + playerSpeed.y * dt;
 	playerSpeed.y = playerSpeed.y + playerAcceleration * dt;
-
+	
 }
 
 void j1Player::CameraPositionUpdate(float dt) {
@@ -262,42 +260,81 @@ void j1Player::cameraSpeedLimitChecker() {
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
-	
-	bool alredycollided = false;
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
+		bool alredycollided = false;
+
+		// - - - - - - - COLLISIONS LOGIC - - - - - - - 
+
+		int detectCollDir[DIR_MAX];
+		detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - playerPosition.x;
+		detectCollDir[DIR_RIGHT] = (playerPosition.x + playerTexture.w) - c2->rect.x;
+		detectCollDir[DIR_UP] = (c2->rect.y + c2->rect.h) - playerPosition.y;
+		detectCollDir[DIR_DOWN] = (playerPosition.y + playerTexture.h) - c2->rect.y;
+
+		bool collDir[DIR_MAX];
+		collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x < 0);
+		collDir[DIR_LEFT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x > 0);
+		collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && playerSpeed.y < 0);
+		collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && playerSpeed.y > 0);
+
+		int dirCheck = -1;
+
+		for (int i = 0; i < DIR_MAX; ++i) 
+		{
+			if (collDir[i] && dirCheck == -1) 
+			{
+				dirCheck = i;
+			}
+			else if (detectCollDir[i] < detectCollDir[dirCheck]) 
+			{
+				dirCheck = i;
+			}			
+		}
+		
+
+		// - - - - - - - CHECK COLLISIONS - - - - - - - 
+
 		if ((c2->type == COLLIDER_FLOOR))
 		{
-			
-			//Detection of axis x from the right
-			if (abs(playerPosition.x - (c2->rect.x + c2->rect.w)) < abs((playerPosition.x + playerTexture.w) - c2->rect.x) &&
-				abs(playerPosition.x - (c2->rect.x + c2->rect.w)) < abs(playerPosition.y - (c2->rect.y + c2->rect.h)) &&
-				abs(playerPosition.x - (c2->rect.x + c2->rect.w)) < abs(c2->rect.y - (playerPosition.y + playerTexture.h)))
-			{
+
+			checkingFall = true;
+
+			switch (dirCheck) {
+
+			case DIR_UP:
+				playerPosition.y = c2->rect.y + c2->rect.h + 1;
+				playerSpeed.y = 0;
+				break;
+
+			case DIR_DOWN:
+				playerPosition.y = c2->rect.y - playerTexture.h;
+				playerSpeed.y = 0;
+				playerAcceleration = 0;
+				checkingFall = false;
+				inputs.add(IN_JUMP_FINISH);
+				break;
+
+			case DIR_LEFT:
 				playerPosition.x = c2->rect.x + c2->rect.w;
-			}
+				playerSpeed.x = 0;
+				break;
 
-			//Detection of axis x from the left
-			else if (abs(c2->rect.x - (playerPosition.x + playerTexture.w)) < abs(c2->rect.y - (playerPosition.y + playerTexture.h))
-				&& abs(c2->rect.x - (playerPosition.x + playerTexture.w)) <abs(playerPosition.y-(c2->rect.y + c2->rect.h))) {
+			case DIR_RIGHT:
 				playerPosition.x = c2->rect.x - playerTexture.w;
+				playerSpeed.x = 0;
+				break;
+			case -1:
+				break;
 			}
 
-			//Detection of axis y from above
-			else if (abs(c2->rect.y - (playerPosition.y + playerTexture.h)) < abs(playerPosition.y - ((c2->rect.y + c2->rect.h)))) {
-				playerPosition.y = c2->rect.y-playerTexture.h;
-			}			
 
-			//Detection of axis y from below
-			else if (abs(playerPosition.y - ((c2->rect.y + c2->rect.h))) < abs(c2->rect.x - (playerPosition.x + playerTexture.w))) {
-				playerPosition.y=	c2->rect.y + c2->rect.h;
-			}			
+			if (checkingFall)
+				inputs.add(IN_FALLING);
 		}
 	}
 
 }
-
-
 
 
 void j1Player::cameraBraking()
@@ -330,8 +367,11 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMPING: state = ST_AT_AIR; 
-
 				break;
+
+			case IN_FALLING: state = ST_AT_AIR;
+				break; 
+
 			}
 		}
 		break;
@@ -341,7 +381,6 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH: state = ST_AT_FLOOR; 
-
 				break;
 
 			}

@@ -16,7 +16,6 @@ struct MapLayer
 	float speed_x;
 
 	inline uint Get(int x, int y) const {
-
 		return gid[x + (y * width)];
 	}
 };

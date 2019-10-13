@@ -11,18 +11,30 @@
 
 enum player_states
 {
-	ST_UNKNOWN,
+	ST_UNKNOWN = -1,
 
 	ST_AT_FLOOR,
 	ST_AT_AIR
 };
 
+enum collDirCheck
+{
+	DIR_UNKNOWN = -1,
+
+	DIR_LEFT,
+	DIR_RIGHT,
+	DIR_UP,
+	DIR_DOWN,
+	DIR_MAX
+};
+
 enum player_inputs
 {
-	IN_UNKNOWN,
+	IN_UNKNOWN = -1,
 
 	IN_JUMPING,
-	IN_JUMP_FINISH
+	IN_JUMP_FINISH,
+	IN_FALLING
 };
 
 class j1Player : public j1Module
@@ -77,6 +89,7 @@ private:
 	fPoint movementForce = { -20,-80 }; // Force applied to the movement in AXIS value
 
 	void PlayerPositionUpdate(float dt); //Update player's position
+	bool checkingFall = false;
 	// - - - - - - - - - - - 
 
 	// - - CAMERA PLAYER - - 
