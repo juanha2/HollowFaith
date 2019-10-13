@@ -7,6 +7,11 @@
 #include "j1Module.h"
 #include "j1Collision.h"
 
+struct Levels
+{
+	p2SString name;
+};
+
 struct MapLayer
 {
 	p2SString name;
@@ -76,6 +81,8 @@ struct MapData
 	p2List<TileSet*>		tilesets;
 	p2List<MapLayer*>		layers;
 	p2List<ObjectsGroup*>	objectgroups;
+	p2List<Levels*>			levels;
+	uint					numLevels = 0;
 };
 
 // ----------------------------------------------------

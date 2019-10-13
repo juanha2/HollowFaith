@@ -25,7 +25,21 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
-	
+
+	// Load levels from config.xml file ----------------------
+
+	pugi::xml_node level_node = config.child("levels");
+
+	for (pugi::xml_node level = level_node.child("level"); level !=NULL; level = level.next_sibling("level"))
+	{
+		Levels* new_level = new Levels();
+		new_level->name = level.attribute("name").as_string();
+		data.levels.add(new_level);
+		data.numLevels++;
+	}
+
+	LOG("Num levels: %i", data.numLevels);
+
 	return ret;
 }
 
@@ -124,9 +138,17 @@ bool j1Map::CleanUp()
 
 	data.objectgroups.clear();
 
+	p2List_item<Levels*>* levels;
+	levels = data.levels.start;
+	while (levels != NULL)
+	{
+		RELEASE(levels->data);
+		levels = levels->next;
+	}
+	data.levels.clear(); 
 	// Clean up the pugui tree
 	map_file.reset();
-
+	
 	return true;
 }
 

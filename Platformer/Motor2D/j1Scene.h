@@ -8,7 +8,7 @@ struct SDL_Texture;
 class j1Scene : public j1Module
 {
 public:
-
+	int currentmap;
 	j1Scene();
 
 	// Destructor
@@ -33,6 +33,8 @@ public:
 	bool CleanUp();
 
 private:
+
+
 };
 
 #endif // __j1SCENE_H__

@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Collision.h"
+#include "j1FadeToBlack.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -32,7 +33,11 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("level01.tmx");
+	//Load first level at start
+
+	p2List_item<Levels*>* levelData = App->map->data.levels.start;
+	App->map->Load(levelData->data->name.GetString());
+
 	App->audio->PlayMusic(App->map->data.music_path.GetString(), 1.0f);
 	return true;
 }
@@ -71,7 +76,15 @@ bool j1Scene::Update(float dt)
 		if (App->render->camera.x < 0)
 			App->render->camera.x += 1;
 	}
-		
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT) {
+		currentmap = 1;
+		App->fade_to_black->FadeToBlack("level02.tmx", 1.0f);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT) {
+		currentmap = 1;
+		App->fade_to_black->FadeToBlack("level01.tmx", 1.0f);
+	}
+	
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();

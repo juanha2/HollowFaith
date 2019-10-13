@@ -25,6 +25,10 @@
 
   <map>
     <folder>maps/</folder>
+    <levels>    
+      <level name="level01.tmx"/>
+      <level name="level02.tmx"/>     
+    </levels>
   </map>
 
 </config>

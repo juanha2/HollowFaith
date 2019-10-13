@@ -99,7 +99,7 @@ bool j1Collision::PostUpdate()
 void j1Collision::DebugDraw()
 {
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
 	if (debug == false)

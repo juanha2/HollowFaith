@@ -70,6 +70,26 @@ public:
 		return true;
 	}
 
+	// Module activation ---
+	bool IsEnabled() const { return active; }
+
+	void Enable()
+	{
+		if (active == false)
+		{
+			active = true;
+			Start();
+		}
+	}
+
+	void Disable()
+	{
+		if (active == true)
+		{
+			active = false;
+			CleanUp();
+		}
+	}
 	virtual void OnCollision(Collider*, Collider*) {}
 
 public:

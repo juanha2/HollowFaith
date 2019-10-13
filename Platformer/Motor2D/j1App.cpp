@@ -12,6 +12,8 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1App.h"
+#include "j1FadeToBlack.h"
+
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -26,8 +28,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new j1Textures();
 	audio = new j1Audio();
 	scene = new j1Scene();
+	fade_to_black = new j1FadeToBlack();
 	map = new j1Map();
 	coll = new j1Collision();
+	
 	
 
 	// Ordered for awake / Start / Update
@@ -40,7 +44,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(scene);
 	AddModule(coll);
-
+	AddModule(fade_to_black);
 	// render last to swap buffer
 	AddModule(render);
 }
