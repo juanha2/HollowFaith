@@ -18,6 +18,7 @@ j1Player::j1Player() : j1Module()
 // Called before quitting
 bool j1Player::CleanUp()
 {
+	LOG("CLEANUP PLAYER");
 	App->tex->UnLoad(graphics);
 
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)//deletes all the hitboxes at the start of the frame
@@ -295,10 +296,15 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	detectCollDir[DIR_DOWN] = (playerPosition.y + playerTexture.h) - c2->rect.y;
 
 	bool collDir[DIR_MAX];
+	collDir[DIR_RIGHT] = false;
+	collDir[DIR_LEFT] = false;
+	collDir[DIR_UP] = false;
+	collDir[DIR_DOWN] = false;
+
 	collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x < 0);
 	collDir[DIR_LEFT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x > 0);
 	collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && playerSpeed.y < 0);
-	collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && playerSpeed.y > 0);
+	collDir[DIR_DOWN] = (detectCollDir[DIR_DOWN] > 0 && playerSpeed.y > 0);
 
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
@@ -328,6 +334,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			switch (dirCheck) {
 
 			case DIR_UP:
+				if(playerSpeed.y < 0)
 				playerPosition.y = c2->rect.y + c2->rect.h + 1;
 				playerSpeed.y = 0;
 				break;

@@ -7,7 +7,7 @@
   </app>
 	
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
     <camera_pos x="0" y="-750"/>
   </renderer>
 
