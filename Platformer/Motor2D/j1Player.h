@@ -49,6 +49,7 @@ enum collDirCheck
 	DIR_DOWN,
 	DIR_MAX
 };
+
 class j1Player : public j1Module
 {
 
@@ -56,8 +57,7 @@ public:
 
 	Collider* colisionadores[MAXNUMOFCOLLIDERS];	
 	SDL_Texture* graphics = nullptr;
-	SDL_Texture* graphics1 = nullptr;
-	
+	SDL_Texture* graphics1 = nullptr;	
 
 	iPoint playerPosition = {0, 670 }; //Player position on the world value
 	bool checkingFall = false;
@@ -71,10 +71,10 @@ public:
 public:
 
 	j1Player();
-
 	// Destructor
 	~j1Player();
 
+	bool Awake(pugi::xml_node&);
 	// Called before the first frame
 	bool Start();
 
@@ -147,6 +147,8 @@ private:
 	Animation walk;
 	Animation idle;
 	Animation jump;
+
+	p2SString jump_fx;
 };
 
 #endif // __j1PLAYER_H__

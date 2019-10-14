@@ -14,7 +14,6 @@
 #include "j1App.h"
 #include "j1FadeToBlack.h"
 
-
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
@@ -31,7 +30,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fade_to_black = new j1FadeToBlack();
 	map = new j1Map();
 	coll = new j1Collision();
-	
 	
 
 	// Ordered for awake / Start / Update
@@ -100,7 +98,9 @@ bool j1App::Awake()
 
 		while(item != NULL && ret == true)
 		{
-			ret = item->data->Awake(config.child(item->data->name.GetString()));
+
+			LOG("%s", item->data->name.GetString());
+			ret = item->data->Awake(config.child(item->data->name.GetString()));			
 			item = item->next;
 		}
 	}

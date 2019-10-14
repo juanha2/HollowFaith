@@ -10,6 +10,6 @@
 	<:anonymous />
 	<FadeToBlack />
 	<renderer>
-		<camera x="0" y="-750" />
+		<camera x="-442" y="-750" />
 	</renderer>
 </game_state>

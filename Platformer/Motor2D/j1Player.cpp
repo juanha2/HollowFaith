@@ -10,17 +10,30 @@
 #include "j1Map.h"
 #include "j1Window.h"
 
+
 j1Player::j1Player() : j1Module()
 {
-
+	name.create("player");
 }
+j1Player::~j1Player() {
 
+};
+
+bool j1Player::Awake(pugi::xml_node& config)
+{
+	LOG("Loading Player Parser");
+	bool ret = true;	
+	
+	jump_fx = config.child("jumpFx").attribute("path").as_string();
+
+	return ret;
+}
 // Called before quitting
 bool j1Player::CleanUp()
 {
 	LOG("CLEANUP PLAYER");
 	App->tex->UnLoad(graphics);
-
+	
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)//deletes all the hitboxes at the start of the frame
 	{
 		if (colisionadores[i] != nullptr) {
@@ -38,6 +51,7 @@ bool j1Player::Start()
 {
 
 	graphics = App->tex->Load("Assets/Sprites/Monster.png");
+	App->audio->LoadFx(jump_fx.GetString());
 
 	idle.PushBack({ 7,164,17,28 });
 	idle.PushBack({ 39,164,17,28 });
@@ -131,6 +145,7 @@ bool j1Player::PreUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR) // Jumping
 	{
+		App->audio->PlayFx(1,0);
 		playerSpeed.y = movementForce.y; 
 		inputs.add(IN_JUMPING);
 	}

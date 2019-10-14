@@ -6,7 +6,7 @@
 #include "j1Map.h"
 #include "j1Collision.h"
 #include "j1Window.h"
-#include <math.h>
+
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
