@@ -138,6 +138,17 @@ bool j1Map::CleanUp()
 
 	data.objectgroups.clear();
 
+	p2List_item<Properties*>* item5;
+	item5 = data.properties.start;
+
+	while (item != NULL)
+	{
+		RELEASE(item->data);
+		item = item->next;
+	}
+
+	data.properties.clear();
+
 	p2List_item<Levels*>* levels;
 	levels = data.levels.start;
 	while (levels != NULL)
@@ -224,6 +235,19 @@ bool j1Map::Load(const char* file_name)
 	App->win->GetWindowSize(window_width, window_height);	
 	scale = App->win->GetScale();
 
+	//Load properties
+	pugi::xml_node properties_node;
+	for (properties_node = map_file.child("map").child("properties").child("property"); properties_node && ret; properties_node = properties_node.next_sibling("property"))
+	{
+		Properties* set_property = new Properties();
+
+		if (ret == true)
+		{
+			ret = LoadProperties(properties_node,set_property);
+		}
+		data.properties.add(set_property);
+	}
+
 	// LOG properties ----------------------------------------------
 	if (ret == true)
 	{
@@ -254,9 +278,7 @@ bool j1Map::LoadMap()
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
-		p2SString bg_color(map.attribute("backgroundcolor").as_string());
-		p2SString music_string(map.attribute("music").as_string());
-		data.music_path = music_string;
+		p2SString bg_color(map.attribute("backgroundcolor").as_string());		
 		
 		data.background_color.r = 0;
 		data.background_color.g = 0;
@@ -388,6 +410,16 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		iterate_gid = &iterate_gid->next_sibling("tile");
 
 	}
+
+	return ret;
+}
+
+bool j1Map::LoadProperties(pugi::xml_node& node, Properties* property)
+{
+	bool ret = true;
+
+	property->name.create(node.attribute("name").as_string());
+	property->value.create(node.attribute("value").as_string());
 
 	return ret;
 }
@@ -548,7 +580,18 @@ void j1Map::log_properties() {
 			item_object = item_object->next;
 		}
 
-		item_group = item_group->next;
+		item_group = item_group->next;	
+	}
+
+	p2List_item<Properties*>* item_property = data.properties.start;
+	while (item_property != NULL)
+	{
+		Properties* p = item_property->data;
+		LOG("Properties ----");
+		LOG("name: %s", p->name.GetString());
+		LOG("value: %s", p->value.GetString());
+
+		item_property = item_property->next;
 	}
 }
 

@@ -7,6 +7,11 @@
 #include "j1Module.h"
 #include "j1Collision.h"
 
+struct Properties{
+
+	p2SString name;
+	p2SString value;	
+};
 struct Levels
 {
 	p2SString name;
@@ -18,6 +23,7 @@ struct MapLayer
 	uint width;
 	uint height;
 	uint* gid = nullptr;
+	Properties	properties;
 	float speed_x;
 
 	inline uint Get(int x, int y) const {
@@ -71,18 +77,19 @@ enum MapTypes
 // ----------------------------------------------------
 struct MapData
 {
-	int						width;
-	int						height;
-	int						tile_width;
-	int						tile_height;
-	SDL_Color				background_color;
-	MapTypes				type;
-	p2SString				music_path;
-	p2List<TileSet*>		tilesets;
-	p2List<MapLayer*>		layers;
-	p2List<ObjectsGroup*>	objectgroups;
-	p2List<Levels*>			levels;
-	uint					numLevels = 0;
+	int							width;
+	int							height;
+	int							tile_width;
+	int							tile_height;
+	SDL_Color					background_color;
+	MapTypes					type;	
+	p2List<TileSet*>			tilesets;
+	p2List<MapLayer*>			layers;
+	p2List<ObjectsGroup*>		objectgroups;
+	p2List<Levels*>				levels;		
+	p2List<Properties*>			properties;
+
+	uint numLevels;
 };
 
 // ----------------------------------------------------
@@ -117,6 +124,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjects(pugi::xml_node& node, ObjectsGroup* group);
+	bool LoadProperties(pugi::xml_node& node, Properties* property);
 	bool CreateColliders(ObjectsData* data, int i);
 	TileSet* GetTileset(int id);
 	void log_properties();
