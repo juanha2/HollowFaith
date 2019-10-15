@@ -65,7 +65,7 @@ void j1Map::Draw()
 						SDL_Rect rect = tileset->GetRect(gid);
 						iPoint vec = MapToWorld(x, y);					
 						
-						if(vec.x + data.tile_width>-App->render->camera.x*layer->data->speed_x/scale && vec.x<((-App->render->camera.x * layer->data->speed_x )+window_width)/scale)
+						if(vec.x + data.tile_width>-App->render->camera.x*layer->data->speed_x/scale && vec.x<((-App->render->camera.x * layer->data->speed_x )+window_width)/scale) //Only blit camera tiles
 						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->speed_x);
 
 						
@@ -82,6 +82,7 @@ bool j1Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets
+
 	p2List_item<TileSet*>* item;
 	item = data.tilesets.start;
 
@@ -147,7 +148,7 @@ bool j1Map::CleanUp()
 	}
 
 	data.properties.clear();
-
+	/*
 	p2List_item<Levels*>* levels;
 	levels = data.levels.start;
 	while (levels != NULL)
@@ -156,7 +157,9 @@ bool j1Map::CleanUp()
 		levels = levels->next;
 	}
 	data.levels.clear(); 
-	// Clean up the pugui tree
+	// Clean up the pugui tree*/
+	
+	log_properties();
 	map_file.reset();
 	
 	return true;
@@ -251,7 +254,7 @@ bool j1Map::Load(const char* file_name)
 	if (ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
-		log_properties();
+		//log_properties();
 	}
 
 	
@@ -535,7 +538,7 @@ bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
 }
 
 void j1Map::log_properties() {
-
+	
 	LOG("width: %d height: %d", data.width, data.height);
 	LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
@@ -615,3 +618,17 @@ bool j1Map::CreateColliders(ObjectsData* data, int i)
 	return ret;
 }
 
+bool j1Map::Reset()
+{
+	map_loaded = false;
+	// TODO: maybe we need to search a less ugly workaround to restart scene
+	//App->scene->Disable();
+	//App->scene->Enable();
+
+	if (CleanUp()) {
+		return true;
+		
+	}
+
+	return false;
+}

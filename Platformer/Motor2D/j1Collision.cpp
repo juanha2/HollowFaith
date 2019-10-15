@@ -7,6 +7,9 @@
 
 j1Collision::j1Collision()
 {
+
+	name.create("colliders");
+
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
@@ -14,7 +17,6 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = true;
-
 
 }
 

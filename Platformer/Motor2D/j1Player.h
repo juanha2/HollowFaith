@@ -57,7 +57,6 @@ public:
 
 	Collider* colisionadores[MAXNUMOFCOLLIDERS];	
 	SDL_Texture* graphics = nullptr;
-	SDL_Texture* graphics1 = nullptr;	
 
 	iPoint playerPosition = {0, 670 }; //Player position on the world value
 	bool checkingFall = false;

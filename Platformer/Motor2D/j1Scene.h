@@ -33,7 +33,8 @@ public:
 	bool CleanUp();
 
 private:
-
+	
+	SDL_Texture* graphics = nullptr;
 
 };
 

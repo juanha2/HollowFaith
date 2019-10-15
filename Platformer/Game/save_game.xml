@@ -7,9 +7,9 @@
 	<audio />
 	<map />
 	<scene />
-	<:anonymous />
+	<colliders />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-66" y="-750" />
+		<camera x="0" y="-750" />
 	</renderer>
 </game_state>

@@ -88,7 +88,7 @@ struct MapData
 	p2List<ObjectsGroup*>		objectgroups;
 	p2List<Levels*>				levels;		
 	p2List<Properties*>			properties;
-
+	
 	uint numLevels;
 };
 
@@ -114,6 +114,8 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	bool Reset();
+
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 
@@ -128,6 +130,7 @@ private:
 	bool CreateColliders(ObjectsData* data, int i);
 	TileSet* GetTileset(int id);
 	void log_properties();
+	
 
 
 

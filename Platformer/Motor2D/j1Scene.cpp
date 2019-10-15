@@ -39,6 +39,7 @@ bool j1Scene::Start()
 	App->map->Load(levelData->data->name.GetString());
 
 	App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
+	graphics = App->tex->Load("Assets/Sprites/halo.png");
 	return true;
 }
 
@@ -51,6 +52,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame();
 
@@ -108,6 +110,8 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
+	SDL_Rect rect = { 0,0,1024 / 2,384 };
+	App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -121,5 +125,6 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 	App->map->CleanUp();
 	App->player->CleanUp();
+	App->tex->UnLoad(graphics);
 	return true;
 }

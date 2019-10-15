@@ -51,6 +51,7 @@ bool j1Player::Start()
 {
 
 	graphics = App->tex->Load("Assets/Sprites/Monster.png");
+	
 	App->audio->LoadFx(jump_fx.GetString());
 
 	idle.PushBack({ 7,164,17,28 });
@@ -137,7 +138,7 @@ bool j1Player::PreUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR) // Jumping
 	{
-		App->audio->PlayFx(1,0);
+		App->audio->PlayFx(1,0,20);
 		playerSpeed.y = movementForce.y; 
 		inputs.add(IN_JUMPING);
 	}
@@ -216,6 +217,7 @@ bool j1Player::PostUpdate()
 {
 
 	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip , NULL , playerTexture.w / 2); // Printing player texture
+	
 	return true;
 }
 
