@@ -105,7 +105,7 @@ private:
 	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
 	float playerAcceleration = 0.0f;// Player acceleration AXIS value
 
-	fPoint movementForce = { -20.0f, - 95.0f }; // Force applied to the movement in AXIS value
+	fPoint movementForce = { -20.0f ,-420.0f }; // Force applied to the movement in AXIS value
 
 	void PlayerPositionUpdate(float dt); //Update player's position
 	// - - - - - - - - - - - 
@@ -132,13 +132,12 @@ private:
 
 	//  - - - - SPEED - - - - 
 	void speedLimitChecker();  // Player limit speed in AXIS
-	fPoint speedLimit = { 60.0f,300.0f }; // Player max speed value
+	fPoint speedLimit = { 250.0f, 750.0f }; // Player max speed value
 
-	float slowlingValue = 1.2f;
+	float slowlingValue = 10.0f;
 	int slowlingLimitValue = 200;
 
-	float gravityForce = 2.0f;// Player acceleration Y value
-	float minGravityConst = 5.0f;
+	float gravityForce = 30.0f;// Player acceleration Y value
 
 	void braking();  //Player smoothly slow
 	// - - - - - - - - - - - 

@@ -97,11 +97,6 @@ bool j1Player::PreUpdate()
 		}
 	}
 
-	//Get time from frames and it's corrected
-	previousTime = frameToSecondValue;
-	frameToSecondValue = App->DeltaTime();
-	if (frameToSecondValue > 0.16)
-		frameToSecondValue = 0.16f;
 
 	//		- - - - - - CAMERA FOLLOW - - - - - - 	
 
@@ -125,7 +120,6 @@ bool j1Player::PreUpdate()
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {	
 		inputs.add(IN_LEFT_UP);
 	}		
-
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		playerSpeed.x -= movementForce.x;
 		playerFlip = SDL_FLIP_NONE;
@@ -134,8 +128,6 @@ bool j1Player::PreUpdate()
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {		
 		inputs.add(IN_RIGHT_UP);
 	}
-
-	
 	else 
 	{
 		braking(); // Smoothy braking when player stops running
@@ -157,6 +149,13 @@ bool j1Player::PreUpdate()
 	//Refresh the player state
 	player_states state = process_fsm(inputs);
 	current_state = state;
+
+	//Get time from frames and it's corrected
+	previousTime = frameToSecondValue;
+	frameToSecondValue = App->DeltaTime();
+	if (frameToSecondValue > 0.16)
+		frameToSecondValue = 0.16f;
+
 
 	//Update position related to real time and puts speed limit.
 	speedLimitChecker();
@@ -420,10 +419,10 @@ void j1Player::cameraBraking()
 
 void j1Player::braking()
 {
-	if(playerSpeed.x > 0)
+	if(playerSpeed.x < 0)
 		playerSpeed.x /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
 	else
-		playerSpeed.x /= -slowlingValue;
+		playerSpeed.x /= slowlingValue;
 }
 
 
