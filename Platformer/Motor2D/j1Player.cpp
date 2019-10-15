@@ -304,8 +304,8 @@ void j1Player::cameraSpeedLimitChecker() {
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	int detectCollDir[DIR_MAX];
-	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - playerPosition.x;
 	detectCollDir[DIR_RIGHT] = (playerPosition.x + playerTexture.w) - c2->rect.x;
+	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - playerPosition.x;
 	detectCollDir[DIR_UP] = (c2->rect.y + c2->rect.h) - playerPosition.y;
 	detectCollDir[DIR_DOWN] = (playerPosition.y + playerTexture.h) - c2->rect.y;
 
@@ -316,9 +316,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	collDir[DIR_DOWN] = false;
 
 	collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x < 0);
-	collDir[DIR_LEFT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x > 0);
+	collDir[DIR_LEFT] = !(detectCollDir[DIR_LEFT] > 0 && playerSpeed.x > 0);
 	collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && playerSpeed.y < 0);
-	collDir[DIR_DOWN] = (detectCollDir[DIR_DOWN] > 0 && playerSpeed.y > 0);
+	collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && playerSpeed.y > 0);
 
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
@@ -326,7 +326,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 		// - - - - - - - COLLISIONS LOGIC - - - - - - - 
 
-		int dirCheck = -1;
+		int dirCheck = DIR_UNKNOWN;
 
 		for (int i = 0; i < DIR_MAX; ++i) 
 		{
@@ -348,7 +348,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			switch (dirCheck) {
 
 			case DIR_UP:
-				if(playerSpeed.y < 0)
+				//if(playerSpeed.y < 0)
 				playerPosition.y = c2->rect.y + c2->rect.h + 1;
 				playerSpeed.y = 0;
 				break;
@@ -363,7 +363,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				break;
 
 			case DIR_LEFT:
-				playerPosition.x = c2->rect.x + c2->rect.w;
+				playerPosition.x = c2->rect.x + c2->rect.w + 1;
 				playerSpeed.x = 0;
 				break;
 
