@@ -63,10 +63,9 @@ void j1Map::Draw()
 					if (tileset != nullptr) {
 
 						SDL_Rect rect = tileset->GetRect(gid);
-						iPoint vec = MapToWorld(x, y);
-					
-						if((vec.x < (-App->render->camera.x+window_width/scale) && vec.x>=App->render->camera.x) &&
-							(vec.y <(-App->render->camera.y+window_height/scale) && vec.y >=App->render->camera.y)) // Only Blit current camera Tiles
+						iPoint vec = MapToWorld(x, y);					
+						
+						if(vec.x + data.tile_width>-App->render->camera.x*layer->data->speed_x/scale && vec.x<((-App->render->camera.x * layer->data->speed_x )+window_width)/scale)
 						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->speed_x);
 
 						
