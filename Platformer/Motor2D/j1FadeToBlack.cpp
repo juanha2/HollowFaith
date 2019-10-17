@@ -6,9 +6,11 @@
 #include "j1FadeToBlack.h"
 #include "j1Render.h"
 #include "j1Map.h"
+#include "j1Player.h"
 #include "j1Scene.h"
 #include "SDL/include/SDL_render.h"
-#include "SDL/include/SDL_timer.h"
+#include "SDL/include/SDL_timer.h"
+
 
 
 bool j1FadeToBlack::Awake(pugi::xml_node&)
@@ -45,15 +47,14 @@ bool j1FadeToBlack::PostUpdate()
 	case fade_step::fade_to_black:
 	{
 		if (now >= total_time)
-		{		
-			App->scene->CleanUp();
-			//App->coll->CleanUp();
-			//App->map->CleanUp();
+		{
 			App->scene->Disable();		
-			
-			if (App->map->Reset()) {
+			App->player->Disable();
 
-				if (App->map->Load(level_to_load.GetString())) {					
+			if (App->map->Reset()) {
+				
+				if (App->map->Load(level_to_load.GetString())) {
+					App->player->Enable();
 					App->scene->Enable();
 				}
 			}		

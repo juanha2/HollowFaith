@@ -28,17 +28,23 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	// Load levels from config.xml file ----------------------
 	
-	pugi::xml_node level_node = config.child("levels");
-	
-	for (pugi::xml_node level = level_node.child("level"); level !=NULL; level = level.next_sibling("level"))
+	pugi::xml_node levelsNode = config.child("levels");
+	if (levelsNode == NULL)
 	{
-		Levels* new_level = new Levels();
-		new_level->name = level.attribute("name").as_string();
-		data.levels.add(new_level);
-		data.numLevels++;
+		LOG("num of levels not found");
+	}
+	else {
+		for (pugi::xml_node level = levelsNode.child("level"); level != NULL; level = level.next_sibling("level"))
+		{
+			Levels* new_level = new Levels();
+			new_level->name = level.attribute("name").as_string();
+			data.levels.add(new_level);
+			data.numLevels++;
+		}
+
+		LOG("Num levels: %i", data.numLevels);
 	}
 	
-	LOG("Num levels: %i", data.numLevels);
 	return ret;
 }
 
@@ -81,7 +87,7 @@ bool j1Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets
-
+	
 	p2List_item<TileSet*>* item;
 	item = data.tilesets.start;
 
@@ -165,9 +171,10 @@ bool j1Map::CleanUp()
 		levels = levels->next;
 	}
 	data.levels.clear(); 
+
 	// Clean up the pugui tree*/
 	map_file.reset();	
-	
+	log_properties();
 	return true;
 }
 

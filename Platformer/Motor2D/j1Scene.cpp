@@ -35,13 +35,15 @@ bool j1Scene::Start()
 {
 	//Load first level at start
 	if (first) {
+		
 		p2List_item<Levels*>* levelData = App->map->data.levels.start;
 		App->map->Load(levelData->data->name.GetString());
+		//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);		
 		first = false;
 	}	
 
-	//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
-	//graphics = App->tex->Load("Assets/Sprites/halo.png");
+	
+//	graphics = App->tex->Load("Assets/Sprites/halo.png");
 	return true;
 }
 
@@ -126,10 +128,12 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	//App->map->Disable();
-	//App->player->Disable();
-	App->tex->UnLoad(graphics);
-	//App->coll->Disable();
-
+	App->player->CleanUp();	
+	App->map->Disable();
+	App->player->CleanUp();
+	App->tex->UnLoad(graphics);	
+	App->tex->CleanUp();	
+	App->audio->CleanUp();
+	
 	return true;
 }

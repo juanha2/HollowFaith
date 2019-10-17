@@ -14,46 +14,6 @@
 j1Player::j1Player() : j1Module()
 {
 	name.create("player");
-}
-j1Player::~j1Player() {
-
-};
-
-bool j1Player::Awake(pugi::xml_node& config)
-{
-	LOG("Loading Player Parser");
-	bool ret = true;	
-	
-	jump_fx = config.child("jumpFx").attribute("path").as_string();
-
-	return ret;
-}
-// Called before quitting
-bool j1Player::CleanUp()
-{
-	LOG("CLEANUP PLAYER");
-	App->tex->UnLoad(graphics);
-	
-	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)//deletes all the hitboxes at the start of the frame
-	{
-		if (colisionadores[i] != nullptr) {
-			colisionadores[i]->to_delete = true;
-			colisionadores[i] = nullptr;
-		}
-	}
-
-	return true;
-}
-
-
-// Called before the first frame
-bool j1Player::Start()
-{
-
-	graphics = App->tex->Load("Assets/Sprites/Monster.png");
-	
-	App->audio->LoadFx(jump_fx.GetString());
-
 	idle.PushBack({ 7,164,17,28 });
 	idle.PushBack({ 39,164,17,28 });
 	idle.PushBack({ 70,163,18,29 });
@@ -66,7 +26,7 @@ bool j1Player::Start()
 	walk.PushBack({ 71,36,17,28 });
 	walk.PushBack({ 102,37,18,27 });
 	walk.PushBack({ 135,36,17,28 });
-	walk.PushBack({ 167,36,17,28 });	
+	walk.PushBack({ 167,36,17,28 });
 	walk.loop = true;
 	walk.speed = 0.02f;
 
@@ -81,14 +41,54 @@ bool j1Player::Start()
 	jump.loop = true;
 	jump.firstLoopFrame = 5;
 	jump.speed = 0.05f;
+}
+j1Player::~j1Player() {
+
+};
+
+bool j1Player::Awake(pugi::xml_node& config)
+{
+	LOG("Loading Player Parser");
+	bool ret = true;	
+	
+	jump_fx = config.child("jumpFx").attribute("path").as_string();
+	
+	return ret;
+}
+
+
+
+// Called before the first frame
+bool j1Player::Start(){
+
+	graphics = App->tex->Load("Assets/Sprites/Monster.png");
+	App->audio->LoadFx(jump_fx.GetString());
+	
 
 	return true;
 }
 
+// Called before quitting
+bool j1Player::CleanUp()
+{
+	LOG("CLEANUP PLAYER");
+	App->tex->UnLoad(graphics);
+
+	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)//deletes all the hitboxes at the start of the frame
+	{
+		if (colisionadores[i] != nullptr) {
+			colisionadores[i]->to_delete = true;
+			colisionadores[i] = nullptr;
+		}
+	}
+	App->tex->UnLoad(graphics);
+
+	return true;
+}
 // Called each loop iteration
 bool j1Player::PreUpdate()
 {
-
+	
 	//Deletes all the hitboxes at the start of the frame
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
@@ -97,7 +97,6 @@ bool j1Player::PreUpdate()
 			colisionadores[i] = nullptr;
 		}
 	}
-
 
 	//		- - - - - - CAMERA FOLLOW - - - - - - 	
 
@@ -215,7 +214,6 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
-
 	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip , NULL , playerTexture.w / 2); // Printing player texture
 	
 	return true;
