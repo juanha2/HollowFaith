@@ -49,6 +49,7 @@ bool j1FadeToBlack::PostUpdate()
 	{
 		if (now >= total_time)
 		{
+			App->scene->CleanUp();
 			App->scene->Disable();		
 			App->player->Disable();
 			
