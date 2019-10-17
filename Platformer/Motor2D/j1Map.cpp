@@ -27,9 +27,9 @@ bool j1Map::Awake(pugi::xml_node& config)
 	folder.create(config.child("folder").child_value());
 
 	// Load levels from config.xml file ----------------------
-
+	
 	pugi::xml_node level_node = config.child("levels");
-
+	
 	for (pugi::xml_node level = level_node.child("level"); level !=NULL; level = level.next_sibling("level"))
 	{
 		Levels* new_level = new Levels();
@@ -37,9 +37,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 		data.levels.add(new_level);
 		data.numLevels++;
 	}
-
+	
 	LOG("Num levels: %i", data.numLevels);
-
 	return ret;
 }
 
@@ -86,10 +85,12 @@ bool j1Map::CleanUp()
 	p2List_item<TileSet*>* item;
 	item = data.tilesets.start;
 
+	int count = 0;
 	while (item != NULL)
 	{
+		
 		RELEASE(item->data);
-		item = item->next;
+		item = item->next;		
 	}
 	data.tilesets.clear();
 
@@ -99,29 +100,33 @@ bool j1Map::CleanUp()
 
 	while (item2 != NULL)
 	{
+		
 		RELEASE(item2->data);
 		item2 = item2->next;
+		
 	}
 	data.layers.clear();
 
 	p2List_item<ObjectsGroup*>* item3;
 	item3 = data.objectgroups.start;
 
+
 	// Remove all objects
 	while (item3 != NULL) {
 
 		p2List_item<ObjectsData*>* item4;
 		item4 = item3->data->objects.start;
-
+		
 		while (item4 != NULL) {
 
 			// Remove all colliders
 
 			for (uint i = 0; i < 100; ++i)
 			{
+			
 				if (item4->data->colliders[i] != nullptr)
 				{
-					item4->data->colliders[i]->to_delete = true;
+					item4->data->colliders[i]->to_delete = true;				
 				}
 				else
 				{
@@ -131,7 +136,7 @@ bool j1Map::CleanUp()
 			RELEASE(item4->data);
 			item4 = item4->next;
 		}
-
+		
 		RELEASE(item3->data);
 		item3 = item3->next;
 	}
@@ -141,13 +146,16 @@ bool j1Map::CleanUp()
 	p2List_item<Properties*>* item5;
 	item5 = data.properties.start;
 
-	while (item != NULL)
+	while (item5 != NULL)
 	{
-		RELEASE(item->data);
-		item = item->next;
+		count++;
+		RELEASE(item5->data);
+		item5 = item5->next;
+		
 	}
 
 	data.properties.clear();
+	
 	/*
 	p2List_item<Levels*>* levels;
 	levels = data.levels.start;
@@ -158,9 +166,7 @@ bool j1Map::CleanUp()
 	}
 	data.levels.clear(); 
 	// Clean up the pugui tree*/
-	
-	log_properties();
-	map_file.reset();
+	map_file.reset();	
 	
 	return true;
 }
@@ -219,7 +225,7 @@ bool j1Map::Load(const char* file_name)
 
 		data.layers.add(set_layer);
 	}
-
+	
 	// Load all objects info ----------------------------------------------
 	pugi::xml_node object_group;
 	for (object_group = map_file.child("map").child("objectgroup"); object_group && ret; object_group = object_group.next_sibling("objectgroup"))
@@ -324,8 +330,10 @@ bool j1Map::LoadMap()
 		{
 			data.type = MAPTYPE_UNKNOWN;
 		}
+			
 	}
 
+	
 	return ret;
 }
 
@@ -620,10 +628,7 @@ bool j1Map::CreateColliders(ObjectsData* data, int i)
 
 bool j1Map::Reset()
 {
-	map_loaded = false;
-	// TODO: maybe we need to search a less ugly workaround to restart scene
-	//App->scene->Disable();
-	//App->scene->Enable();
+	map_loaded = false;	
 
 	if (CleanUp()) {
 		return true;

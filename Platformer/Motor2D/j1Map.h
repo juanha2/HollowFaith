@@ -137,12 +137,13 @@ private:
 public:
 
 	MapData data;
+	bool				map_loaded;
 
 private:
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
-	bool				map_loaded;
+	
 	uint				window_width;
 	uint				window_height;
 	int					scale;

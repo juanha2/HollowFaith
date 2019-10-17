@@ -16,9 +16,7 @@ bool j1FadeToBlack::Awake(pugi::xml_node&)
 	name.create("FadeToBlack");
 
 	uint width, height = 0u;
-	App->win->GetWindowSize(width, height);
-
-	
+	App->win->GetWindowSize(width, height);	
 
 	screen = { 0, 0, (int)width * (int)App->win->GetScale(), (int)height * (int)App->win->GetScale() };
 	return true;
@@ -48,14 +46,18 @@ bool j1FadeToBlack::PostUpdate()
 	{
 		if (now >= total_time)
 		{		
+			App->scene->CleanUp();
+			//App->coll->CleanUp();
+			//App->map->CleanUp();
+			App->scene->Disable();		
 			
-			App->scene->Enable();
-			App->map->CleanUp();
-			
-			App->map->Load(level_to_load.GetString());
+			if (App->map->Reset()) {
 
-			total_time += total_time;
-			start_time = SDL_GetTicks();
+				if (App->map->Load(level_to_load.GetString())) {					
+					App->scene->Enable();
+				}
+			}		
+				
 			current_step = fade_step::fade_from_black;
 		}
 	} break;

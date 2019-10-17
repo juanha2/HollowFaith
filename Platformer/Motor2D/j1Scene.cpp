@@ -34,12 +34,14 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	//Load first level at start
+	if (first) {
+		p2List_item<Levels*>* levelData = App->map->data.levels.start;
+		App->map->Load(levelData->data->name.GetString());
+		first = false;
+	}	
 
-	p2List_item<Levels*>* levelData = App->map->data.levels.start;
-	App->map->Load(levelData->data->name.GetString());
-
-	App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
-	graphics = App->tex->Load("Assets/Sprites/halo.png");
+	//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
+	//graphics = App->tex->Load("Assets/Sprites/halo.png");
 	return true;
 }
 
@@ -85,6 +87,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT) {
 		currentmap = 1;
 		App->fade_to_black->FadeToBlack("level01.tmx", 1.0f);
+
 	}
 	
 
@@ -111,7 +114,7 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 	SDL_Rect rect = { 0,0,1024 / 2,384 };
-	App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
+	//App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -123,8 +126,10 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	App->map->CleanUp();
-	App->player->CleanUp();
+	//App->map->Disable();
+	//App->player->Disable();
 	App->tex->UnLoad(graphics);
+	//App->coll->Disable();
+
 	return true;
 }

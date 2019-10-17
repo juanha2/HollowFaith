@@ -34,6 +34,7 @@ public:
 
 private:
 	
+	bool first = true;
 	SDL_Texture* graphics = nullptr;
 
 };
