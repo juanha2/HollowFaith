@@ -172,3 +172,18 @@ bool j1Audio::PlayFx(unsigned int id, int repeat, uint volume)
 
 	return ret;
 }
+
+bool j1Audio::UnLoad()
+{
+	// unload all sfx loaded
+	p2List_item<Mix_Chunk*>* item;
+	for (item = fx.start; item != NULL; item = item->next)
+	{
+		Mix_FreeChunk(item->data);
+		item->data = NULL;
+	}
+
+	fx.clear();
+
+	return true;
+}

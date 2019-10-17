@@ -128,12 +128,11 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	App->player->CleanUp();	
-	App->map->Disable();
+		
 	App->player->CleanUp();
 	App->tex->UnLoad(graphics);	
 	App->tex->CleanUp();	
 	App->audio->CleanUp();
-	
+
 	return true;
 }

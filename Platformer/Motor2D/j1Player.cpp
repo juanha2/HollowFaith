@@ -19,7 +19,7 @@ j1Player::j1Player() : j1Module()
 	idle.PushBack({ 70,163,18,29 });
 	idle.PushBack({ 7,164,17,28 });
 	idle.loop = true;
-	idle.speed = 0.02f;
+	idle.speed = 0.06f;
 
 	walk.PushBack({ 7,37,17,27 });
 	walk.PushBack({ 39,36,17,28 });
@@ -28,7 +28,7 @@ j1Player::j1Player() : j1Module()
 	walk.PushBack({ 135,36,17,28 });
 	walk.PushBack({ 167,36,17,28 });
 	walk.loop = true;
-	walk.speed = 0.02f;
+	walk.speed = 0.08f;
 
 	jump.PushBack({ 231,36,17,28 });
 	jump.PushBack({ 261,38,20,26 });
@@ -40,7 +40,7 @@ j1Player::j1Player() : j1Module()
 	jump.PushBack({ 454,38,18,26 });
 	jump.loop = true;
 	jump.firstLoopFrame = 5;
-	jump.speed = 0.05f;
+	jump.speed = 0.15f;
 }
 j1Player::~j1Player() {
 
@@ -62,8 +62,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 bool j1Player::Start(){
 
 	graphics = App->tex->Load("Assets/Sprites/Monster.png");
-	App->audio->LoadFx(jump_fx.GetString());
-	
+	App->audio->LoadFx(jump_fx.GetString());	
 
 	return true;
 }
@@ -82,7 +81,7 @@ bool j1Player::CleanUp()
 		}
 	}
 	App->tex->UnLoad(graphics);
-
+	App->audio->UnLoad();
 	return true;
 }
 // Called each loop iteration
