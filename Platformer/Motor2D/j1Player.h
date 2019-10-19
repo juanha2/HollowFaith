@@ -18,6 +18,8 @@ enum player_states
 	ST_AT_AIR,
 	ST_WALK_RIGHT,
 	ST_WALK_LEFT,
+
+	ST_CLIMB,
 };
 
 
@@ -33,6 +35,9 @@ enum player_inputs
 	
 	IN_RIGHT_UP,
 	IN_RIGHT_DOWN,
+
+	IN_UPWARDS_UP,
+	IN_CLIMB,
 
 	IN_LEFT_UP,
 	IN_LEFT_DOWN,
@@ -152,8 +157,11 @@ private:
 	Animation walk;
 	Animation idle;
 	Animation jump;
+	Animation climb;
 
 	p2SString jump_fx;
+
+	bool can_climb = false;
 };
 
 #endif // __j1PLAYER_H__

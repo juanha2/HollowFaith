@@ -15,7 +15,8 @@ j1Collision::j1Collision()
 
 	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_CLIMB] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = true;
 
 }
@@ -129,6 +130,10 @@ void j1Collision::DebugDraw()
 
 		case COLLIDER_PLATFORM: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
+			break;
+
+		case COLLIDER_CLIMB: // white
+			App->render->DrawQuad(colliders[i]->rect, 100, 0, 100, alpha);
 			break;
 		}
 	}

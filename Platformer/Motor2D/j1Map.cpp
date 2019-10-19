@@ -624,11 +624,17 @@ bool j1Map::CreateColliders(ObjectsData* data, int i)
 	collider_rect.w = data->width;
 
 	//Type of Collider
+	if (data->name == 0)
+		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_NONE);
+
 	if (data->name == 1)
 		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_FLOOR);
 
 	if (data->name == 2)
 		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_PLATFORM);
+
+	if (data->name == 3)
+		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_CLIMB);
 
 	return ret;
 }

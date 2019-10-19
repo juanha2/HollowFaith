@@ -41,6 +41,14 @@ j1Player::j1Player() : j1Module()
 	jump.loop = true;
 	jump.firstLoopFrame = 5;
 	jump.speed = 0.15f;
+
+
+	climb.PushBack({ 5,131,19,29 });
+	climb.PushBack({ 39,131,18,29 });
+	climb.PushBack({ 69,131,20,29 });
+	climb.PushBack({ 100,131,19,29 });
+	climb.loop = true;
+	climb.speed = 0.15f;
 }
 j1Player::~j1Player() {
 
@@ -110,8 +118,14 @@ bool j1Player::PreUpdate()
 		
 	
 	//		- - - - - - PLAYER INPUTS - - - - - - 
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) {	
+		playerPosition.y -= 1;
+		inputs.add(IN_CLIMB);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) {
+		inputs.add(IN_UPWARDS_UP);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		playerSpeed.x += movementForce.x;
 		playerFlip = SDL_FLIP_HORIZONTAL;
 		inputs.add(IN_WALK_LEFT);
@@ -142,7 +156,7 @@ bool j1Player::PreUpdate()
 	}
 	
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR) // Jumping
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && current_state!=ST_CLIMB) // Jumping
 	{
 		App->audio->PlayFx(1,0,20);
 		playerSpeed.y = movementForce.y; 
@@ -191,7 +205,7 @@ bool j1Player::Update(float dt)
 	//current_animation = &idle;
 	switch (current_state)
 	{
-	case ST_IDLE:
+	case ST_IDLE:		
 		
 		playerAcceleration = 0;
 		playerSpeed.y = 0; // When is at the floor we don't apply any gravity force
@@ -204,7 +218,7 @@ bool j1Player::Update(float dt)
 		
 		if(!godMode)
 			playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player		
-	
+		
 		break;
 
 	case ST_WALK_RIGHT:
@@ -213,6 +227,11 @@ bool j1Player::Update(float dt)
 		break;
 	case ST_WALK_LEFT:
 		current_animation = &walk;
+		break;
+	case ST_CLIMB:
+		playerSpeed.x = 0;
+		playerSpeed.y = 0;
+		current_animation = &climb;
 		break;
 
 	}
@@ -316,6 +335,8 @@ void j1Player::cameraSpeedLimitChecker() {
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
+	
+	can_climb = false;
 	int detectCollDir[DIR_MAX];
 	detectCollDir[DIR_RIGHT] = (playerPosition.x + playerTexture.w) - c2->rect.x;
 	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - playerPosition.x;
@@ -352,8 +373,16 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		// - - - - - - - CHECK COLLISIONS - - - - - - - 
 		if (ignoreColl == false) {
 
+			
+			if ((c2->type == COLLIDER_CLIMB))
+			{				
+				can_climb = true;
+				
+			}
+
 		if ((c2->type == COLLIDER_FLOOR))
 		{
+			
 			switch (dirCheck) {
 
 			case DIR_UP:
@@ -384,9 +413,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			case -1:
 				break;
 
-			}			
-
-			
+			}				
 		}
 
 		if(playerSpeed.y >= 0)
@@ -415,6 +442,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				}
 			}
 		}
+		
 	}
 }
 
@@ -466,6 +494,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 				break;
 			case IN_WALK_LEFT: state = ST_WALK_LEFT;
 				break;
+			case IN_CLIMB: state = ST_CLIMB; break;
 			}
 		}
 		break;
@@ -474,10 +503,12 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 		{
 			switch (last_input)
 			{
+		
 			case IN_JUMP_FINISH: state = ST_IDLE;
 				break;
 
 			case IN_RIGHT_UP: state = ST_IDLE; break;
+			case IN_LEFT_UP: state = ST_IDLE; break;
 			}
 		}
 		break;
@@ -485,6 +516,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 		case ST_WALK_RIGHT:
 			switch (last_input)
 			{
+			case IN_CLIMB: state = ST_CLIMB; break;
 			case IN_RIGHT_UP: state = ST_IDLE; break;
 			case IN_JUMPING: state = ST_AT_AIR;
 				break;
@@ -499,6 +531,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 		case ST_WALK_LEFT:
 			switch (last_input)
 			{
+			case IN_CLIMB: state = ST_CLIMB; break;
 			case IN_LEFT_UP: state = ST_IDLE; break;
 			case IN_JUMPING: state = ST_AT_AIR;
 				break;
@@ -506,6 +539,14 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 				break;
 			case IN_WALK_RIGHT: state = ST_IDLE;
 				break;
+
+			}
+			break;
+
+		case ST_CLIMB:
+			switch (last_input)
+			{
+			case IN_UPWARDS_UP: state = ST_AT_AIR; break;			
 
 			}
 			break;
