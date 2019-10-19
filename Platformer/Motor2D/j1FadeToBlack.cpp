@@ -8,9 +8,11 @@
 #include "j1Map.h"
 #include "j1Player.h"
 #include "j1Scene.h"
+#include "j1Audio.h"
 #include "j1Textures.h"
 #include "SDL/include/SDL_render.h"
-#include "SDL/include/SDL_timer.h"
+#include "SDL/include/SDL_timer.h"
+
 
 
 
@@ -50,15 +52,15 @@ bool j1FadeToBlack::PostUpdate()
 		if (now >= total_time)
 		{
 			App->scene->CleanUp();
-			App->scene->Disable();		
+			App->scene->Disable();
+			App->player->CleanUp();
 			App->player->Disable();
-			
+
 			if (App->map->Reset()) {
 				
 				if (App->map->Load(level_to_load.GetString())) {
 					App->player->Enable();
-					App->scene->Enable();
-					
+					App->scene->Enable();		
 				}
 			}		
 				

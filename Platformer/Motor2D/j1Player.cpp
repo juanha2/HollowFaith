@@ -127,6 +127,14 @@ bool j1Player::PreUpdate()
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {		
 		inputs.add(IN_RIGHT_UP);
 	}
+	//  - - - - - ONLY ON GOD MODE - - - - - - -
+	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
+		playerSpeed.y += movementForce.x;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
+		playerSpeed.y -= movementForce.x;
+	}
+	// - - - - - - - - - - - - - - - - - - - - - 
 	else 
 	{
 		braking(); // Smoothy braking when player stops running
@@ -140,11 +148,12 @@ bool j1Player::PreUpdate()
 		playerSpeed.y = movementForce.y; 
 		inputs.add(IN_JUMPING);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godMode)
 		playerAcceleration += -movementForce.y; // Get down while you're in the air faster
 
-	//		- - - - - - - - - - - - - - - - - - 
-	
+
+
+
 	//Refresh the player state
 	player_states state = process_fsm(inputs);
 	current_state = state;
@@ -177,7 +186,6 @@ bool j1Player::Update(float dt)
 	switch (current_state)
 	{
 	case ST_IDLE:
-
 		
 		playerAcceleration = 0;
 		playerSpeed.y = 0; // When is at the floor we don't apply any gravity force
@@ -188,7 +196,8 @@ bool j1Player::Update(float dt)
 	case ST_AT_AIR:
 		current_animation = &jump;
 		
-		playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player		
+		if(!godMode)
+			playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player		
 	
 		break;
 
@@ -201,6 +210,9 @@ bool j1Player::Update(float dt)
 		break;
 
 	}
+
+	if (ignoreColl == true && godMode == false)
+		ignoreColl = false;
 
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
@@ -227,23 +239,19 @@ void j1Player::PlayerPositionUpdate(float dt)
 
 	// Y AXIS POS
 	playerPosition.y = playerPosition.y + playerSpeed.y * dt;
-	playerSpeed.y = playerSpeed.y + playerAcceleration * dt;
+
+	if(!godMode)
+		playerSpeed.y = playerSpeed.y + playerAcceleration * dt;
 	
 }
 
 void j1Player::CameraPositionUpdate(float dt) {
 
 	// X AXIS POS
-
 	if (playerPosition.x > 1024 / 4 - playerTexture.w)
-		App->render->camera.x = (-playerPosition.x+ 1024 / 4 - playerTexture.w )*2;
-	//if(playerPosition.y< 640-768/2 + playerTexture.h)
-		//App->render->camera.y = (-playerPosition.y +150 + 768 / 4 - playerTexture.h) * 2;
+		App->render->camera.x = (-playerPosition.x + 1024 / 4 - playerTexture.w ) * 2;
 
-
-	//App->render->camera.x = App->render->camera.x + cameraSpeed.x * dt;
-
-	//Y AXIS POS
+	// Y AXIS POS
 	App->render->camera.y = App->render->camera.y + cameraSpeed.y * dt;
 }
 
@@ -309,11 +317,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	detectCollDir[DIR_DOWN] = (playerPosition.y + playerTexture.h) - c2->rect.y;
 
 	bool collDir[DIR_MAX];
-	collDir[DIR_RIGHT] = false;
-	collDir[DIR_LEFT] = false;
-	collDir[DIR_UP] = false;
-	collDir[DIR_DOWN] = false;
-
 	collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && playerSpeed.x < 0);
 	collDir[DIR_LEFT] = !(detectCollDir[DIR_LEFT] > 0 && playerSpeed.x > 0);
 	collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && playerSpeed.y < 0);
@@ -341,6 +344,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		
 
 		// - - - - - - - CHECK COLLISIONS - - - - - - - 
+		if (ignoreColl == false) {
 
 		if ((c2->type == COLLIDER_FLOOR))
 		{
@@ -380,28 +384,29 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		}
 
 		if(playerSpeed.y >= 0)
-		if ((c2->type == COLLIDER_PLATFORM))
-		{
-			switch (dirCheck) {
+			if ((c2->type == COLLIDER_PLATFORM))
+			{
+				switch (dirCheck) {
 
-			case DIR_UP:
-				break;
+				case DIR_UP:
+					break;
 
-			case DIR_DOWN:
-				playerPosition.y = c2->rect.y - playerTexture.h;
-				playerSpeed.y = 0;
-				playerAcceleration = 0;
-				checkingFall = false;
-				inputs.add(IN_JUMP_FINISH);
-				break;
+				case DIR_DOWN:
+					playerPosition.y = c2->rect.y - playerTexture.h;
+					playerSpeed.y = 0;
+					playerAcceleration = 0;
+					checkingFall = false;
+					inputs.add(IN_JUMP_FINISH);
+					break;
 
-			case DIR_LEFT:
-				break;
+				case DIR_LEFT:
+					break;
 
-			case DIR_RIGHT:
-				break;
-			case -1:
-				break;
+				case DIR_RIGHT:
+					break;
+				case -1:
+					break;
+				}
 			}
 		}
 	}
@@ -422,6 +427,13 @@ void j1Player::braking()
 		playerSpeed.x /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
 	else
 		playerSpeed.x /= slowlingValue;
+
+	if (godMode) {
+		if (playerSpeed.y < 0)
+			playerSpeed.y /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
+		else
+			playerSpeed.y /= slowlingValue;
+	}
 }
 
 

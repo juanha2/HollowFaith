@@ -82,16 +82,33 @@ bool j1Scene::Update(float dt)
 		if (App->render->camera.x < 0)
 			App->render->camera.x += 1;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 		currentmap = 1;
 		App->fade_to_black->FadeToBlack("level02.tmx", 1.0f);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		currentmap = 1;
 		App->fade_to_black->FadeToBlack("level01.tmx", 1.0f);
 
 	}
-	
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+		App->player->savedPosition.x = App->player->playerPosition.x;
+		App->player->savedPosition.y = App->player->playerPosition.y;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+		App->player->ignoreColl = true;
+		App->player->playerPosition.y = App->player->savedPosition.y;
+		App->player->playerPosition.x = App->player->savedPosition.x;	
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == false) {
+		App->player->godMode = true;
+		App->player->ignoreColl = true;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == true) {
+		App->player->godMode = false;
+
+	}
+
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();

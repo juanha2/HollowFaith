@@ -58,8 +58,15 @@ public:
 	Collider* colisionadores[MAXNUMOFCOLLIDERS];	
 	SDL_Texture* graphics = nullptr;
 
-	iPoint playerPosition = {0, 670 }; //Player position on the world value
+	iPoint startPosLevel1 = { 0, 670 };
+	iPoint startPosLevel2 = { 0, 670 };
+
+	iPoint savedPosition = { 0, 670 };
+
+	iPoint playerPosition = startPosLevel1; //Player position on the world value
 	bool checkingFall = false;
+	bool ignoreColl = false;
+	bool godMode = false;
 
 	// - - - - INPUT - - - - 
 	p2List<player_inputs> inputs; //Stores player related inputs
