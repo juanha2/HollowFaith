@@ -38742,7 +38742,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="603"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -38842,8 +38842,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="273"/>
-   <tile gid="274"/>
+   <tile gid="532"/>
+   <tile gid="603"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -38942,8 +38942,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="298"/>
-   <tile gid="299"/>
+   <tile gid="532"/>
+   <tile gid="603"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -39042,8 +39042,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="323"/>
-   <tile gid="324"/>
+   <tile gid="532"/>
+   <tile gid="603"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -39142,8 +39142,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="348"/>
-   <tile gid="349"/>
+   <tile gid="532"/>
+   <tile gid="628"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -39242,8 +39242,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="373"/>
-   <tile gid="374"/>
+   <tile gid="532"/>
+   <tile gid="603"/>
    <tile gid="177"/>
    <tile gid="177"/>
    <tile gid="0"/>
@@ -39342,8 +39342,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="398"/>
-   <tile gid="399"/>
+   <tile gid="532"/>
+   <tile gid="603"/>
    <tile gid="177"/>
    <tile gid="177"/>
    <tile gid="177"/>
@@ -39442,8 +39442,8 @@
    <tile gid="315"/>
    <tile gid="315"/>
    <tile gid="202"/>
-   <tile gid="423"/>
-   <tile gid="424"/>
+   <tile gid="532"/>
+   <tile gid="628"/>
    <tile gid="202"/>
    <tile gid="202"/>
    <tile gid="202"/>
@@ -40150,9 +40150,8 @@
   <object id="14" name="1" x="656" y="528" width="48" height="16"/>
   <object id="15" name="1" x="736" y="496" width="48" height="304"/>
   <object id="16" name="2" x="448" y="592" width="48" height="16"/>
-  <object id="19" name="3" x="112" y="592" width="32" height="112"/>
+  <object id="19" name="3" x="112" y="592" width="16" height="112"/>
   <object id="20" name="3" x="240" y="544" width="32" height="112"/>
   <object id="22" name="3" x="448" y="592" width="32" height="112"/>
-  <object id="23" name="0" x="112" y="576" width="32" height="16"/>
  </objectgroup>
 </map>

@@ -49,6 +49,8 @@ j1Player::j1Player() : j1Module()
 	climb.PushBack({ 100,131,19,29 });
 	climb.loop = true;
 	climb.speed = 0.15f;
+
+	climb_idle = { 5,131,19,29 };
 }
 j1Player::~j1Player() {
 
@@ -118,14 +120,14 @@ bool j1Player::PreUpdate()
 		
 	
 	//		- - - - - - PLAYER INPUTS - - - - - - 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) {	
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) {		
 		playerPosition.y -= 1;
 		inputs.add(IN_CLIMB);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) {
 		inputs.add(IN_UPWARDS_UP);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && current_state!=ST_CLIMB) {
 		playerSpeed.x += movementForce.x;
 		playerFlip = SDL_FLIP_HORIZONTAL;
 		inputs.add(IN_WALK_LEFT);
@@ -156,9 +158,10 @@ bool j1Player::PreUpdate()
 	}
 	
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && current_state!=ST_CLIMB) // Jumping
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && current_state!=ST_CLIMB && current_state != ST_CLIMB_IDLE) // Jumping
 	{
 		App->audio->PlayFx(1,0,20);
+		if(!can_climb)
 		playerSpeed.y = movementForce.y; 
 		inputs.add(IN_JUMPING);
 	}
@@ -167,12 +170,18 @@ bool j1Player::PreUpdate()
 		if(playerAcceleration > -1300 && playerSpeed.y < -40)
 			playerAcceleration += (movementForce.y / 6);
 		
+	}	
+	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
+		inputs.add(IN_CLIMB);
+		playerPosition.y += 1; // Get down while you're in the air faster
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
+		inputs.add(IN_UPWARDS_UP);
+		playerPosition.y += 1; // Get down while you're in the air faster
+	}
+
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godMode)
 		playerAcceleration += -movementForce.y; // Get down while you're in the air faster
-
-
-
 
 	//Refresh the player state
 	player_states state = process_fsm(inputs);
@@ -218,17 +227,29 @@ bool j1Player::Update(float dt)
 		
 		if(!godMode)
 			playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player		
-		
+		if (can_climb) {
+			playerAcceleration = 0;
+		}
 		break;
 
 	case ST_WALK_RIGHT:
 		
 		current_animation = &walk;
 		break;
+
 	case ST_WALK_LEFT:
 		current_animation = &walk;
 		break;
-	case ST_CLIMB:
+
+	case ST_CLIMB:	
+		playerAcceleration = 0;
+		playerSpeed.x = 0;
+		playerSpeed.y = 0;
+		current_animation = &climb;
+		break;
+
+	case ST_CLIMB_IDLE:
+		playerAcceleration = 0;
 		playerSpeed.x = 0;
 		playerSpeed.y = 0;
 		current_animation = &climb;
@@ -250,7 +271,14 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
-	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip , NULL , playerTexture.w / 2); // Printing player texture
+	
+	if(current_state==ST_CLIMB_IDLE)
+	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &climb_idle, 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing player texture
+
+	else {
+		App->render->Blit(graphics, playerPosition.x, playerPosition.y, &current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing player texture
+
+	}
 	
 	return true;
 }
@@ -336,7 +364,7 @@ void j1Player::cameraSpeedLimitChecker() {
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	
-	can_climb = false;
+	
 	int detectCollDir[DIR_MAX];
 	detectCollDir[DIR_RIGHT] = (playerPosition.x + playerTexture.w) - c2->rect.x;
 	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - playerPosition.x;
@@ -473,7 +501,7 @@ void j1Player::braking()
 
 player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 {
-
+	can_climb = false;
 	static player_states state = ST_IDLE;
 	player_inputs  last_input;
 
@@ -506,9 +534,9 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 		
 			case IN_JUMP_FINISH: state = ST_IDLE;
 				break;
-
-			case IN_RIGHT_UP: state = ST_IDLE; break;
-			case IN_LEFT_UP: state = ST_IDLE; break;
+			case IN_CLIMB: state = ST_CLIMB;
+			//case IN_RIGHT_UP: state = ST_IDLE; break;
+			//case IN_LEFT_UP: state = ST_IDLE; break;
 			}
 		}
 		break;
@@ -546,10 +574,28 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 		case ST_CLIMB:
 			switch (last_input)
 			{
-			case IN_UPWARDS_UP: state = ST_AT_AIR; break;			
+			case IN_UPWARDS_UP: state = ST_CLIMB_IDLE; break;				
+			case IN_WALK_RIGHT: state = ST_WALK_RIGHT;
+				break;
+			case IN_WALK_LEFT: state = ST_WALK_LEFT;
+				break;
 
 			}
 			break;
+
+		case ST_CLIMB_IDLE:
+		{
+			switch (last_input)
+			{
+			
+			case IN_WALK_RIGHT: state = ST_WALK_RIGHT;
+				break;
+			case IN_WALK_LEFT: state = ST_WALK_LEFT;
+				break;
+			case IN_CLIMB: state = ST_CLIMB; break;
+			}
+		}
+		break;
 		}
 	}
 	return state;
