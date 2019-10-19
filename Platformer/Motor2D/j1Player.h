@@ -110,7 +110,7 @@ private:
 	
 	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
 	float playerAcceleration = 0.0f;// Player acceleration AXIS value
-
+	float hoverAcceleration = 0.0f;
 	fPoint movementForce = { -20.0f ,-420.0f }; // Force applied to the movement in AXIS value
 
 	void PlayerPositionUpdate(float dt); //Update player's position

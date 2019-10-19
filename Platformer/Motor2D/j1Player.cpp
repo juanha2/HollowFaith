@@ -148,6 +148,12 @@ bool j1Player::PreUpdate()
 		playerSpeed.y = movementForce.y; 
 		inputs.add(IN_JUMPING);
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) {
+
+		if(playerAcceleration > -1300 && playerSpeed.y < -40)
+			playerAcceleration += (movementForce.y / 6);
+		
+	}
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godMode)
 		playerAcceleration += -movementForce.y; // Get down while you're in the air faster
 
