@@ -21,6 +21,8 @@ enum player_states
 
 	ST_CLIMB,	
 	ST_CLIMB_IDLE,
+
+	ST_DEAD,
 };
 
 
@@ -44,6 +46,7 @@ enum player_inputs
 	IN_LEFT_UP,
 	IN_LEFT_DOWN,
 
+	IN_DEAD,
 };
 
 
@@ -109,7 +112,7 @@ public:
 	// State machine
 	player_states process_fsm(p2List<player_inputs>& inputs); 
 	
-
+	bool dead = false;
 private:
 
 	// - - - - PLAYER - - - - 
@@ -161,12 +164,14 @@ private:
 	Animation idle;
 	Animation jump;
 	Animation climb;
+	Animation death;
 	SDL_Rect	climb_idle;
+	
 
 	p2SString jump_fx;
 
 	bool can_climb = false;
-	bool is_climbing = false;
+	
 };
 
 #endif // __j1PLAYER_H__

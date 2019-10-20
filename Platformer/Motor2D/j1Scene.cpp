@@ -42,8 +42,8 @@ bool j1Scene::Start()
 		first = false;
 	}	
 
-	
-//	graphics = App->tex->Load("Assets/Sprites/halo.png");
+	App->render->camera = App->render->camera_init; //Sets camera on inicial position.
+	graphics = App->tex->Load("Assets/Sprites/halo.png");
 	return true;
 }
 
@@ -56,7 +56,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	
+
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame();
 
@@ -109,6 +109,7 @@ bool j1Scene::Update(float dt)
 
 	}
 
+	
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();

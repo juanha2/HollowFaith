@@ -9,6 +9,7 @@
 #include "j1Player.h"
 #include "j1Map.h"
 #include "j1Window.h"
+#include "j1FadeToBlack.h"
 
 
 j1Player::j1Player() : j1Module()
@@ -42,6 +43,15 @@ j1Player::j1Player() : j1Module()
 	jump.firstLoopFrame = 5;
 	jump.speed = 0.15f;
 
+	death.PushBack({ 227,131,21,29 });
+	death.PushBack({ 259,129,22,29 });
+	death.PushBack({ 291,139,25,20 });
+	death.PushBack({ 322,149,29,29 });
+	death.PushBack({ 352,148,35,12 });
+	death.PushBack({ 393,147,25,13 });
+	death.PushBack({ 180,120,25,13 });
+	death.loop = false;
+	death.speed = 0.15f;
 
 	climb.PushBack({ 5,131,19,29 });
 	climb.PushBack({ 39,131,18,29 });
@@ -71,6 +81,11 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Player::Start(){
 
+	dead = false;
+	death.Reset();
+	current_state = ST_AT_AIR;
+	current_animation = &idle;
+	playerPosition = startPosLevel1;
 	graphics = App->tex->Load("Assets/Sprites/Monster.png");
 	App->audio->LoadFx(jump_fx.GetString());	
 
@@ -90,8 +105,10 @@ bool j1Player::CleanUp()
 			colisionadores[i] = nullptr;
 		}
 	}
+
 	App->tex->UnLoad(graphics);
 	App->audio->UnLoad();
+
 	return true;
 }
 // Called each loop iteration
@@ -117,71 +134,77 @@ bool j1Player::PreUpdate()
 	}
 	else 
 		cameraSpeed.x -= playerSpeed.x / 40;	
+
+	if (!dead) {
+
+		//		- - - - - - PLAYER INPUTS - - - - - - 
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) {
+			playerPosition.y -= 1;
+			inputs.add(IN_CLIMB);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) {
+			inputs.add(IN_UPWARDS_UP);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && current_state != ST_CLIMB) {
+			playerSpeed.x += movementForce.x;
+			playerFlip = SDL_FLIP_HORIZONTAL;
+			inputs.add(IN_WALK_LEFT);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
+			inputs.add(IN_LEFT_UP);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			playerSpeed.x -= movementForce.x;
+			playerFlip = SDL_FLIP_NONE;
+			inputs.add(IN_WALK_RIGHT);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
+			inputs.add(IN_RIGHT_UP);
+		}
+		//  - - - - - ONLY ON GOD MODE - - - - - - -
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
+			playerSpeed.y += movementForce.x;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
+			playerSpeed.y -= movementForce.x;
+		}
+		// - - - - - - - - - - - - - - - - - - - - - 
+		else
+		{
+			braking(); // Smoothy braking when player stops running
+			cameraBraking(); // Smoothy camera braking when player is not running
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && current_state != ST_CLIMB && current_state != ST_CLIMB_IDLE) // Jumping
+		{
+			App->audio->PlayFx(1, 0, 20);
+			playerSpeed.y = movementForce.y;
+			inputs.add(IN_JUMPING);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) {
+
+			if (playerAcceleration > -1300 && playerSpeed.y < -40)
+				playerAcceleration += (movementForce.y / 6);
+
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
+			inputs.add(IN_CLIMB);
+			playerPosition.y += 1; // Get down while you're in the air faster
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
+			inputs.add(IN_UPWARDS_UP);
+			playerPosition.y += 1; // Get down while you're in the air faster
+		}
+
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godMode)
+			playerAcceleration += -movementForce.y; // Get down while you're in the air faster
+	}
+
+	else {			
 		
-	
-	//		- - - - - - PLAYER INPUTS - - - - - - 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) {		
-		playerPosition.y -= 1;
-		inputs.add(IN_CLIMB);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) {
-		inputs.add(IN_UPWARDS_UP);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && current_state!=ST_CLIMB) {
-		playerSpeed.x += movementForce.x;
-		playerFlip = SDL_FLIP_HORIZONTAL;
-		inputs.add(IN_WALK_LEFT);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {	
-		inputs.add(IN_LEFT_UP);
-	}		
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		playerSpeed.x -= movementForce.x;
-		playerFlip = SDL_FLIP_NONE;
-		inputs.add(IN_WALK_RIGHT);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {		
-		inputs.add(IN_RIGHT_UP);
-	}
-	//  - - - - - ONLY ON GOD MODE - - - - - - -
-	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
-		playerSpeed.y += movementForce.x;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
-		playerSpeed.y -= movementForce.x;
-	}
-	// - - - - - - - - - - - - - - - - - - - - - 
-	else 
-	{
-		braking(); // Smoothy braking when player stops running
-		cameraBraking(); // Smoothy camera braking when player is not running
+		App->fade_to_black->FadeToBlack("level01.tmx", 2.0f);
 	}
 	
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && current_state!=ST_CLIMB && current_state != ST_CLIMB_IDLE) // Jumping
-	{
-		App->audio->PlayFx(1,0,20);
-	
-		playerSpeed.y = movementForce.y; 
-		inputs.add(IN_JUMPING);
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) {
-
-		if(playerAcceleration > -1300 && playerSpeed.y < -40)
-			playerAcceleration += (movementForce.y / 6);
-		
-	}	
-	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
-		inputs.add(IN_CLIMB);
-		playerPosition.y += 1; // Get down while you're in the air faster
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
-		inputs.add(IN_UPWARDS_UP);
-		playerPosition.y += 1; // Get down while you're in the air faster
-	}
-
-	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godMode)
-		playerAcceleration += -movementForce.y; // Get down while you're in the air faster
 
 	//Refresh the player state
 	player_states state = process_fsm(inputs);
@@ -254,6 +277,17 @@ bool j1Player::Update(float dt)
 		current_animation = &climb;
 		break;
 
+	case ST_DEAD:	
+
+		if (!dead) {
+			inputs.add(IN_WALK_RIGHT); //Returns to idle when restarts player
+		}
+		playerAcceleration = 0;
+		playerSpeed.x = 0;
+		playerSpeed.y = 0;
+		current_animation = &death;
+		
+		break;
 	}
 
 	if (ignoreColl == true && godMode == false)
@@ -266,7 +300,6 @@ bool j1Player::Update(float dt)
 
 	return true;
 }
-
 
 bool j1Player::PostUpdate()
 {
@@ -400,12 +433,17 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		// - - - - - - - CHECK COLLISIONS - - - - - - - 
 		if (ignoreColl == false) {
 
+		if ((c2->type == COLLIDER_DEATH))
+		{
+			inputs.add(IN_DEAD);
+			dead = true;
+		}
 			
-			if ((c2->type == COLLIDER_CLIMB))
-			{				
-				can_climb = true;
+		if ((c2->type == COLLIDER_CLIMB))
+		{				
+			can_climb = true;
 				
-			}
+		}
 
 		if ((c2->type == COLLIDER_FLOOR))
 		{
@@ -501,6 +539,7 @@ void j1Player::braking()
 player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 {
 	can_climb = false;
+
 	static player_states state = ST_IDLE;
 	player_inputs  last_input;
 
@@ -531,9 +570,9 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			switch (last_input)
 			{
 		
-			case IN_JUMP_FINISH: state = ST_IDLE;
-				break;
-			case IN_CLIMB: state = ST_CLIMB;
+			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_CLIMB: state = ST_CLIMB; break;
+			case IN_DEAD: state = ST_DEAD;	break;
 			//case IN_RIGHT_UP: state = ST_IDLE; break;
 			//case IN_LEFT_UP: state = ST_IDLE; break;
 			}
@@ -592,6 +631,17 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			case IN_WALK_LEFT: state = ST_WALK_LEFT;
 				break;
 			case IN_CLIMB: state = ST_CLIMB; break;
+			}
+		}
+		break;
+
+		case ST_DEAD:
+		{
+			switch (last_input)
+			{
+
+			case IN_WALK_RIGHT: state = ST_WALK_RIGHT;
+				break;		
 			}
 		}
 		break;

@@ -60,7 +60,7 @@ bool j1FadeToBlack::PostUpdate()
 				
 				if (App->map->Load(level_to_load.GetString())) {
 					App->player->Enable();
-					App->scene->Enable();		
+					App->scene->Enable();					
 				}
 			}		
 				
