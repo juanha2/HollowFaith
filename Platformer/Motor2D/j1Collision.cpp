@@ -17,6 +17,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_CLIMB] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = true;
 
@@ -49,8 +50,6 @@ bool j1Collision::Update(float dt)
 	// Calculate collisions
 	Collider* c1;
 	Collider* c2;
-
-
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
@@ -138,6 +137,10 @@ void j1Collision::DebugDraw()
 			break;
 
 		case COLLIDER_DEATH: // white
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+
+		case COLLIDER_WIN: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		}

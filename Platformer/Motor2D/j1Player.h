@@ -69,8 +69,8 @@ public:
 	Collider* colisionadores[MAXNUMOFCOLLIDERS];	
 	SDL_Texture* graphics = nullptr;
 
-	iPoint startPosLevel1 = { 0, 670 };
-	iPoint startPosLevel2 = { 0, 670 };
+	iPoint startPosLevel1 = { 0, 340 };
+	iPoint startPosLevel2 = { 0, 340 };
 
 	iPoint savedPosition = { 0, 670 };
 
@@ -171,7 +171,7 @@ private:
 	p2SString jump_fx;
 
 	bool can_climb = false;
-	
+	bool win = false;
 };
 
 #endif // __j1PLAYER_H__

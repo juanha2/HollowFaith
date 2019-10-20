@@ -8,7 +8,7 @@
 	
   <renderer>
     <vsync value="true"/>
-    <camera_pos x="0" y="-750"/>
+    <camera_pos x="0" y="-10"/>
   </renderer>
 
   <window>

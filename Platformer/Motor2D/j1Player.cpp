@@ -81,6 +81,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Player::Start(){
 
+	win = false;
 	dead = false;
 	death.Reset();
 	current_state = ST_AT_AIR;
@@ -137,6 +138,9 @@ bool j1Player::PreUpdate()
 
 	if (!dead) {
 
+		if (win) {
+			App->fade_to_black->FadeToBlack("level02.tmx", 1.0f);
+		}
 		//		- - - - - - PLAYER INPUTS - - - - - - 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) {
 			playerPosition.y -= 1;
@@ -333,8 +337,9 @@ void j1Player::PlayerPositionUpdate(float dt)
 void j1Player::CameraPositionUpdate(float dt) {
 
 	// X AXIS POS
-	if (playerPosition.x > 1024 / 4 - playerTexture.w)
+	if (playerPosition.x > 1024 / 4 - playerTexture.w && playerPosition.x < 1300)
 		App->render->camera.x = (-playerPosition.x + 1024 / 4 - playerTexture.w ) * 2;
+
 
 	// Y AXIS POS
 	App->render->camera.y = App->render->camera.y + cameraSpeed.y * dt;
@@ -437,6 +442,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			inputs.add(IN_DEAD);
 			dead = true;
+		}
+
+		if ((c2->type == COLLIDER_WIN))
+		{
+			inputs.add(IN_WALK_RIGHT);
+			win = true;
 		}
 			
 		if ((c2->type == COLLIDER_CLIMB))

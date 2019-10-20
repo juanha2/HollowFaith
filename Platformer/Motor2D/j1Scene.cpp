@@ -134,7 +134,7 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 	SDL_Rect rect = { 0,0,1024 / 2,384 };
-	//App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
+	App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
