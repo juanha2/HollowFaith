@@ -161,7 +161,7 @@ bool j1Player::PreUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && current_state!=ST_CLIMB && current_state != ST_CLIMB_IDLE) // Jumping
 	{
 		App->audio->PlayFx(1,0,20);
-		if(!can_climb)
+	
 		playerSpeed.y = movementForce.y; 
 		inputs.add(IN_JUMPING);
 	}
@@ -227,9 +227,8 @@ bool j1Player::Update(float dt)
 		
 		if(!godMode)
 			playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player		
-		if (can_climb) {
-			playerAcceleration = 0;
-		}
+		
+
 		break;
 
 	case ST_WALK_RIGHT:
