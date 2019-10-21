@@ -345,7 +345,7 @@ void j1Player::PlayerPositionUpdate(float dt)
 void j1Player::CameraPositionUpdate(float dt) {
 
 	// X AXIS POS
-	if (playerPosition.x > 1024 / 4 - playerTexture.w && playerPosition.x < 1300)
+	if (playerPosition.x > 1024 / 4 - playerTexture.w && playerPosition.x < 1325)
 		App->render->camera.x = (-playerPosition.x + 1024 / 4 - playerTexture.w ) * 2;
 
 
