@@ -55,8 +55,8 @@ private:
 public:
 
 	Particle* active[MAX_ACTIVE_PARTICLES];
-	Particle tornadoHao;
-	Particle bloodLow;
+	Particle dustRunning;
+
 
 };
 

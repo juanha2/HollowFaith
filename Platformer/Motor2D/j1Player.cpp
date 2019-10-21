@@ -5,11 +5,13 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Render.h"
+#include "j1Particles.h"
 #include "j1Collision.h"
 #include "j1Player.h"
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1FadeToBlack.h"
+
 
 
 j1Player::j1Player() : j1Module()
@@ -185,6 +187,7 @@ bool j1Player::PreUpdate()
 			if(canJump == true)
 				App->audio->PlayFx(1, 0, 20);
 
+			App->particles->AddParticle(App->particles->dustRunning, playerPosition.x , playerPosition.y, playerFlip, COLLIDER_NONE);
 			playerSpeed.y = movementForce.y;
 			inputs.add(IN_JUMPING);
 			canJump = false;
