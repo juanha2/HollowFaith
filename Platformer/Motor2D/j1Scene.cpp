@@ -37,11 +37,16 @@ bool j1Scene::Start()
 	if (first) {
 		
 		p2List_item<Levels*>* levelData = App->map->data.levels.start;
-		App->map->Load(levelData->data->name.GetString());
-		//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);		
+		App->map->Load(levelData->data->name.GetString());		
+	//	App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
 		first = false;
-	}	
-
+	}
+	if (currentmap == 1) {
+		//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
+	}
+	if (currentmap == 2) {
+	//	App->audio->PlayMusic(App->map->data.properties.start->next->data->value.GetString(), 1.0f);
+	}
 	App->render->camera = App->render->camera_init; //Sets camera on inicial position.
 	graphics = App->tex->Load("Assets/Sprites/halo.png");
 	return true;
@@ -83,7 +88,7 @@ bool j1Scene::Update(float dt)
 			App->render->camera.x += 1;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-		currentmap = 1;
+		currentmap = 2;
 		App->fade_to_black->FadeToBlack("level02.tmx", 1.0f);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
@@ -107,9 +112,7 @@ bool j1Scene::Update(float dt)
 	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == true) {
 		App->player->godMode = false;
 
-	}
-
-	
+	}	
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
@@ -147,10 +150,9 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 		
-	App->player->CleanUp();
+	
 	App->tex->UnLoad(graphics);	
-	App->tex->CleanUp();	
-	App->audio->CleanUp();
+	App->tex->CleanUp();		
 
 	return true;
 }

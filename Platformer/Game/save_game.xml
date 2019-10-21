@@ -7,9 +7,10 @@
 	<textures />
 	<audio />
 	<scene />
+	<:anonymous />
 	<colliders />
 	<FadeToBlack />
 	<renderer>
-		<camera x="0" y="-10" />
+		<camera x="-1330" y="-10" />
 	</renderer>
 </game_state>

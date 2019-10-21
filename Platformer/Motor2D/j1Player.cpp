@@ -88,7 +88,8 @@ bool j1Player::Start(){
 	current_animation = &idle;
 	playerPosition = startPosLevel1;
 	graphics = App->tex->Load("Assets/Sprites/Monster.png");
-	App->audio->LoadFx(jump_fx.GetString());	
+		
+	App->audio->LoadFx(jump_fx.GetString());
 
 	return true;
 }

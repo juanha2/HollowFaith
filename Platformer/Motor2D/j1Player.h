@@ -69,8 +69,8 @@ public:
 	Collider* colisionadores[MAXNUMOFCOLLIDERS];	
 	SDL_Texture* graphics = nullptr;
 
-	iPoint startPosLevel1 = { 0, 340 };
-	iPoint startPosLevel2 = { 0, 340 };
+	iPoint startPosLevel1 = { 50, 340 };
+	iPoint startPosLevel2 = { 50 , 340 };
 
 	iPoint savedPosition = { 0, 670 };
 
