@@ -144,7 +144,7 @@ bool j1Player::PreUpdate()
 		}
 		//		- - - - - - PLAYER INPUTS - - - - - - 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) {
-			playerPosition.y -= 1;
+			playerPosition.y -= playerClimbSpeed;
 			inputs.add(IN_CLIMB);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) {
@@ -182,9 +182,12 @@ bool j1Player::PreUpdate()
 
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && current_state != ST_CLIMB && current_state != ST_CLIMB_IDLE) // Jumping
 		{
-			App->audio->PlayFx(1, 0, 20);
+			if(canJump == true)
+				App->audio->PlayFx(1, 0, 20);
+
 			playerSpeed.y = movementForce.y;
 			inputs.add(IN_JUMPING);
+			canJump = false;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) {
 
@@ -192,19 +195,20 @@ bool j1Player::PreUpdate()
 				playerAcceleration += (movementForce.y / 6);
 
 		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) {
+			canJump = true;
+		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
 			inputs.add(IN_CLIMB);
-			playerPosition.y += 1; // Get down while you're in the air faster
+			playerPosition.y += playerClimbSpeed; // Get down while you're in the air faster
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
 			inputs.add(IN_UPWARDS_UP);
 			playerPosition.y += 1; // Get down while you're in the air faster
 		}
-
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godMode)
 			playerAcceleration += -movementForce.y; // Get down while you're in the air faster
 	}
-
 	else {			
 		
 		App->fade_to_black->FadeToBlack("level01.tmx", 2.0f);
@@ -469,12 +473,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				break;
 
 			case DIR_DOWN:
+			
 				playerPosition.y = c2->rect.y - playerTexture.h;
-				playerSpeed.y = 0;
 				playerAcceleration = 0;
-				checkingFall = false;
+				playerSpeed.y = 0;							
 				jump.Reset();
 				inputs.add(IN_JUMP_FINISH);
+				checkingFall = false;
 				break;
 
 			case DIR_LEFT:

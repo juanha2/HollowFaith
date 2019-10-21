@@ -119,11 +119,13 @@ private:
 	SDL_Rect playerTexture = { 0, 0, 17, 27 };
 	SDL_RendererFlip playerFlip = SDL_RendererFlip::SDL_FLIP_NONE;
 	
+	float playerClimbSpeed = 1.0f;
 	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
 	float playerAcceleration = 0.0f;// Player acceleration AXIS value
 	float hoverAcceleration = 0.0f;
 	fPoint movementForce = { -20.0f ,-420.0f }; // Force applied to the movement in AXIS value
-
+	
+	bool canJump = true;
 	void PlayerPositionUpdate(float dt); //Update player's position
 	// - - - - - - - - - - - 
 
