@@ -11,6 +11,7 @@ class j1Input;
 class j1Render;
 class j1Textures;
 class j1Audio;
+class j1Particles;
 class j1Collision;
 class j1Scene;
 class j1Map;
@@ -92,6 +93,7 @@ public:
 	j1Collision*		coll;
 	j1Player*			player;
 	j1FadeToBlack*		fade_to_black;
+	j1Particles*		particles;
 
 private:
 
