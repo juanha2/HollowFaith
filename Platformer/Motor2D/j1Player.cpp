@@ -10,6 +10,7 @@
 #include "j1Player.h"
 #include "j1Map.h"
 #include "j1Window.h"
+#include "j1Scene.h"
 #include "j1FadeToBlack.h"
 
 
@@ -214,7 +215,11 @@ bool j1Player::PreUpdate()
 	}
 	else {			
 		
-		App->fade_to_black->FadeToBlack("level01.tmx", 2.0f);
+		for (int i = 0; i <= App->map->data.numLevels; i++) {
+			if (App->scene->currentmap == i) {
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i-1]->name.GetString(), 2.0f);
+			}
+		}	
 	}
 	
 

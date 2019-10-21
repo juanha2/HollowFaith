@@ -11,6 +11,6 @@
 	<colliders />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-1066" y="-10" />
+		<camera x="-416" y="-10" />
 	</renderer>
 </game_state>

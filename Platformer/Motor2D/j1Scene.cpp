@@ -33,12 +33,13 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	
 	//Load first level at start
 	if (first) {
 		
 		p2List_item<Levels*>* levelData = App->map->data.levels.start;
 		App->map->Load(levelData->data->name.GetString());		
-	//	App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
+		//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
 		first = false;
 	}
 	if (currentmap == 1) {
