@@ -40,8 +40,10 @@ bool j1Scene::Start()
 		p2List_item<Levels*>* levelData = App->map->data.levels.start;
 		App->map->Load(levelData->data->name.GetString());		
 		//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
+		currentmap = 1;
 		first = false;
 	}
+	
 	if (currentmap == 1) {
 		//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
 	}

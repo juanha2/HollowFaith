@@ -143,6 +143,7 @@ bool j1Player::PreUpdate()
 	if (!dead) {
 
 		if (win) {
+			App->scene->currentmap=2;
 			App->fade_to_black->FadeToBlack("level02.tmx", 1.0f);
 		}
 		//		- - - - - - PLAYER INPUTS - - - - - - 
@@ -215,7 +216,7 @@ bool j1Player::PreUpdate()
 	}
 	else {			
 		
-		for (int i = 0; i <= App->map->data.numLevels; i++) {
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
 			if (App->scene->currentmap == i) {
 				App->fade_to_black->FadeToBlack(App->map->data.levels[i-1]->name.GetString(), 2.0f);
 			}
