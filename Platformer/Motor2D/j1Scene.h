@@ -32,6 +32,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+
+	bool Save(pugi::xml_node&) const;
+	bool Load(pugi::xml_node&);
+
+
 private:
 	
 	bool first = true;

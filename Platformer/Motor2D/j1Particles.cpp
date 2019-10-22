@@ -10,6 +10,9 @@
 
 j1Particles::j1Particles()
 {
+
+	name.create("particles");
+
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 		active[i] = nullptr;
 }
@@ -102,15 +105,16 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, bool flipe
 			p->position.x = x;
 			p->position.y = y;
 			p->fliped = fliped;
+
 			if (collider_type != COLLIDER_NONE)
 				p->collider = App->coll->AddCollider(p->anim.GetCurrentFrame(), collider_type, 20, 10, 10, 5, this);
+
 			active[i] = p;
 			/*if (p->life == 5000) App->player->swordTrack = i;
 
 			if (p->life == 999999)
 				App->player->swordTrackGround = i;
 			if (p->life == 999998) App->player2->swordTrackGround = i;*/
-
 			break;
 		}
 	}

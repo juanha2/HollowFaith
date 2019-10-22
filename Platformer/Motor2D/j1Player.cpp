@@ -18,6 +18,7 @@
 j1Player::j1Player() : j1Module()
 {
 	name.create("player");
+
 	idle.PushBack({ 7,164,17,28 });
 	idle.PushBack({ 39,164,17,28 });
 	idle.PushBack({ 70,163,18,29 });
@@ -452,88 +453,88 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		// - - - - - - - CHECK COLLISIONS - - - - - - - 
 		if (ignoreColl == false) {
 
-		if ((c2->type == COLLIDER_DEATH))
-		{
-			inputs.add(IN_DEAD);
-			dead = true;
-		}
-
-		if ((c2->type == COLLIDER_WIN))
-		{
-			inputs.add(IN_WALK_RIGHT);
-			win = true;
-		}
-			
-		if ((c2->type == COLLIDER_CLIMB))
-		{				
-			can_climb = true;
-				
-		}
-
-		if ((c2->type == COLLIDER_FLOOR))
-		{
-			
-			switch (dirCheck) {
-
-			case DIR_UP:
-				//if(playerSpeed.y < 0)
-				playerPosition.y = c2->rect.y + c2->rect.h + 1;
-				playerSpeed.y = 0;
-				break;
-
-			case DIR_DOWN:
-			
-				playerPosition.y = c2->rect.y - playerTexture.h;
-				playerAcceleration = 0;
-				playerSpeed.y = 0;							
-				jump.Reset();
-				inputs.add(IN_JUMP_FINISH);
-				checkingFall = false;
-				break;
-
-			case DIR_LEFT:
-				playerPosition.x = c2->rect.x + c2->rect.w + 1;
-				playerSpeed.x = 0;
-				break;
-
-			case DIR_RIGHT:
-				playerPosition.x = c2->rect.x - playerTexture.w;
-				playerSpeed.x = 0;
-				break;
-
-			case -1:
-				break;
-
-			}				
-		}
-
-		if(playerSpeed.y >= 0)
-			if ((c2->type == COLLIDER_PLATFORM))
+			if ((c2->type == COLLIDER_DEATH))
 			{
+				inputs.add(IN_DEAD);
+				dead = true;
+			}
+
+			if ((c2->type == COLLIDER_WIN))
+			{
+				inputs.add(IN_WALK_RIGHT);
+				win = true;
+			}
+			
+			if ((c2->type == COLLIDER_CLIMB))
+			{				
+				can_climb = true;
+				
+			}
+
+			if ((c2->type == COLLIDER_FLOOR))
+			{
+			
 				switch (dirCheck) {
 
 				case DIR_UP:
-					break;
+					//if(playerSpeed.y < 0)
+					playerPosition.y = c2->rect.y + c2->rect.h + 1;
+					playerSpeed.y = 0;
+				break;
 
 				case DIR_DOWN:
+			
 					playerPosition.y = c2->rect.y - playerTexture.h;
-					playerSpeed.y = 0;
 					playerAcceleration = 0;
-					checkingFall = false;
+					playerSpeed.y = 0;							
+					jump.Reset();
 					inputs.add(IN_JUMP_FINISH);
+					checkingFall = false;
 					break;
 
 				case DIR_LEFT:
+					playerPosition.x = c2->rect.x + c2->rect.w + 1;
+					playerSpeed.x = 0;
 					break;
 
 				case DIR_RIGHT:
+					playerPosition.x = c2->rect.x - playerTexture.w;
+					playerSpeed.x = 0;
 					break;
+
 				case -1:
 					break;
+
+				}				
+			}
+
+			if(playerSpeed.y >= 0){
+				if ((c2->type == COLLIDER_PLATFORM))
+				{
+					switch (dirCheck) {
+
+					case DIR_UP:
+						break;
+
+					case DIR_DOWN:
+						playerPosition.y = c2->rect.y - playerTexture.h;
+						playerSpeed.y = 0;
+						playerAcceleration = 0;
+						checkingFall = false;
+						inputs.add(IN_JUMP_FINISH);
+						break;
+
+					case DIR_LEFT:
+						break;
+
+					case DIR_RIGHT:
+						break;
+					case -1:
+						break;
+					}
 				}
 			}
-		}
-		
+		}	
 	}
 }
 

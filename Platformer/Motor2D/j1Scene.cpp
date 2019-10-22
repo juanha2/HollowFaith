@@ -100,13 +100,10 @@ bool j1Scene::Update(float dt)
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
-		App->player->savedPosition.x = App->player->playerPosition.x;
-		App->player->savedPosition.y = App->player->playerPosition.y;
+		App->SaveGame();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
-		App->player->ignoreColl = true;
-		App->player->playerPosition.y = App->player->savedPosition.y;
-		App->player->playerPosition.x = App->player->savedPosition.x;	
+		App->LoadGame();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == false) {
 		App->player->godMode = true;
@@ -156,6 +153,28 @@ bool j1Scene::CleanUp()
 	
 	App->tex->UnLoad(graphics);	
 	App->tex->CleanUp();		
+
+	return true;
+}
+
+bool j1Scene::Save(pugi::xml_node& save) const
+{
+	//Save all the player's status variables
+	//save.append_child("current_map").append_attribute("name") = App->map->data.currentmap.GetString();
+	App->player->savedPosition.x = App->player->playerPosition.x;
+	App->player->savedPosition.y = App->player->playerPosition.y;
+
+	return true;
+}
+
+bool j1Scene::Load(pugi::xml_node& save)
+{
+	//Save all the player's status variables
+	//save.append_child("current_map").append_attribute("name") = App->map->data.currentmap.GetString();
+	App->player->ignoreColl = true;
+	App->player->playerPosition.y = App->player->savedPosition.y;
+	App->player->playerPosition.x = App->player->savedPosition.x;
+
 
 	return true;
 }
