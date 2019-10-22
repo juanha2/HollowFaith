@@ -187,10 +187,12 @@ bool j1Player::PreUpdate()
 
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && current_state != ST_CLIMB && current_state != ST_CLIMB_IDLE) // Jumping
 		{
-			if(canJump == true)
+			if (canJump == true) {
 				App->audio->PlayFx(1, 0, 20);
-
-			App->particles->AddParticle(App->particles->dustRunning, playerPosition.x , playerPosition.y, playerFlip, COLLIDER_NONE);
+				App->particles->AddParticle(App->particles->dustJumping, playerPosition.x, playerPosition.y + playerTexture.h, playerFlip, COLLIDER_NONE);
+			}
+				
+			
 			playerSpeed.y = movementForce.y;
 			inputs.add(IN_JUMPING);
 			canJump = false;

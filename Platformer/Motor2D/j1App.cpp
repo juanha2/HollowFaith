@@ -28,9 +28,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new j1Textures();
 	audio = new j1Audio();
 	scene = new j1Scene();
+	particles = new j1Particles();
 	fade_to_black = new j1FadeToBlack();
 	map = new j1Map();
-	particles = new j1Particles();
 	coll = new j1Collision();
 	
 
@@ -44,8 +44,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 
 	AddModule(scene);
-	AddModule(particles);
 	AddModule(coll);
+	AddModule(particles);
 	AddModule(fade_to_black);
 	// render last to swap buffer
 	AddModule(render);

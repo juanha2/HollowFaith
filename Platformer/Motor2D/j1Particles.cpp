@@ -23,10 +23,17 @@ j1Particles::~j1Particles()
 // Load assets
 bool j1Particles::Start()
 {
-	// Loading particles 
 
+	// Dust Jumping Effect
+	dustJumping.anim.PushBack({ 8, 247, 13, 5 });
+	dustJumping.anim.PushBack({ 37, 249, 19, 5 });
+	dustJumping.anim.PushBack({ 68, 250, 21, 5 });
+	dustJumping.anim.PushBack({ 99, 252, 17, 4 });
+	dustJumping.anim.PushBack({ 131, 252, 23, 4 });
 
-	graphics = App->tex->Load("Assets/Sprites/Monster.png");
+	dustJumping.anim.loop = false;
+	dustJumping.anim.speed = 0.4f;
+	dustJumping.life = 200;
 
 	// Dust Running Effect
 	dustRunning.anim.PushBack({ 225, 241, 17, 14 });
@@ -35,11 +42,10 @@ bool j1Particles::Start()
 	dustRunning.anim.PushBack({ 321, 240, 17, 16 });
 	dustRunning.anim.PushBack({ 352, 239, 17, 17 });
 	dustRunning.anim.PushBack({ 385, 243, 13, 13 });
+
 	dustRunning.anim.loop = true;
-	dustRunning.anim.speed = 0.1f;
-	dustRunning.speed.x = 0;
-	dustRunning.life = 6000;
-	dustRunning.anim.firstLoopFrame = 2.0f;
+	dustRunning.anim.speed = 0.1f;	
+	dustRunning.life = 1000;
 
 	return true;
 }
@@ -58,13 +64,12 @@ bool j1Particles::CleanUp()
 		}
 	}
 
-	App->tex->UnLoad(graphics);
 
 	return true;
 }
 
 // Update: draw background
-bool j1Particles::Update()
+bool j1Particles::Update(float dt)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -72,7 +77,7 @@ bool j1Particles::Update()
 
 		if (p == nullptr)
 			continue;
-
+		//App->render->Blit(App->player->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
 
 		if (p->Update() == false)
 		{
@@ -81,8 +86,9 @@ bool j1Particles::Update()
 		}
 		else if (SDL_GetTicks() >= p->born)
 		{
-			//if (p->life == 999998) App->render->Blit(App->player->graphics, p->position.x, p->position.y, !p->fliped, &(p->anim.GetCurrentFrame()), 1.0, true, true, true);
-			App->render->Blit(graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), 1.0);
+		
+			App->render->Blit(App->player->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), 1.0, 1.0, p->fliped);
+
 			if (p->fx_played == false)
 			{
 				// Play particle fx here
@@ -94,7 +100,7 @@ bool j1Particles::Update()
 	return true;
 }
 
-void j1Particles::AddParticle(const Particle& particle, int x, int y, bool fliped, COLLIDER_TYPE collider_type, Uint32 delay)
+void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type, Uint32 delay)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -110,11 +116,7 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, bool flipe
 				p->collider = App->coll->AddCollider(p->anim.GetCurrentFrame(), collider_type, 20, 10, 10, 5, this);
 
 			active[i] = p;
-			/*if (p->life == 5000) App->player->swordTrack = i;
 
-			if (p->life == 999999)
-				App->player->swordTrackGround = i;
-			if (p->life == 999998) App->player2->swordTrackGround = i;*/
 			break;
 		}
 	}

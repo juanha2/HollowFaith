@@ -23,7 +23,7 @@ struct Particle
 	Uint32 born = 0;
 	Uint32 life = 0;
 	bool fx_played = false;
-	bool fliped = false;
+	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
 
 
@@ -40,12 +40,12 @@ public:
 	~j1Particles();
 
 	bool Start();
-	bool Update();
+	bool Update(float dt);
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 
 
-	void AddParticle(const Particle& particle, int x, int y, bool fliped, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0);
+	void AddParticle(const Particle& particle, int x, int y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0);
 
 private:
 
@@ -55,6 +55,7 @@ private:
 public:
 
 	Particle* active[MAX_ACTIVE_PARTICLES];
+	Particle dustJumping;
 	Particle dustRunning;
 
 
