@@ -171,9 +171,11 @@ private:
 	
 
 	p2SString jump_fx;
+	p2SString death_fx;
 
 	bool can_climb = false;
 	bool win = false;
+	bool sound_repeat = false;
 };
 
 #endif // __j1PLAYER_H__

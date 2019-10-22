@@ -76,6 +76,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	bool ret = true;	
 	
 	jump_fx = config.child("jumpFx").attribute("path").as_string();
+	death_fx = config.child("deathFx").attribute("path").as_string();
 	
 	return ret;
 }
@@ -88,13 +89,14 @@ bool j1Player::Start(){
 	win = false;
 	dead = false;
 	death.Reset();
+	sound_repeat = false;
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
 	playerPosition = startPosLevel1;
 	graphics = App->tex->Load("Assets/Sprites/Monster.png");
 		
 	App->audio->LoadFx(jump_fx.GetString());
-
+	App->audio->LoadFx(death_fx.GetString());
 	return true;
 }
 
@@ -218,7 +220,11 @@ bool j1Player::PreUpdate()
 			playerAcceleration += -movementForce.y; // Get down while you're in the air faster
 	}
 	else {			
-		
+		if (!sound_repeat) {
+			App->audio->PlayFx(2, 0, 20);
+			sound_repeat = true;
+		}			
+
 		for (int i = 1; i <= App->map->data.numLevels; i++) {
 			if (App->scene->currentmap == i) {
 				App->fade_to_black->FadeToBlack(App->map->data.levels[i-1]->name.GetString(), 2.0f);
@@ -299,10 +305,11 @@ bool j1Player::Update(float dt)
 		break;
 
 	case ST_DEAD:	
-
+		
 		if (!dead) {
 			inputs.add(IN_WALK_RIGHT); //Returns to idle when restarts player
 		}
+		
 		playerAcceleration = 0;
 		playerSpeed.x = 0;
 		playerSpeed.y = 0;
@@ -457,6 +464,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 			if ((c2->type == COLLIDER_DEATH))
 			{
+				
+				
 				inputs.add(IN_DEAD);
 				dead = true;
 			}
