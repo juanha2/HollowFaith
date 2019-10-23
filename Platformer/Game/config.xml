@@ -34,7 +34,8 @@
   <player>
     <jumpFx path="audio/fx/jump.wav"/>
     <deathFx path="audio/fx/death.wav"/>
-    <winFx path="audio/fx/victory.wav"/>
+    <win1Fx path="audio/fx/victory1.wav"/>
+    <win2Fx path="audio/fx/victory2.wav"/>
   </player>
 
 </config>

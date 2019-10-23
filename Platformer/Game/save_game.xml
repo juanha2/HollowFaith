@@ -11,6 +11,6 @@
 	<particles />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-416" y="-10" />
+		<camera x="-2052" y="-10" />
 	</renderer>
 </game_state>

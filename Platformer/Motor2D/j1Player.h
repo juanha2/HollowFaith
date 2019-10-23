@@ -113,6 +113,7 @@ public:
 	player_states process_fsm(p2List<player_inputs>& inputs); 
 	
 	bool dead = false;
+	bool win = false;
 private:
 
 	// - - - - PLAYER - - - - 
@@ -176,11 +177,12 @@ private:
 
 	p2SString jump_fx;
 	p2SString death_fx;
-	p2SString win_Fx;
+	p2SString win1_Fx;
+	p2SString win2_Fx;
 
 	bool can_climb = false;
-	bool win = false;
-	bool sound_repeat = false;
+	
+	
 };
 
 #endif // __j1PLAYER_H__

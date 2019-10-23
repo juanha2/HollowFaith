@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="25" tilewidth="16" tileheight="16" nextobjectid="108">
-  <properties>
-    <property name="Music" value="audio/music/music2.ogg"/>
-  </properties>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="25" tilewidth="16" tileheight="16" nextobjectid="110">
+ <properties>
+  <property name="Music" value="audio/music/music2.ogg"/>
+ </properties>
  <tileset firstgid="1" name="Assets1" tilewidth="16" tileheight="16" tilecount="675" columns="25">
   <image source="Assets1.png" width="400" height="432"/>
  </tileset>
@@ -17687,10 +17687,12 @@
   <object id="99" name="1" x="1232" y="304" width="368" height="96"/>
   <object id="100" name="1" x="1488" y="0" width="112" height="96"/>
   <object id="101" name="1" x="1504" y="96" width="96" height="32"/>
-  <object id="102" name="1" x="1504" y="256" width="32" height="48"/>
+  <object id="102" name="1" x="1504" y="272" width="32" height="32"/>
   <object id="103" name="1" x="1536" y="240" width="32" height="64"/>
   <object id="104" name="1" x="1568" y="192" width="32" height="112"/>
   <object id="105" name="1" x="880" y="0" width="144" height="48"/>
   <object id="106" name="4" x="1072" y="384" width="160" height="16"/>
+  <object id="108" x="1568" y="128" width="16"/>
+  <object id="109" name="5" x="1584" y="128" width="32" height="64"/>
  </objectgroup>
 </map>

@@ -46,6 +46,8 @@ bool j1Scene::Start()
     App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);    //Plays current map music
     graphics = App->tex->Load("Assets/Sprites/halo.png");
 
+
+	sound_repeat = false; 
     App->render->camera = App->render->camera_init; //Sets camera on inicial position.
 	return true;
 }
@@ -59,6 +61,49 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	
+	if (App->player->win && currentmap==1) {
+
+		if (!sound_repeat && currentmap == 1) {
+			App->audio->PlayFx(3, 0, App->audio->FXvolume);
+			sound_repeat = true;
+		}
+
+		currentmap = 2;
+
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
+			if (currentmap == i)
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i-1]->name.GetString(), 2.0f);
+		}
+	}
+
+	else if (App->player->win && currentmap == 2) {
+
+		if (!sound_repeat && currentmap == 2) {
+			App->audio->PlayFx(4, 0, App->audio->FXvolume);
+			sound_repeat = true;
+		}
+
+		currentmap = 1;
+
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
+			if (currentmap == i)
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 3.0f);
+		}
+	}
+
+	if (App->player->dead) {
+
+		if (!sound_repeat) {
+			App->audio->PlayFx(2, 0, App->audio->FXvolume);
+			sound_repeat = true;
+		}
+
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
+			if (App->scene->currentmap == i)
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
+		}
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame();

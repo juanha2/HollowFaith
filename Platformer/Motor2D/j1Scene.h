@@ -41,6 +41,7 @@ private:
 	
 	bool first = true;
 	SDL_Texture* graphics = nullptr;
+	bool sound_repeat = false;
 
 };
 

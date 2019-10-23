@@ -77,7 +77,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	
 	jump_fx = config.child("jumpFx").attribute("path").as_string();
 	death_fx = config.child("deathFx").attribute("path").as_string();
-	win_Fx = config.child("winFx").attribute("path").as_string();
+	win1_Fx = config.child("win1Fx").attribute("path").as_string();
+	win2_Fx = config.child("win2Fx").attribute("path").as_string();
 	
 	return ret;
 }
@@ -90,7 +91,7 @@ bool j1Player::Start(){
 	win = false;
 	dead = false;
 	death.Reset();
-	sound_repeat = false;
+	
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
 	playerPosition = startPosLevel1;
@@ -98,7 +99,8 @@ bool j1Player::Start(){
 		
 	App->audio->LoadFx(jump_fx.GetString());
 	App->audio->LoadFx(death_fx.GetString());
-	App->audio->LoadFx(win_Fx.GetString());
+	App->audio->LoadFx(win1_Fx.GetString());
+	App->audio->LoadFx(win2_Fx.GetString());
 	return true;
 }
 
@@ -136,19 +138,7 @@ bool j1Player::PreUpdate()
 
 
 	if (!dead) {
-
-		if (win) 
-		{
-			if (!sound_repeat) {
-				App->audio->PlayFx(3, 0, App->audio->FXvolume);
-				sound_repeat = true;
-			}
-			
-			App->scene->currentmap=2;
-			App->fade_to_black->FadeToBlack("level02.tmx", 1.0f);
-		}
-
-
+		
 		//		- - - - - - PLAYER INPUTS - - - - - - 
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) { // Pressing W (Climbing)
@@ -220,20 +210,7 @@ bool j1Player::PreUpdate()
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) { // Releasing Space
 			canJump = true;
 		}
-	}
-	else 
-	{	
-		if (!sound_repeat) {
-			App->audio->PlayFx(2, 0, App->audio->FXvolume);
-			sound_repeat = true;
-		}			
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (App->scene->currentmap == i) 
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i-1]->name.GetString(), 2.0f);
-		}	
-	}
-	
+	}	
 
 	//Refresh the player state
 	player_states state = process_fsm(inputs);
@@ -462,8 +439,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 			if ((c2->type == COLLIDER_DEATH))
 			{
-				
-				
+			
 				inputs.add(IN_DEAD);
 				dead = true;
 			}
