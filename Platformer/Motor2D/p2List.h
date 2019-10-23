@@ -295,36 +295,19 @@ public:
 		return tmp;
 	}
 
-	/**
-* Deletes last item from the list
-*/
+
+// Deletes last item from the list
+
 	bool Pop(tdata& item)
 	{
 		bool result = false;
 
-		p2List_item<tdata>* last = GetLast();
-
-		if (last != NULL)
+		if (start != nullptr)
 		{
-			p2List_item<tdata>* tmp = start;
-
-			if (tmp == last)
-			{
-				// Only one item left in the qeue
-				item = start->data;
-				delete start;
-				start = NULL;
-			}
-			else
-			{
-				while (tmp->next != last)
-					tmp = tmp->next;
-
-				item = tmp->next->data;
-				delete tmp->next;
-				tmp->next = NULL;
-			}
-
+			p2List_item<tdata>* new_start = start->next;
+			item = start->data;
+			RELEASE(start);
+			start = new_start;
 			result = true;
 		}
 

@@ -4,17 +4,17 @@
 	<window />
 	<map />
 	<player>
-		<position x="209" y="21" />
+		<position x="222" y="277" />
 	</player>
 	<textures />
 	<audio />
 	<scene>
-		<currentmap value="2" />
+		<currentmap value="1" />
 	</scene>
 	<colliders />
 	<particles />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-4" y="-10" />
+		<camera x="-6" y="-10" />
 	</renderer>
 </game_state>

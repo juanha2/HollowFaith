@@ -28,6 +28,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	bool ret = true;	
 	
 
+	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 
 	idle.load_animation(animIterator, "idle");
@@ -36,13 +37,15 @@ bool j1Player::Awake(pugi::xml_node& config)
 	death.load_animation(animIterator, "death");
 	climb.load_animation(animIterator, "climb");
 
-
+	// Loading all Player FX
 	jump_fx = config.child("jumpFx").attribute("path").as_string();
 	death_fx = config.child("deathFx").attribute("path").as_string();
 	win1_Fx = config.child("win1Fx").attribute("path").as_string();
 	win2_Fx = config.child("win2Fx").attribute("path").as_string();
 
+	// Loading Player sprite
 	graphics_path = config.child("graphics").attribute("path").as_string();
+
 	return ret;
 }
 
@@ -108,11 +111,6 @@ bool j1Player::PreUpdate()
 		}
 	}
 
-	if (current_state == ST_CLIMB_IDLE)
-		climb.speed = 0;
-	else
-		climb.speed = 0.15f;
-
 	if (!dead) {
 		
 		//		- - - - - - PLAYER INPUTS - - - - - - 
@@ -165,17 +163,15 @@ bool j1Player::PreUpdate()
 		}
 
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && // Pressing Space (Jumping)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && current_state != ST_AT_AIR && // Pressing Space (Jumping)
 			current_state != ST_CLIMB && current_state != ST_CLIMB_IDLE) 
 		{
-			if (canJump == true) {
-				App->audio->PlayFx(1, 0, App->audio->FXvolume);
-				App->particles->AddParticle(App->particles->dustJumping, playerPosition.x, playerPosition.y + playerTexture.h, playerFlip, COLLIDER_NONE);
-			}
-					
+			
+			App->audio->PlayFx(1, 0, App->audio->FXvolume);
+			App->particles->AddParticle(App->particles->dustJumping, playerPosition.x, playerPosition.y + playerTexture.h, playerFlip, COLLIDER_NONE);			
 			playerSpeed.y = movementForce.y;
 			inputs.add(IN_JUMPING);
-			canJump = false;
+		
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) { // Stay pressing Space (Hovering)
 
@@ -184,7 +180,7 @@ bool j1Player::PreUpdate()
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) { // Releasing Space
-			canJump = true;
+
 		}
 	}	
 
@@ -245,6 +241,8 @@ bool j1Player::Update(float dt)
 		playerAcceleration = 0;
 		playerSpeed.x = 0;
 		playerSpeed.y = 0;
+		climb.speed = 0.15f;
+
 		current_animation = &climb;
 		break;
 
@@ -252,6 +250,8 @@ bool j1Player::Update(float dt)
 		playerAcceleration = 0;
 		playerSpeed.x = 0;
 		playerSpeed.y = 0;
+		climb.speed = 0;
+			
 		current_animation = &climb;
 		break;
 

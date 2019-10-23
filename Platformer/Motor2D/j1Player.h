@@ -132,7 +132,6 @@ private:
 	float hoverSpeedActivation = -40.0f;
 	float hoverFallSmooth = 6.0f;
 
-	bool canJump = true;
 	void PlayerPositionUpdate(float dt); //Update player's position
 	// - - - - - - - - - - - 
 

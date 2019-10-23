@@ -174,7 +174,7 @@ void j1App::PrepareUpdate()
 void j1App::FinishUpdate()
 {
 	if(want_to_save == true)
-		SavegameNow();
+		SaveGameNow();
 
 	if(want_to_load == true)
 		LoadGameNow();
@@ -348,7 +348,7 @@ bool j1App::LoadGameNow()
 	return ret;
 }
 
-bool j1App::SavegameNow() const
+bool j1App::SaveGameNow() const
 {
 	bool ret = true;
 	

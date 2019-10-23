@@ -63,12 +63,6 @@ bool j1Scene::Update(float dt)
 {
 	Win_Lose_Condition();	
 
-	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame();
-
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->SaveGame();		
-
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {	
 		if (App->render->camera.y>-App->map->data.height*App->map->data.tile_height)
 			App->render->camera.y -= 1;	
