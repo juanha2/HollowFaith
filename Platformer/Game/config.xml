@@ -119,4 +119,31 @@
 
   </player>
 
+  <particles>
+    <animations>
+      <animation name ="dustJumping">
+        <sprite x ="8" y ="247" w ="13" h="5"/>
+        <sprite x ="37" y ="249" w ="19" h="5"/>
+        <sprite x ="68" y ="250" w ="21" h="5"/>
+        <sprite x ="99" y ="252" w ="17" h="4"/>
+        <sprite x ="131" y ="252" w ="23" h="4"/>
+
+        <animValues loop="false" speed="0.4f"/>
+      </animation>
+
+      <animation name ="dustRunning">
+        <sprite x ="225" y ="241" w ="17" h="14"/>
+        <sprite x ="258" y ="245" w ="13" h="11"/>
+        <sprite x ="289" y ="243" w ="18" h="13"/>
+        <sprite x ="321" y ="240" w ="17" h="16"/>
+        <sprite x ="352" y ="239" w ="17" h="17"/>
+        <sprite x ="385" y ="243" w ="13" h="13"/>
+
+        <animValues loop="false" speed="0.1f"/>
+      </animation>
+
+    </animations>
+  </particles>
+
+
 </config>

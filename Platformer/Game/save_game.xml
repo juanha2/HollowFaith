@@ -4,7 +4,7 @@
 	<window />
 	<map />
 	<player>
-		<position x="115" y="325" />
+		<position x="204" y="277" />
 	</player>
 	<textures />
 	<audio />

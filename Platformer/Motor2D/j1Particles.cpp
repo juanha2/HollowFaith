@@ -62,7 +62,6 @@ bool j1Particles::Update(float dt)
 
 		if (p == nullptr)
 			continue;
-		//App->render->Blit(App->player->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
 
 		if (p->Update() == false)
 		{
