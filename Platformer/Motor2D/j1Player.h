@@ -111,6 +111,9 @@ public:
 
 	// State machine
 	player_states process_fsm(p2List<player_inputs>& inputs); 
+
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 	
 	bool dead = false;
 	bool win = false;

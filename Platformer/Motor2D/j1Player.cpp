@@ -54,16 +54,25 @@ bool j1Player::Start(){
 	win = false;
 	dead = false;
 	death.Reset();
-	
+
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
-	playerPosition = startPosLevel1;
+
+	if (App->scene->different_map) {
+		playerPosition.x = savedPosition.x;
+		playerPosition.y = savedPosition.y;
+		App->scene->different_map = false;
+	}
+	else
+		playerPosition = startPosLevel1;
+
 	graphics = App->tex->Load(graphics_path.GetString());
-		
+
 	App->audio->LoadFx(jump_fx.GetString());
 	App->audio->LoadFx(death_fx.GetString());
 	App->audio->LoadFx(win1_Fx.GetString());
 	App->audio->LoadFx(win2_Fx.GetString());
+
 	return true;
 }
 
@@ -621,4 +630,34 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 		}
 	}
 	return state;
+}
+
+// Load Game State
+bool j1Player::Load(pugi::xml_node& data)
+{
+
+	if (App->scene->currentmap == App->scene->savedcurrentmap) {
+		playerPosition.x = data.child("position").attribute("x").as_int();
+		playerPosition.y = data.child("position").attribute("y").as_int();
+	}
+
+	if (App->scene->different_map) {
+		savedPosition.x = data.child("position").attribute("x").as_int();
+		savedPosition.y = data.child("position").attribute("y").as_int();
+	}
+
+
+	return true;
+}
+
+// Save Game State
+bool j1Player::Save(pugi::xml_node& data) const
+{
+
+	pugi::xml_node pos = data.append_child("position");
+
+	pos.append_attribute("x").set_value(playerPosition.x);
+	pos.append_attribute("y").set_value(playerPosition.y);
+
+	return true;
 }

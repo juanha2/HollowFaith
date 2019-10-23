@@ -9,6 +9,8 @@ class j1Scene : public j1Module
 {
 public:
 	int currentmap;
+	int savedcurrentmap;
+	bool different_map = false;
 	j1Scene();
 
 	// Destructor

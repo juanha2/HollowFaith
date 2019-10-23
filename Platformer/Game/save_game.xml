@@ -3,14 +3,18 @@
 	<input />
 	<window />
 	<map />
-	<player />
+	<player>
+		<position x="209" y="21" />
+	</player>
 	<textures />
 	<audio />
-	<scene />
+	<scene>
+		<currentmap value="2" />
+	</scene>
 	<colliders />
 	<particles />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-96" y="-10" />
+		<camera x="-4" y="-10" />
 	</renderer>
 </game_state>

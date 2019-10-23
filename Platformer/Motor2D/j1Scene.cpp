@@ -157,21 +157,26 @@ bool j1Scene::CleanUp()
 
 bool j1Scene::Save(pugi::xml_node& save) const
 {
-	//Save all the player's status variables
-	//save.append_child("current_map").append_attribute("name") = App->map->data.currentmap.GetString();
 	App->player->savedPosition.x = App->player->playerPosition.x;
 	App->player->savedPosition.y = App->player->playerPosition.y;
+
+	pugi::xml_node current_map = save.append_child("currentmap");
+
+	current_map.append_attribute("value").set_value(currentmap);
 
 	return true;
 }
 
 bool j1Scene::Load(pugi::xml_node& save)
 {
-	//Save all the player's status variables
-	//save.append_child("current_map").append_attribute("name") = App->map->data.currentmap.GetString();
-	App->player->ignoreColl = true;
-	App->player->playerPosition.y = App->player->savedPosition.y;
-	App->player->playerPosition.x = App->player->savedPosition.x;
+	savedcurrentmap = save.child("currentmap").attribute("value").as_int();
+
+	if (savedcurrentmap != currentmap) {
+		currentmap = savedcurrentmap;
+		different_map = true;
+		App->fade_to_black->FadeToBlack(App->map->data.levels[savedcurrentmap - 1]->name.GetString(), 1.0f);
+	}
+
 
 
 	return true;
