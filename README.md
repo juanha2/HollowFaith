@@ -1,4 +1,4 @@
-# HollowFaith
+﻿# HollowFaith
 Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM during the "development of videogames" subject. The first level gives you time to adapt to the mechanics, in the second level those skills will be put to test.
 
 ## How to play:
@@ -63,7 +63,16 @@ Juan Hernández Almagro
 - Blit only current map tiles
 - Climb mechanic
 
-Aaron Guerrero Bueno
+Aaron Guerrero Cruz
+- Creation of player time/movement logic system
+- Implemented collision logic system
+- Implemented animation logic system
+- Implemented particles logic system
+- Implemented camara movement logic system
+- Added XML Animation method
+- Added particles effects in-game
+- Added debug functions
+- Hover mechanic
 
 
 ## Debug functionality:
