@@ -77,6 +77,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	
 	jump_fx = config.child("jumpFx").attribute("path").as_string();
 	death_fx = config.child("deathFx").attribute("path").as_string();
+	win_Fx = config.child("winFx").attribute("path").as_string();
 	
 	return ret;
 }
@@ -97,6 +98,7 @@ bool j1Player::Start(){
 		
 	App->audio->LoadFx(jump_fx.GetString());
 	App->audio->LoadFx(death_fx.GetString());
+	App->audio->LoadFx(win_Fx.GetString());
 	return true;
 }
 
@@ -137,6 +139,11 @@ bool j1Player::PreUpdate()
 
 		if (win) 
 		{
+			if (!sound_repeat) {
+				App->audio->PlayFx(3, 0, App->audio->FXvolume);
+				sound_repeat = true;
+			}
+			
 			App->scene->currentmap=2;
 			App->fade_to_black->FadeToBlack("level02.tmx", 1.0f);
 		}

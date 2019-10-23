@@ -176,6 +176,7 @@ private:
 
 	p2SString jump_fx;
 	p2SString death_fx;
+	p2SString win_Fx;
 
 	bool can_climb = false;
 	bool win = false;

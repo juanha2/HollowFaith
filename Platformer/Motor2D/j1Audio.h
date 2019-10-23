@@ -37,7 +37,7 @@ public:
 	bool UnLoad();
 
 
-	int FXvolume = 20;
+	int FXvolume = 60;
 
 private:
 

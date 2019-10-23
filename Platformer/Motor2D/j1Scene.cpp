@@ -35,23 +35,18 @@ bool j1Scene::Start()
 {
 	
 	//Load first level at start
-	if (first) {
-		
-		p2List_item<Levels*>* levelData = App->map->data.levels.start;
-		App->map->Load(levelData->data->name.GetString());		
-		//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
-		currentmap = 1;
-		first = false;
-	}
-	
-	if (currentmap == 1) {
-		//App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);
-	}
-	if (currentmap == 2) {
-	//	App->audio->PlayMusic(App->map->data.properties.start->next->data->value.GetString(), 1.0f);
-	}
-	App->render->camera = App->render->camera_init; //Sets camera on inicial position.
-	graphics = App->tex->Load("Assets/Sprites/halo.png");
+	  if (first) {
+
+        p2List_item<Levels*>* levelData = App->map->data.levels.start;
+        App->map->Load(levelData->data->name.GetString());
+        currentmap = 1;
+        first = false;
+    }
+
+    App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);    //Plays current map music
+    graphics = App->tex->Load("Assets/Sprites/halo.png");
+
+    App->render->camera = App->render->camera_init; //Sets camera on inicial position.
 	return true;
 }
 
