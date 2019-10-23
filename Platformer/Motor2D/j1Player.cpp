@@ -28,35 +28,20 @@ bool j1Player::Awake(pugi::xml_node& config)
 	bool ret = true;	
 	
 
-
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 
+	idle.load_animation(animIterator, "idle");
+	walk.load_animation(animIterator, "walk");
+	jump.load_animation(animIterator, "jump");
+	death.load_animation(animIterator, "death");
+	climb.load_animation(animIterator, "climb");
 
-	idle.loadAnimation(animIterator, "idle");
-	idle.loop = true;
-	idle.speed = 0.06f;
-
-	walk.loadAnimation(animIterator, "walk");
-	walk.loop = true;
-	walk.speed = 0.08f;
-
-	jump.loadAnimation(animIterator, "jump");
-	jump.loop = true;
-	jump.firstLoopFrame = 5;
-	jump.speed = 0.15f;
-
-	death.loadAnimation(animIterator, "death");
-	death.loop = false;
-	death.speed = 0.15f;
-
-	climb.loadAnimation(animIterator, "climb");
-	climb.loop = true;
-	climb.speed = 0.15f;
 
 	jump_fx = config.child("jumpFx").attribute("path").as_string();
 	death_fx = config.child("deathFx").attribute("path").as_string();
 	win1_Fx = config.child("win1Fx").attribute("path").as_string();
 	win2_Fx = config.child("win2Fx").attribute("path").as_string();
+
 	graphics_path = config.child("graphics").attribute("path").as_string();
 	return ret;
 }

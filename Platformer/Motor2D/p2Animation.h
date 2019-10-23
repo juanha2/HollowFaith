@@ -29,7 +29,7 @@ public:
 		assert(last_frame < MAX_FRAMES);
 	}
 
-	void loadAnimation(pugi::xml_node animationIterator, p2SString name)
+	void load_animation(pugi::xml_node animationIterator, p2SString name)
 	{
 		for (animationIterator = animationIterator; animationIterator != NULL; animationIterator = animationIterator.next_sibling("animation"))
 		{
@@ -42,6 +42,9 @@ public:
 					frame.y = framesIterator.attribute("y").as_int();
 					frame.w = framesIterator.attribute("w").as_int();
 					frame.h = framesIterator.attribute("h").as_int();
+
+					this->loop = animationIterator.child("animValues").attribute("loop").as_bool();
+					this->speed = animationIterator.child("animValues").attribute("speed").as_float();
 
 					this->PushBack(frame);
 				}

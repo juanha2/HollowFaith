@@ -172,7 +172,6 @@ private:
 	Animation jump;
 	Animation climb;
 	Animation death;
-	SDL_Rect	climb_idle;
 	
 	p2SString graphics_path;
 	p2SString jump_fx;

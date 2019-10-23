@@ -44,6 +44,8 @@
         <sprite x ="39" y ="164" w ="17" h="28"/>
         <sprite x ="70" y ="163" w ="18" h="29"/>
         <sprite x ="7" y ="164" w ="17" h="28"/>
+        
+        <animValues loop="true" speed="0.06f"/>      
       </animation>
 
       <animation name ="walk">
@@ -53,6 +55,8 @@
         <sprite x ="102" y ="37" w ="18" h="27"/>
         <sprite x ="135" y ="36" w ="17" h="28"/>
         <sprite x ="167" y ="36" w ="17" h="28"/>
+
+        <animValues loop="true" speed="0.08f"/>
       </animation>
 
       <animation name ="jump">
@@ -64,6 +68,8 @@
         <sprite x ="389" y ="34" w ="20" h="29"/>
         <sprite x ="420" y ="37" w ="22" h="27"/>
         <sprite x ="454" y ="38" w ="18" h="26"/>
+
+        <animValues loop="true" speed="0.15f"/>
       </animation>
 
       <animation name ="death">
@@ -74,6 +80,8 @@
         <sprite x ="352" y ="148" w ="35" h="12"/>
         <sprite x ="393" y ="147" w ="25" h="13"/>
         <sprite x ="180" y ="120" w ="25" h="13"/>
+
+        <animValues loop="false" speed="0.15f"/>
       </animation>
 
       <animation name ="climb">
@@ -81,10 +89,8 @@
         <sprite x ="39" y ="131" w ="18" h="29"/>
         <sprite x ="69" y ="131" w ="20" h="29"/>
         <sprite x ="100" y ="131" w ="19" h="29"/>
-      </animation>
 
-      <animation name ="climb_idle">
-        <sprite x ="5" y ="131" w ="19" h="29"/>
+        <animValues loop="true" speed="0.15f"/>
       </animation>
     </animations>
     
