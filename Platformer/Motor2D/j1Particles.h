@@ -35,11 +35,12 @@ struct Particle
 
 class j1Particles : public j1Module
 {
+
 public:
 	j1Particles();
 	~j1Particles();
 
-	bool Start();
+	bool Awake(pugi::xml_node&);
 	bool Update(float dt);
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
@@ -51,13 +52,13 @@ private:
 
 	SDL_Texture* graphics = nullptr;
 	uint last_particle = 0;
+	Uint32 defaultParticleLife = 200;
 
 public:
 
 	Particle* active[MAX_ACTIVE_PARTICLES];
 	Particle dustJumping;
 	Particle dustRunning;
-
 
 };
 

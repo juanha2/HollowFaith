@@ -20,34 +20,19 @@ j1Particles::j1Particles()
 j1Particles::~j1Particles()
 {}
 
-// Load assets
-bool j1Particles::Start()
+bool j1Particles::Awake(pugi::xml_node& config)
 {
+	// Loading Particle Animations
+	pugi::xml_node animIterator = config.child("animations").child("animation");
 
-	// Dust Jumping Effect
-	dustJumping.anim.PushBack({ 8, 247, 13, 5 });
-	dustJumping.anim.PushBack({ 37, 249, 19, 5 });
-	dustJumping.anim.PushBack({ 68, 250, 21, 5 });
-	dustJumping.anim.PushBack({ 99, 252, 17, 4 });
-	dustJumping.anim.PushBack({ 131, 252, 23, 4 });
+	dustJumping.anim.load_animation(animIterator, "dustJumping");
+	dustJumping.life = defaultParticleLife;
 
-	dustJumping.anim.loop = false;
-	dustJumping.anim.speed = 0.4f;
-	dustJumping.life = 200;
-
-	// Dust Running Effect
-	dustRunning.anim.PushBack({ 225, 241, 17, 14 });
-	dustRunning.anim.PushBack({ 258, 245, 13, 11 });
-	dustRunning.anim.PushBack({ 289, 243, 18, 13 });
-	dustRunning.anim.PushBack({ 321, 240, 17, 16 });
-	dustRunning.anim.PushBack({ 352, 239, 17, 17 });
-	dustRunning.anim.PushBack({ 385, 243, 13, 13 });
-
-	dustRunning.anim.loop = true;
-	dustRunning.anim.speed = 0.1f;	
-	dustRunning.life = 1000;
+	dustRunning.anim.load_animation(animIterator, "dustRunning");
+	dustRunning.life = defaultParticleLife;
 
 	return true;
+
 }
 
 // Unload assets

@@ -53,6 +53,7 @@ public:
 		}
 	}
 
+
 	SDL_Rect& GetCurrentFrame() //float dt
 	{
 		float tmp = speed;
