@@ -1,34 +1,101 @@
-# Hollow Faith
+# HollowFaith
+Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM during the "development of videogames" subject. The first level gives you time to adapt to the mechanics, in the second level those skills will be put to test.
 
-### Link to our Github Project - https://github.com/juanha2/HollowFaith
+## How to play:
 
-# How to Play
+### General
+- ESC: Close Game
+### Keyboard:
+- A: Move left
+- D: Move right
+- W: Climb up
+- S: Climb down
+- Space: Jump
+- Hold Space while in air: hover
 
-#### Concept
-This game consists on 2D arcade platformer. The first level has the time to adapt to the controls, in the second level those skills will be put to the test. Our goal is to set it in a world of abstract characters and that transmits certain feelings.
+## Credits
+- Aaron Guerrero Cruz
+> Github profile: https://github.com/AaronGCProg
 
-### Inputs
+- Juan Hernández Almagro
+> Github profile: https://github.com/juanha2
 
-##### General
+- Art from:
 
-ESC - Close the game <br>
+https://craftpix.net/freebies/free-pixel-art-tiny-hero-sprites/?utm_source=dribbble.com&utm_medium=myself&utm_campaign=sprite
 
-##### Player
+https://anokolisa.itch.io/forest-game-assets-20
 
-Special Mechanics:
-Climb & Hover.
+https://vnitti.itch.io/glacial-mountains-parallax-background
 
-Keyboard:
-A & D  - Left & Right Movement<br>
-W - You hold on to the stairs<br>
-W & S - Up & Down Movement when you're climbing<br> 
+- Music from:
 
-Space - Jump<br>
-Holding Space - While jumping, if you hold the Space, you can hover for a few more moments.<br>
-<br>
+https://www.bensound.com/royalty-free-music/track/sad-day
 
-##### Innovation
-Animation loading from XML.<br>
-Particle Effects.<br>
-Procedural collision system.<br> 
+https://www.bensound.com/royalty-free-music/track/november
+
+- SFX from:
+
+https://freesound.org/people/shinephoenixstormcrow/sounds/337049/
+
+https://freesound.org/people/elijahdanie/sounds/487436/
+
+
+## Innovations:
+- Animation loading from XML
+- Particle effects system
+- Procedural collision system
+- New mechanics: Climb and hover!
+- Parallax made from Tiled
+- Music path from Tiled Map editor
+- Only blit current Camera Tiles
+
+## Member contributions
+
+Juan Hernández Almagro
+- Creation of the maps
+- Implemented colliders from Tiled
+- Implemented animations 
+- Implemented transitions between maps 
+- Win/Lose Condition
+- Added music and sfx
+- Camera limits
+- Blit only current map tiles
+- Climb mechanic
+
+Aaron Guerrero Bueno
+
+
+## Debug functionality:
+- F1 ​Start from level 1
+- F2 ​Start from level 2
+- F5 ​Save the current state
+- F6 ​Load the previous state
+- F9​ See paths and colliders
+- F10​ God Mode
+## License:
+MIT License
+
+Copyright (c) [2019] [Aaron Guerrero Bueno / Juan Hernández Almagro]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Find this project's repository in:
+https://github.com/juanha2/HollowFaith
 
