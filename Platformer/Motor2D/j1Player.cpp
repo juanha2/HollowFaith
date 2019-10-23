@@ -79,7 +79,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	death_fx = config.child("deathFx").attribute("path").as_string();
 	win1_Fx = config.child("win1Fx").attribute("path").as_string();
 	win2_Fx = config.child("win2Fx").attribute("path").as_string();
-	
+	graphics_path = config.child("graphics").attribute("path").as_string();
 	return ret;
 }
 
@@ -95,7 +95,7 @@ bool j1Player::Start(){
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
 	playerPosition = startPosLevel1;
-	graphics = App->tex->Load("Assets/Sprites/Monster.png");
+	graphics = App->tex->Load(graphics_path.GetString());
 		
 	App->audio->LoadFx(jump_fx.GetString());
 	App->audio->LoadFx(death_fx.GetString());

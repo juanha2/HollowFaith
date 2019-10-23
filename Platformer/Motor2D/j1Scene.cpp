@@ -61,49 +61,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	
-	if (App->player->win && currentmap==1) {
-
-		if (!sound_repeat && currentmap == 1) {
-			App->audio->PlayFx(3, 0, App->audio->FXvolume);
-			sound_repeat = true;
-		}
-
-		currentmap = 2;
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i-1]->name.GetString(), 2.0f);
-		}
-	}
-
-	else if (App->player->win && currentmap == 2) {
-
-		if (!sound_repeat && currentmap == 2) {
-			App->audio->PlayFx(4, 0, App->audio->FXvolume);
-			sound_repeat = true;
-		}
-
-		currentmap = 1;
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 3.0f);
-		}
-	}
-
-	if (App->player->dead) {
-
-		if (!sound_repeat) {
-			App->audio->PlayFx(2, 0, App->audio->FXvolume);
-			sound_repeat = true;
-		}
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (App->scene->currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
-		}
-	}
+	Win_Lose_Condition();	
 
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame();
@@ -130,15 +88,15 @@ bool j1Scene::Update(float dt)
 		if (App->render->camera.x < 0)
 			App->render->camera.x += 1;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-		currentmap = 2;
-		App->fade_to_black->FadeToBlack("level02.tmx", 1.0f);
-	}
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		currentmap = 1;
-		App->fade_to_black->FadeToBlack("level01.tmx", 1.0f);
-
+		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		currentmap = 2;
+		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
+	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
 		App->SaveGame();
 	}
@@ -217,4 +175,53 @@ bool j1Scene::Load(pugi::xml_node& save)
 
 
 	return true;
+}
+
+void j1Scene::Win_Lose_Condition() {
+
+	// Winning at map 1--------------------------
+	if (App->player->win && currentmap == 1) {
+
+		if (!sound_repeat && currentmap == 1) {
+			App->audio->PlayFx(3, 0, App->audio->FXvolume);
+			sound_repeat = true;
+		}
+
+		currentmap = 2;
+
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
+			if (currentmap == i)
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
+		}
+	}
+
+	// Winning at map 2--------------------------
+	else if (App->player->win && currentmap == 2) {
+
+		if (!sound_repeat && currentmap == 2) {
+			App->audio->PlayFx(4, 0, App->audio->FXvolume);
+			sound_repeat = true;
+		}
+
+		currentmap = 1;
+
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
+			if (currentmap == i)
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 3.0f);
+		}
+	}
+
+	// Dying -----------------------------------------
+	if (App->player->dead) {
+
+		if (!sound_repeat) {
+			App->audio->PlayFx(2, 0, App->audio->FXvolume);
+			sound_repeat = true;
+		}
+
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
+			if (App->scene->currentmap == i)
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
+		}
+	}
 }

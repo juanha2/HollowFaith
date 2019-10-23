@@ -174,7 +174,7 @@ private:
 	Animation death;
 	SDL_Rect	climb_idle;
 	
-
+	p2SString graphics_path;
 	p2SString jump_fx;
 	p2SString death_fx;
 	p2SString win1_Fx;

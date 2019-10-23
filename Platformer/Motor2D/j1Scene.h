@@ -39,6 +39,7 @@ public:
 
 private:
 	
+	void Win_Lose_Condition();
 	bool first = true;
 	SDL_Texture* graphics = nullptr;
 	bool sound_repeat = false;

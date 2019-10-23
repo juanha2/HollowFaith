@@ -32,6 +32,7 @@
   </map>
 
   <player>
+    <graphics path="Assets/Sprites/Monster.png"/>
     <jumpFx path="audio/fx/jump.wav"/>
     <deathFx path="audio/fx/death.wav"/>
     <win1Fx path="audio/fx/victory1.wav"/>
