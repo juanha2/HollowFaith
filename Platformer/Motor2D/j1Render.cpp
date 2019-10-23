@@ -48,6 +48,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera.y = config.child("camera_pos").attribute("y").as_float();
 
 		camera_init = camera;
+		
 	}
 
 	return ret;

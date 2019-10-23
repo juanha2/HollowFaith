@@ -35,6 +35,10 @@ public:
 	bool PlayFx(unsigned int fx, int repeat, uint volume);
 
 	bool UnLoad();
+
+
+	int FXvolume = 20;
+
 private:
 
 	_Mix_Music*			music;

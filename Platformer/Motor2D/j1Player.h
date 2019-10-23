@@ -122,9 +122,12 @@ private:
 	float playerClimbSpeed = 1.0f;
 	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
 	float playerAcceleration = 0.0f;// Player acceleration AXIS value
-	float hoverAcceleration = 0.0f;
 	fPoint movementForce = { -20.0f ,-420.0f }; // Force applied to the movement in AXIS value
 	
+	float hoverAcceleration = -1300.0f;
+	float hoverSpeedActivation = -40.0f;
+	float hoverFallSmooth = 6.0f;
+
 	bool canJump = true;
 	void PlayerPositionUpdate(float dt); //Update player's position
 	// - - - - - - - - - - - 
@@ -134,7 +137,7 @@ private:
 	fPoint cameraSpeed = { 0.0f,0.0f }; // Camera speed AXIS value
 	fPoint cameraSpeedLimit = { 200.0f, 250.0f }; // Camera max speed value
 
-	float cameraFollowingPoint = 340.0f;
+	int startCameraFollowingPoint = 1325;
 	float cameraFollowingGuide = 0.0f;
 
 	void cameraSpeedLimitChecker();
@@ -146,6 +149,7 @@ private:
 	//  - - - - TIME - - - - 
 	float previousTime = 0.0f;
 	float frameToSecondValue = 0.0f;
+	float maxFrameToSecondValue = 0.16f;
 	// - - - - - - - - - - - 
 
 

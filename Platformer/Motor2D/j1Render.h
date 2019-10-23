@@ -52,6 +52,7 @@ public:
 	SDL_Color		background;
 
 	SDL_Rect		camera_init;
+
 };
 
 #endif // __j1RENDER_H__

@@ -132,103 +132,98 @@ bool j1Player::PreUpdate()
 		}
 	}
 
-	//		- - - - - - CAMERA FOLLOW - - - - - - 	
-
-	if (playerPosition.x > cameraFollowingPoint) // Starts to follow the player faster in X position.
-	{
-
-		if(playerPosition.x)
-			cameraSpeed.x -= playerSpeed.x;
-	}
-	else 
-		cameraSpeed.x -= playerSpeed.x / 40;	
 
 	if (!dead) {
 
-		if (win) {
+		if (win) 
+		{
 			App->scene->currentmap=2;
 			App->fade_to_black->FadeToBlack("level02.tmx", 1.0f);
 		}
+
+
 		//		- - - - - - PLAYER INPUTS - - - - - - 
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) {
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) { // Pressing W (Climbing)
 			playerPosition.y -= playerClimbSpeed;
 			inputs.add(IN_CLIMB);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) {
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) { // Releasing W
 			inputs.add(IN_UPWARDS_UP);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && current_state != ST_CLIMB) {
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Pressing S (Climbing)
+			playerPosition.y += playerClimbSpeed;
+			inputs.add(IN_CLIMB);	
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Releasing S
+			playerPosition.y += 1;
+			inputs.add(IN_UPWARDS_UP);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && current_state != ST_CLIMB) { // Pressing A (Running)
 			playerSpeed.x += movementForce.x;
 			playerFlip = SDL_FLIP_HORIZONTAL;
 			inputs.add(IN_WALK_LEFT);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) {
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_UP) { // Releasing A 
 			inputs.add(IN_LEFT_UP);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) { // Pressing D (Running)
 			playerSpeed.x -= movementForce.x;
 			playerFlip = SDL_FLIP_NONE;
 			inputs.add(IN_WALK_RIGHT);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) {
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) { // Releasing D 
 			inputs.add(IN_RIGHT_UP);
 		}
+
 		//  - - - - - ONLY ON GOD MODE - - - - - - -
-		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) {
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && godMode) { // Pressing W in God mode (Flying)
 			playerSpeed.y += movementForce.x;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) {
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && godMode) { // Pressing S in God mode (Flying)
 			playerSpeed.y -= movementForce.x;
 		}
 		// - - - - - - - - - - - - - - - - - - - - - 
-		else
+
+		else // If none key is pressed, the player and the camera will start braking.
 		{
 			braking(); // Smoothy braking when player stops running
 			cameraBraking(); // Smoothy camera braking when player is not running
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && current_state != ST_CLIMB && current_state != ST_CLIMB_IDLE) // Jumping
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state != ST_AT_AIR && // Pressing Space (Jumping)
+			current_state != ST_CLIMB && current_state != ST_CLIMB_IDLE) 
 		{
 			if (canJump == true) {
-				App->audio->PlayFx(1, 0, 20);
+				App->audio->PlayFx(1, 0, App->audio->FXvolume);
 				App->particles->AddParticle(App->particles->dustJumping, playerPosition.x, playerPosition.y + playerTexture.h, playerFlip, COLLIDER_NONE);
 			}
-				
-			
+					
 			playerSpeed.y = movementForce.y;
 			inputs.add(IN_JUMPING);
 			canJump = false;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) {
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) { // Stay pressing Space (Hovering)
 
-			if (playerAcceleration > -1300 && playerSpeed.y < -40)
-				playerAcceleration += (movementForce.y / 6);
+			if (playerAcceleration > hoverAcceleration && playerSpeed.y < hoverSpeedActivation)
+				playerAcceleration += (movementForce.y / hoverFallSmooth);
 
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) {
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) { // Releasing Space
 			canJump = true;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
-			inputs.add(IN_CLIMB);
-			playerPosition.y += playerClimbSpeed; // Get down while you're in the air faster
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) {
-			inputs.add(IN_UPWARDS_UP);
-			playerPosition.y += 1; // Get down while you're in the air faster
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !godMode)
-			playerAcceleration += -movementForce.y; // Get down while you're in the air faster
 	}
-	else {			
+	else 
+	{	
 		if (!sound_repeat) {
-			App->audio->PlayFx(2, 0, 20);
+			App->audio->PlayFx(2, 0, App->audio->FXvolume);
 			sound_repeat = true;
 		}			
 
 		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (App->scene->currentmap == i) {
+			if (App->scene->currentmap == i) 
 				App->fade_to_black->FadeToBlack(App->map->data.levels[i-1]->name.GetString(), 2.0f);
-			}
 		}	
 	}
 	
@@ -240,14 +235,13 @@ bool j1Player::PreUpdate()
 	//Get time from frames and it's corrected
 	previousTime = frameToSecondValue;
 	frameToSecondValue = App->DeltaTime();
-	if (frameToSecondValue > 0.16)
-		frameToSecondValue = 0.16f;
+	if (frameToSecondValue > maxFrameToSecondValue)
+		frameToSecondValue = maxFrameToSecondValue;
 
 
 	//Update position related to real time and puts speed limit.
 	speedLimitChecker();
 	PlayerPositionUpdate(frameToSecondValue);
-
 
 
 	//Update position related to real time and player position.
@@ -277,12 +271,9 @@ bool j1Player::Update(float dt)
 		
 		if(!godMode)
 			playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player		
-		
-
 		break;
 
 	case ST_WALK_RIGHT:
-		
 		current_animation = &walk;
 		break;
 
@@ -314,7 +305,6 @@ bool j1Player::Update(float dt)
 		playerSpeed.x = 0;
 		playerSpeed.y = 0;
 		current_animation = &death;
-		
 		break;
 	}
 
@@ -323,7 +313,8 @@ bool j1Player::Update(float dt)
 
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
-		colisionadores[i] = App->coll->AddCollider({ (int)playerPosition.x, (int)playerPosition.y, playerTexture.w, playerTexture.h }, COLLIDER_PLAYER, 0, 0, 0, 0, this); // Creating player colliders
+		colisionadores[i] = App->coll->AddCollider({ (int)playerPosition.x, (int)playerPosition.y, playerTexture.w, playerTexture.h }, 
+			COLLIDER_PLAYER, 0, 0, 0, 0, this); // Creating player colliders
 	}
 
 	return true;
@@ -332,20 +323,20 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 	
-	if(current_state==ST_CLIMB_IDLE)
-	App->render->Blit(graphics, playerPosition.x, playerPosition.y, &climb_idle, 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing player texture
+	if(current_state == ST_CLIMB_IDLE)
+	App->render->Blit(graphics, playerPosition.x, playerPosition.y, 
+		&climb_idle, 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing climbing idle player texture
+	else 
+		App->render->Blit(graphics, playerPosition.x, playerPosition.y, 
+			&current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing all other player textures
 
-	else {
-		App->render->Blit(graphics, playerPosition.x, playerPosition.y, &current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing player texture
-
-	}
+	
 	
 	return true;
 }
 
 void j1Player::PlayerPositionUpdate(float dt)
 {
-
 
 	// X AXIS POS
 	playerPosition.x = playerPosition.x + playerSpeed.x * dt;
@@ -361,8 +352,8 @@ void j1Player::PlayerPositionUpdate(float dt)
 void j1Player::CameraPositionUpdate(float dt) {
 
 	// X AXIS POS
-	if (playerPosition.x > 1024 / 4 - playerTexture.w && playerPosition.x < 1325)
-		App->render->camera.x = (-playerPosition.x + 1024 / 4 - playerTexture.w ) * 2;
+	if (playerPosition.x > App->win->width / (App->win->scale * 2) - playerTexture.w && playerPosition.x < startCameraFollowingPoint)
+		App->render->camera.x = (-playerPosition.x + App->win->width / (App->win->scale * 2) - playerTexture.w ) * App->win->scale;
 
 
 	// Y AXIS POS
