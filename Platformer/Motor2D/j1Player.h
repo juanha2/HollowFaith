@@ -66,28 +66,34 @@ class j1Player : public j1Module
 
 public:
 
-	Collider* colisionadores[MAXNUMOFCOLLIDERS];	
+	Collider* colisionadores[MAXNUMOFCOLLIDERS];
 	SDL_Texture* graphics = nullptr;
 
-	iPoint startPosLevel1 = { 50, 340 };
-	iPoint startPosLevel2 = { 50 , 340 };
+	iPoint				startPosLevel1;
+	iPoint				startPosLevel2;
 
-	iPoint savedPosition = { 0, 670 };
+	iPoint				savedPosition = { 0, 670 };
 
-	iPoint playerPosition = startPosLevel1; //Player position on the world value
-	bool checkingFall = false;
-	bool ignoreColl = false;
-	bool godMode = false;
+	iPoint				playerPosition = startPosLevel1;		//Player position on the world value
+	bool				checkingFall = false;
+	bool				ignoreColl = false;
+	bool				godMode = false;
+	bool				dead = false;
+	bool				win = false;
+	bool				can_climb = false;
 
 	// - - - - INPUT - - - - 
-	p2List<player_inputs> inputs; //Stores player related inputs
-	player_states current_state = ST_UNKNOWN; //Intializing player status
+
+	p2List<player_inputs>	 inputs;							//Stores player related inputs
+	player_states			 current_state = ST_UNKNOWN;		//Intializing player status
+
 	// - - - - - - - - - - - 
 
 
 public:
 
 	j1Player();
+
 	// Destructor
 	~j1Player();
 
@@ -110,80 +116,81 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 
 	// State machine
-	player_states process_fsm(p2List<player_inputs>& inputs); 
+	player_states process_fsm(p2List<player_inputs>& inputs);
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
-	
-	bool dead = false;
-	bool win = false;
+
+
 private:
 
 	// - - - - PLAYER - - - - 
-	SDL_Rect playerTexture = { 0, 0, 17, 27 };
-	SDL_RendererFlip playerFlip = SDL_RendererFlip::SDL_FLIP_NONE;
-	
-	float playerClimbSpeed = 1.0f;
-	fPoint playerSpeed = { 0.0f,0.0f }; // Player speed AXIS value
-	float playerAcceleration = 0.0f;// Player acceleration AXIS value
-	fPoint movementForce = { -20.0f ,-420.0f }; // Force applied to the movement in AXIS value
-	
-	float hoverAcceleration = -1300.0f;
-	float hoverSpeedActivation = -40.0f;
-	float hoverFallSmooth = 6.0f;
 
-	void PlayerPositionUpdate(float dt); //Update player's position
+	SDL_Rect			playerTexture = { 0, 0, 17, 27 };
+	SDL_RendererFlip	playerFlip = SDL_RendererFlip::SDL_FLIP_NONE;
+
+	float				playerClimbSpeed;
+	fPoint				playerSpeed;							// Player speed AXIS value
+	float				playerAcceleration;						// Player acceleration AXIS value
+	fPoint				movementForce;							// Force applied to the movement in AXIS value
+
+	float				hoverAcceleration;
+	float				hoverSpeedActivation;
+	float				hoverFallSmooth;
+
+	void PlayerPositionUpdate(float dt);						//Update player's position
+
 	// - - - - - - - - - - - 
 
 	// - - CAMERA PLAYER - - 
-	float cameraAcceleration = 0.0f; // Camera acceleration AXIS value
-	fPoint cameraSpeed = { 0.0f,0.0f }; // Camera speed AXIS value
-	fPoint cameraSpeedLimit = { 200.0f, 250.0f }; // Camera max speed value
 
-	int startCameraFollowingPoint = 1325;
-	float cameraFollowingGuide = 0.0f;
+	float				cameraAcceleration = 0.0f;				// Camera acceleration AXIS value
+	fPoint				cameraSpeed = { 0.0f,0.0f };			// Camera speed AXIS value
+	fPoint				cameraSpeedLimit = { 200.0f, 250.0f };	// Camera max speed value
+
+	int					startCameraFollowingPoint = 1325;
+	float				cameraFollowingGuide = 0.0f;
 
 	void cameraSpeedLimitChecker();
 	void CameraPositionUpdate(float dt);
-
 	void cameraBraking();
+
 	// - - - - - - - - - - - 
 
 	//  - - - - TIME - - - - 
-	float previousTime = 0.0f;
-	float frameToSecondValue = 0.0f;
-	float maxFrameToSecondValue = 0.16f;
+	float				previousTime = 0.0f;
+	float				frameToSecondValue = 0.0f;
+	float				maxFrameToSecondValue = 0.16f;
+
 	// - - - - - - - - - - - 
 
 
 	//  - - - - SPEED - - - - 
-	void speedLimitChecker();  // Player limit speed in AXIS
-	fPoint speedLimit = { 250.0f, 750.0f }; // Player max speed value
 
-	float slowlingValue = 10.0f;
-	int slowlingLimitValue = 200;
+	void				speedLimitChecker();					// Player limit speed in AXIS
+	fPoint				speedLimit;								// Player max speed value
 
-	float gravityForce = 30.0f;// Player acceleration Y value
+	float				slowingValue;
+	int					slowlingLimitValue;
+	float				gravityForce;							//Player acceleration Y value
 
-	void braking();  //Player smoothly slow
+	void braking();												//Player smoothly slow
+
 	// - - - - - - - - - - - 
 
 	Animation* current_animation;
-	Animation walk;
-	Animation idle;
-	Animation jump;
-	Animation climb;
-	Animation death;
-	
-	p2SString graphics_path;
-	p2SString jump_fx;
-	p2SString death_fx;
-	p2SString win1_Fx;
-	p2SString win2_Fx;
+	Animation			walk;
+	Animation			idle;
+	Animation			jump;
+	Animation			climb;
+	Animation			death;
 
-	bool can_climb = false;
-	
-	
+	p2SString			graphics_path;
+	p2SString			jump_fx;
+	p2SString			death_fx;
+	p2SString			win1_Fx;
+	p2SString			win2_Fx;
+
 };
 
 #endif // __j1PLAYER_H__

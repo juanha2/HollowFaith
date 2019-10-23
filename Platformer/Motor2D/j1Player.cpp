@@ -38,13 +38,46 @@ bool j1Player::Awake(pugi::xml_node& config)
 	climb.load_animation(animIterator, "climb");
 
 	// Loading all Player FX
-	jump_fx = config.child("jumpFx").attribute("path").as_string();
-	death_fx = config.child("deathFx").attribute("path").as_string();
-	win1_Fx = config.child("win1Fx").attribute("path").as_string();
-	win2_Fx = config.child("win2Fx").attribute("path").as_string();
+
+	pugi::xml_node fxIterator = config.child("fx");
+	jump_fx = fxIterator.child("jumpFx").attribute("path").as_string();
+	death_fx = fxIterator.child("deathFx").attribute("path").as_string();
+	win1_Fx = fxIterator.child("win1Fx").attribute("path").as_string();
+	win2_Fx = fxIterator.child("win2Fx").attribute("path").as_string();
 
 	// Loading Player sprite
 	graphics_path = config.child("graphics").attribute("path").as_string();
+
+	// Player data
+
+	pugi::xml_node dataIterator = config.child("data");
+
+	startPosLevel1.x = dataIterator.child("StartPosLevel1").attribute("x").as_float();
+	startPosLevel1.y = dataIterator.child("StartPosLevel1").attribute("y").as_float();
+
+	startPosLevel2.x = dataIterator.child("StartPosLevel2").attribute("x").as_float();
+	startPosLevel2.y = dataIterator.child("StartPosLevel2").attribute("y").as_float();
+
+	playerClimbSpeed = dataIterator.child("climbspeed").attribute("value").as_float();
+
+	playerSpeed.x = dataIterator.child("speed").attribute("x").as_float();
+	playerSpeed.x = dataIterator.child("speed").attribute("y").as_float();
+
+	playerAcceleration = dataIterator.child("acceleration").attribute("value").as_float();
+
+	movementForce.x = dataIterator.child("MovementForce").attribute("x").as_float();
+	movementForce.y = dataIterator.child("MovementForce").attribute("y").as_float();
+
+	hoverAcceleration = dataIterator.child("hover_acceleration").attribute("value").as_float();
+	hoverSpeedActivation = dataIterator.child("hover_speed_activation").attribute("value").as_float();
+	hoverFallSmooth = dataIterator.child("hover_fall_smooth").attribute("value").as_float();
+
+	speedLimit.x = dataIterator.child("speed_limit").attribute("x").as_float();
+	speedLimit.y = dataIterator.child("speed_limit").attribute("y").as_float();
+
+	gravityForce = dataIterator.child("gravity").attribute("value").as_float();
+	slowingValue = dataIterator.child("slowing_value").attribute("value").as_float();
+	slowlingLimitValue = dataIterator.child("slowing_limit").attribute("value").as_int();
 
 	return ret;
 }
@@ -500,23 +533,23 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 void j1Player::cameraBraking()
 {
 	if (cameraSpeed.x > 0)
-		cameraSpeed.x /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
+		cameraSpeed.x /= slowingValue; // Smoothy braking when player stops running (We need to improve it)
 	else
-		cameraSpeed.x /= -slowlingValue;
+		cameraSpeed.x /= -slowingValue;
 }
 
 void j1Player::braking()
 {
 	if(playerSpeed.x < 0)
-		playerSpeed.x /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
+		playerSpeed.x /= slowingValue; // Smoothy braking when player stops running (We need to improve it)
 	else
-		playerSpeed.x /= slowlingValue;
+		playerSpeed.x /= slowingValue;
 
 	if (godMode) {
 		if (playerSpeed.y < 0)
-			playerSpeed.y /= slowlingValue; // Smoothy braking when player stops running (We need to improve it)
+			playerSpeed.y /= slowingValue; // Smoothy braking when player stops running (We need to improve it)
 		else
-			playerSpeed.y /= slowlingValue;
+			playerSpeed.y /= slowingValue;
 	}
 }
 

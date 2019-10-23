@@ -32,11 +32,34 @@
   </map>
 
   <player>
+    
     <graphics path="Assets/Sprites/Monster.png"/>
-    <jumpFx path="audio/fx/jump.wav"/>
-    <deathFx path="audio/fx/death.wav"/>
-    <win1Fx path="audio/fx/victory1.wav"/>
-    <win2Fx path="audio/fx/victory2.wav"/>
+
+    <data>
+
+      <StartPosLevel1 x="50" y="340"/>
+      <StartPosLevel2 x="50" y="340"/>    
+      <texture x="0" y="0" w="17" h="27"/>
+      <climbspeed value="1.0f"/>
+      <speed x="0.0f" y="0.0f"/>
+      <acceleration value="0.0f"/>
+      <MovementForce x="-20.0f " y="-420.0f "/>
+      <hover_acceleration value="-1300.0f"/>
+      <hover_speed_activation value="-40.0f"/>
+      <hover_fall_smooth value="6.0f"/>
+      <speed_limit x=" 250.0f" y="750.0f"/>
+      <gravity value="30.0f"/>
+      <slowing_value value="10.0f"/>
+      <slowing_limit value=" 200"/>    
+    
+    </data>
+    
+    <fx>      
+      <jumpFx path="audio/fx/jump.wav"/>
+      <deathFx path="audio/fx/death.wav"/>
+      <win1Fx path="audio/fx/victory1.wav"/>
+      <win2Fx path="audio/fx/victory2.wav"/>
+    </fx>  
     
     <animations>
       <animation name ="idle">
@@ -93,34 +116,7 @@
         <animValues loop="true" speed="0.15f"/>
       </animation>
     </animations>
-    
+
   </player>
-
-  
-  <particles>
-    <animations>
-      <animation name ="dustJumping">
-        <sprite x ="8" y ="247" w ="13" h="5"/>
-        <sprite x ="37" y ="249" w ="19" h="5"/>
-        <sprite x ="68" y ="250" w ="21" h="5"/>
-        <sprite x ="99" y ="252" w ="17" h="4"/>
-        <sprite x ="131" y ="252" w ="23" h="4"/>
-
-        <animValues loop="false" speed="0.4f"/>
-      </animation>
-
-      <animation name ="dustRunning">
-        <sprite x ="225" y ="241" w ="17" h="14"/>
-        <sprite x ="258" y ="245" w ="13" h="11"/>
-        <sprite x ="289" y ="243" w ="18" h="13"/>
-        <sprite x ="321" y ="240" w ="17" h="16"/>
-        <sprite x ="352" y ="239" w ="17" h="17"/>
-        <sprite x ="385" y ="243" w ="13" h="13"/>
-
-        <animValues loop="false" speed="0.1f"/>
-      </animation>
-      
-    </animations>  
-  </particles>
 
 </config>

@@ -4,7 +4,7 @@
 	<window />
 	<map />
 	<player>
-		<position x="222" y="277" />
+		<position x="115" y="325" />
 	</player>
 	<textures />
 	<audio />
@@ -15,6 +15,6 @@
 	<particles />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-6" y="-10" />
+		<camera x="0" y="-10" />
 	</renderer>
 </game_state>
