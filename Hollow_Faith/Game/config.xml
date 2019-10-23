@@ -2,8 +2,8 @@
 
 <config>
   <app>
-    <title>Game Development Testbed</title>
-    <organization>UPC</organization>
+    <title>Hollow Faith v0.35</title>
+    <organization>Juan Hernández & Aarón Guerrero</organization>
   </app>
 	
   <renderer>
