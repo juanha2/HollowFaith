@@ -29,6 +29,27 @@ public:
 		assert(last_frame < MAX_FRAMES);
 	}
 
+	void loadAnimation(pugi::xml_node animationIterator, p2SString name)
+	{
+		for (animationIterator = animationIterator; animationIterator != NULL; animationIterator = animationIterator.next_sibling("animation"))
+		{
+			if (name == animationIterator.attribute("name").as_string())
+			{
+				for (pugi::xml_node framesIterator = animationIterator.child("sprite"); framesIterator; framesIterator = framesIterator.next_sibling("sprite"))
+				{
+					SDL_Rect frame;
+					frame.x = framesIterator.attribute("x").as_int();
+					frame.y = framesIterator.attribute("y").as_int();
+					frame.w = framesIterator.attribute("w").as_int();
+					frame.h = framesIterator.attribute("h").as_int();
+
+					this->PushBack(frame);
+				}
+				break;
+			}
+		}
+	}
+
 	SDL_Rect& GetCurrentFrame() //float dt
 	{
 		float tmp = speed;

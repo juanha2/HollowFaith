@@ -36,7 +36,58 @@
     <jumpFx path="audio/fx/jump.wav"/>
     <deathFx path="audio/fx/death.wav"/>
     <win1Fx path="audio/fx/victory1.wav"/>
-    <win2Fx path="audio/fx/victory2.wav"/>
+    <win2Fx path="audio/fx/victory2.wav"/>ç
+    
+    <animations>
+      <animation name ="idle">
+        <sprite x ="7" y ="164" w ="17" h="28"/>
+        <sprite x ="39" y ="164" w ="17" h="28"/>
+        <sprite x ="70" y ="163" w ="18" h="29"/>
+        <sprite x ="7" y ="164" w ="17" h="28"/>
+      </animation>
+
+      <animation name ="walk">
+        <sprite x ="7" y ="37" w ="17" h="27"/>
+        <sprite x ="39" y ="36" w ="17" h="28"/>
+        <sprite x ="71" y ="36" w ="17" h="28"/>
+        <sprite x ="102" y ="37" w ="18" h="27"/>
+        <sprite x ="135" y ="36" w ="17" h="28"/>
+        <sprite x ="167" y ="36" w ="17" h="28"/>
+      </animation>
+
+      <animation name ="jump">
+        <sprite x ="231" y ="36" w ="17" h="28"/>
+        <sprite x ="261" y ="38" w ="20" h="26"/>
+        <sprite x ="292" y ="38" w ="22" h="26"/>
+        <sprite x ="327" y ="34" w ="17" h="30"/>
+        <sprite x ="358" y ="32" w ="18" h="29"/>
+        <sprite x ="389" y ="34" w ="20" h="29"/>
+        <sprite x ="420" y ="37" w ="22" h="27"/>
+        <sprite x ="454" y ="38" w ="18" h="26"/>
+      </animation>
+
+      <animation name ="death">
+        <sprite x ="227" y ="131" w ="21" h="29"/>
+        <sprite x ="259" y ="129" w ="22" h="29"/>
+        <sprite x ="291" y ="139" w ="25" h="20"/>
+        <sprite x ="322" y ="149" w ="29" h="29"/>
+        <sprite x ="352" y ="148" w ="35" h="12"/>
+        <sprite x ="393" y ="147" w ="25" h="13"/>
+        <sprite x ="180" y ="120" w ="25" h="13"/>
+      </animation>
+
+      <animation name ="climb">
+        <sprite x ="5" y ="131" w ="19" h="29"/>
+        <sprite x ="39" y ="131" w ="18" h="29"/>
+        <sprite x ="69" y ="131" w ="20" h="29"/>
+        <sprite x ="100" y ="131" w ="19" h="29"/>
+      </animation>
+
+      <animation name ="climb_idle">
+        <sprite x ="5" y ="131" w ="19" h="29"/>
+      </animation>
+    </animations>
+    
   </player>
 
 </config>

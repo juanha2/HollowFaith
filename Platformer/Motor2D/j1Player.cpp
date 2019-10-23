@@ -18,63 +18,41 @@
 j1Player::j1Player() : j1Module()
 {
 	name.create("player");
-
-	idle.PushBack({ 7,164,17,28 });
-	idle.PushBack({ 39,164,17,28 });
-	idle.PushBack({ 70,163,18,29 });
-	idle.PushBack({ 7,164,17,28 });
-	idle.loop = true;
-	idle.speed = 0.06f;
-
-	walk.PushBack({ 7,37,17,27 });
-	walk.PushBack({ 39,36,17,28 });
-	walk.PushBack({ 71,36,17,28 });
-	walk.PushBack({ 102,37,18,27 });
-	walk.PushBack({ 135,36,17,28 });
-	walk.PushBack({ 167,36,17,28 });
-	walk.loop = true;
-	walk.speed = 0.08f;
-
-	jump.PushBack({ 231,36,17,28 });
-	jump.PushBack({ 261,38,20,26 });
-	jump.PushBack({ 292,38,22,26 });
-	jump.PushBack({ 327,34,17,30 });
-	jump.PushBack({ 358,32,18,29 });
-	jump.PushBack({ 389,34,20,29 });
-	jump.PushBack({ 420,37,22,27 });
-	jump.PushBack({ 454,38,18,26 });
-	jump.loop = true;
-	jump.firstLoopFrame = 5;
-	jump.speed = 0.15f;
-
-	death.PushBack({ 227,131,21,29 });
-	death.PushBack({ 259,129,22,29 });
-	death.PushBack({ 291,139,25,20 });
-	death.PushBack({ 322,149,29,29 });
-	death.PushBack({ 352,148,35,12 });
-	death.PushBack({ 393,147,25,13 });
-	death.PushBack({ 180,120,25,13 });
-	death.loop = false;
-	death.speed = 0.15f;
-
-	climb.PushBack({ 5,131,19,29 });
-	climb.PushBack({ 39,131,18,29 });
-	climb.PushBack({ 69,131,20,29 });
-	climb.PushBack({ 100,131,19,29 });
-	climb.loop = true;
-	climb.speed = 0.15f;
-
-	climb_idle = { 5,131,19,29 };
 }
-j1Player::~j1Player() {
 
-};
+j1Player::~j1Player() {};
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Player Parser");
 	bool ret = true;	
 	
+
+
+	pugi::xml_node animIterator = config.child("animations").child("animation");
+
+
+	idle.loadAnimation(animIterator, "idle");
+	idle.loop = true;
+	idle.speed = 0.06f;
+
+	walk.loadAnimation(animIterator, "walk");
+	walk.loop = true;
+	walk.speed = 0.08f;
+
+	jump.loadAnimation(animIterator, "jump");
+	jump.loop = true;
+	jump.firstLoopFrame = 5;
+	jump.speed = 0.15f;
+
+	death.loadAnimation(animIterator, "death");
+	death.loop = false;
+	death.speed = 0.15f;
+
+	climb.loadAnimation(animIterator, "climb");
+	climb.loop = true;
+	climb.speed = 0.15f;
+
 	jump_fx = config.child("jumpFx").attribute("path").as_string();
 	death_fx = config.child("deathFx").attribute("path").as_string();
 	win1_Fx = config.child("win1Fx").attribute("path").as_string();
@@ -136,6 +114,10 @@ bool j1Player::PreUpdate()
 		}
 	}
 
+	if (current_state == ST_CLIMB_IDLE)
+		climb.speed = 0;
+	else
+		climb.speed = 0.15f;
 
 	if (!dead) {
 		
@@ -307,15 +289,9 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 	
-	if(current_state == ST_CLIMB_IDLE)
 	App->render->Blit(graphics, playerPosition.x, playerPosition.y, 
-		&climb_idle, 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing climbing idle player texture
-	else 
-		App->render->Blit(graphics, playerPosition.x, playerPosition.y, 
-			&current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing all other player textures
+		&current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing all other player textures
 
-	
-	
 	return true;
 }
 
