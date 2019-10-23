@@ -479,7 +479,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				switch (dirCheck) {
 
 				case DIR_UP:
-					//if(playerSpeed.y < 0)
+
 					playerPosition.y = c2->rect.y + c2->rect.h + 1;
 					playerSpeed.y = 0;
 				break;
@@ -495,11 +495,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					break;
 
 				case DIR_LEFT:
+
 					playerPosition.x = c2->rect.x + c2->rect.w + 1;
 					playerSpeed.x = 0;
 					break;
 
 				case DIR_RIGHT:
+
 					playerPosition.x = c2->rect.x - playerTexture.w;
 					playerSpeed.x = 0;
 					break;
@@ -511,6 +513,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 			if(playerSpeed.y >= 0){
+
 				if ((c2->type == COLLIDER_PLATFORM))
 				{
 					switch (dirCheck) {
@@ -598,12 +601,9 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-		
 			case IN_JUMP_FINISH: state = ST_IDLE; break;
 			case IN_CLIMB: state = ST_CLIMB; break;
 			case IN_DEAD: state = ST_DEAD;	break;
-			//case IN_RIGHT_UP: state = ST_IDLE; break;
-			//case IN_LEFT_UP: state = ST_IDLE; break;
 			}
 		}
 		break;

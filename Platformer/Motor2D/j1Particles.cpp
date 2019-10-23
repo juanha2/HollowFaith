@@ -122,20 +122,12 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_Render
 	}
 }
 
-void j1Particles::OnCollision(Collider* c1, Collider* c2)
+void j1Particles::OnCollision(Collider* c1, Collider* c2) // Detecting particles collision
 {
-	/*for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
-	{
-		// Always destroy particles that collide
-		if (active[i] != nullptr && active[i]->collider == c1)
-		{
-			//AddParticle(tornadoHaoImpact, active[i]->position.x + 30, active[i]->position.y + 30, COLLIDER_NONE);
-			delete active[i];
-			active[i] = nullptr;
-			break;
 
-		}
-	}*/
+
+
+
 }
 
 // -------------------------------------------------------------

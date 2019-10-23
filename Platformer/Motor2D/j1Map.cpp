@@ -443,7 +443,6 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties* property)
 
 SDL_Rect TileSet::GetRect(int id) {
 
-	//LOG("%i", id);
 	int id_ = id - firstgid;
 
 	SDL_Rect Rect = { 0, 0, 0, 0 };
