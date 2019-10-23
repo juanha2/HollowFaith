@@ -37,8 +37,8 @@
 
     <data>
 
-      <StartPosLevel1 x="50" y="340"/>
-      <StartPosLevel2 x="50" y="340"/>    
+      <StartPosLevel1 x="50" y="320"/>
+      <StartPosLevel2 x="50" y="320"/>    
       <texture x="0" y="0" w="17" h="27"/>
       <climbspeed value="1.0f"/>
       <speed x="0.0f" y="0.0f"/>

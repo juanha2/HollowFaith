@@ -91,6 +91,12 @@ bool j1Scene::Update(float dt)
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
 	
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {		
+		App->player->ignoreColl = true;		
+		App->player->playerPosition = App->player->startPosLevel1; 
+		App->render->camera.x = 0;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
 		App->SaveGame();
 	}

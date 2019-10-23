@@ -317,7 +317,7 @@ bool j1Player::PostUpdate()
 {
 	
 	App->render->Blit(graphics, playerPosition.x, playerPosition.y, 
-		&current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing all other player textures
+		&current_animation->GetCurrentFrame(), 1.0, 1.0, playerFlip, NULL, playerTexture.w / 2); // Printing all player textures
 
 	return true;
 }
