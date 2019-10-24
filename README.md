@@ -13,6 +13,8 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 - Space: Jump
 - Hold Space while in air: hover
 
+*When a crow appears, it means you have no sight of landing. You have to max jump and hover everytime you see this bird.
+
 ## Credits
 - Aaron Guerrero Cruz
 > Github profile: https://github.com/AaronGCProg
