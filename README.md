@@ -78,6 +78,7 @@ Aaron Guerrero Cruz
 ## Debug functionality:
 - F1 ​Start from level 1
 - F2 ​Start from level 2
+- F3 ​Start from current level
 - F5 ​Save the current state
 - F6 ​Load the previous state
 - F9​ See paths and colliders
