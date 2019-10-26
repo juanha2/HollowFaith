@@ -35,13 +35,16 @@ bool j1Scene::Start()
 {
 	
 	//Load first level at start
-	  if (first) {
+	if (first) 
+	{
 
-        p2List_item<Levels*>* levelData = App->map->data.levels.start;
+		p2List_item<Levels*>* levelData = App->map->data.levels.start;
         App->map->Load(levelData->data->name.GetString());
         currentmap = 1;
         first = false;
-    }
+
+	}
+
 
     App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);    //Plays current map music
     graphics = App->tex->Load("Assets/Sprites/halo.png");
@@ -63,56 +66,51 @@ bool j1Scene::Update(float dt)
 {
 	Win_Lose_Condition();	
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {	
-		if (App->render->camera.y>-App->map->data.height*App->map->data.tile_height)
-			App->render->camera.y -= 1;	
-	}		
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-		if (App->render->camera.y < 0)
-			App->render->camera.y += 1;
-	}		
-
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {			
-		if(App->render->camera.x>-App->map->data.width*App->map->data.tile_width)
-			App->render->camera.x -= 1;
-	}		
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		if (App->render->camera.x < 0)
-			App->render->camera.x += 1;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
+	{ // Start at the level 1 begin
 		currentmap = 1;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
+	{ // Start at the level 2 begin
 		currentmap = 2;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
 	
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {		
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
+	{ // Start at the current level begin
 		App->player->ignoreColl = true;		
 		App->player->playerPosition = App->player->startPosLevel1; 
 		App->render->camera.x = 0;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) 
+	{ // Save State
 		App->SaveGame();
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+
+
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
+	{ // Load State
 		App->LoadGame();
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == false) {
+
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == false) 
+	{ // Turn On God mode
 		App->player->godMode = true;
 		App->player->ignoreColl = true;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == true) {
+	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == true) 
+	{ // Turn Off God mode
 		App->player->godMode = false;
-
 	}	
 
-	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
 	return true;

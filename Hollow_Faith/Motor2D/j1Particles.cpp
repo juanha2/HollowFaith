@@ -106,15 +106,8 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_Render
 	}
 }
 
-void j1Particles::OnCollision(Collider* c1, Collider* c2) // Detecting particles collision
-{
+void j1Particles::OnCollision(Collider* c1, Collider* c2) {} // Detecting particles collision
 
-
-
-
-}
-
-// -------------------------------------------------------------
 // -------------------------------------------------------------
 
 Particle::Particle()
