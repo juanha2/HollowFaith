@@ -305,7 +305,10 @@ bool j1Player::Update(float dt)
 		break;
 	}
 
-	if (ignoreColl == true && godMode == false)
+	if (App->scene->ready_to_load == true) {
+		ignoreColl = true;
+	}
+	if (ignoreColl == true && godMode == false && App->scene->ready_to_load==false)
 		ignoreColl = false;
 
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
@@ -677,17 +680,22 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 // Load Game State
 bool j1Player::Load(pugi::xml_node& data)
 {
+	
+	if (App->fade_to_black->black_screen == true) {		
 
-	if (App->scene->currentmap == App->scene->savedcurrentmap) {
+		if (App->scene->different_map) {
+
+			App->scene->ready_to_load = true;
+			ignoreColl = true;
+			savedPosition.x = data.child("position").attribute("x").as_int();
+			savedPosition.y = data.child("position").attribute("y").as_int();
+		}
+	}
+
+	else if (!App->scene->different_map) {
 		playerPosition.x = data.child("position").attribute("x").as_int();
 		playerPosition.y = data.child("position").attribute("y").as_int();
 	}
-
-	if (App->scene->different_map) {
-		savedPosition.x = data.child("position").attribute("x").as_int();
-		savedPosition.y = data.child("position").attribute("y").as_int();
-	}
-
 
 	return true;
 }

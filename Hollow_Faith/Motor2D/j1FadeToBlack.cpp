@@ -54,14 +54,16 @@ bool j1FadeToBlack::PostUpdate()
 			App->scene->CleanUp();
 			App->scene->Disable();		
 			App->player->Disable();
-
+			
 			if (App->map->Reset()) {
 				
 				if (App->map->Load(level_to_load.GetString())) {
 					App->player->Enable();
-					App->scene->Enable();					
+					App->scene->Enable();						
 				}
-			}		
+
+				black_screen = true;
+			}	
 				
 			current_step = fade_step::fade_from_black;
 		}
@@ -69,8 +71,8 @@ bool j1FadeToBlack::PostUpdate()
 
 	case fade_step::fade_from_black:
 	{
-		normalized = 1.0f - normalized;
-
+		normalized = 1.0f - normalized;	
+		black_screen = false;
 		if (now >= total_time)
 			current_step = fade_step::none;
 	} break;

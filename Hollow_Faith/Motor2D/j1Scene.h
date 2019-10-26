@@ -11,6 +11,7 @@ public:
 	int currentmap;
 	int savedcurrentmap;
 	bool different_map = false;
+	bool ready_to_load = false;
 	j1Scene();
 
 	// Destructor

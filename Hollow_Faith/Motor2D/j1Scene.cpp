@@ -49,7 +49,7 @@ bool j1Scene::Start()
     App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);    //Plays current map music
     graphics = App->tex->Load("Assets/Sprites/halo.png");
 
-
+	ready_to_load = false;
 	sound_repeat = false; 
     App->render->camera = App->render->camera_init; //Sets camera on inicial position.
 	return true;
@@ -96,7 +96,7 @@ bool j1Scene::Update(float dt)
 
 
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
-	{ // Load State
+	{ // Load State				
 		App->LoadGame();
 	}
 
@@ -162,8 +162,7 @@ bool j1Scene::Load(pugi::xml_node& save)
 		different_map = true;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[savedcurrentmap - 1]->name.GetString(), 1.0f);
 	}
-
-
+	
 
 	return true;
 }

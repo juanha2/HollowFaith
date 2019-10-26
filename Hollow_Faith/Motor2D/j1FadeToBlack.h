@@ -18,6 +18,7 @@ public:
 	bool FadeToBlack(const char* lvlName, float time = 1.0f);
 	bool IsFading() const;
 
+	bool black_screen = false;
 
 private:
 
