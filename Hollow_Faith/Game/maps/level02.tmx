@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="25" tilewidth="16" tileheight="16" nextobjectid="115">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="25" tilewidth="16" tileheight="16" nextobjectid="117">
  <properties>
   <property name="Music" value="audio/music/music2.ogg"/>
  </properties>
@@ -14460,7 +14460,7 @@
    <tile gid="0"/>
    <tile gid="426"/>
    <tile gid="427"/>
-   <tile gid="428"/>
+   <tile gid="80"/>
    <tile gid="429"/>
    <tile gid="430"/>
    <tile gid="0"/>
@@ -15857,12 +15857,12 @@
    <tile gid="141"/>
    <tile gid="136"/>
    <tile gid="133"/>
-   <tile gid="242"/>
-   <tile gid="243"/>
+   <tile gid="130"/>
+   <tile gid="130"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="242"/>
-   <tile gid="243"/>
+   <tile gid="130"/>
+   <tile gid="130"/>
+   <tile gid="130"/>
    <tile gid="141"/>
    <tile gid="136"/>
    <tile gid="133"/>
@@ -15957,12 +15957,12 @@
    <tile gid="141"/>
    <tile gid="136"/>
    <tile gid="133"/>
-   <tile gid="104"/>
-   <tile gid="104"/>
+   <tile gid="242"/>
+   <tile gid="243"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="104"/>
-   <tile gid="104"/>
+   <tile gid="242"/>
+   <tile gid="243"/>
    <tile gid="141"/>
    <tile gid="136"/>
    <tile gid="133"/>
@@ -16031,8 +16031,8 @@
    <tile gid="135"/>
    <tile gid="136"/>
    <tile gid="133"/>
-   <tile gid="198"/>
-   <tile gid="199"/>
+   <tile gid="80"/>
+   <tile gid="80"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -16057,12 +16057,12 @@
    <tile gid="141"/>
    <tile gid="136"/>
    <tile gid="133"/>
+   <tile gid="104"/>
+   <tile gid="104"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="104"/>
+   <tile gid="104"/>
    <tile gid="141"/>
    <tile gid="136"/>
    <tile gid="133"/>
@@ -16259,9 +16259,9 @@
    <tile gid="133"/>
    <tile gid="0"/>
    <tile gid="289"/>
-   <tile gid="61"/>
-   <tile gid="61"/>
-   <tile gid="289"/>
+   <tile gid="155"/>
+   <tile gid="155"/>
+   <tile gid="155"/>
    <tile gid="544"/>
    <tile gid="141"/>
    <tile gid="136"/>
@@ -16359,8 +16359,8 @@
    <tile gid="133"/>
    <tile gid="544"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="61"/>
+   <tile gid="61"/>
    <tile gid="0"/>
    <tile gid="544"/>
    <tile gid="141"/>
@@ -17647,13 +17647,12 @@
   <object id="36" name="1" x="48" y="208" width="336" height="32"/>
   <object id="40" name="1" x="192" y="144" width="48" height="64"/>
   <object id="43" name="1" x="80" y="48" width="384" height="16"/>
-  <object id="47" name="1" x="48" y="144" width="32" height="16"/>
   <object id="48" name="2" x="48" y="48" width="32" height="16"/>
   <object id="49" name="4" x="48" y="192" width="144" height="16"/>
   <object id="52" name="1" x="416" y="64" width="48" height="288"/>
-  <object id="53" name="1" x="464" y="128" width="32" height="16"/>
-  <object id="54" name="1" x="528" y="128" width="32" height="16"/>
-  <object id="58" name="1" x="496" y="176" width="32" height="16"/>
+  <object id="53" name="1" x="464" y="144" width="32" height="16"/>
+  <object id="54" name="1" x="528" y="144" width="32" height="16"/>
+  <object id="58" name="1" x="496" y="192" width="32" height="16"/>
   <object id="73" name="1" x="464" y="368" width="288" height="32"/>
   <object id="77" name="4" x="496" y="256" width="32" height="16"/>
   <object id="78" name="1" x="496" y="272" width="32" height="16"/>
@@ -17688,8 +17687,8 @@
   <object id="109" name="5" x="1584" y="128" width="32" height="64"/>
   <object id="110" name="2" x="48" y="96" width="32" height="16"/>
   <object id="111" name="4" x="160" y="360" width="64" height="8"/>
-  <object id="112" name="4" x="464" y="121" width="32" height="8"/>
-  <object id="113" name="4" x="528" y="121" width="32" height="8"/>
   <object id="114" name="4" x="848" y="169" width="48" height="16"/>
+  <object id="115" name="4" x="528" y="128" width="32" height="16"/>
+  <object id="116" name="4" x="464" y="128" width="32" height="16"/>
  </objectgroup>
 </map>
