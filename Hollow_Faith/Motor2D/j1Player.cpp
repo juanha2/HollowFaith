@@ -259,7 +259,7 @@ bool j1Player::Update(float dt)
 		current_animation = &jump;
 		
 		if(!godMode)
-			playerSpeed.y += gravityForce; // While it's in the air we apply gravity to get down the player		
+			playerSpeed.y += gravityForce; 	
 		break;
 
 	case ST_WALK_RIGHT:
@@ -270,7 +270,7 @@ bool j1Player::Update(float dt)
 		current_animation = &walk;
 		break;
 
-	case ST_CLIMB:	
+	case ST_CLIMB:	// When the player is climbing 
 		playerAcceleration = 0;
 		playerSpeed.x = 0;
 		playerSpeed.y = 0;
@@ -279,7 +279,7 @@ bool j1Player::Update(float dt)
 		current_animation = &climb;
 		break;
 
-	case ST_CLIMB_IDLE:
+	case ST_CLIMB_IDLE: // When the player is stop climbing
 		playerAcceleration = 0;
 		playerSpeed.x = 0;
 		playerSpeed.y = 0;
@@ -322,7 +322,7 @@ bool j1Player::PostUpdate()
 	return true;
 }
 
-void j1Player::PlayerPositionUpdate(float dt)
+void j1Player::PlayerPositionUpdate(float dt) // Player movement * delta time
 {
 
 	// X AXIS POS
@@ -336,7 +336,7 @@ void j1Player::PlayerPositionUpdate(float dt)
 	
 }
 
-void j1Player::CameraPositionUpdate(float dt) {
+void j1Player::CameraPositionUpdate(float dt) { // Camera movement system
 
 	// X AXIS POS
 	if (playerPosition.x > App->win->width / (App->win->scale * 2) - playerTexture.w && playerPosition.x < startCameraFollowingPoint)
@@ -403,7 +403,8 @@ void j1Player::cameraSpeedLimitChecker() {
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	
-	
+	// - - - - - - - COLLISIONS LOGIC - - - - - - - 
+
 	int detectCollDir[DIR_MAX];
 	detectCollDir[DIR_RIGHT] = (playerPosition.x + playerTexture.w) - c2->rect.x;
 	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - playerPosition.x;
@@ -418,9 +419,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	for (int i = 0; i < MAXNUMOFCOLLIDERS; i++)
 	{
-		bool alredycollided = false;
-
-		// - - - - - - - COLLISIONS LOGIC - - - - - - - 
+		bool alredycollided = false;	
 
 		int dirCheck = DIR_UNKNOWN;
 
@@ -438,6 +437,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		
 
 		// - - - - - - - CHECK COLLISIONS - - - - - - - 
+
 		if (ignoreColl == false) {
 
 			if ((c2->type == COLLIDER_DEATH))
@@ -587,7 +587,10 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_JUMP_FINISH: state = ST_IDLE; break;
+			case IN_JUMP_FINISH: state = ST_IDLE; 
+				App->particles->AddParticle(App->particles->dustJumping, playerPosition.x, playerPosition.y + playerTexture.h, playerFlip, COLLIDER_NONE);
+				App->particles->AddParticle(App->particles->dustRunning, playerPosition.x, playerPosition.y + playerTexture.h - particlePosMargin, playerFlip, COLLIDER_NONE);
+				break;
 			case IN_CLIMB: state = ST_CLIMB; break;
 			case IN_DEAD: state = ST_DEAD;	break;
 			}

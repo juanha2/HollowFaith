@@ -66,8 +66,8 @@ class j1Player : public j1Module
 
 public:
 
-	Collider* colisionadores[MAXNUMOFCOLLIDERS];
-	SDL_Texture* graphics = nullptr;
+	Collider*			colisionadores[MAXNUMOFCOLLIDERS];
+	SDL_Texture*		graphics = nullptr;
 
 	iPoint				startPosLevel1;
 	iPoint				startPosLevel2;
@@ -138,11 +138,14 @@ private:
 	float				hoverSpeedActivation;
 	float				hoverFallSmooth;
 
+	float				particlePosMargin = 10.0f;
+
 	void PlayerPositionUpdate(float dt);						//Update player's position
 
 	// - - - - - - - - - - - 
 
-	// - - CAMERA PLAYER - - 
+
+	// - - - CAMERA PLAYER - - -
 
 	float				cameraAcceleration = 0.0f;				// Camera acceleration AXIS value
 	fPoint				cameraSpeed = { 0.0f,0.0f };			// Camera speed AXIS value
@@ -157,7 +160,9 @@ private:
 
 	// - - - - - - - - - - - 
 
+
 	//  - - - - TIME - - - - 
+
 	float				previousTime = 0.0f;
 	float				frameToSecondValue = 0.0f;
 	float				maxFrameToSecondValue = 0.16f;
@@ -178,18 +183,28 @@ private:
 
 	// - - - - - - - - - - - 
 
-	Animation* current_animation;
+
+	//  - - - - ANIMATION - - - - 
+
+	Animation*			current_animation;
 	Animation			walk;
 	Animation			idle;
 	Animation			jump;
 	Animation			climb;
 	Animation			death;
 
+	// - - - - - - - - - - - - - - 
+
+
+	//  - - - - - - FX - - - - - - 
+
 	p2SString			graphics_path;
 	p2SString			jump_fx;
 	p2SString			death_fx;
 	p2SString			win1_Fx;
 	p2SString			win2_Fx;
+
+	// - - - - - - - - - - - - - - 
 
 };
 
