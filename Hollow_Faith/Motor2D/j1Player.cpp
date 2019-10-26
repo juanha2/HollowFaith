@@ -592,6 +592,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			case IN_JUMP_FINISH: state = ST_IDLE; 
 				App->particles->AddParticle(App->particles->dustJumping, playerPosition.x, playerPosition.y + playerTexture.h, playerFlip, COLLIDER_NONE);
 				App->particles->AddParticle(App->particles->dustRunning, playerPosition.x, playerPosition.y + playerTexture.h - particlePosMargin, playerFlip, COLLIDER_NONE);
+				App->audio->PlayFx(5, 0, App->audio->FXvolume);
 				break;
 			case IN_CLIMB: state = ST_CLIMB; break;
 			case IN_DEAD: state = ST_DEAD;	break;

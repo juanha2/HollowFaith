@@ -15,8 +15,11 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 
 *When a crow appears, it means you have no sight of landing. You have to max jump and hover everytime you see this bird.
 
+## Find this project's repository in:
+https://github.com/juanha2/HollowFaith
+
 ## Credits
-- Aaron Guerrero Cruz
+- Aarón Guerrero Cruz
 > Github profile: https://github.com/AaronGCProg
 
 - Juan Hernández Almagro
@@ -65,7 +68,7 @@ Juan Hernández Almagro
 - Blit only current map tiles
 - Climb mechanic
 
-Aaron Guerrero Cruz
+Aarón Guerrero Cruz
 - Creation of player time/movement logic system
 - Implemented collision logic system
 - Implemented animation logic system
@@ -88,7 +91,7 @@ Aaron Guerrero Cruz
 ## License:
 MIT License
 
-Copyright (c) [2019] [Aaron Guerrero Bueno / Juan Hernández Almagro]
+Copyright (c) [2019] [Aarón Guerrero Cruz / Juan Hernández Almagro]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -108,6 +111,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-## Find this project's repository in:
-https://github.com/juanha2/HollowFaith
 
