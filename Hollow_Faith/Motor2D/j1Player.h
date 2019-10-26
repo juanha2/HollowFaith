@@ -203,6 +203,7 @@ private:
 	p2SString			death_fx;
 	p2SString			win1_Fx;
 	p2SString			win2_Fx;
+	p2SString			landing_Fx;
 
 	// - - - - - - - - - - - - - - 
 

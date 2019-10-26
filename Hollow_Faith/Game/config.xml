@@ -59,6 +59,7 @@
       <deathFx path="audio/fx/death.wav"/>
       <win1Fx path="audio/fx/victory1.wav"/>
       <win2Fx path="audio/fx/victory2.wav"/>
+      <landingFx path="audio/fx/landing.wav"/>
     </fx>  
     
     <animations>
