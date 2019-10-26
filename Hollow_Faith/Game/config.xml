@@ -60,6 +60,7 @@
       <win1Fx path="audio/fx/victory1.wav"/>
       <win2Fx path="audio/fx/victory2.wav"/>
       <landingFx path="audio/fx/landing.wav"/>
+      <hoverFx path="audio/fx/hoversound.wav"/>
     </fx>  
     
     <animations>

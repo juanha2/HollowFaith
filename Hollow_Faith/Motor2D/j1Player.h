@@ -204,6 +204,7 @@ private:
 	p2SString			win1_Fx;
 	p2SString			win2_Fx;
 	p2SString			landing_Fx;
+	p2SString			hover_Fx;
 
 	// - - - - - - - - - - - - - - 
 
