@@ -12,8 +12,10 @@
 #include "j1Player.h"
 #include "j1Scene.h"
 #include "j1Map.h"
-#include "j1App.h"
+#include "j1Pathfinding.h"
 #include "j1FadeToBlack.h"
+#include "j1App.h"
+
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -32,6 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fade_to_black = new j1FadeToBlack();
 	map = new j1Map();
 	coll = new j1Collision();
+	pathfinding = new j1PathFinding();
 	
 
 	// Ordered for awake / Start / Update
@@ -41,6 +44,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);	
 	AddModule(tex);
 	AddModule(audio);	
+	AddModule(pathfinding);
 	AddModule(scene);
 	AddModule(player);
 	AddModule(coll);
