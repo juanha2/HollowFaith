@@ -47,6 +47,9 @@ private:
 	SDL_Texture* graphics = nullptr;
 	bool sound_repeat = false;
 
+
+	SDL_Texture* debug_tex;
+
 };
 
 #endif // __j1SCENE_H__

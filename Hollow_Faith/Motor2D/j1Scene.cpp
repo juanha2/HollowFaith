@@ -11,6 +11,7 @@
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "j1FadeToBlack.h"
+#include "j1Pathfinding.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -48,6 +49,7 @@ bool j1Scene::Start()
 
     App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);    //Plays current map music
     graphics = App->tex->Load("Assets/Sprites/halo.png");
+	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 
 	ready_to_load = false;
 	sound_repeat = false; 
@@ -58,6 +60,31 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+
+	// debug pathfing ------------------
+	static iPoint origin;
+	static bool origin_selected = false;
+
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		if (origin_selected == true)
+		{
+			App->pathfinding->CreatePath(origin, p);
+			origin_selected = false;
+		}
+		else
+		{
+			origin = p;
+			origin_selected = true;
+		}
+	}
+
 	return true;
 }
 
@@ -65,7 +92,6 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	Win_Lose_Condition();	
-
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
 	{ // Start at the level 1 begin
@@ -111,7 +137,29 @@ bool j1Scene::Update(float dt)
 		App->player->godMode = false;
 	}	
 
+
 	App->map->Draw();
+
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+
+	// Debug pathfinding ------------------------------
+	//int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+	p = App->map->MapToWorld(p.x, p.y);
+
+	App->render->Blit(debug_tex, p.x, p.y);
+
+	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		App->render->Blit(debug_tex, pos.x, pos.y);
+	}
 
 	return true;
 }
@@ -122,6 +170,8 @@ bool j1Scene::PostUpdate()
 	bool ret = true;
 	SDL_Rect rect = { 0,0, App->win->screen_surface->w / App->win->scale, App->win->screen_surface->h / App->win->scale };
 	App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
+
+
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
