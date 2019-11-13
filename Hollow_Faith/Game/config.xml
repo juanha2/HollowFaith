@@ -3,7 +3,7 @@
 <config>
   <app>
     <title>Hollow Faith v0.35</title>
-    <organization>Juan Hernández & Aarón Guerrero</organization>
+    <organization>Juan Hernández Aarón Guerrero</organization>
   </app>
 	
   <renderer>
@@ -32,8 +32,22 @@
   </map>
 
   <enemies>
+    <sprites path="Assets/Sprites/enemy.png"/>
     
-  </enemies>
+    <animations>
+      <animation name ="fly">
+        <sprite x ="3" y ="7" w ="21" h="25"/>
+        <sprite x ="35" y ="6" w ="21" h="26"/>
+        <sprite x ="68" y ="5" w ="20" h="27"/>
+        <sprite x ="99" y ="7" w ="21" h="25"/>
+        <sprite x ="132" y ="6" w ="20" h="26"/>
+        <sprite x ="164" y ="5" w ="20" h="27"/>        
+        <animValues loop="true" speed="0.06f"/>
+      </animation>
+    </animations>
+   
+
+    </enemies>
   
   <player>
     

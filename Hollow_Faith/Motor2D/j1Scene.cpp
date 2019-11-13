@@ -12,7 +12,7 @@
 #include "j1Collision.h"
 #include "j1FadeToBlack.h"
 #include "j1Pathfinding.h"
-#include "ModuleEnemies.h"
+#include "j1Enemies.h"
 
 j1Scene::j1Scene() : j1Module()
 {

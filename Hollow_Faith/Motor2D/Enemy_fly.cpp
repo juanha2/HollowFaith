@@ -2,8 +2,11 @@
 #include "Enemy_fly.h"
 #include "j1Collision.h"
 #include "p2Animation.h"
+#include "j1Pathfinding.h"
+
 Enemy_fly::Enemy_fly(int x, int y) : Enemy(x, y)
 {
+
 	fly.PushBack({ 3,7,21,25 });
 	fly.PushBack({ 35, 6, 21, 26 });
 	fly.PushBack({ 68, 5, 20, 27 });
@@ -19,8 +22,8 @@ Enemy_fly::Enemy_fly(int x, int y) : Enemy(x, y)
 }
 
 void Enemy_fly::Move()
-{
-
-	//position.y = int(float(original_y) + (25.0f * sinf(wave)));
+{	
+	//App->pathfinding->CreatePath({ 80,350 }, { 100,350 });
 	position.x += 1;
+	
 }

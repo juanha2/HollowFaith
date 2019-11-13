@@ -89,7 +89,7 @@
     <ClCompile Include="j1Pathfinding.cpp" />
     <ClCompile Include="j1Player.cpp" />
     <ClCompile Include="j1Scene.cpp" />
-    <ClCompile Include="ModuleEnemies.cpp" />
+    <ClCompile Include="j1Enemies.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
     <ClCompile Include="j1Textures.cpp" />
@@ -106,7 +106,7 @@
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1Player.h" />
     <ClInclude Include="j1Scene.h" />
-    <ClInclude Include="ModuleEnemies.h" />
+    <ClInclude Include="j1Enemies.h" />
     <ClInclude Include="p2Animation.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
