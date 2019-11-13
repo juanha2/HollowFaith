@@ -2,12 +2,13 @@
 
 <config>
   <app>
-    <title>Hollow Faith v0.35</title>
-    <organization>Juan Hernández Aarón Guerrero</organization>
+    <title>Hollow Faith v0.68</title>
+    <organization>Juan Hernández and Aarón Guerrero</organization>
+    <frameratecap value ="30"/>
   </app>
 	
   <renderer>
-    <vsync value="true"/>
+    <vsync value="false"/>
     <camera_pos x="0" y="-10"/>
   </renderer>
 

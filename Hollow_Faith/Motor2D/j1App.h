@@ -3,6 +3,8 @@
 
 #include "p2List.h"
 #include "j1Module.h"
+#include "j1PerfTimer.h"
+#include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
@@ -98,11 +100,28 @@ public:
 	j1PathFinding*		pathfinding;
 	j1Enemies*			enemies;
 
+
+	j1PerfTimer			ptimer;
+	uint64				frame_count = 0;
+	j1Timer				startup_time;
+	j1Timer				frame_time;
+	j1Timer				last_sec_frame_time;
+	uint32				last_sec_frame_count = 0;
+	uint32				prev_last_sec_frame_count = 0;
+	uint32				frames_on_last_update;
+	float				avg_fps;
+	float				seconds_since_startup;
+	float				dt;
+
+
+	uint32				frameratecap;
+	uint32				last_frame_ms;
+
+
 private:
 
 	p2List<j1Module*>	modules;
 	uint				frames;
-	float				dt;
 	int					argc;
 	char**				args;
 
