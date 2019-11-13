@@ -1,17 +1,13 @@
-#ifndef __ModuleEnemies_H__
-#define __ModuleEnemies_H__
+#ifndef __j1Enemies_H__
+#define __j1Enemies_H__
 
 #include "j1Module.h"
 #include "j1Textures.h"
 #include "Enemy_fly.h"
+#include "p2SString.h"
 
 #define MAX_ENEMIES 100
 
-// TODO 2: Add a new enemy: Brown Cookies!
-
-// TODO 3: Have the Brown Cookies describe a path in the screen
-
-// TODO 4: Create a new enemy type: the Mech
 
 enum ENEMY_TYPES
 {
@@ -28,12 +24,12 @@ struct EnemyInfo
 };
 
 
-class ModuleEnemies : public j1Module
+class j1Enemies : public j1Module
 {
 public:
 
-	ModuleEnemies();
-	virtual  ~ModuleEnemies();
+	j1Enemies();
+	virtual  ~j1Enemies();
 
 	bool Start();
 	bool Awake(pugi::xml_node& config);
@@ -51,9 +47,11 @@ private:
 
 private:
 
-	EnemyInfo queue[MAX_ENEMIES];
-	Enemy* enemies[MAX_ENEMIES];
-	SDL_Texture* sprites;
+	EnemyInfo		queue[MAX_ENEMIES];
+	Enemy*			enemies[MAX_ENEMIES];
+
+	p2SString		sprites_path;
+	SDL_Texture*	sprites;
 };
 
-#endif // __ModuleEnemies_H__
+#endif // j1Enemies

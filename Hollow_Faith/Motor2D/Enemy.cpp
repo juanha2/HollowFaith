@@ -4,6 +4,7 @@
 #include "j1Particles.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Enemies.h"
 
 Enemy::Enemy(int x, int y) : position(x, y)
 {
@@ -31,5 +32,6 @@ void Enemy::Draw(SDL_Texture* sprites)
 
 void Enemy::OnCollision(Collider* collider)
 {
+	
 	//App->particles->AddParticle(App->particles->explosion, position.x, position.y);
 }

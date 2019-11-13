@@ -1,7 +1,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
-#include "ModuleEnemies.h"
+#include "j1Enemies.h"
 #include "j1Particles.h"
 #include "j1Textures.h"
 #include "j1Window.h"
@@ -9,10 +9,9 @@
 #include "Enemy.h"
 #include "Enemy_fly.h"
 
-
 #define SPAWN_MARGIN 0
 
-ModuleEnemies::ModuleEnemies() : j1Module()
+j1Enemies::j1Enemies() : j1Module()
 {
 	name.create("enemies");
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
@@ -20,58 +19,59 @@ ModuleEnemies::ModuleEnemies() : j1Module()
 }
 
 // Destructor
-ModuleEnemies::~ModuleEnemies()
+j1Enemies::~j1Enemies()
 {
 }
 
-bool ModuleEnemies::Awake(pugi::xml_node& config)
+bool j1Enemies::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Enemies");
 	bool ret = true;
+	sprites_path = config.child("sprites").attribute("path").as_string();
 
 	return ret;
 }
-bool ModuleEnemies::Start()
+bool j1Enemies::Start()
 {
 	// Create a prototype for each enemy available so we can copy them around
-	sprites = App->tex->Load("Assets/Sprites/enemy.png");	
+	sprites = App->tex->Load(sprites_path.GetString());
 	return true;
 }
 
-bool ModuleEnemies::PreUpdate()
+bool j1Enemies::PreUpdate()
 {
 	// check camera position to decide what to spawn
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
 		if (queue[i].type != ENEMY_TYPES::NO_TYPE)
 		{
-			if (queue[i].x  < App->render->camera.x + (App->render->camera.w) + SPAWN_MARGIN)
+			if (queue[i].x < App->render->camera.x + (App->render->camera.w) + SPAWN_MARGIN)
 			{
 				SpawnEnemy(queue[i]);
 				queue[i].type = ENEMY_TYPES::NO_TYPE;
-				LOG("Spawning enemy at %d", queue[i].x );
+				LOG("Spawning enemy at %d", queue[i].x);
 			}
 		}
 	}
-	
-	
+
+
 	return true;
 }
 
 // Called before render is available
-bool  ModuleEnemies::Update(float dt)
+bool  j1Enemies::Update(float dt)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 		if (enemies[i] != nullptr) enemies[i]->Move();
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 		if (enemies[i] != nullptr) enemies[i]->Draw(sprites);
-	
-	
+
+
 	return true;
 }
 
-bool ModuleEnemies::PostUpdate()
+bool j1Enemies::PostUpdate()
 {
 	// check camera position to decide what to spawn
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
@@ -91,7 +91,7 @@ bool ModuleEnemies::PostUpdate()
 }
 
 // Called before quitting
-bool ModuleEnemies::CleanUp()
+bool j1Enemies::CleanUp()
 {
 	LOG("Freeing all enemies");
 
@@ -109,7 +109,7 @@ bool ModuleEnemies::CleanUp()
 	return true;
 }
 
-bool ModuleEnemies::AddEnemy(ENEMY_TYPES type, int x, int y)
+bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y)
 {
 	bool ret = false;
 
@@ -128,7 +128,7 @@ bool ModuleEnemies::AddEnemy(ENEMY_TYPES type, int x, int y)
 	return ret;
 }
 
-void ModuleEnemies::SpawnEnemy(const EnemyInfo& info)
+void j1Enemies::SpawnEnemy(const EnemyInfo& info)
 {
 	// find room for the new enemy
 	uint i = 0;
@@ -138,7 +138,7 @@ void ModuleEnemies::SpawnEnemy(const EnemyInfo& info)
 	{
 		switch (info.type)
 		{
-			
+
 		case ENEMY_TYPES::ENEMY_FLY:
 			enemies[i] = new Enemy_fly(info.x, info.y);
 			break;
@@ -146,7 +146,7 @@ void ModuleEnemies::SpawnEnemy(const EnemyInfo& info)
 	}
 }
 
-void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
+void j1Enemies::OnCollision(Collider* c1, Collider* c2)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{

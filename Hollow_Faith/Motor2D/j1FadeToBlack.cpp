@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "j1Textures.h"
+#include "j1Enemies.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 
@@ -54,12 +55,14 @@ bool j1FadeToBlack::PostUpdate()
 			App->scene->CleanUp();
 			App->scene->Disable();		
 			App->player->Disable();
+			App->enemies->Disable();
 			
 			if (App->map->Reset()) {
 				
 				if (App->map->Load(level_to_load.GetString())) {
 					App->player->Enable();
-					App->scene->Enable();						
+					App->scene->Enable();
+					App->enemies->Enable();
 				}
 
 				black_screen = true;

@@ -217,8 +217,16 @@ bool j1Player::PreUpdate()
 				playerAcceleration += (movementForce.y / hoverFallSmooth );
 
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) { // Releasing Space
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP ) { // Releasing Space
 
+		}
+		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && (current_state != ST_CLIMB || current_state !=ST_CLIMB_IDLE)) {
+			if (playerFlip)
+				App->particles->stone.speed.x = -5;
+			else
+				App->particles->stone.speed.x = 5;
+
+			App->particles->AddParticle(App->particles->stone, playerPosition.x, playerPosition.y + playerTexture.h / 4, playerFlip, COLLIDER_STONE);
 		}
 	}	
 
@@ -438,7 +446,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 		if (ignoreColl == false) {
 
-			if ((c2->type == COLLIDER_DEATH))
+			if ((c2->type == COLLIDER_DEATH) || (c2->type == COLLIDER_ENEMY))
 			{
 			
 				inputs.add(IN_DEAD);
@@ -577,6 +585,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			case IN_WALK_LEFT: state = ST_WALK_LEFT;
 				break;
 			case IN_CLIMB: state = ST_CLIMB; break;
+			case IN_DEAD: state = ST_DEAD;	break;
 			}
 		}
 		break;
@@ -607,6 +616,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 				break;
 			case IN_WALK_LEFT: state = ST_IDLE;
 				break;
+			case IN_DEAD: state = ST_DEAD;	break;
 
 			}
 			break;
@@ -622,6 +632,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 				break;
 			case IN_WALK_RIGHT: state = ST_IDLE;
 				break;
+			case IN_DEAD: state = ST_DEAD;	break;
 
 			}
 			break;

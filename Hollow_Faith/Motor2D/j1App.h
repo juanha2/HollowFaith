@@ -20,7 +20,7 @@ class j1Map;
 class j1Player;
 class j1FadeToBlack;
 class j1PathFinding;
-class ModuleEnemies;
+class j1Enemies;
 
 class j1App
 {
@@ -98,7 +98,7 @@ public:
 	j1FadeToBlack*		fade_to_black;
 	j1Particles*		particles;
 	j1PathFinding*		pathfinding;
-	ModuleEnemies*		enemies;
+	j1Enemies*			enemies;
 
 
 
