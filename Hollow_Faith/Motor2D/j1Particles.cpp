@@ -31,6 +31,10 @@ bool j1Particles::Awake(pugi::xml_node& config)
 	dustRunning.anim.load_animation(animIterator, "dustRunning");
 	dustRunning.life = defaultParticleLife;
 
+	stone.anim.load_animation(animIterator, "stone");
+	stone.life = stoneLife;
+	
+
 	return true;
 
 }

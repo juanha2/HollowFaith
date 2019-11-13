@@ -53,12 +53,14 @@ private:
 	SDL_Texture* graphics = nullptr;
 	uint last_particle = 0;
 	Uint32 defaultParticleLife = 200;
+	Uint32 stoneLife = 1000;
 
 public:
 
 	Particle* active[MAX_ACTIVE_PARTICLES];
 	Particle dustJumping;
 	Particle dustRunning;
+	Particle stone;
 
 };
 

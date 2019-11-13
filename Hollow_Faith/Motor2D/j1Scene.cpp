@@ -47,7 +47,7 @@ bool j1Scene::Start()
 
 	}
 
-	App->enemies->AddEnemy(ENEMY_TYPES::ENEMY_FLY, 60, 320);
+	App->enemies->AddEnemy(ENEMY_TYPES::ENEMY_FLY, 80, 320);
 	
 
     App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);    //Plays current map music

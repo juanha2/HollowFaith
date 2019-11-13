@@ -162,6 +162,11 @@
         <animValues loop="false" speed="0.1f"/>
       </animation>
 
+      <animation name ="stone">
+        <sprite x ="72" y ="10" w ="14" h="14"/>
+        <animValues loop="false" speed="0.4f"/>
+      </animation>
+
     </animations>
   </particles>
 
