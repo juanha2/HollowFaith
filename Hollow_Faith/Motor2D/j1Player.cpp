@@ -233,16 +233,10 @@ bool j1Player::PreUpdate()
 	player_states state = process_fsm(inputs);
 	current_state = state;
 
-	//Get time from frames and it's corrected
-	previousTime = frameToSecondValue;
-	frameToSecondValue = App->DeltaTime();
-	if (frameToSecondValue > maxFrameToSecondValue)
-		frameToSecondValue = maxFrameToSecondValue;
-
 
 	//Update position related to real time and puts speed limit.
 	speedLimitChecker();
-	PlayerPositionUpdate(frameToSecondValue);
+	PlayerPositionUpdate(App->dt);
 
 
 	//Update position related to real time and player position.
