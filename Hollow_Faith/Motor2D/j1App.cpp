@@ -2,6 +2,7 @@
 
 #include "p2Defs.h"
 #include "p2Log.h"
+
 #include "j1Window.h"
 #include "j1Input.h"
 #include "j1Render.h"
@@ -99,6 +100,8 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
+
+		frameratecap = app_config.child("frameratecap").attribute("value").as_int();
 	}
 
 	if(ret == true)
@@ -174,6 +177,14 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+
+	frame_count++;
+	last_sec_frame_count++;
+
+	// TODO 4: Calculate the dt: differential time since last frame
+	
+	dt = frame_time.ReadSec();
+	frame_time.Start();
 }
 
 // ---------------------------------------------
@@ -184,6 +195,32 @@ void j1App::FinishUpdate()
 
 	if(want_to_load == true)
 		LoadGameNow();
+
+	// Framerate calculations --
+
+	if (last_sec_frame_time.Read() > 1000)
+	{
+		last_sec_frame_time.Start();
+		prev_last_sec_frame_count = last_sec_frame_count;
+		last_sec_frame_count = 0;
+	}
+
+	avg_fps = float(frame_count) / startup_time.ReadSec();
+	seconds_since_startup = startup_time.ReadSec();
+	last_frame_ms = frame_time.Read();
+	frames_on_last_update = prev_last_sec_frame_count;
+
+
+	// TODO 2: Use SDL_Delay to make sure you get your capped framerate
+	if (last_frame_ms < (1000 / frameratecap))
+	{
+		j1PerfTimer timer;
+		SDL_Delay((1000 / frameratecap) - last_frame_ms);
+
+		// TODO3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
+		LOG("We waited for %f milliseconds and got back in %u", timer.ReadMs(), frames_on_last_update);
+	}
+
 }
 
 // Call modules before each loop iteration
@@ -388,5 +425,5 @@ bool j1App::SaveGameNow() const
 }
 
 
-float j1App::DeltaTime() const { return 1.0f / 60.0f; } // Returns seconds from frames
+float j1App::DeltaTime() const { return dt; } // Returns seconds from frames
 

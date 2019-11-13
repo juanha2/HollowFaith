@@ -66,6 +66,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	playerSpeed.x = dataIterator.child("speed").attribute("y").as_float();
 
 	playerAcceleration = dataIterator.child("acceleration").attribute("value").as_float();
+	accelLimit = dataIterator.child("accelerationLimit").attribute("value").as_float();
 
 	movementForce.x = dataIterator.child("MovementForce").attribute("x").as_float();
 	movementForce.y = dataIterator.child("MovementForce").attribute("y").as_float();
@@ -213,7 +214,7 @@ bool j1Player::PreUpdate()
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) { // Stay pressing Space (Hovering)
 
 			if (playerAcceleration > hoverAcceleration && playerSpeed.y < hoverSpeedActivation)
-				playerAcceleration += (movementForce.y / hoverFallSmooth);
+				playerAcceleration += (movementForce.y / hoverFallSmooth );
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP) { // Releasing Space
@@ -225,22 +226,14 @@ bool j1Player::PreUpdate()
 	player_states state = process_fsm(inputs);
 	current_state = state;
 
-	//Get time from frames and it's corrected
-	previousTime = frameToSecondValue;
-	frameToSecondValue = App->DeltaTime();
-	if (frameToSecondValue > maxFrameToSecondValue)
-		frameToSecondValue = maxFrameToSecondValue;
-
-
 	//Update position related to real time and puts speed limit.
 	speedLimitChecker();
-	PlayerPositionUpdate(frameToSecondValue);
+	PlayerPositionUpdate(App->DeltaTime());
 
 
 	//Update position related to real time and player position.
 	cameraSpeedLimitChecker();
 	CameraPositionUpdate(frameToSecondValue);
-
 
 		return true;
 }
@@ -317,6 +310,7 @@ bool j1Player::Update(float dt)
 			COLLIDER_PLAYER, 0, 0, 0, 0, this); // Creating player colliders
 	}
 
+
 	return true;
 }
 
@@ -364,22 +358,18 @@ void j1Player::speedLimitChecker()
 		playerSpeed.x = speedLimit.x;
 
 	if (playerSpeed.y > speedLimit.y)
-	{
 		playerSpeed.y = speedLimit.y;
-		playerAcceleration = playerAcceleration;
-	}
-
-
+	
 	//NEGATIVE
 
 	if (playerSpeed.x < -speedLimit.x)
 		playerSpeed.x = -speedLimit.x;
 
 	if (playerSpeed.y < -speedLimit.y)
-	{
 		playerSpeed.y = -speedLimit.y;
-		playerAcceleration = playerAcceleration;
-	}
+
+	if (playerAcceleration < accelLimit)
+		playerAcceleration = accelLimit;
 
 }
 

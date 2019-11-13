@@ -3,6 +3,8 @@
 
 #include "p2List.h"
 #include "j1Module.h"
+#include "j1PerfTimer.h"
+#include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
@@ -98,11 +100,29 @@ public:
 	j1PathFinding*		pathfinding;
 	ModuleEnemies*		enemies;
 
+
+
+	j1PerfTimer			ptimer;
+	uint64				frame_count = 0;
+	j1Timer				startup_time;
+	j1Timer				frame_time;
+	j1Timer				last_sec_frame_time;
+	uint32				last_sec_frame_count = 0;
+	uint32				prev_last_sec_frame_count = 0;
+	uint32				frames_on_last_update;
+	float				avg_fps;
+	float				seconds_since_startup;
+	
+
+
+	uint32				frameratecap;
+	uint32				last_frame_ms;
+	float				dt;
+
 private:
 
 	p2List<j1Module*>	modules;
 	uint				frames;
-	float				dt;
 	int					argc;
 	char**				args;
 
@@ -113,6 +133,7 @@ private:
 	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
+
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S
