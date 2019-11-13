@@ -175,7 +175,6 @@ private:
 	void				speedLimitChecker();					// Player limit speed in AXIS
 	fPoint				speedLimit;								// Player max speed value
 
-	float				accelLimit;
 	float				slowingValue;
 	int					slowlingLimitValue;
 	float				gravityForce;							//Player acceleration Y value

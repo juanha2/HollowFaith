@@ -175,10 +175,6 @@ bool j1Scene::PostUpdate()
 	SDL_Rect rect = { 0,0, App->win->screen_surface->w / App->win->scale, App->win->screen_surface->h / App->win->scale };
 	App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
 
-	static char title[256];
-	sprintf_s(title, 256, "%s || Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
-	App->GetTitle(), App->avg_fps, App->last_frame_ms, App->frames_on_last_update, App->seconds_since_startup, App->frame_count);
-	App->win->SetTitle(title);
 
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
