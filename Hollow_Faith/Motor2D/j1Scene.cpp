@@ -12,6 +12,7 @@
 #include "j1Collision.h"
 #include "j1FadeToBlack.h"
 #include "j1Pathfinding.h"
+#include "ModuleEnemies.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -46,6 +47,8 @@ bool j1Scene::Start()
 
 	}
 
+	App->enemies->AddEnemy(ENEMY_TYPES::ENEMY_FLY, 60, 320);
+	
 
     App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);    //Plays current map music
     graphics = App->tex->Load("Assets/Sprites/halo.png");
@@ -60,6 +63,7 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	
 
 	// debug pathfing ------------------
 	static iPoint origin;
