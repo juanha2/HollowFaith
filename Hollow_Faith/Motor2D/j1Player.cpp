@@ -46,6 +46,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	win2_Fx = fxIterator.child("win2Fx").attribute("path").as_string();
 	landing_Fx = fxIterator.child("landingFx").attribute("path").as_string();
 	hover_Fx = fxIterator.child("hoverFx").attribute("path").as_string();
+	stone_Fx = fxIterator.child("stoneFx").attribute("path").as_string();
 
 	// Loading Player sprite
 	graphics_path = config.child("graphics").attribute("path").as_string();
@@ -112,6 +113,7 @@ bool j1Player::Start(){
 	App->audio->LoadFx(win2_Fx.GetString());
 	App->audio->LoadFx(landing_Fx.GetString());
 	App->audio->LoadFx(hover_Fx.GetString());
+	App->audio->LoadFx(stone_Fx.GetString());
 
 	return true;
 }
@@ -223,9 +225,15 @@ bool j1Player::PreUpdate()
 			if (playerFlip)
 				App->particles->stone.speed.x = -5;
 			else
-				App->particles->stone.speed.x = 5;
+				App->particles->stone.speed.x = 5;			
 
-			App->particles->AddParticle(App->particles->stone, playerPosition.x, playerPosition.y + playerTexture.h / 4, playerFlip, COLLIDER_STONE);
+			if (App->particles->elim)
+			{
+				App->particles->elim = false;
+				App->particles->AddParticle(App->particles->stone, playerPosition.x, playerPosition.y + playerTexture.h / 4, playerFlip, COLLIDER_STONE);
+				App->audio->PlayFx(7, 0, 100);
+			}
+			
 		}
 	}	
 

@@ -5,6 +5,7 @@
 #include "j1Particles.h"
 #include "j1Player.h"
 #include "j1Collision.h"
+#include "p2Log.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -33,6 +34,9 @@ bool j1Particles::Awake(pugi::xml_node& config)
 
 	stone.anim.load_animation(animIterator, "stone");
 	stone.life = stoneLife;
+
+	death.anim.load_animation(animIterator, "death");
+	death.life = deathlife;
 	
 
 	return true;
@@ -66,12 +70,14 @@ bool j1Particles::Update(float dt)
 
 		if (p == nullptr)
 			continue;
-
+		
 		if (p->Update() == false)
-		{
+		{			
 			delete p;
-			active[i] = nullptr;
+			active[i] = nullptr;				
 		}
+
+	
 		else if (SDL_GetTicks() >= p->born)
 		{
 		
@@ -83,6 +89,8 @@ bool j1Particles::Update(float dt)
 				p->fx_played = true;
 			}
 		}
+		
+	
 	}
 
 	return true;
@@ -109,11 +117,26 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_Render
 		}
 	}
 }
-
-void j1Particles::OnCollision(Collider* c1, Collider* c2) {} // Detecting particles collision
+// Detecting particles collision
 
 // -------------------------------------------------------------
 
+void j1Particles::OnCollision(Collider* c1, Collider* c2) 
+
+{
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	{
+		// Always destroy particles that collide
+		if (active[i] != nullptr && active[i]->collider == c1)
+		{
+			elim = true;
+			delete active[i];
+			active[i] = nullptr;
+			break;
+		}
+	}
+
+} 
 Particle::Particle()
 {
 	position.SetToZero();

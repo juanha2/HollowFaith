@@ -3,16 +3,17 @@
 #include "j1Collision.h"
 #include "p2Animation.h"
 #include "j1Pathfinding.h"
+#include "j1Audio.h"
 
 Enemy_fly::Enemy_fly(int x, int y) : Enemy(x, y)
 {
 
-	fly.PushBack({ 3,7,21,25 });
-	fly.PushBack({ 35, 6, 21, 26 });
-	fly.PushBack({ 68, 5, 20, 27 });
-	fly.PushBack({ 99, 7, 21, 25 });
-	fly.PushBack({ 132, 6, 20, 26 });
-	fly.PushBack({ 164, 5, 20, 27 });	
+	fly.PushBack({ 3,39,21,25 });
+	fly.PushBack({ 35, 38, 21, 26 });
+	fly.PushBack({ 68, 37, 20, 27 });
+	fly.PushBack({ 99, 39, 21, 25 });
+	fly.PushBack({ 132, 38, 20, 26 });
+	fly.PushBack({ 164, 37, 20, 27 });	
 	fly.speed = 0.08f;
 
 	animation = &fly;
@@ -27,3 +28,5 @@ void Enemy_fly::Move()
 	//position.x += 1;
 	
 }
+
+

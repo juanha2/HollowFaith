@@ -49,8 +49,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(enemies);
 	AddModule(player);	
-	AddModule(coll);
 	AddModule(particles);
+	AddModule(coll);
+	
 	AddModule(fade_to_black);
 	
 	// render last to swap buffer
@@ -217,7 +218,7 @@ void j1App::FinishUpdate()
 		SDL_Delay((1000 / frameratecap) - last_frame_ms);
 
 		// TODO3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
-		LOG("We waited for %f milliseconds and got back in %u", timer.ReadMs(), frames_on_last_update);
+		//LOG("We waited for %f milliseconds and got back in %u", timer.ReadMs(), frames_on_last_update);
 	}
 }
 

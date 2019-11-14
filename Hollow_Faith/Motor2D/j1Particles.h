@@ -54,6 +54,7 @@ private:
 	uint last_particle = 0;
 	Uint32 defaultParticleLife = 200;
 	Uint32 stoneLife = 1000;
+	Uint32 deathlife = 500;
 
 public:
 
@@ -61,6 +62,9 @@ public:
 	Particle dustJumping;
 	Particle dustRunning;
 	Particle stone;
+	Particle death;
+
+	bool elim = true;
 
 };
 
