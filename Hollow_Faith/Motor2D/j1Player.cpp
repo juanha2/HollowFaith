@@ -215,13 +215,13 @@ bool j1Player::PreUpdate()
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) { // Stay pressing Space (Hovering)
 
 			if (playerAcceleration > hoverAcceleration && playerSpeed.y < hoverSpeedActivation)
-				playerAcceleration += (movementForce.y / hoverFallSmooth);
+				playerAcceleration += (movementForce.y / hoverFallSmooth) * (App->dt * 43);
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP ) { // Releasing Space
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && (current_state != ST_CLIMB || current_state !=ST_CLIMB_IDLE)) {
+		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && (current_state != ST_CLIMB || current_state != ST_CLIMB_IDLE)) {
 			if (playerFlip)
 				App->particles->stone.speed.x = -5;
 			else
@@ -273,7 +273,7 @@ bool j1Player::Update(float dt)
 		current_animation = &jump;
 		
 		if(!godMode)
-			playerSpeed.y += gravityForce; 	
+			playerSpeed.y += gravityForce * (dt * 51) ; 	
 		break;
 
 	case ST_WALK_RIGHT:

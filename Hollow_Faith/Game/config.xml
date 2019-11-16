@@ -4,7 +4,7 @@
   <app>
     <title>Hollow Faith v0.68</title>
     <organization>Juan Hernández and Aarón Guerrero</organization>
-    <frameratecap value ="60"/>
+    <frameratecap value ="30"/>
   </app>
 	
   <renderer>
