@@ -43,10 +43,11 @@ bool j1Scene::Start()
 
 	config = App->LoadConfig(config_file);
 
-	j1Entity* player = nullptr;
-	player = App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
-	player->Awake(config.child(App->objects->name.GetString()));
-	player->Start();
+	
+	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
+
+	App->objects->player->Awake(config.child(App->objects->name.GetString()));
+	App->objects->player->Start();
 
 	//Load first level at start
 	if (first) 
@@ -193,6 +194,7 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 		
+	App->objects->player = nullptr;
 	App->objects->DeleteEntities();
 	App->tex->UnLoad(graphics);	
 	App->tex->UnLoad(debug_tex);	

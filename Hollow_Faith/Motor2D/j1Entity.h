@@ -12,10 +12,10 @@ enum collDirCheck
 {
 	DIR_UNKNOWN = -1,
 
-	DIR_LEFT,
-	DIR_RIGHT,
 	DIR_UP,
 	DIR_DOWN,
+	DIR_LEFT,
+	DIR_RIGHT,
 	DIR_MAX
 };
 

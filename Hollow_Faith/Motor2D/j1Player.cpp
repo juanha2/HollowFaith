@@ -19,11 +19,8 @@
 
 j1Player::j1Player() : j1Entity(entityType::PLAYER)
 {
-
 	if (App->objects->player == nullptr)
 		App->objects->player = this;
-
-
 }
 
 j1Player::~j1Player() {};
@@ -229,7 +226,9 @@ bool j1Player::PreUpdate()
 	player_states state = process_fsm(inputs);
 	current_state = state;
 
-	
+	//Update position related to real time and puts speed limit.
+	speedLimitChecker();
+	PositionUpdate(App->dt);
 
 	//Update position related to real time and player position.
 	cameraSpeedLimitChecker();
@@ -315,9 +314,7 @@ bool j1Player::Update(float dt)
 	checkingFall = true;	
 
 
-	//Update position related to real time and puts speed limit.
-	speedLimitChecker();
-	PositionUpdate(App->dt);
+	
 
 	return true;
 }
@@ -402,16 +399,18 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	// - - - - - - - COLLISIONS LOGIC - - - - - - - 
 
 	int detectCollDir[DIR_MAX];
-	detectCollDir[DIR_RIGHT] = (position.x + entity_collider.w) - c2->rect.x;
-	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - position.x;
 	detectCollDir[DIR_UP] = (c2->rect.y + c2->rect.h) - position.y;
 	detectCollDir[DIR_DOWN] = (position.y + entity_collider.h) - c2->rect.y;
+	detectCollDir[DIR_RIGHT] = (position.x + entity_collider.w) - c2->rect.x;
+	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - position.x;
+	
 
 	bool collDir[DIR_MAX];
+	collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && speed.y < 0);
+	collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && speed.y > 0);
 	collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && speed.x < 0);
 	collDir[DIR_LEFT] = !(detectCollDir[DIR_LEFT] > 0 && speed.x > 0);
-	collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && speed.y < 0);
-	collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && speed.y > 0);		
+		
 		
 	int dirCheck = DIR_UNKNOWN;
 
