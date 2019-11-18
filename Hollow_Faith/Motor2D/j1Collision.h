@@ -5,6 +5,7 @@
 
 #include "SDL/include/SDL.h"
 #include "j1Module.h"
+#include "j1Entity.h"
 
 enum COLLIDER_TYPE
 {
@@ -27,21 +28,14 @@ struct Collider
 	SDL_Rect rect;
 	bool to_delete = false;
 	COLLIDER_TYPE type;
-	j1Module* callback = nullptr;
-	int damage = NULL;
-	int delayPlayer = NULL; // We'll use this to set the player animation delay when he doesn't land a hit, as well for the player knockback when the attack is landed.
-	int delayEnemy = NULL;	//Same as above
-	int attackType = NULL; //We'll use this to set the attack type: punch, slash, kick... To set the sound effects & particles
+	j1Entity* callback = nullptr;
 
-	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, int damage, int delayPlayer, int delayEnemy, int attackType, j1Module* callback = nullptr) :
+	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, j1Entity* callback = nullptr) :
 		rect(rectangle),
-		type(type),
-		damage(damage),
-		delayPlayer(delayPlayer),
-		delayEnemy(delayEnemy),
-		attackType(attackType),
+		type(type),				
 		callback(callback)
 	{}
+
 	void SetPos(int x, int y)
 	{
 		rect.x = x;
@@ -68,7 +62,8 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, int damage = 0, int delayPlayer = 0, int delayEnemy = 0, int attackType = 0, j1Module * callback = nullptr);
+	Collider* AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Entity * callback = nullptr);
+	void AddColliderEntity(Collider* collider);
 	void DebugDraw();
 
 

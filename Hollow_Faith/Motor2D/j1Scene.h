@@ -12,6 +12,7 @@ public:
 	int savedcurrentmap;
 	bool different_map = false;
 	bool ready_to_load = false;
+	bool sound_repeat = false;
 	j1Scene();
 
 	// Destructor
@@ -40,13 +41,12 @@ public:
 	bool Load(pugi::xml_node&);
 
 
-private:
+private:	
 	
-	void Win_Lose_Condition();
 	bool first = true;
 	SDL_Texture* graphics = nullptr;
-	bool sound_repeat = false;
 
+	
 
 	SDL_Texture* debug_tex;
 

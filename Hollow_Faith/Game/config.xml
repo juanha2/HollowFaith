@@ -6,7 +6,7 @@
     <organization>Juan Hernández and Aarón Guerrero</organization>
     <frameratecap value ="30"/>
   </app>
-	
+  
   <renderer>
     <vsync value="false"/>
     <camera_pos x="0" y="-10"/>
@@ -19,46 +19,14 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
-
-  <file_system>
-    <path>data.zip</path>
-  </file_system>
-
-  <map>
-    <folder>maps/</folder>
-    <levels>    
-      <level name="level01.tmx"/>
-      <level name="level02.tmx"/>     
-    </levels>
-  </map>
-
-  <enemies>
-    <sprites path="Assets/Sprites/enemy.png"/>
-    
-    <animations>
-      <animation name ="fly">
-        <sprite x ="3" y ="7" w ="21" h="25"/>
-        <sprite x ="35" y ="6" w ="21" h="26"/>
-        <sprite x ="68" y ="5" w ="20" h="27"/>
-        <sprite x ="99" y ="7" w ="21" h="25"/>
-        <sprite x ="132" y ="6" w ="20" h="26"/>
-        <sprite x ="164" y ="5" w ="20" h="27"/>        
-        <animValues loop="true" speed="0.06f"/>
-      </animation>
-    </animations>
-    
-    <death_enemyFx path="audio/fx/death.wav"/>
-
-    </enemies>
   
-  <player>
-    
+  <objects>
     <graphics path="Assets/Sprites/Monster.png"/>
 
     <data>
 
       <StartPosLevel1 x="50" y="320"/>
-      <StartPosLevel2 x="50" y="320"/>    
+      <StartPosLevel2 x="50" y="320"/>
       <texture x="0" y="0" w="17" h="27"/>
       <climbspeed value="1.0f"/>
       <speed x="0.0f" y="0.0f"/>
@@ -70,11 +38,11 @@
       <speed_limit x=" 250.0f" y="750.0f"/>
       <gravity value="30.0f"/>
       <slowing_value value="10.0f"/>
-      <slowing_limit value=" 200"/>    
-    
+      <slowing_limit value=" 200"/>
+
     </data>
-    
-    <fx>      
+
+    <fx>
       <jumpFx path="audio/fx/jump.wav"/>
       <deathFx path="audio/fx/death.wav"/>
       <win1Fx path="audio/fx/victory1.wav"/>
@@ -82,16 +50,16 @@
       <landingFx path="audio/fx/landing.wav"/>
       <hoverFx path="audio/fx/hoversound.wav"/>
       <stoneFx path="audio/fx/stone.wav"/>
-    </fx>  
-    
+    </fx>
+
     <animations>
       <animation name ="idle">
         <sprite x ="7" y ="164" w ="17" h="28"/>
         <sprite x ="39" y ="164" w ="17" h="28"/>
         <sprite x ="70" y ="163" w ="18" h="29"/>
         <sprite x ="7" y ="164" w ="17" h="28"/>
-        
-        <animValues loop="true" speed="0.06f"/>      
+
+        <animValues loop="true" speed="0.06f"/>
       </animation>
 
       <animation name ="walk">
@@ -140,8 +108,39 @@
       </animation>
     </animations>
 
-  </player>
 
+  </objects>
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+
+  <map>
+    <folder>maps/</folder>
+    <levels>    
+      <level name="level01.tmx"/>
+      <level name="level02.tmx"/>     
+    </levels>
+  </map>
+
+  <enemies>
+    <sprites path="Assets/Sprites/enemy.png"/>
+    
+    <animations>
+      <animation name ="fly">
+        <sprite x ="3" y ="7" w ="21" h="25"/>
+        <sprite x ="35" y ="6" w ="21" h="26"/>
+        <sprite x ="68" y ="5" w ="20" h="27"/>
+        <sprite x ="99" y ="7" w ="21" h="25"/>
+        <sprite x ="132" y ="6" w ="20" h="26"/>
+        <sprite x ="164" y ="5" w ="20" h="27"/>        
+        <animValues loop="true" speed="0.06f"/>
+      </animation>
+    </animations>
+    
+    <death_enemyFx path="audio/fx/death.wav"/>
+
+    </enemies>
+  
   <particles>
     <animations>
       <animation name ="dustJumping">

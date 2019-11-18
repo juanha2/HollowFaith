@@ -9,12 +9,11 @@
 #include "j1Audio.h"
 #include "j1Particles.h"
 #include "j1Collision.h"
-#include "j1Player.h"
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "j1FadeToBlack.h"
-#include "j1Enemies.h"
+#include "j1Objects.h"
 #include "j1App.h"
 
 
@@ -27,7 +26,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	input = new j1Input();
 	win = new j1Window();
 	render = new j1Render();
-	player = new j1Player();
 	tex = new j1Textures();
 	audio = new j1Audio();
 	scene = new j1Scene();
@@ -35,23 +33,22 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fade_to_black = new j1FadeToBlack();
 	map = new j1Map();
 	coll = new j1Collision();
+	objects = new j1Objects();
 	pathfinding = new j1PathFinding();
-	enemies = new j1Enemies();
+	
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(win);
-	AddModule(map);	
+	AddModule(map);
 	AddModule(tex);
 	AddModule(audio);	
 	AddModule(pathfinding);
 	AddModule(scene);
-	AddModule(enemies);
-	AddModule(player);	
+	AddModule(objects);	
 	AddModule(particles);
-	AddModule(coll);
-	
+	AddModule(coll);	
 	AddModule(fade_to_black);
 	
 	// render last to swap buffer
@@ -111,7 +108,6 @@ bool j1App::Awake()
 
 		while(item != NULL && ret == true)
 		{
-
 			LOG("%s", item->data->name.GetString());
 			ret = item->data->Awake(config.child(item->data->name.GetString()));			
 			item = item->next;

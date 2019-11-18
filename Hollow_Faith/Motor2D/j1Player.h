@@ -5,10 +5,13 @@
 #define JUMP_INIT_AY 0.47568444444 //initial acceleration on the Y coord. //0.867
 
 #define JUMP_TIME 3000
-#define MAXNUMOFCOLLIDERS 1
+
 
 #include "j1Module.h"
 #include "p2Animation.h"
+#include "j1Entity.h"
+
+struct SDL_Texture;
 
 enum player_states
 {
@@ -50,34 +53,16 @@ enum player_inputs
 };
 
 
-enum collDirCheck
-{
-	DIR_UNKNOWN = -1,
-
-	DIR_LEFT,
-	DIR_RIGHT,
-	DIR_UP,
-	DIR_DOWN,
-	DIR_MAX
-};
-
-class j1Player : public j1Module
+class j1Player : public j1Entity
 {
 
-public:
-
-	Collider*			colisionadores[MAXNUMOFCOLLIDERS];
-	SDL_Texture*		graphics = nullptr;
+public:	
 
 	iPoint				startPosLevel1;
 	iPoint				startPosLevel2;
 
-	iPoint				savedPosition = { 0, 670 };
-
-	iPoint				playerPosition = startPosLevel1;		//Player position on the world value
 	bool				checkingFall = false;
 	bool				ignoreColl = false;
-	bool				godMode = false;
 	bool				dead = false;
 	bool				win = false;
 	bool				can_climb = false;
@@ -105,42 +90,34 @@ public:
 	bool PreUpdate();
 
 	// Called each loop iteration
-	bool Update(float dt);
+	bool Update(float dt);	
 
 	bool PostUpdate();
 
 	// Called before quitting
-	bool CleanUp();
-
-	// Called when the player collides
-	void OnCollision(Collider* c1, Collider* c2);
+	void CleanUp();	
 
 	// State machine
 	player_states process_fsm(p2List<player_inputs>& inputs);
 
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
+	void Load(pugi::xml_node& file);
+	void Save(pugi::xml_node& file) const;
 
+	void OnCollision(Collider* c1, Collider* c2);
+	void Win_Lose_Condition();	
 
 private:
 
-	// - - - - PLAYER - - - - 
+	// - - - - PLAYER - - - - 	
 
-	SDL_Rect			playerTexture = { 0, 0, 17, 27 };
-	SDL_RendererFlip	playerFlip = SDL_RendererFlip::SDL_FLIP_NONE;
-
-	float				playerClimbSpeed;
-	fPoint				playerSpeed;							// Player speed AXIS value
-	float				playerAcceleration;						// Player acceleration AXIS value
+	float				playerClimbSpeed;	
 	fPoint				movementForce;							// Force applied to the movement in AXIS value
 
 	float				hoverAcceleration;
 	float				hoverSpeedActivation;
 	float				hoverFallSmooth;
 
-	float				particlePosMargin = 10.0f;
-
-	void PlayerPositionUpdate(float dt);						//Update player's position
+	float				particlePosMargin = 10.0f;	
 
 	// - - - - - - - - - - - 
 
@@ -185,8 +162,7 @@ private:
 
 
 	//  - - - - ANIMATION - - - - 
-
-	Animation*			current_animation;
+		
 	Animation			walk;
 	Animation			idle;
 	Animation			jump;
@@ -197,8 +173,7 @@ private:
 
 
 	//  - - - - - - FX - - - - - - 
-
-	p2SString			graphics_path;
+		
 	p2SString			jump_fx;
 	p2SString			death_fx;
 	p2SString			win1_Fx;

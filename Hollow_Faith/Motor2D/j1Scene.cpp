@@ -8,11 +8,13 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "j1Objects.h"
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "j1FadeToBlack.h"
 #include "j1Pathfinding.h"
-#include "j1Enemies.h"
+#include "j1Entity.h"
+
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -36,19 +38,24 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+
+	config = App->LoadConfig(config_file);
+
+	j1Entity* player = nullptr;
+	player = App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
+	player->Awake(config.child(App->objects->name.GetString()));
+	player->Start();
+
 	//Load first level at start
 	if (first) 
 	{
-
 		p2List_item<Levels*>* levelData = App->map->data.levels.start;
         App->map->Load(levelData->data->name.GetString());
         currentmap = 1;
-        first = false;
-
+        first = false;		
 	}
-
-	App->enemies->AddEnemy(ENEMY_TYPES::ENEMY_FLY, 80, 320);
-	
 
     App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);    //Plays current map music
     graphics = App->tex->Load("Assets/Sprites/halo.png");
@@ -63,7 +70,6 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	
 
 	// debug pathfing ------------------
 	static iPoint origin;
@@ -95,7 +101,6 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	Win_Lose_Condition();	
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
 	{ // Start at the level 1 begin
@@ -111,12 +116,12 @@ bool j1Scene::Update(float dt)
 	}
 	
 
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
-	{ // Start at the current level begin
-		App->player->ignoreColl = true;		
-		App->player->playerPosition = App->player->startPosLevel1; 
-		App->render->camera.x = 0;
-	}
+	//if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
+	//{ // Start at the current level begin
+	//	App->player->ignoreColl = true;		
+	//	App->player->playerPosition = App->player->startPosLevel1; 
+	//	App->render->camera.x = 0;
+	//}
 
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) 
@@ -124,23 +129,21 @@ bool j1Scene::Update(float dt)
 		App->SaveGame();
 	}
 
-
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
 	{ // Load State				
 		App->LoadGame();
 	}
 
+	//if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == false) 
+	//{ // Turn On God mode
+	//	App->player->godMode = true;
+	//	App->player->ignoreColl = true;
+	//}
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == false) 
-	{ // Turn On God mode
-		App->player->godMode = true;
-		App->player->ignoreColl = true;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == true) 
-	{ // Turn Off God mode
-		App->player->godMode = false;
-	}	
-
+	//else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == true) 
+	//{ // Turn Off God mode
+	//	App->player->godMode = false;
+	//}	
 
 	App->map->Draw();
 
@@ -191,17 +194,19 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 		
-	
+	App->objects->DeleteEntities();
 	App->tex->UnLoad(graphics);	
-	App->tex->CleanUp();		
+	App->tex->UnLoad(debug_tex);	
+	App->tex->CleanUp();	
+	App->coll->CleanUp();
 
 	return true;
 }
 
 bool j1Scene::Save(pugi::xml_node& save) const
 {
-	App->player->savedPosition.x = App->player->playerPosition.x;
-	App->player->savedPosition.y = App->player->playerPosition.y;
+	/*App->player->savedPosition.x = App->player->playerPosition.x;
+	App->player->savedPosition.y = App->player->playerPosition.y;*/
 
 	pugi::xml_node current_map = save.append_child("currentmap");
 
@@ -213,6 +218,7 @@ bool j1Scene::Save(pugi::xml_node& save) const
 bool j1Scene::Load(pugi::xml_node& save)
 {
 	savedcurrentmap = save.child("currentmap").attribute("value").as_int();
+	LOG("%i", savedcurrentmap);
 
 	if (savedcurrentmap != currentmap) {
 		currentmap = savedcurrentmap;
@@ -222,53 +228,4 @@ bool j1Scene::Load(pugi::xml_node& save)
 	
 
 	return true;
-}
-
-void j1Scene::Win_Lose_Condition() {
-
-	// Winning at map 1--------------------------
-	if (App->player->win && currentmap == 1) {
-
-		if (!sound_repeat && currentmap == 1) {
-			App->audio->PlayFx(3, 0, App->audio->FXvolume);
-			sound_repeat = true;
-		}
-
-		currentmap = 2;
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
-		}
-	}
-
-	// Winning at map 2--------------------------
-	else if (App->player->win && currentmap == 2) {
-
-		if (!sound_repeat && currentmap == 2) {
-			App->audio->PlayFx(4, 0, App->audio->FXvolume);
-			sound_repeat = true;
-		}
-
-		currentmap = 1;
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 3.0f);
-		}
-	}
-
-	// Dying -----------------------------------------
-	if (App->player->dead) {
-
-		if (!sound_repeat) {
-			App->audio->PlayFx(2, 0, App->audio->FXvolume);
-			sound_repeat = true;
-		}
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (App->scene->currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
-		}
-	}
 }

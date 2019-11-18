@@ -87,12 +87,6 @@ bool j1Collision::Update(float dt)
 			}
 		}
 	}
-
-	
-	if (App->player->checkingFall)
-		App->player->inputs.add(IN_FALLING);
-
-	App->player->checkingFall = true;
 	
 	return true;
 }
@@ -176,16 +170,15 @@ bool j1Collision::CleanUp()
 	return true;
 }
 
-Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, int damage, int delayPlayer, int delayEnemy, int attackType, j1Module* callback)
+Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Entity* callback)
 {
-
 	Collider* ret = nullptr;
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, type, damage, delayPlayer, delayEnemy, attackType, callback);
+			ret = colliders[i] = new Collider(rect, type, callback);
 			break;
 		}
 	}
@@ -193,6 +186,18 @@ Collider* j1Collision::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, int damage
 	return ret;
 }
 
+void j1Collision::AddColliderEntity(Collider* collider)
+{
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (colliders[i] == nullptr)
+		{
+			colliders[i] = collider;
+			break;
+		}
+	}
+
+}
 // -----------------------------------------------------
 
 bool Collider::CheckCollision(const SDL_Rect& r) const

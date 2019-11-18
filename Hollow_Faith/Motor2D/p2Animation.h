@@ -54,10 +54,10 @@ public:
 	}
 
 
-	SDL_Rect& GetCurrentFrame() //float dt
+	SDL_Rect& GetCurrentFrame(float dt) //float dt
 	{
 		float tmp = speed;
-		current_frame += tmp; //*dt
+		current_frame += tmp * dt; //*dt
 
 		if (current_frame < 0)
 		{

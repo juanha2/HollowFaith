@@ -81,7 +81,7 @@ bool j1Particles::Update(float dt)
 		else if (SDL_GetTicks() >= p->born)
 		{
 		
-			App->render->Blit(App->player->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), 1.0, 1.0, p->fliped);
+			//App->render->Blit(App->player->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame(dt)), 1.0, 1.0, p->fliped);
 
 			if (p->fx_played == false)
 			{
@@ -109,7 +109,7 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_Render
 			p->fliped = fliped;
 
 			if (collider_type != COLLIDER_NONE)
-				p->collider = App->coll->AddCollider(p->anim.GetCurrentFrame(), collider_type, 20, 10, 10, 5, this);
+				p->collider = App->coll->AddCollider(p->anim.GetCurrentFrame(0), collider_type, nullptr);
 
 			active[i] = p;
 

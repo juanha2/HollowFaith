@@ -164,7 +164,7 @@ bool j1Map::CleanUp()
 	
 	// Clean up the pugui tree*/
 	map_file.reset();	
-	log_properties();
+	
 	return true;
 }
 

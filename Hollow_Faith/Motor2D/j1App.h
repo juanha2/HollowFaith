@@ -17,10 +17,10 @@ class j1Particles;
 class j1Collision;
 class j1Scene;
 class j1Map;
-class j1Player;
 class j1FadeToBlack;
 class j1PathFinding;
 class j1Enemies;
+class j1Objects;
 
 class j1App
 {
@@ -58,11 +58,11 @@ public:
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
 	float DeltaTime() const;
-
+	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 private:
 
 	// Load config file
-	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+	
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();
@@ -93,12 +93,12 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Map*				map;
-	j1Collision*		coll;
-	j1Player*			player;
+	j1Collision*		coll;	
 	j1FadeToBlack*		fade_to_black;
 	j1Particles*		particles;
 	j1PathFinding*		pathfinding;
 	j1Enemies*			enemies;
+	j1Objects*			objects;
 
 
 	j1PerfTimer			ptimer;

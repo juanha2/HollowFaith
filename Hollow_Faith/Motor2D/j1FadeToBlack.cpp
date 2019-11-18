@@ -6,20 +6,22 @@
 #include "j1FadeToBlack.h"
 #include "j1Render.h"
 #include "j1Map.h"
-#include "j1Player.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "j1Textures.h"
-#include "j1Enemies.h"
+#include "j1Objects.h"
+
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 
 
-
-
-bool j1FadeToBlack::Awake(pugi::xml_node&)
+j1FadeToBlack::j1FadeToBlack(): j1Module()
 {
 	name.create("FadeToBlack");
+}
+
+bool j1FadeToBlack::Awake(pugi::xml_node&)
+{	
 
 	uint width, height = 0u;
 	App->win->GetWindowSize(width, height);	
@@ -52,17 +54,14 @@ bool j1FadeToBlack::PostUpdate()
 	{
 		if (now >= total_time)
 		{
-			App->scene->CleanUp();
+			App->objects->Disable();			
 			App->scene->Disable();		
-			App->player->Disable();
-			App->enemies->Disable();
-			
+					
 			if (App->map->Reset()) {
 				
 				if (App->map->Load(level_to_load.GetString())) {
-					App->player->Enable();
-					App->scene->Enable();
-					App->enemies->Enable();
+					App->objects->Enable();
+					App->scene->Enable();				
 				}
 
 				black_screen = true;
