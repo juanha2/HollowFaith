@@ -19,6 +19,11 @@
 
 j1Player::j1Player() : j1Entity(entityType::PLAYER)
 {
+
+	if (App->objects->player == nullptr)
+		App->objects->player = this;
+
+
 }
 
 j1Player::~j1Player() {};
@@ -224,9 +229,7 @@ bool j1Player::PreUpdate()
 	player_states state = process_fsm(inputs);
 	current_state = state;
 
-	//Update position related to real time and puts speed limit.
-	speedLimitChecker();
-	PositionUpdate(App->dt);
+	
 
 	//Update position related to real time and player position.
 	cameraSpeedLimitChecker();
@@ -310,6 +313,11 @@ bool j1Player::Update(float dt)
 		inputs.add(IN_FALLING);
 
 	checkingFall = true;	
+
+
+	//Update position related to real time and puts speed limit.
+	speedLimitChecker();
+	PositionUpdate(App->dt);
 
 	return true;
 }

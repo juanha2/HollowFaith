@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "j1Textures.h"
 #include "j1Entity.h"
+#include "j1Player.h"
 
 class j1Entity;
 
@@ -36,11 +37,13 @@ public:
 
 public:
 	
-	p2SString		texture_path;
-	SDL_Texture* texture;
-	p2List<j1Entity*> Entities;	
-	iPoint savedPosition;
+	p2SString			texture_path;
+	SDL_Texture*		texture;
+	p2List<j1Entity*>	Entities;	
+	iPoint				savedPosition;
 
+
+	j1Player* player;
 
 };
 

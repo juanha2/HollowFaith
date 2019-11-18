@@ -134,16 +134,15 @@ bool j1Scene::Update(float dt)
 		App->LoadGame();
 	}
 
-	//if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == false) 
-	//{ // Turn On God mode
-	//	App->player->godMode = true;
-	//	App->player->ignoreColl = true;
-	//}
-
-	//else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->player->godMode == true) 
-	//{ // Turn Off God mode
-	//	App->player->godMode = false;
-	//}	
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->objects->player->godMode == false)
+	{ // Turn On God mode
+		App->objects->player->godMode = true;
+		App->objects->player->ignoreColl = true;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->objects->player->godMode == true)
+	{ // Turn Off God mode
+		App->objects->player->godMode = false;
+	}	
 
 	App->map->Draw();
 

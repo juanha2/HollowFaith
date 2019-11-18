@@ -159,7 +159,8 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 	switch (type)
 	{
 	case j1Entity::entityType::PLAYER:
-		tmp = new j1Player();
+		if(player == nullptr)
+			tmp = new j1Player();
 		break;
 	}
 
