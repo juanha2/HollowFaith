@@ -140,14 +140,14 @@ bool j1Player::PreUpdate()
 		//		- - - - - - PLAYER INPUTS - - - - - - 
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) { // Pressing W (Climbing)
-			position.y -= playerClimbSpeed;
+			position.y -= playerClimbSpeed * (App->dt * 50);
 			inputs.add(IN_CLIMB);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) { // Releasing W
 			inputs.add(IN_UPWARDS_UP);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Pressing S (Climbing)
-			position.y += playerClimbSpeed;
+			position.y += playerClimbSpeed * (App->dt * 60);
 			inputs.add(IN_CLIMB);	
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Releasing S
@@ -442,6 +442,29 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			if ((c2->type == COLLIDER_CLIMB))
 			{				
 				can_climb = true;
+
+				switch (dirCheck) {
+
+
+				case DIR_DOWN:
+				
+					if (!App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && detectCollDir[DIR_DOWN] >= 16.5f) { // WORKING IN IT
+				
+						position.y = c2->rect.y - entity_collider.h;
+
+						Acceleration = 0;
+						jump.Reset();
+						inputs.add(IN_WALK_RIGHT);
+						checkingFall = false;
+					}
+					else
+					{
+						inputs.add(IN_CLIMB);
+					}
+					
+					break;
+
+				}
 				
 			}
 
@@ -624,7 +647,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 				break;
 			case IN_WALK_LEFT: state = ST_WALK_LEFT;
 				break;
-
+				
 			}
 			break;
 
