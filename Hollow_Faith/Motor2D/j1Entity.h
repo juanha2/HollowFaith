@@ -34,7 +34,7 @@ public:
 	j1Entity();
 	j1Entity(entityType type);
 	~j1Entity();
-
+	
 	virtual bool Awake(pugi::xml_node& config) { return true; };
 	virtual bool Start() { return true; };
 	virtual bool PreUpdate() { return true; };
@@ -48,9 +48,6 @@ public:
 	void PositionUpdate(float dt);						//Update entity's position
 	void Draw(float dt);	
 
-	void create_colliders();
-	void delete_colliders();
-
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
 	void CollisionPosUpdate();
 
@@ -63,6 +60,7 @@ public:
 	iPoint maxSpeed;	
 
 	Collider*			collider;
+	bool				ignoreColl = false;
 	bool				godMode = false;
 	float				Acceleration;						// Player acceleration AXIS value
 	SDL_RendererFlip	flip = SDL_RendererFlip::SDL_FLIP_NONE;
@@ -71,7 +69,7 @@ public:
 	
 
 private:
-
+	
 };
 
 #endif
