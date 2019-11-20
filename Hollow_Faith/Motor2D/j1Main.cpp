@@ -10,6 +10,9 @@
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
 #pragma comment( lib, "SDL/libx86/SDL2main.lib" )
 
+#include "Brofiler/Brofiler.h"
+#pragma comment( lib, "Brofiler/ProfilerCore32.lib")
+
 enum MainState
 {
 	CREATE = 1,
@@ -26,9 +29,10 @@ j1App* App = NULL;
 int main(int argc, char* args[])
 {
 	LOG("Engine starting ... %d");
-
+	
 	MainState state = MainState::CREATE;
-	int result = EXIT_FAILURE;
+	int result = EXIT_FAILURE;	
+	
 
 	while(state != EXIT)
 	{
@@ -50,6 +54,7 @@ int main(int argc, char* args[])
 
 			// Awake all modules -----------------------------------------------
 			case AWAKE:
+
 			LOG("AWAKE PHASE ===============================");
 			if(App->Awake() == true)
 				state = START;
