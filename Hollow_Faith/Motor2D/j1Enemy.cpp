@@ -52,6 +52,7 @@ bool j1Enemy::PreUpdate()
 {
 	bool ret = true;
 
+	//DEBUG MOVEMENT ENEMY
 
 		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT ) { // Pressing A (Running)
 			position.x += 1;
@@ -63,12 +64,10 @@ bool j1Enemy::PreUpdate()
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) { // Pressing A (Running)
-			position.y -= 1;
-			flip = SDL_FLIP_HORIZONTAL;
+			position.y -= 1;			
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) { // Pressing A (Running)
-			position.y += 1;
-			flip = SDL_FLIP_HORIZONTAL;
+			position.y += 1;			
 		}
 		
 	PositionUpdate(App->dt);
