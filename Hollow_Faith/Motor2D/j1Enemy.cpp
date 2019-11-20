@@ -10,6 +10,7 @@
 #include "j1Player.h"
 #include "j1Map.h"
 #include "j1Objects.h"
+#include "j1Pathfinding.h"
 #include "j1Enemy.h"
 #include "j1Scene.h"
 
@@ -54,7 +55,9 @@ bool j1Enemy::PreUpdate()
 
 	//DEBUG MOVEMENT ENEMY
 
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT ) { // Pressing A (Running)
+	
+		
+	/*if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT ) { // Pressing A (Running)
 			position.x += 1;
 			flip = SDL_FLIP_NONE;
 		}
@@ -68,9 +71,9 @@ bool j1Enemy::PreUpdate()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) { // Pressing A (Running)
 			position.y += 1;			
-		}
+		}*/
 		
-	PositionUpdate(App->dt);
+	//PositionUpdate(App->dt);
 
 
 	return ret;
@@ -80,6 +83,26 @@ bool j1Enemy::PreUpdate()
 bool j1Enemy::Update(float dt)
 {
 	bool ret = true;
+	
+
+/*
+	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < agroDistance)
+		chase = true;
+
+	if (chase) 
+	{
+		pathToPlayer = App->pathfinding->GetLastPath();
+		
+		for (uint i = 0; i < pathToPlayer.Count(); i++)
+		{
+			
+			
+
+		}
+	}
+	
+	*/
+	
 
 	return ret;
 }

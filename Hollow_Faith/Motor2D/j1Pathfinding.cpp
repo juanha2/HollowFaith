@@ -123,26 +123,6 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill)
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 
-	// north
-	cell.create(pos.x, pos.y + 1);
-	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(this->g, this->h, cell, this));
-
-	// east
-	cell.create(pos.x + 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(this->g, this->h, cell, this));
-
-	// south
-	cell.create(pos.x, pos.y - 1);
-	if(App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(this->g, this->h, cell, this));
-
-	// west
-	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
-		list_to_fill.list.add(PathNode(this->g, this->h, cell, this));
-
 	// north - west
 	cell.create(pos.x - 1, pos.y + 1);
 	if (App->pathfinding->IsWalkable(cell))
@@ -162,6 +142,28 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill)
 	cell.create(pos.x + 1, pos.y + 1);
 	if (App->pathfinding->IsWalkable(cell))
 		list_to_fill.list.add(PathNode(this->g, this->h, cell, this));
+
+	// west
+	cell.create(pos.x - 1, pos.y);
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(this->g, this->h, cell, this));
+
+	// east
+	cell.create(pos.x + 1, pos.y);
+	if (App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(this->g, this->h, cell, this));
+
+	// north
+	cell.create(pos.x, pos.y + 1);
+	if(App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(this->g, this->h, cell, this));
+
+	// south
+	cell.create(pos.x, pos.y - 1);
+	if(App->pathfinding->IsWalkable(cell))
+		list_to_fill.list.add(PathNode(this->g, this->h, cell, this));
+
+	
 
 	return list_to_fill.list.count();
 }
@@ -210,7 +212,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		p2List_item<PathNode>* lowest = opened.GetNodeLowestScore();
 
 		PathNode* current = &closed.list.add(lowest->data)->data;
-		current->g++;
+		
 
 		opened.list.del(lowest);
 

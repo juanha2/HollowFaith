@@ -5,6 +5,7 @@
 #include "p2Animation.h"
 #include "j1Entity.h"
 #include "j1Module.h"
+#include "p2DynArray.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -15,6 +16,11 @@ class j1Enemy : public j1Entity
 public:
 
 	Animation animation;
+	p2DynArray<iPoint> pathToPlayer;
+
+	bool chase;
+	int agroDistance = 50;
+
 public:
 
 	j1Enemy();
