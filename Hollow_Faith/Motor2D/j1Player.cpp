@@ -142,18 +142,41 @@ bool j1Player::PreUpdate()
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) { // Pressing W (Climbing)
 			position.y -= playerClimbSpeed * (App->dt * 50);
 			inputs.add(IN_CLIMB);
-		}
+
+		} 
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) { // Releasing W
+			acum = 0;
 			inputs.add(IN_UPWARDS_UP);
 		}
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Releasing W
+			acum++;
+			if (acum < 10)
+				position.x += playerClimbSpeed * (App->dt * 50);
+			else if ( acum==10)
+				current_state != ST_CLIMB;
+		inputs.add(IN_CLIMB);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Releasing W
+			position.x -= playerClimbSpeed * (App->dt * 50);
+			inputs.add(IN_CLIMB);
+		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Pressing S (Climbing)
-			position.y += playerClimbSpeed * (App->dt * 60);
+			position.y += playerClimbSpeed * (App->dt * 50);
 			inputs.add(IN_CLIMB);	
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE) && can_climb) { // Pressing A (Running)
+			position.x -= playerClimbSpeed * (App->dt * 50);
+			inputs.add(IN_CLIMB);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE) && can_climb ) { // Pressing A (Running)
+			position.x += playerClimbSpeed * (App->dt * 50);
+			inputs.add(IN_CLIMB);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Releasing S
 			position.y += 1;
 			inputs.add(IN_UPWARDS_UP);
 		}
+
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && current_state != ST_CLIMB) { // Pressing A (Running)
 			speed.x += movementForce.x;
 			flip = SDL_FLIP_HORIZONTAL;
@@ -167,7 +190,10 @@ bool j1Player::PreUpdate()
 			flip = SDL_FLIP_NONE;
 			inputs.add(IN_WALK_RIGHT);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) { // Releasing D 
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP && App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) { // Releasing D 
+			inputs.add(IN_RIGHT_UP);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP ) { // Releasing D 
 			inputs.add(IN_RIGHT_UP);
 		}
 
@@ -450,6 +476,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				
 					if (!App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && detectCollDir[DIR_DOWN] >= 16.5f) { // WORKING IN IT
 				
+						
 						position.y = c2->rect.y - entity_collider.h;
 
 						Acceleration = 0;

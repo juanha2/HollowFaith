@@ -60,7 +60,7 @@ public:
 
 	iPoint				startPosLevel1;
 	iPoint				startPosLevel2;
-
+	int acum = 0;
 	bool				checkingFall = false;
 	bool				ignoreColl = false;
 	bool				dead = false;
