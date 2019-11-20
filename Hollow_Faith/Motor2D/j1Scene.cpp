@@ -14,6 +14,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Pathfinding.h"
 #include "j1Entity.h"
+#include "j1Enemy.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -43,12 +44,15 @@ bool j1Scene::Start()
 
 	config = App->LoadConfig(config_file);
 
-	
+	App->objects->DeleteEntities();
 	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
-
 	App->objects->player->Awake(config.child(App->objects->name.GetString()));
 	App->objects->player->Start();
 
+	App->objects->AddEntity(j1Entity::entityType::ENEMY, { 0,0 });
+	App->objects->enemy->Awake(config.child(App->objects->name.GetString()));
+	App->objects->enemy->Start();
+	
 	//Load first level at start
 	if (first) 
 	{
@@ -112,6 +116,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
 	{ // Start at the level 2 begin
+		
 		currentmap = 2;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
@@ -195,6 +200,7 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 		
 	App->objects->player = nullptr;
+	App->objects->enemy = nullptr;
 	App->objects->DeleteEntities();
 	App->tex->UnLoad(graphics);	
 	App->tex->UnLoad(debug_tex);	

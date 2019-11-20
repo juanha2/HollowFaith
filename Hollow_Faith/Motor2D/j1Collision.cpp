@@ -28,6 +28,12 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_STONE][COLLIDER_PLATFORM] = true;
 	matrix[COLLIDER_STONE][COLLIDER_ENEMY] = true;
 
+	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = false;	
+	matrix[COLLIDER_ENEMY][COLLIDER_NONE] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_PLATFORM] = true;
+
+
 }
 
 // Destructor

@@ -10,12 +10,12 @@
 		<currentmap value="1" />
 	</scene>
 	<objects>
-		<position x="556" y="117" />
+		<position x="50" y="325" />
 	</objects>
 	<particles />
 	<colliders />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-634" y="-10" />
+		<camera x="0" y="-10" />
 	</renderer>
 </game_state>

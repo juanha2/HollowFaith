@@ -94,7 +94,6 @@ bool j1Player::Start()
 	App->coll->AddColliderEntity(collider);
 	win = false;
 	dead = false;
-	death.Reset();
 	
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
@@ -125,10 +124,9 @@ bool j1Player::Start()
 // Called before quitting
 void j1Player::CleanUp()
 {	
-	//LOG("CLEANUP PLAYER");
-	
-	delete_colliders();	
+	LOG("CLEANUP PLAYER");
 	App->audio->UnLoad();
+	death.Reset();
 
 }
 // Called each loop iteration
@@ -453,8 +451,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if (ignoreColl == false) {
 
 			if ((c2->type == COLLIDER_DEATH) || (c2->type == COLLIDER_ENEMY))
-			{
-			
+			{		
+				
 				inputs.add(IN_DEAD);
 				dead = true;
 			}
@@ -776,11 +774,11 @@ void j1Player::Win_Lose_Condition() {
 	}
 
 	// Dying -----------------------------------------
-	if (dead) {
-		
+	if (dead) {		
 
 		if (!App->scene->sound_repeat) {
 			App->audio->PlayFx(2, 0, App->audio->FXvolume);
+			death.Reset();
 			App->scene->sound_repeat = true;
 		}
 
