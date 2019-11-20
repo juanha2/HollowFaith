@@ -48,8 +48,12 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+
+
 void j1Map::Draw()
 {
+	BROFILER_CATEGORY("MapLogic", Profiler::Color::Orchid);
+
 	if (map_loaded == false)
 		return;	
 	

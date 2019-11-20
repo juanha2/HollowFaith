@@ -189,10 +189,12 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
+	BROFILER_CATEGORY("PathfindingLogic", Profiler::Color::Yellow);
 
 	if (!IsWalkable(origin) || !IsWalkable(destination)) 
 		return -1;
 
+	int check = 0;
 
 	PathList opened;
 	PathList closed;
@@ -201,7 +203,8 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	opened.list.add(start);
 
 	while (opened.list.count() > 0) {
-		
+		check++;
+
 		p2List_item<PathNode>* lowest = opened.GetNodeLowestScore();
 
 		PathNode* current = &closed.list.add(lowest->data)->data;
@@ -235,6 +238,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			
 			if (closed.Find(adjacentIterator->data.pos) != NULL) 
 			{
+				LOG("%d", check);
 				continue;
 			}
 
@@ -251,6 +255,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		}
 	}
 
+	
 	
 	return -1;
 }

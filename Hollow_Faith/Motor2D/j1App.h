@@ -7,6 +7,10 @@
 #include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 
+#include "Brofiler/Brofiler.h"
+#pragma comment( lib, "Brofiler/ProfilerCore32.lib")
+
+
 // Modules
 class j1Window;
 class j1Input;
