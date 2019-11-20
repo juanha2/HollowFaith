@@ -1,5 +1,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
+
+
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Textures.h"
@@ -34,6 +36,8 @@ bool j1Enemy::Awake(pugi::xml_node& config)
 	entity_collider = { 0, 0, 17, 27 };
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 
+	originalPos = position;
+
 	return ret;
 }
 
@@ -43,6 +47,7 @@ bool j1Enemy::Start()
 
 	App->coll->AddColliderEntity(collider);
 	current_animation = &animation;
+
 
 	position = { 80,320 };
 
@@ -73,7 +78,7 @@ bool j1Enemy::PreUpdate()
 			position.y += 1;			
 		}*/
 		
-	//PositionUpdate(App->dt);
+	PositionUpdate(App->dt);
 
 
 	return ret;
@@ -83,25 +88,38 @@ bool j1Enemy::PreUpdate()
 bool j1Enemy::Update(float dt)
 {
 	bool ret = true;
-	
 
-/*
+	timer += dt;
+
+
 	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < agroDistance)
-		chase = true;
+	{
+		if (timer > 5) 
+		{
+			chase = true;
+			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
+			pathToPlayer = *App->pathfinding->GetLastPath();	
+			
+			timer = 0;
+		}
+	}	
 
 	if (chase) 
 	{
-		pathToPlayer = App->pathfinding->GetLastPath();
-		
-		for (uint i = 0; i < pathToPlayer.Count(); i++)
+		if (pathToPlayer.Count() > 0) 
 		{
-			
-			
-
+			iPoint current = App->map->MapToWorld(pathToPlayer.At(0)->x, pathToPlayer.At(0)->y);
+			position.x = current.x + originalPos.x;
+			pathToPlayer.Pop(current);
+		
 		}
+		else
+		{		
+			chase = false;
+		}		
 	}
 	
-	*/
+	
 	
 
 	return ret;

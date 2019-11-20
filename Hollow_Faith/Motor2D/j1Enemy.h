@@ -6,6 +6,8 @@
 #include "j1Entity.h"
 #include "j1Module.h"
 #include "p2DynArray.h"
+#include "j1Timer.h"
+#include "p2Point.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -17,9 +19,13 @@ public:
 
 	Animation animation;
 	p2DynArray<iPoint> pathToPlayer;
+	iPoint originalPos;
 
-	bool chase;
-	int agroDistance = 50;
+	float timer;
+
+
+	bool chase = false;
+	int agroDistance = 200;
 
 public:
 
