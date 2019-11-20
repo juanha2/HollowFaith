@@ -26,18 +26,6 @@ j1Entity::~j1Entity()
 {
 }
 
-
-void j1Entity::create_colliders()
-{
-
-	
-}
-
-void j1Entity::delete_colliders()
-{
-
-}
-
 void j1Entity::Draw(float dt)
 {	
 	App->render->Blit(App->objects->texture, position.x, position.y,

@@ -125,9 +125,7 @@ bool j1Player::Start()
 // Called before quitting
 void j1Player::CleanUp()
 {	
-	//LOG("CLEANUP PLAYER");
-	
-	delete_colliders();	
+	LOG("CLEANUP PLAYER");
 	App->audio->UnLoad();
 
 }
@@ -453,8 +451,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if (ignoreColl == false) {
 
 			if ((c2->type == COLLIDER_DEATH) || (c2->type == COLLIDER_ENEMY))
-			{
-			
+			{		
+				
 				inputs.add(IN_DEAD);
 				dead = true;
 			}

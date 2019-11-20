@@ -5,6 +5,7 @@
 #include "j1Player.h"
 #include "j1Entity.h"
 #include "j1Textures.h"
+#include "j1Enemy.h"
 
 
 j1Objects::j1Objects()
@@ -18,9 +19,9 @@ j1Objects::~j1Objects()
 
 bool j1Objects::Awake(pugi::xml_node& config)
 {
-	bool ret = true;	
-	texture_path = config.child("graphics").attribute("path").as_string();	
-	
+	bool ret = true;
+	texture_path = config.child("graphics").attribute("path").as_string();
+
 	LOG("%s", texture_path.GetString());
 	return ret;
 }
@@ -29,10 +30,10 @@ bool j1Objects::Start()
 {
 	bool ret = true;
 	texture = App->tex->Load(texture_path.GetString());
-	
 
 	return ret;
 }
+
 bool j1Objects::PreUpdate()
 {
 
@@ -41,29 +42,25 @@ bool j1Objects::PreUpdate()
 	while (tmp != nullptr)
 	{
 
-		if (tmp->data->type == j1Entity::entityType::PLAYER)
+		if (tmp->data->type == j1Entity::entityType::PLAYER || tmp->data->type == j1Entity::entityType::ENEMY)
 			ret = tmp->data->PreUpdate();
 		tmp = tmp->next;
 	}
 
-	//if (App->map->debug)DebugDraw();
-
 	return ret;
 }
 bool j1Objects::Update(float dt)
-{		
-	
+{
+
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)
-	{				
-		
-		if (tmp->data->type == j1Entity::entityType::PLAYER)
-			ret = tmp->data->Update(dt);	
+	{
+
+		if (tmp->data->type == j1Entity::entityType::PLAYER || tmp->data->type == j1Entity::entityType::ENEMY)
+			ret = tmp->data->Update(dt);
 		tmp = tmp->next;
 	}
-
-	//if (App->map->debug)DebugDraw();
 
 	return ret;
 }
@@ -73,7 +70,7 @@ bool j1Objects::PostUpdate()
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)
-	{		
+	{
 		ret = tmp->data->PostUpdate();
 		tmp = tmp->next;
 	}
@@ -90,7 +87,7 @@ bool j1Objects::CleanUp()
 		tmp->data->CleanUp();
 		tmp = tmp->next;
 	}
-	
+
 	return ret;
 }
 
@@ -110,10 +107,10 @@ bool j1Objects::Load(pugi::xml_node& file)
 {
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
-	
+
 	while (tmp != nullptr)
 	{
-		if (tmp->data->type == j1Entity::entityType::PLAYER)
+		if (tmp->data->type == j1Entity::entityType::PLAYER || tmp->data->type == j1Entity::entityType::ENEMY)
 		{
 			tmp->data->Load(file);
 		}
@@ -145,7 +142,7 @@ bool j1Objects::DebugDraw()
 	{
 		col.h = tmp->data->Collider.h, col.w = tmp->data->Collider.w, col.x = tmp->data->Collider.x, col.y = tmp->data->Collider.y;
 		App->render->DrawQuad(col, 255, 0, 0, 50);
-	
+
 		tmp = tmp->next;
 	}*/
 	return true;
@@ -159,8 +156,11 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 	switch (type)
 	{
 	case j1Entity::entityType::PLAYER:
-		if(player == nullptr)
-			tmp = new j1Player();
+		tmp = new j1Player();
+		break;
+
+	case j1Entity::entityType::ENEMY:
+		tmp = new j1Enemy();
 		break;
 	}
 
@@ -180,6 +180,4 @@ void j1Objects::DeleteEntities()
 		Entities.del(tmp2);
 		tmp = tmp->prev;
 	}
-
-
 }

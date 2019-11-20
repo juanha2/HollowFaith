@@ -7,6 +7,7 @@
 #include "j1Textures.h"
 #include "j1Entity.h"
 #include "j1Player.h"
+#include "j1Enemy.h"
 
 class j1Entity;
 
@@ -44,7 +45,7 @@ public:
 
 
 	j1Player* player;
-
+	j1Enemy* enemy;
 };
 
 
