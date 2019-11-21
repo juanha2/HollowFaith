@@ -21,7 +21,8 @@
   </window>
   
   <objects>
-    <graphics path="Assets/Sprites/Monster.png"/>
+    <graphics_player path="Assets/Sprites/Monster.png"/>
+    <graphics_enemy path="Assets/Sprites/enemy.png"/>
 
     <data>
 
@@ -123,7 +124,7 @@
   </map>
 
   <enemies>
-    <sprites path="Assets/Sprites/enemy.png"/>
+  
     
     <animations>
       <animation name ="fly">

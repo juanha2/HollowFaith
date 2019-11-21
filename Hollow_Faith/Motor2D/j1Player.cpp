@@ -30,6 +30,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	LOG("Loading Player Parser");
 	bool ret = true;	
 
+	texture_path = config.child("graphics_player").attribute("path").as_string();
+
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 
@@ -90,7 +92,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Player::Start()
 {	
-	
+	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
 	win = false;
 	dead = false;

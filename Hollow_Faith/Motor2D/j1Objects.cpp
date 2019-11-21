@@ -20,16 +20,16 @@ j1Objects::~j1Objects()
 bool j1Objects::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
-	texture_path = config.child("graphics").attribute("path").as_string();
+	
 
-	LOG("%s", texture_path.GetString());
+	
 	return ret;
 }
 
 bool j1Objects::Start()
 {
 	bool ret = true;
-	texture = App->tex->Load(texture_path.GetString());
+	
 
 	return ret;
 }
@@ -80,7 +80,7 @@ bool j1Objects::PostUpdate()
 bool j1Objects::CleanUp()
 {
 	bool ret = true;
-	App->tex->UnLoad(texture);
+	
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)
 	{

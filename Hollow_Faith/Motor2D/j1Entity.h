@@ -41,7 +41,7 @@ public:
 	virtual bool Update(float dt) { return true; };
 	virtual bool PostUpdate() { return true; };	
 
-	virtual void CleanUp() {};
+	virtual void CleanUp();
 	virtual void Save(pugi::xml_node& file) const {};
 	virtual void Load(pugi::xml_node& file) {};	
 	
@@ -67,7 +67,8 @@ public:
 
 	SDL_Rect			entity_collider;
 	
-
+	p2SString			texture_path;
+	SDL_Texture* texture;
 private:
 	
 };

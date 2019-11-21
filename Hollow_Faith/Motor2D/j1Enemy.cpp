@@ -29,6 +29,8 @@ bool j1Enemy::Awake(pugi::xml_node& config)
 	LOG("Loading Enemy Parser");
 	bool ret = true;
 
+	texture_path = config.child("graphics_enemy").attribute("path").as_string();
+
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 	animation.load_animation(animIterator, "idle");
@@ -45,6 +47,7 @@ bool j1Enemy::Start()
 {
 	bool ret = true;
 
+	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
 	current_animation = &animation;
 
