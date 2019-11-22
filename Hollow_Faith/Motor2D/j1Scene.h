@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "p2DynArray.h"
 
 struct SDL_Texture;
 
@@ -45,7 +46,7 @@ private:
 	
 	bool first = true;
 	SDL_Texture* graphics = nullptr;
-
+	
 	
 
 	SDL_Texture* debug_tex;

@@ -40,7 +40,7 @@ public:
 	// Operators
 	VALUE& operator[](unsigned int index)
 	{
-		ASSERT(index < num_elements);
+		//ASSERT(index < num_elements);
 		return data[index];
 	}
 

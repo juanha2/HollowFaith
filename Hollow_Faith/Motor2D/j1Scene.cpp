@@ -199,6 +199,7 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 		
+	
 	App->objects->player = nullptr;
 	App->objects->enemy = nullptr;
 	App->objects->DeleteEntities();

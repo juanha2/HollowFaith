@@ -97,12 +97,13 @@ bool j1Enemy::Update(float dt)
 
 	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < agroDistance)
 	{
-		if (timer > 5) 
+		if (timer > 3) 
 		{
 			chase = true;
 			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
 			pathToPlayer = *App->pathfinding->GetLastPath();	
-			
+			pathToPlayer.Flip();
+
 			timer = 0;
 		}
 	}	
@@ -111,10 +112,20 @@ bool j1Enemy::Update(float dt)
 	{
 		if (pathToPlayer.Count() > 0) 
 		{
+
 			iPoint current = App->map->MapToWorld(pathToPlayer.At(0)->x, pathToPlayer.At(0)->y);
-			position.x = current.x + originalPos.x;
-			pathToPlayer.Pop(current);
-		
+
+			if (position.x != current.x + originalPos.x) {
+
+				if (App->objects->player->position.x > position.x)
+					speed.x += 10;
+				else
+					speed.x -= 10;
+
+			}
+
+
+			pathToPlayer.Pop(pathToPlayer[0]);
 		}
 		else
 		{		
@@ -183,6 +194,17 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 
 	if (ignoreColl == false) {
 
+		if ((c2->type == COLLIDER_PLAYER))
+		{
+			switch (dirCheck) {
+
+			case DIR_UP:
+				
+				break;
+
+			}
+
+		}
 		
 		if ((c2->type == COLLIDER_FLOOR))
 		{
@@ -208,7 +230,7 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 
 			case DIR_RIGHT:
 
-				position.x = c2->rect.x - entity_collider.w;
+				position.x = c2->rect.x - entity_collider.w - 1;
 				speed.x = 0;
 				break;
 
