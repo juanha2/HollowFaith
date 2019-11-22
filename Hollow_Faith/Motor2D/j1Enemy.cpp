@@ -97,12 +97,11 @@ bool j1Enemy::Update(float dt)
 
 	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < agroDistance)
 	{
-		if (timer > 3) 
+		if (timer > 5) 
 		{
 			chase = true;
 			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
 			pathToPlayer = *App->pathfinding->GetLastPath();	
-			pathToPlayer.Flip();
 
 			timer = 0;
 		}
@@ -112,20 +111,24 @@ bool j1Enemy::Update(float dt)
 	{
 		if (pathToPlayer.Count() > 0) 
 		{
-
 			iPoint current = App->map->MapToWorld(pathToPlayer.At(0)->x, pathToPlayer.At(0)->y);
 
-			if (position.x != current.x + originalPos.x) {
+			if (abs(abs(position.x) - abs(current.x)) > 3) {
 
-				if (App->objects->player->position.x > position.x)
-					speed.x += 10;
+				if (current.x > position.x)
+					speed.x += 3;
 				else
-					speed.x -= 10;
+					speed.x -= 3;
 
 			}
-
-
-			pathToPlayer.Pop(pathToPlayer[0]);
+			else
+			{
+				speed.x = 0;
+				pathToPlayer.Flip();
+				pathToPlayer.Pop(pathToPlayer[0]);
+				pathToPlayer.Flip();
+			}
+			
 		}
 		else
 		{		
