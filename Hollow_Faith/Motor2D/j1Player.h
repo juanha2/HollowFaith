@@ -60,9 +60,8 @@ public:
 
 	iPoint				startPosLevel1;
 	iPoint				startPosLevel2;
-	int acum = 0;
-	bool				checkingFall = false;
 	
+	bool				checkingFall = false;
 	bool				dead = false;
 	bool				win = false;
 	bool				can_climb = false;

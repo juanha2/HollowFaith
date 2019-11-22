@@ -142,42 +142,30 @@ bool j1Player::PreUpdate()
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) { // Pressing W (Climbing)
 			position.y -= playerClimbSpeed * (App->dt * 50);
 			inputs.add(IN_CLIMB);
-
 		} 
-		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) { // Releasing W
-			acum = 0;
+		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) { // Releasing W		
 			inputs.add(IN_UPWARDS_UP);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Releasing W
-			acum++;
-			if (acum < 10)
-				position.x += playerClimbSpeed * (App->dt * 50);
-			else if ( acum==10)
-				current_state != ST_CLIMB;
-		inputs.add(IN_CLIMB);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Releasing W
-			position.x -= playerClimbSpeed * (App->dt * 50);
-			inputs.add(IN_CLIMB);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Pressing S (Climbing)
+	
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && can_climb) { // Pressing S (Climbing)
 			position.y += playerClimbSpeed * (App->dt * 50);
 			inputs.add(IN_CLIMB);	
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE) && can_climb) { // Pressing A (Running)
-			position.x -= playerClimbSpeed * (App->dt * 50);
-			inputs.add(IN_CLIMB);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE) && can_climb ) { // Pressing A (Running)
-			position.x += playerClimbSpeed * (App->dt * 50);
-			inputs.add(IN_CLIMB);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Releasing S
-			position.y += 1;
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) { // Releasing S
+			//position.y += 1;
 			inputs.add(IN_UPWARDS_UP);
 		}
 
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && current_state != ST_CLIMB) { // Pressing A (Running)
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && can_climb && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Pressing A (Running)
+			position.x -= playerClimbSpeed * (App->dt * 50);
+			inputs.add(IN_CLIMB);
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && can_climb && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Pressing A (Running)
+			position.x += playerClimbSpeed * (App->dt * 50);
+			inputs.add(IN_CLIMB);
+		}
+
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // Pressing A (Running)
 			speed.x += movementForce.x;
 			flip = SDL_FLIP_HORIZONTAL;
 			inputs.add(IN_WALK_LEFT);
@@ -189,10 +177,7 @@ bool j1Player::PreUpdate()
 			speed.x -= movementForce.x;
 			flip = SDL_FLIP_NONE;
 			inputs.add(IN_WALK_RIGHT);
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP && App->input->GetKey(SDL_SCANCODE_D) == KEY_UP) { // Releasing D 
-			inputs.add(IN_RIGHT_UP);
-		}
+		}		
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_UP ) { // Releasing D 
 			inputs.add(IN_RIGHT_UP);
 		}
@@ -266,7 +251,7 @@ bool j1Player::PreUpdate()
 // Called each loop iteration
 bool j1Player::Update(float dt)
 {
-
+	
 	Win_Lose_Condition();
 	//current_animation = &idle;
 	switch (current_state)
@@ -466,33 +451,52 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			
 			if ((c2->type == COLLIDER_CLIMB))
-			{				
-				can_climb = true;
-
-				switch (dirCheck) {
-
-
-				case DIR_DOWN:
-				
-					if (!App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && detectCollDir[DIR_DOWN] >= 16.5f) { // WORKING IN IT
-				
-						
-						position.y = c2->rect.y - entity_collider.h;
-
-						Acceleration = 0;
-						jump.Reset();
-						inputs.add(IN_WALK_RIGHT);
-						checkingFall = false;
-					}
-					else
-					{
-						inputs.add(IN_CLIMB);
-					}
-					
-					break;
-
+			{		
+				if ((position.x + 10 > c2->rect.x && position.x < c2->rect.x + c2->rect.w)
+					&& (position.y + 15 > c2->rect.y && position.y < c2->rect.y + c2->rect.h)
+					&& (position.y + entity_collider.h - 1 < c2->rect.y + c2->rect.h)
+					&& (position.x + 5 < c2->rect.x + c2->rect.w))
+					can_climb = true;
+				else if (position.y +15< c2->rect.y) {
+					position.y = c2->rect.y - 14;
+					can_climb = true;
 				}
 				
+				else{
+					
+					can_climb = false;
+					current_state = ST_AT_AIR;
+				}
+					
+
+				//switch (dirCheck) {
+
+
+				//case DIR_DOWN:
+				//
+				//	if (!App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && detectCollDir[DIR_DOWN] >= 16.5f) { // WORKING IN IT
+				//
+				//		
+				//		position.y = c2->rect.y;
+
+				//		Acceleration = 0;
+				//		jump.Reset();
+				//		inputs.add(IN_WALK_RIGHT);
+				//		checkingFall = false;
+				//	}
+
+				//	break;
+
+			//	//case DIR_LEFT:
+
+			//	//	if (position.x > c2->rect.x && position.x < c2->rect.x + c2->rect.w)
+			//	//		can_climb = true;
+			//	//	
+			//	//	break;
+			//	//}
+			//	
+
+			//	
 			}
 
 			if ((c2->type == COLLIDER_FLOOR))
@@ -591,7 +595,7 @@ void j1Player::braking()
 
 player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 {
-	can_climb = false;
+	
 
 	static player_states state = ST_IDLE;
 	player_inputs  last_input;
