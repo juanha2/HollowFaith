@@ -56,7 +56,6 @@ bool j1Enemy::Start()
 	current_animation = &animation;
 
 
-	position = { 80,320 };
 
 	return ret;
 }

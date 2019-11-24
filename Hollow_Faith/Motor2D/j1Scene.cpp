@@ -38,24 +38,14 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-
-	config = App->LoadConfig(config_file);
-
 	App->objects->DeleteEntities();
 	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
-	App->objects->player->Awake(config.child(App->objects->name.GetString()));
-	App->objects->player->Start();
 
-	App->objects->AddEntity(j1Entity::entityType::ENEMY, { 0,0 });
-	App->objects->enemy->Awake(config.child(App->objects->name.GetString()));
-	App->objects->enemy->Start();
+	App->objects->AddEntity(j1Entity::entityType::ENEMY, { 100,100 });
+	App->objects->AddEntity(j1Entity::entityType::ENEMY, { 80,320});
 	
 	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
-	App->objects->particle->Awake(config.child(App->objects->name.GetString()));
-	App->objects->particle->Start();
+
 
 	//Load first level at start
 	if (first) 

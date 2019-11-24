@@ -150,6 +150,11 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 {
 	j1Entity* tmp = nullptr;
 
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+
+	config = App->LoadConfig(config_file);
+
 	switch (type)
 	{
 	case j1Entity::entityType::PLAYER:
@@ -158,6 +163,7 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 
 	case j1Entity::entityType::ENEMY:
 		tmp = new j1Enemy();
+		tmp->position = position;
 		break;
 
 	case j1Entity::entityType::STONE:
@@ -165,9 +171,12 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 		break;
 	}
 
-	if (tmp)
+	if (tmp) {
 		Entities.add(tmp);
-
+		tmp->Awake(config.child(App->objects->name.GetString()));
+		tmp->Start();
+	}
+	
 	return tmp;
 }
 
