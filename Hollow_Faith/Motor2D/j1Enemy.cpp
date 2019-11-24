@@ -16,13 +16,16 @@
 #include "j1Enemy.h"
 #include "j1Scene.h"
 
+
 j1Enemy::j1Enemy() : j1Entity(entityType::ENEMY)
 {
 	if (App->objects->enemy == nullptr)
 		App->objects->enemy = this;
 }
 
+
 j1Enemy::~j1Enemy() {};
+
 
 bool j1Enemy::Awake(pugi::xml_node& config)
 {
@@ -43,6 +46,7 @@ bool j1Enemy::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+
 bool j1Enemy::Start()
 {
 	bool ret = true;
@@ -57,29 +61,12 @@ bool j1Enemy::Start()
 	return ret;
 }
 
+
 bool j1Enemy::PreUpdate()
 {
 	bool ret = true;
 
-	//DEBUG MOVEMENT ENEMY
-
 	
-		
-	/*if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT ) { // Pressing A (Running)
-			position.x += 1;
-			flip = SDL_FLIP_NONE;
-		}
-
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) { // Pressing A (Running)
-			position.x -= 1;
-			flip = SDL_FLIP_HORIZONTAL;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) { // Pressing A (Running)
-			position.y -= 1;			
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) { // Pressing A (Running)
-			position.y += 1;			
-		}*/
 		
 	PositionUpdate(App->dt);
 
@@ -99,10 +86,12 @@ bool j1Enemy::Update(float dt)
 	{
 		if (timer > 5) 
 		{
-			chase = true;
+			
 			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
-			pathToPlayer = *App->pathfinding->GetLastPath();	
+			pathToPlayer = *App->pathfinding->GetLastPath();
+			pathToPlayer.Flip();
 
+			chase = true;
 			timer = 0;
 		}
 	}	
@@ -111,34 +100,44 @@ bool j1Enemy::Update(float dt)
 	{
 		if (pathToPlayer.Count() > 0) 
 		{
-			iPoint current = App->map->MapToWorld(pathToPlayer.At(0)->x, pathToPlayer.At(0)->y);
+			iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
-			if (abs(abs(position.x) - abs(current.x)) > 3) {
+			if (abs(abs(position.x) - abs(current.x)) > 3 || abs(abs(position.y) - abs(current.y)) > 3){
 
 				if (current.x > position.x)
 					speed.x += 3;
 				else
 					speed.x -= 3;
 
+				if (current.y < position.y)
+					speed.y -= 3;
+				else
+					speed.y += 3;
+
+
+				if (abs(abs(position.x) - abs(current.x)) < 3)
+					speed.x = 0;
+
+				if (abs(abs(position.y) - abs(current.y)) < 3)
+					speed.y = 0;
+
 			}
 			else
 			{
 				speed.x = 0;
-				pathToPlayer.Flip();
-				pathToPlayer.Pop(pathToPlayer[0]);
-				pathToPlayer.Flip();
+				speed.y = 0;
+				
+				pathToPlayer.Pop(pathToPlayer[pathToPlayer.Count() - 1]);
 			}
 			
 		}
 		else
 		{		
+			pathToPlayer.Clear();
 			chase = false;
 		}		
 	}
 	
-	
-	
-
 	return ret;
 }
 
