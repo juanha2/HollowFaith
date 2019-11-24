@@ -61,8 +61,9 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 }
 
 // To request all tiles involved in the last generated path
-const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
+p2DynArray<iPoint>* j1PathFinding::GetLastPath() 
 {
+
 	return &last_path;
 }
 

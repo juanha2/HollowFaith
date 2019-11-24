@@ -23,7 +23,6 @@ public:
 
 	float timer;
 
-
 	bool chase = false;
 	int agroDistance = 200;
 

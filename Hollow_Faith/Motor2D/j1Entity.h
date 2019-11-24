@@ -53,11 +53,11 @@ public:
 
 public:
 	
-	Animation* current_animation = nullptr;
-	entityType type;
-	fPoint speed;
-	iPoint position;
-	iPoint maxSpeed;	
+	Animation*			current_animation = nullptr;
+	entityType			type;
+	fPoint				speed;
+	iPoint				position;
+	iPoint				maxSpeed;	
 
 	Collider*			collider;
 	bool				ignoreColl = false;
@@ -68,7 +68,7 @@ public:
 	SDL_Rect			entity_collider;
 	
 	p2SString			texture_path;
-	SDL_Texture* texture;
+	SDL_Texture*		texture;
 private:
 	
 };
