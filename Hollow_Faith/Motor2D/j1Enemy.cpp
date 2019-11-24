@@ -77,8 +77,9 @@ bool j1Enemy::PreUpdate()
 
 bool j1Enemy::Update(float dt)
 {
-	bool ret = true;
+	BROFILER_CATEGORY("EnemyPathLogic", Profiler::Color::DarkBlue);
 
+	bool ret = true;
 	timer += dt;
 
 
