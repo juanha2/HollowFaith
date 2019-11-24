@@ -6,16 +6,15 @@
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "p2Log.h"
+#include "j1Objects.h"
+#include "j1Entity.h"
 
 #include "SDL/include/SDL_timer.h"
 
-j1Particles::j1Particles()
+j1Particles::j1Particles() : j1Entity(entityType::STONE)
 {
-
-	name.create("particles");
-
-	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
-		active[i] = nullptr;
+	if (App->objects->particle == nullptr)
+		App->objects->particle = this;
 }
 
 j1Particles::~j1Particles()
@@ -23,12 +22,16 @@ j1Particles::~j1Particles()
 
 bool j1Particles::Awake(pugi::xml_node& config)
 {
+
+	texture_path = config.child("graphics_player").attribute("path").as_string();
+
 	// Loading Particle Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 
 	dustJumping.anim.load_animation(animIterator, "dustJumping");
 	dustJumping.life = defaultParticleLife;
 
+	LOG("%i", dustJumping.anim.frames[1].x);
 	dustRunning.anim.load_animation(animIterator, "dustRunning");
 	dustRunning.life = defaultParticleLife;
 
@@ -36,15 +39,20 @@ bool j1Particles::Awake(pugi::xml_node& config)
 	stone.life = stoneLife;
 
 	death.anim.load_animation(animIterator, "death");
-	death.life = deathlife;
-	
-
+	death.life = deathlife;	
 	return true;
 
 }
+bool j1Particles::Start()
+{
+	texture = App->tex->Load(texture_path.GetString());	
+	elim = true;	
+	return true;
+}
+
 
 // Unload assets
-bool j1Particles::CleanUp()
+void j1Particles::CleanUp()
 {
 
 	// Unloading particles
@@ -57,44 +65,40 @@ bool j1Particles::CleanUp()
 		}
 	}
 
-
-	return true;
 }
 
 // Update: draw background
 bool j1Particles::Update(float dt)
 {
+
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		Particle* p = active[i];
 
 		if (p == nullptr)
 			continue;
-		
+
 		if (p->Update() == false)
-		{			
+		{
 			delete p;
-			active[i] = nullptr;				
+			active[i] = nullptr;
 		}
 
-	
+
 		else if (SDL_GetTicks() >= p->born)
 		{
-		
-			//App->render->Blit(App->player->graphics, p->position.x, p->position.y, &(p->anim.GetCurrentFrame(dt)), 1.0, 1.0, p->fliped);
-
+			App->render->Blit(texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame(dt)), 1.0, 1.0, p->fliped, NULL, entity_collider.w / 2);
 			if (p->fx_played == false)
 			{
 				// Play particle fx here
 				p->fx_played = true;
 			}
 		}
-		
-	
 	}
 
 	return true;
 }
+
 
 void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type, Uint32 delay)
 {
@@ -121,7 +125,7 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_Render
 
 // -------------------------------------------------------------
 
-void j1Particles::OnCollision(Collider* c1, Collider* c2) 
+void j1Particles::OnCollision(Collider* c1, Collider* c2)
 
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
@@ -136,7 +140,7 @@ void j1Particles::OnCollision(Collider* c1, Collider* c2)
 		}
 	}
 
-} 
+}
 Particle::Particle()
 {
 	position.SetToZero();
@@ -161,8 +165,11 @@ bool Particle::Update()
 
 	if (life > 0)
 	{
-		if ((SDL_GetTicks() - born) > life)
+		if ((SDL_GetTicks() - born) > life) {
+			App->objects->particle->elim = true;
 			ret = false;
+		}
+
 	}
 	else
 		if (anim.Finished())

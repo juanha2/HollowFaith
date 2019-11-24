@@ -28,6 +28,7 @@ public:
 		NO_TYPE,
 		PLAYER,		
 		ENEMY,	
+		STONE,
 	};
 
 public:

@@ -6,6 +6,7 @@
 #include "j1Entity.h"
 #include "j1Textures.h"
 #include "j1Enemy.h"
+#include "j1Particles.h"
 
 
 j1Objects::j1Objects()
@@ -20,16 +21,16 @@ j1Objects::~j1Objects()
 bool j1Objects::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
-	
 
-	
+
+
 	return ret;
 }
 
 bool j1Objects::Start()
 {
 	bool ret = true;
-	
+
 
 	return ret;
 }
@@ -41,9 +42,7 @@ bool j1Objects::PreUpdate()
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)
 	{
-
-		if (tmp->data->type == j1Entity::entityType::PLAYER || tmp->data->type == j1Entity::entityType::ENEMY)
-			ret = tmp->data->PreUpdate();
+		ret = tmp->data->PreUpdate();
 		tmp = tmp->next;
 	}
 
@@ -56,9 +55,7 @@ bool j1Objects::Update(float dt)
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)
 	{
-
-		if (tmp->data->type == j1Entity::entityType::PLAYER || tmp->data->type == j1Entity::entityType::ENEMY)
-			ret = tmp->data->Update(dt);
+		ret = tmp->data->Update(dt);
 		tmp = tmp->next;
 	}
 
@@ -80,7 +77,7 @@ bool j1Objects::PostUpdate()
 bool j1Objects::CleanUp()
 {
 	bool ret = true;
-	
+
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)
 	{
@@ -110,10 +107,10 @@ bool j1Objects::Load(pugi::xml_node& file)
 
 	while (tmp != nullptr)
 	{
-		if (tmp->data->type == j1Entity::entityType::PLAYER || tmp->data->type == j1Entity::entityType::ENEMY)
-		{
-			tmp->data->Load(file);
-		}
+
+
+		tmp->data->Load(file);
+
 		tmp = tmp->next;
 	}
 	return ret;
@@ -162,6 +159,10 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 	case j1Entity::entityType::ENEMY:
 		tmp = new j1Enemy();
 		break;
+
+	case j1Entity::entityType::STONE:
+		tmp = new j1Particles();
+		break;
 	}
 
 	if (tmp)
@@ -172,7 +173,7 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 
 void j1Objects::DeleteEntities()
 {
-	p2List_item<j1Entity*>* tmp = Entities.start;
+	p2List_item<j1Entity*>* tmp = Entities.end;
 	while (tmp != nullptr)
 	{
 		p2List_item<j1Entity*>* tmp2 = tmp;
@@ -180,4 +181,6 @@ void j1Objects::DeleteEntities()
 		Entities.del(tmp2);
 		tmp = tmp->prev;
 	}
+
+	LOG("%i", App->objects->Entities.count());
 }

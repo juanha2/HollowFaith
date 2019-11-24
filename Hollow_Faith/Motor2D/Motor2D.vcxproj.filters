@@ -40,9 +40,6 @@
     <ClCompile Include="j1FadeToBlack.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Particles.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -62,6 +59,9 @@
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClCompile>
     <ClCompile Include="j1Enemy.cpp">
+      <Filter>Desenvolupament  ========\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Particles.cpp">
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,9 +126,6 @@
     <ClInclude Include="j1FadeToBlack.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="j1Particles.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Pathfinding.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
@@ -148,6 +145,9 @@
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClInclude>
     <ClInclude Include="j1Enemy.h">
+      <Filter>Desenvolupament  ========\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Particles.h">
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClInclude>
   </ItemGroup>

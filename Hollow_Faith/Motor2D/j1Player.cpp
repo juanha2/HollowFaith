@@ -203,7 +203,7 @@ bool j1Player::PreUpdate()
 		{
 			
 			App->audio->PlayFx(1, 0, App->audio->FXvolume);
-			App->particles->AddParticle(App->particles->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
+			//App->particles->AddParticle(App->particles->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
 			speed.y = movementForce.y;
 			inputs.add(IN_JUMPING);
 		
@@ -219,16 +219,17 @@ bool j1Player::PreUpdate()
 		}
 		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && (current_state != ST_CLIMB || current_state != ST_CLIMB_IDLE)) {
 			if (flip)
-				App->particles->stone.speed.x = -5;
+				App->objects->particle->stone.speed.x = -5;
 			else
-				App->particles->stone.speed.x = 5;			
+				App->objects->particle->stone.speed.x = 5;
 
-			if (App->particles->elim)
+			if (App->objects->particle->elim)
 			{
-				App->particles->elim = false;
-				App->particles->AddParticle(App->particles->stone, position.x, position.y + entity_collider.h / 4, flip, COLLIDER_STONE);
+				App->objects->particle->elim = false;
+				App->objects->particle->AddParticle(App->objects->particle->stone, position.x, position.y + entity_collider.h / 4, flip, COLLIDER_STONE);
 				App->audio->PlayFx(7, 0, 100);
 			}
+
 			
 		}
 	}	
@@ -628,8 +629,8 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH: state = ST_IDLE; 
-				App->particles->AddParticle(App->particles->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
-				App->particles->AddParticle(App->particles->dustRunning, position.x, position.y + entity_collider.h - particlePosMargin, flip, COLLIDER_NONE);
+				//App->particles->AddParticle(App->particles->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
+				//App->particles->AddParticle(App->particles->dustRunning, position.x, position.y + entity_collider.h - particlePosMargin, flip, COLLIDER_NONE);
 				App->audio->PlayFx(5, 0, App->audio->FXvolume);
 				break;
 			case IN_CLIMB: state = ST_CLIMB; break;

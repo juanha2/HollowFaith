@@ -53,6 +53,10 @@ bool j1Scene::Start()
 	App->objects->enemy->Awake(config.child(App->objects->name.GetString()));
 	App->objects->enemy->Start();
 	
+	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
+	App->objects->particle->Awake(config.child(App->objects->name.GetString()));
+	App->objects->particle->Start();
+
 	//Load first level at start
 	if (first) 
 	{
@@ -197,16 +201,17 @@ bool j1Scene::PostUpdate()
 // Called before quitting
 bool j1Scene::CleanUp()
 {
-	LOG("Freeing scene");
-		
+	LOG("Freeing scene");		
 	
+	App->objects->DeleteEntities();
+	App->tex->UnLoad(graphics);
+	App->tex->UnLoad(debug_tex);
+	App->tex->CleanUp();
+	App->coll->CleanUp();
+
 	App->objects->player = nullptr;
 	App->objects->enemy = nullptr;
-	App->objects->DeleteEntities();
-	App->tex->UnLoad(graphics);	
-	App->tex->UnLoad(debug_tex);	
-	App->tex->CleanUp();	
-	App->coll->CleanUp();
+	App->objects->particle = nullptr;
 
 	return true;
 }

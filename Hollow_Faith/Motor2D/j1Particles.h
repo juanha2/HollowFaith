@@ -1,17 +1,15 @@
 
-#ifndef __MODULEPARTICLES_H__
-#define __MODULEPARTICLES_H__
+#ifndef __j1PARTICLES_H__
+#define __j1PARTICLES_H__
 
 #include "j1Module.h"
 #include "p2Animation.h"
-#include "p2Point.h"
+#include "j1Entity.h"
 #include "j1Collision.h"
 
 #define MAX_ACTIVE_PARTICLES 100
 
 struct SDL_Texture;
-struct Collider;
-enum COLLIDER_TYPE;
 
 struct Particle
 {
@@ -25,32 +23,30 @@ struct Particle
 	bool fx_played = false;
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
-
-
 	Particle();
 	Particle(const Particle& p);
 	~Particle();
 	bool Update();
 };
 
-class j1Particles : public j1Module
+class j1Particles : public j1Entity
 {
 
 public:
 	j1Particles();
 	~j1Particles();
 
+	bool Start();
 	bool Awake(pugi::xml_node&);
 	bool Update(float dt);
-	bool CleanUp();
-	void OnCollision(Collider* c1, Collider* c2);
+	void CleanUp();
 
+	void OnCollision(Collider* c1, Collider* c2);
 
 	void AddParticle(const Particle& particle, int x, int y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0);
 
 private:
 
-	SDL_Texture* graphics = nullptr;
 	uint last_particle = 0;
 	Uint32 defaultParticleLife = 200;
 	Uint32 stoneLife = 1000;
@@ -64,8 +60,8 @@ public:
 	Particle stone;
 	Particle death;
 
-	bool elim = true;
+	bool elim;
 
 };
 
-#endif // __MODULEPARTICLES_H__
+#endif // __j1PARTICLES_H__
