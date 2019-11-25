@@ -24,7 +24,8 @@ struct MapLayer
 	uint height;
 	uint* gid = nullptr;
 	Properties	properties;
-	float speed_x;
+	float speed_x;	
+	
 
 	inline uint Get(int x, int y) const {
 		return gid[x + (y * width)];
@@ -41,7 +42,7 @@ struct TileSet
 	int					spacing;
 	int					tile_width;
 	int					tile_height;
-	SDL_Texture* texture = nullptr;
+	SDL_Texture*		texture = nullptr;
 	int					tex_width;
 	int					tex_height;
 	int					num_tiles_width;
@@ -58,6 +59,8 @@ struct ObjectsData
 	uint		width;
 	uint		height;
 	Collider*	colliders[100] = { nullptr };
+	bool walkable;
+	
 };
 
 struct ObjectsGroup

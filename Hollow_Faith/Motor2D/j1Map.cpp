@@ -537,7 +537,17 @@ bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
 		data->height = object.attribute("height").as_uint();
 		data->width = object.attribute("width").as_uint();
 
-		CreateColliders(data, i); //We set a collider for each object we have
+		if (group->name == "Navigation") //We make sure each object has walkability property 
+		{			
+			data->walkable = object.child("properties").child("property").attribute("value").as_bool();
+			LOG("%i", data->walkable);
+		}
+
+		else {
+			CreateColliders(data, i); //We set a collider for each object we have
+			data->walkable = true;
+		}
+		
 		i++;
 		group->objects.add(data);
 	}
