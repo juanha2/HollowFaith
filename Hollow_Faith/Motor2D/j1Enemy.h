@@ -53,6 +53,7 @@ public:
 	void Save(pugi::xml_node& file) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
+	
 };
 
 #endif // __ENEMY_H__

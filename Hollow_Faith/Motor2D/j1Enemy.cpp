@@ -60,7 +60,7 @@ bool j1Enemy::Start()
 	current_animation = &animation;
 	App->audio->LoadFx(death.GetString());
 
-
+	ignoreColl = false;
 	return ret;
 }
 
@@ -150,6 +150,15 @@ bool j1Enemy::Update(float dt)
 		}		
 	}
 	
+	if (elim)
+	{
+		App->audio->PlayFx(8, 0, App->audio->FXvolume);
+		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
+		collider->to_delete = true;
+
+		App->objects->DeleteEntity();
+	}
+
 	return ret;
 }
 
@@ -218,16 +227,12 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 
 	if (ignoreColl == false) {
 
-		if ((c1->type == COLLIDER_PLAYER))
+		if ((c2->type == COLLIDER_PLAYER))
 		{
 			switch (dirCheck) {
 
 			case DIR_UP:
-				App->audio->PlayFx(8, 0, App->audio->FXvolume);
-				App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
-				collider->to_delete = true;
-
-				App->objects->DeleteEntity();
+				
 				break;
 
 			}

@@ -520,6 +520,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 				case DIR_DOWN:
 					speed.y = movementForce.y / 2;
+					c2->callback->elim = true;
 					inputs.add(IN_JUMPING);
 					break;
 
