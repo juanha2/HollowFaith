@@ -218,27 +218,30 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 
 	if (ignoreColl == false) {
 
-		if ((c2->type == COLLIDER_PLAYER))
+		if ((c1->type == COLLIDER_PLAYER))
 		{
 			switch (dirCheck) {
 
 			case DIR_UP:
-				// Dies				
+				App->audio->PlayFx(8, 0, App->audio->FXvolume);
+				App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
+				collider->to_delete = true;
 
+				App->objects->DeleteEntity();
 				break;
 
 			}
-
 		}
 
 		if ((c2->type == COLLIDER_STONE))
 		{
-			//App->objects->DeleteEntity(this);			
-			collider->to_delete = true;			
-		
+			elim = true;
+
 			App->audio->PlayFx(8, 0, App->audio->FXvolume);
 			App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
+			collider->to_delete = true;
 			
+			App->objects->DeleteEntity();			
 		}
 		
 		if ((c2->type == COLLIDER_FLOOR))

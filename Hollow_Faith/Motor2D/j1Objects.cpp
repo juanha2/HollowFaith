@@ -195,7 +195,7 @@ void j1Objects::DeleteEntities()
 	//LOG("%i", App->objects->Entities.count());
 }
 
-void j1Objects::DeleteEntity(j1Entity* entity)
+void j1Objects::DeleteEntity()
 {
 	p2List_item<j1Entity*>* tmp = Entities.end;
 
@@ -203,13 +203,12 @@ void j1Objects::DeleteEntity(j1Entity* entity)
 	{
 		p2List_item<j1Entity*>* tmp2 = tmp;
 
-		if (tmp->data == entity) {
+		if (tmp->data->elim) {
 			RELEASE(tmp->data);
 			Entities.del(tmp2);
 		}
 		
 		tmp = tmp->prev;
 	}
-
-	//LOG("%i", App->objects->Entities.count());
+	
 }

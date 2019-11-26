@@ -34,7 +34,7 @@ public:
 
 	j1Entity* AddEntity(j1Entity::entityType type, iPoint position);
 	void DeleteEntities();
-	void DeleteEntity(j1Entity* entity);
+	void DeleteEntity();
 	
 
 	void OnCollision(Collider* c1, Collider* c2) {};
