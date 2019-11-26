@@ -438,7 +438,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 		if (ignoreColl == false) {
 
-			if ((c2->type == COLLIDER_DEATH) || (c2->type == COLLIDER_ENEMY))
+			if ((c2->type == COLLIDER_DEATH))
 			{		
 				
 				inputs.add(IN_DEAD);
@@ -468,36 +468,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					can_climb = false;
 					current_state = ST_AT_AIR;
 				}
-					
-
-				//switch (dirCheck) {
-
-
-				//case DIR_DOWN:
-				//
-				//	if (!App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN && detectCollDir[DIR_DOWN] >= 16.5f) { // WORKING IN IT
-				//
-				//		
-				//		position.y = c2->rect.y;
-
-				//		Acceleration = 0;
-				//		jump.Reset();
-				//		inputs.add(IN_WALK_RIGHT);
-				//		checkingFall = false;
-				//	}
-
-				//	break;
-
-			//	//case DIR_LEFT:
-
-			//	//	if (position.x > c2->rect.x && position.x < c2->rect.x + c2->rect.w)
-			//	//		can_climb = true;
-			//	//	
-			//	//	break;
-			//	//}
-			//	
-
-			//	
 			}
 
 			if ((c2->type == COLLIDER_FLOOR))
@@ -538,7 +508,35 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				}	
 				
 			}
-			CollisionPosUpdate();
+
+			if ((c2->type == COLLIDER_ENEMY))
+			{
+				switch (dirCheck) {
+
+				case DIR_UP:
+					inputs.add(IN_DEAD);
+					dead = true;
+					break;
+
+				case DIR_DOWN:
+					speed.y = movementForce.y / 2;
+					inputs.add(IN_JUMPING);
+					break;
+
+				case DIR_LEFT:
+					inputs.add(IN_DEAD);
+					dead = true;
+					break;
+
+				case DIR_RIGHT:
+					inputs.add(IN_DEAD);
+					dead = true;
+					break;
+				case -1:
+					break;
+				}
+			}
+			
 			if(speed.y >= 0){
 
 				if ((c2->type == COLLIDER_PLATFORM))
@@ -567,6 +565,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				}
 			}
 		}
+
+		CollisionPosUpdate();
 }
 
 

@@ -216,7 +216,8 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 			switch (dirCheck) {
 
 			case DIR_UP:
-				
+				// Dies
+
 				break;
 
 			}
