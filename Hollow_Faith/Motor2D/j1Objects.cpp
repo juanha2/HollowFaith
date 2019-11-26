@@ -162,6 +162,7 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 		break;
 
 	case j1Entity::entityType::ENEMY:
+		
 		tmp = new j1Enemy();
 		tmp->position = position;
 		break;
@@ -191,5 +192,24 @@ void j1Objects::DeleteEntities()
 		tmp = tmp->prev;
 	}
 
-	LOG("%i", App->objects->Entities.count());
+	//LOG("%i", App->objects->Entities.count());
+}
+
+void j1Objects::DeleteEntity(j1Entity* entity)
+{
+	p2List_item<j1Entity*>* tmp = Entities.end;
+
+	while (tmp != nullptr)
+	{
+		p2List_item<j1Entity*>* tmp2 = tmp;
+
+		if (tmp->data == entity) {
+			RELEASE(tmp->data);
+			Entities.del(tmp2);
+		}
+		
+		tmp = tmp->prev;
+	}
+
+	//LOG("%i", App->objects->Entities.count());
 }

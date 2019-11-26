@@ -30,8 +30,7 @@ bool j1Particles::Awake(pugi::xml_node& config)
 
 	dustJumping.anim.load_animation(animIterator, "dustJumping");
 	dustJumping.life = defaultParticleLife;
-
-	LOG("%i", dustJumping.anim.frames[1].x);
+	
 	dustRunning.anim.load_animation(animIterator, "dustRunning");
 	dustRunning.life = defaultParticleLife;
 

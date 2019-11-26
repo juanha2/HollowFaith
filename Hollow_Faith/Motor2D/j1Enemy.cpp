@@ -38,6 +38,10 @@ bool j1Enemy::Awake(pugi::xml_node& config)
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 	animation.load_animation(animIterator, "idle");
 
+	// Loading all FX
+	pugi::xml_node fxIterator = config.child("fx");
+	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
+
 	entity_collider = { 0, 0, 17, 27 };
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 
@@ -54,7 +58,7 @@ bool j1Enemy::Start()
 	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
 	current_animation = &animation;
-
+	App->audio->LoadFx(death.GetString());
 
 
 	return ret;
@@ -219,12 +223,22 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 			switch (dirCheck) {
 
 			case DIR_UP:
-				// Dies
+				// Dies				
 
 				break;
 
 			}
 
+		}
+
+		if ((c2->type == COLLIDER_STONE))
+		{
+			//App->objects->DeleteEntity(this);			
+			collider->to_delete = true;			
+		
+			App->audio->PlayFx(8, 0, App->audio->FXvolume);
+			App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
+			
 		}
 		
 		if ((c2->type == COLLIDER_FLOOR))

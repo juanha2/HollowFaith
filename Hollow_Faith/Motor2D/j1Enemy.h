@@ -21,6 +21,7 @@ public:
 	p2DynArray<iPoint> pathToPlayer;
 	iPoint originalPos;
 
+	p2SString			death;
 	float timer;
 
 	bool chase = false;

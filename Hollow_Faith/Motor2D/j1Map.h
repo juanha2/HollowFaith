@@ -81,7 +81,6 @@ struct ObjectsData
 	uint		width;
 	uint		height;
 	Collider*	colliders[100] = { nullptr };
-	bool walkable;
 	
 };
 
