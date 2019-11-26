@@ -203,7 +203,9 @@ void j1Objects::DeleteEntity()
 	{
 		p2List_item<j1Entity*>* tmp2 = tmp;
 
-		if (tmp->data->elim) {
+		if (tmp->data->elim) 
+		{
+			tmp->data->CleanUp();
 			RELEASE(tmp->data);
 			Entities.del(tmp2);
 		}

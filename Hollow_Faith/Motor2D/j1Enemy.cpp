@@ -69,7 +69,15 @@ bool j1Enemy::PreUpdate()
 {
 	bool ret = true;
 
-	
+	if (elim)
+	{
+		App->audio->PlayFx(8, 0, App->audio->FXvolume);
+		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
+		collider->to_delete = true;
+
+		pathToPlayer.Clear();
+		App->objects->DeleteEntity();
+	}
 		
 	PositionUpdate(App->dt);
 
@@ -150,14 +158,7 @@ bool j1Enemy::Update(float dt)
 		}		
 	}
 	
-	if (elim)
-	{
-		App->audio->PlayFx(8, 0, App->audio->FXvolume);
-		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
-		collider->to_delete = true;
-
-		App->objects->DeleteEntity();
-	}
+	
 
 	return ret;
 }
