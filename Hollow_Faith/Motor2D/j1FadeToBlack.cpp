@@ -10,6 +10,7 @@
 #include "j1Audio.h"
 #include "j1Textures.h"
 #include "j1Objects.h"
+#include "j1Pathfinding.h"
 
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
@@ -61,7 +62,15 @@ bool j1FadeToBlack::PostUpdate()
 				
 				if (App->map->Load(level_to_load.GetString())) {
 					App->objects->Enable();
-					App->scene->Enable();				
+					App->scene->Enable();	
+
+					int w, h;
+					uchar* data = nullptr;
+					if (App->map->CreateWalkabilityMap(w, h, &data))
+					{
+						App->pathfinding->SetMap(w, h, data);
+						RELEASE_ARRAY(data);
+					}
 				}
 
 				black_screen = true;

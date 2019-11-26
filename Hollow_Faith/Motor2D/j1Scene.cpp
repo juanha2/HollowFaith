@@ -222,21 +222,9 @@ bool j1Scene::Load(pugi::xml_node& save)
 	{
 		currentmap = savedcurrentmap;
 		different_map = true;
+
 		App->fade_to_black->FadeToBlack(App->map->data.levels[savedcurrentmap - 1]->name.GetString(), 1.0f);
-		
-
-		if (App->map->Load(App->map->data.levels[savedcurrentmap - 1]->name.GetString()) == true)
-		{
-			int w, h;
-			uchar* data = nullptr;
-			if (App->map->CreateWalkabilityMap(w, h, &data))
-			{
-				App->pathfinding->SetMap(w, h, data);
-				RELEASE_ARRAY(data);
-			}
-
-		}
-
+	
 	}
 	
 
