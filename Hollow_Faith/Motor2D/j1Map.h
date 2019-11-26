@@ -154,7 +154,7 @@ private:
 	bool LoadObjects(pugi::xml_node& node, ObjectsGroup* group);
 	bool LoadProperties(pugi::xml_node& node, Properties& property);
 	bool CreateColliders(ObjectsData* data, int i);
-	TileSet* GetTileset(int id);
+	TileSet* GetTileset(int id) const;
 	void log_properties();
 	
 
@@ -164,6 +164,8 @@ public:
 
 	MapData data;
 	bool				map_loaded;
+
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 private:
 

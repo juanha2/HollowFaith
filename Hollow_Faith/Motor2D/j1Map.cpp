@@ -464,7 +464,7 @@ SDL_Rect TileSet::GetRect(int id) {
 
 }
 
-TileSet* j1Map::GetTileset(int id) {
+TileSet* j1Map::GetTileset(int id) const {
 
 	p2List_item<TileSet*>* aux_tile = data.tilesets.start;
 
@@ -684,4 +684,53 @@ float Properties::Get(const char* value, float default_value) const
 	}
 
 	return default_value;
+}
+
+bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	p2List_item<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.Get("navigation") != 1.00f)
+		{
+			continue;
+		}
+
+		uchar* map = new uchar[layer->width * layer->height];
+		memset(map, 1, layer->width * layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y * layer->width) + x;
+
+				int tile_id = layer->Get(x, y);
+				TileSet* tileset = (tile_id > 0) ? GetTileset(tile_id) : NULL;
+
+				if (tileset != NULL)
+				{
+					if (tile_id > 0)
+						map[i] = 0;
+					else
+						map[i] = 1;
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
+
+	return ret;
 }

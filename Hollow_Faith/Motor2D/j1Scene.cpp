@@ -54,6 +54,14 @@ bool j1Scene::Start()
         App->map->Load(levelData->data->name.GetString());
         currentmap = 1;
         first = false;		
+
+		int w, h;
+		uchar* data = nullptr;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+		{
+			App->pathfinding->SetMap(w, h, data);
+			RELEASE_ARRAY(data);
+		}
 	}
 	
 	
@@ -224,10 +232,25 @@ bool j1Scene::Load(pugi::xml_node& save)
 	savedcurrentmap = save.child("currentmap").attribute("value").as_int();
 	LOG("%i", savedcurrentmap);
 
-	if (savedcurrentmap != currentmap) {
+	if (savedcurrentmap != currentmap) 
+	{
 		currentmap = savedcurrentmap;
 		different_map = true;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[savedcurrentmap - 1]->name.GetString(), 1.0f);
+		
+
+		if (App->map->Load(App->map->data.levels[savedcurrentmap - 1]->name.GetString()) == true)
+		{
+			int w, h;
+			uchar* data = nullptr;
+			if (App->map->CreateWalkabilityMap(w, h, &data))
+			{
+				App->pathfinding->SetMap(w, h, data);
+				RELEASE_ARRAY(data);
+			}
+
+		}
+
 	}
 	
 
