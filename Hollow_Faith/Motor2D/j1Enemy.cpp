@@ -86,9 +86,15 @@ bool j1Enemy::Update(float dt)
 	{
 		if (timer > 5) 
 		{
-			
+
+			pathToPlayer.Clear();
 			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
-			pathToPlayer = *App->pathfinding->GetLastPath();
+
+			for (uint i = 0; i < App->pathfinding->GetLastPath()->Count(); i++)
+			{
+				pathToPlayer.PushBack(*App->pathfinding->GetLastPath()->At(i));
+			}
+
 			pathToPlayer.Flip();
 
 			chase = true;
@@ -144,6 +150,15 @@ bool j1Enemy::Update(float dt)
 bool j1Enemy::PostUpdate()
 {
 	bool ret = true;
+
+
+	for (uint i = 0; i < pathToPlayer.Count(); ++i)
+	{
+		iPoint pos = App->map->MapToWorld(pathToPlayer[i].x, pathToPlayer[i].y);
+		App->render->Blit(App->scene->debug_tex, pos.x, pos.y);
+	}
+
+
 	Draw(App->dt);
 	return ret;
 }

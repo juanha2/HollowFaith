@@ -43,6 +43,7 @@ public:
 
 	
 
+	SDL_Texture* debug_tex;
 
 private:	
 	
@@ -51,7 +52,7 @@ private:
 	
 	
 
-	SDL_Texture* debug_tex;
+	
 
 };
 

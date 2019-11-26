@@ -161,7 +161,7 @@ bool j1Scene::Update(float dt)
 
 	// Debug pathfinding ------------------------------
 	//int x, y;
-	App->input->GetMousePosition(x, y);
+	/*App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
@@ -174,7 +174,7 @@ bool j1Scene::Update(float dt)
 	{
 		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		App->render->Blit(debug_tex, pos.x, pos.y);
-	}
+	}*/
 
 	return true;
 }
