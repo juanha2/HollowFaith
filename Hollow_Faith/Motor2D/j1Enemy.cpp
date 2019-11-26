@@ -122,16 +122,15 @@ bool j1Enemy::Update(float dt)
 
 
 				if (abs(abs(position.x) - abs(current.x)) < 3)
-					speed.x = 0;
+					speed.x = 1;
 
 				if (abs(abs(position.y) - abs(current.y)) < 3)
-					speed.y = 0;
+					speed.y = 1;
 
 			}
 			else
 			{
-				speed.x = 0;
-				speed.y = 0;
+				
 				
 				pathToPlayer.Pop(pathToPlayer[pathToPlayer.Count() - 1]);
 			}
@@ -141,6 +140,9 @@ bool j1Enemy::Update(float dt)
 		{		
 			pathToPlayer.Clear();
 			chase = false;
+
+			speed.x = 0;
+			speed.y = 0;
 		}		
 	}
 	
