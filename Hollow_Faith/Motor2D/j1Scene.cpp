@@ -55,8 +55,9 @@ bool j1Scene::Start()
         currentmap = 1;
         first = false;		
 	}
-
-    App->audio->PlayMusic(App->map->data.properties.start->data->value.GetString(), 1.0f);    //Plays current map music
+	
+	
+    App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
     graphics = App->tex->Load("Assets/Sprites/halo.png");
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 

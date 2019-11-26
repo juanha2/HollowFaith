@@ -59,6 +59,9 @@ void j1Map::Draw()
 	
 	for (p2List_item<MapLayer*>* layer = data.layers.start; layer != NULL; layer = layer->next) {
 
+		if (layer->data->properties.Get("draw") != 0)
+			continue;
+
 		for (int x = 0; x < data.width; x++)
 		{
 			for (int y = 0; y < data.height; y++)
@@ -74,8 +77,8 @@ void j1Map::Draw()
 						SDL_Rect rect = tileset->GetRect(gid);
 						iPoint vec = MapToWorld(x, y);					
 						
-						if(vec.x + data.tile_width>-App->render->camera.x*layer->data->speed_x/scale && vec.x<((-App->render->camera.x * layer->data->speed_x )+window_width)/scale) //Only blit camera tiles
-						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->speed_x);
+						if(vec.x + data.tile_width>-App->render->camera.x* layer->data->properties.Get("speed_x") /scale && vec.x<((-App->render->camera.x * layer->data->properties.Get("speed_x"))+window_width)/scale) //Only blit camera tiles
+						App->render->Blit(tileset->texture, vec.x, vec.y, &rect, layer->data->properties.Get("speed_x"));
 
 						
 					}
@@ -153,18 +156,6 @@ bool j1Map::CleanUp()
 
 	data.objectgroups.clear();
 
-	p2List_item<Properties*>* item5;
-	item5 = data.properties.start;
-
-	while (item5 != NULL)
-	{
-		count++;
-		RELEASE(item5->data);
-		item5 = item5->next;
-		
-	}
-
-	data.properties.clear();
 	
 	// Clean up the pugui tree*/
 	map_file.reset();	
@@ -246,16 +237,16 @@ bool j1Map::Load(const char* file_name)
 
 	//Load properties
 	pugi::xml_node properties_node;
-	for (properties_node = map_file.child("map").child("properties").child("property"); properties_node && ret; properties_node = properties_node.next_sibling("property"))
-	{
-		Properties* set_property = new Properties();
+	properties_node = map_file.child("map");
 
-		if (ret == true)
-		{
-			ret = LoadProperties(properties_node,set_property);
-		}
-		data.properties.add(set_property);
+	if (ret == true)
+	{
+		ret = LoadProperties(properties_node, data.properties);
+
 	}
+
+	
+	
 
 	// LOG properties ----------------------------------------------
 	if (ret == true)
@@ -283,6 +274,7 @@ bool j1Map::LoadMap()
 	}
 	else
 	{
+		data.music = map.child("properties").child("property").attribute("value").as_string();
 		data.width = map.attribute("width").as_int();
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
@@ -405,11 +397,14 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
 
+	LoadProperties(node, layer->properties);
+
+
 	layer->name.create(node.attribute("name").as_string());
 	layer->width = node.attribute("width").as_uint();
 	layer->height = node.attribute("height").as_uint();
 	layer->gid = new uint[layer->width * layer->height];
-	layer->speed_x = node.child("properties").child("property").attribute("value").as_float();
+	//layer->speed_x = node.child("properties").child("property").attribute("value").as_float();
 
 	memset(layer->gid, 0, (layer->width * layer->height) * sizeof(uint)); //Fill with zeros
 
@@ -425,12 +420,27 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-bool j1Map::LoadProperties(pugi::xml_node& node, Properties* property)
+bool j1Map::LoadProperties(pugi::xml_node& node, Properties& property)
 {
 	bool ret = true;
 
-	property->name.create(node.attribute("name").as_string());
-	property->value.create(node.attribute("value").as_string());
+	pugi::xml_node data = node.child("properties");
+
+	if (data != NULL)
+	{
+		pugi::xml_node prop;
+
+		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
+		{
+			Properties::Property* p = new Properties::Property();
+
+			p->name = prop.attribute("name").as_string();
+			p->value = prop.attribute("value").as_float();
+
+			
+			property.list.add(p);
+		}
+	}
 
 	return ret;
 }
@@ -603,16 +613,14 @@ void j1Map::log_properties() {
 		item_group = item_group->next;	
 	}
 
-	p2List_item<Properties*>* item_property = data.properties.start;
+	/*p2List_item<Properties*>* item_property = data.properties.start;
 	while (item_property != NULL)
 	{
 		Properties* p = item_property->data;
-		LOG("Properties ----");
-		LOG("name: %s", p->name.GetString());
-		LOG("value: %s", p->value.GetString());
+		
 
 		item_property = item_property->next;
-	}
+	}*/
 }
 
 bool j1Map::CreateColliders(ObjectsData* data, int i)
@@ -662,4 +670,18 @@ bool j1Map::Reset()
 	}
 
 	return false;
+}
+
+float Properties::Get(const char* value, float default_value) const
+{
+	p2List_item<Property*>* item = list.start;
+
+	while (item)
+	{
+		if (item->data->name == value)
+			return item->data->value;
+		item = item->next;
+	}
+
+	return default_value;
 }

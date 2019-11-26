@@ -7,11 +7,33 @@
 #include "j1Module.h"
 #include "j1Collision.h"
 
-struct Properties{
+struct Properties
+{
+	struct Property
+	{
+		p2SString name;
+		float value;
+	};
 
-	p2SString name;
-	p2SString value;	
+	~Properties()
+	{
+		p2List_item<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.clear();
+	}
+
+	float Get(const char* name, float default_value = 0) const;
+
+	p2List<Property*>    list;
 };
+
 struct Levels
 {
 	p2SString name;
@@ -86,11 +108,12 @@ struct MapData
 	int							tile_height;
 	SDL_Color					background_color;
 	MapTypes					type;	
+	p2SString					music;
 	p2List<TileSet*>			tilesets;
 	p2List<MapLayer*>			layers;
 	p2List<ObjectsGroup*>		objectgroups;
 	p2List<Levels*>				levels;		
-	p2List<Properties*>			properties;
+	Properties					properties;
 	
 	uint numLevels;
 };
@@ -129,7 +152,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjects(pugi::xml_node& node, ObjectsGroup* group);
-	bool LoadProperties(pugi::xml_node& node, Properties* property);
+	bool LoadProperties(pugi::xml_node& node, Properties& property);
 	bool CreateColliders(ObjectsData* data, int i);
 	TileSet* GetTileset(int id);
 	void log_properties();
