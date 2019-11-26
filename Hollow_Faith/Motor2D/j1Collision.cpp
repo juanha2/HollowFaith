@@ -3,6 +3,7 @@
 #include "j1Input.h"
 #include "j1Collision.h"
 #include "j1Player.h"
+#include "j1Scene.h"
 #include "p2Log.h"
 
 j1Collision::j1Collision()
@@ -107,10 +108,8 @@ bool j1Collision::PostUpdate()
 void j1Collision::DebugDraw()
 {
 
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		debug = !debug;
 
-	if (debug == false)
+	if (App->scene->debug == false)
 		return;
 
 	Uint8 alpha = 80;

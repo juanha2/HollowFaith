@@ -9,6 +9,9 @@ struct SDL_Texture;
 class j1Scene : public j1Module
 {
 public:
+
+	bool debug = false;
+
 	int currentmap;
 	int savedcurrentmap;
 	bool different_map = false;

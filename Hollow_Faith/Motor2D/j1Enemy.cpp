@@ -151,13 +151,14 @@ bool j1Enemy::PostUpdate()
 {
 	bool ret = true;
 
-
-	for (uint i = 0; i < pathToPlayer.Count(); ++i)
+	if (App->scene->debug) 
 	{
-		iPoint pos = App->map->MapToWorld(pathToPlayer[i].x, pathToPlayer[i].y);
-		App->render->Blit(App->scene->debug_tex, pos.x, pos.y);
+		for (uint i = 0; i < pathToPlayer.Count(); ++i)
+		{
+			iPoint pos = App->map->MapToWorld(pathToPlayer[i].x, pathToPlayer[i].y);
+			App->render->Blit(App->scene->debug_tex, pos.x, pos.y);
+		}
 	}
-
 
 	Draw(App->dt);
 	return ret;
