@@ -10,11 +10,22 @@
 		<currentmap value="1" />
 	</scene>
 	<objects>
-		<position x="193" y="277" />
+		<player>
+			<position x="218" y="277" />
+		</player>
+		<EnemyFly>
+			<position x="110" y="124" />
+		</EnemyFly>
+		<EnemyFly>
+			<position x="44" y="124" />
+		</EnemyFly>
+		<EnemyLand>
+			<position x="106" y="320" />
+		</EnemyLand>
 	</objects>
 	<colliders />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-14" y="-10" />
+		<camera x="0" y="-10" />
 	</renderer>
 </game_state>

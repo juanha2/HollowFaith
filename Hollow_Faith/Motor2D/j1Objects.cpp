@@ -106,12 +106,26 @@ bool j1Objects::Load(pugi::xml_node& file)
 {
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
+	pugi::xml_node EnemyFly = file.child("EnemyFly");
+	pugi::xml_node EnemyLand = file.child("EnemyLand");
 
 	while (tmp != nullptr)
 	{
+		if (tmp->data->type == j1Entity::entityType::PLAYER)
+		{
+			tmp->data->Load(file.child("player"));
+		}
+		else if (tmp->data->type == j1Entity::entityType::ENEMY_FLY)
+		{
+			tmp->data->Load(EnemyFly);
+			EnemyFly = EnemyFly.next_sibling("EnemyFly");
 
-
-		tmp->data->Load(file);
+		}
+		else if (tmp->data->type == j1Entity::entityType::ENEMY_LAND)
+		{
+			tmp->data->Load(EnemyLand);
+			EnemyLand = EnemyLand.next_sibling("EnemyLand");	
+		}		
 
 		tmp = tmp->next;
 	}

@@ -29,13 +29,39 @@ j1Enemy::~j1Enemy() {};
 // Load Enemies State
 void j1Enemy::Load(pugi::xml_node& data)
 {
+	
+	if (App->scene->different_map) {
 
+		App->scene->ready_to_load = true;
+		ignoreColl = true;
+		App->objects->savedPosition.x = data.child("position").attribute("x").as_int();
+		App->objects->savedPosition.y = data.child("position").attribute("y").as_int();
+	}
+
+	else if (!App->scene->different_map) {
+
+		position.x = data.child("position").attribute("x").as_int();
+		position.y = data.child("position").attribute("y").as_int();
+		LOG("%i", position.x);
+	}
 }
 
 // Save Enemies State
 void j1Enemy::Save(pugi::xml_node& data) const
-{
+{	
 
+	if (type == ENEMY_FLY)
+	{
+		pugi::xml_node fly_enemy = data.append_child("EnemyFly");;
+		fly_enemy.append_child("position").append_attribute("x") = position.x;
+		fly_enemy.child("position").append_attribute("y") = position.y;
+	}
+	else if (type == ENEMY_LAND)
+	{
+		pugi::xml_node land_enemy = data.append_child("EnemyLand");;
+		land_enemy.append_child("position").append_attribute("x") = position.x;
+		land_enemy.child("position").append_attribute("y") = position.y;
+	}
 }
 
 void j1Enemy::OnCollision(Collider* c1, Collider* c2) {

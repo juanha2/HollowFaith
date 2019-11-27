@@ -444,8 +444,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			if ((c2->type == COLLIDER_DEATH))
 			{		
 				
-				inputs.add(IN_DEAD);
-				dead = true;
+				//inputs.add(IN_DEAD);
+				//dead = true;
 			}
 			
 			if ((c2->type == COLLIDER_WIN))
@@ -718,8 +718,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 
 // Load Game State
 void j1Player::Load(pugi::xml_node& data)
-{
-	
+{	
 	
 	if (App->scene->different_map) {
 
@@ -727,8 +726,7 @@ void j1Player::Load(pugi::xml_node& data)
 		ignoreColl = true;
 		App->objects->savedPosition.x = data.child("position").attribute("x").as_int();
 		App->objects->savedPosition.y= data.child("position").attribute("y").as_int();
-	}
-	
+	}	
 
 	else if (!App->scene->different_map) {
 		
@@ -742,7 +740,7 @@ void j1Player::Load(pugi::xml_node& data)
 // Save Game State
 void j1Player::Save(pugi::xml_node& data) const
 {	
-	pugi::xml_node pos = data.append_child("position");
+	pugi::xml_node pos = data.append_child("player").append_child("position");
 
 	pos.append_attribute("x").set_value(position.x);
 	pos.append_attribute("y").set_value(position.y);

@@ -39,11 +39,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->objects->DeleteEntities();
-	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
-
-	App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { 100,100 });
-	App->objects->AddEntity(j1Entity::entityType::ENEMY_LAND, { 80,320});
-	
+	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });	
 	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
 
 
@@ -53,7 +49,7 @@ bool j1Scene::Start()
 		p2List_item<Levels*>* levelData = App->map->data.levels.start;
         App->map->Load(levelData->data->name.GetString());
         currentmap = 1;
-        first = false;		
+        first = false;				
 
 		int w, h;
 		uchar* data = nullptr;
@@ -62,6 +58,13 @@ bool j1Scene::Start()
 			App->pathfinding->SetMap(w, h, data);
 			RELEASE_ARRAY(data);
 		}
+	}
+
+	if (currentmap == 1) {
+
+		App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { 100,100 });
+		App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { 20,100 });
+		App->objects->AddEntity(j1Entity::entityType::ENEMY_LAND, { 80,320 });
 	}
 	
 	
