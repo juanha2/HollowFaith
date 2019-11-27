@@ -9,6 +9,7 @@
 #include "j1Player.h"
 #include "j1Enemy.h"
 #include "j1Particles.h"
+#include "j1EnemyFly.h"
 
 class j1Entity;
 

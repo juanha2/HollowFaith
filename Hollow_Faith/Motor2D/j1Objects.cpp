@@ -7,6 +7,8 @@
 #include "j1Textures.h"
 #include "j1Enemy.h"
 #include "j1Particles.h"
+#include "j1EnemyFly.h"
+#include "j1EnemyLand.h"
 
 
 j1Objects::j1Objects()
@@ -161,9 +163,15 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 		tmp = new j1Player();
 		break;
 
-	case j1Entity::entityType::ENEMY:
+	case j1Entity::entityType::ENEMY_FLY:
 		
-		tmp = new j1Enemy();
+		tmp = new j1EnemyFly();
+		tmp->position = position;
+		break;
+
+	case j1Entity::entityType::ENEMY_LAND:
+
+		tmp = new j1EnemyLand();
 		tmp->position = position;
 		break;
 

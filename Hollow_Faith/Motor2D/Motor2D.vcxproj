@@ -78,6 +78,8 @@
   <ItemGroup>
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Enemy.cpp" />
+    <ClCompile Include="J1EnemyFly.cpp" />
+    <ClCompile Include="j1EnemyLand.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1Main.cpp" />
@@ -101,6 +103,8 @@
   <ItemGroup>
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1Enemy.h" />
+    <ClInclude Include="j1EnemyFly.h" />
+    <ClInclude Include="j1EnemyLand.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1Map.h" />

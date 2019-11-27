@@ -41,8 +41,8 @@ bool j1Scene::Start()
 	App->objects->DeleteEntities();
 	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
 
-	App->objects->AddEntity(j1Entity::entityType::ENEMY, { 100,100 });
-	App->objects->AddEntity(j1Entity::entityType::ENEMY, { 80,320});
+	App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { 100,100 });
+	App->objects->AddEntity(j1Entity::entityType::ENEMY_LAND, { 80,320});
 	
 	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
 

@@ -27,7 +27,8 @@ public:
 	{
 		NO_TYPE,
 		PLAYER,		
-		ENEMY,	
+		ENEMY_FLY,
+		ENEMY_LAND,
 		STONE,
 	};
 

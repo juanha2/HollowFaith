@@ -29,25 +29,9 @@ public:
 
 public:
 
-	j1Enemy();
-
+	j1Enemy(j1Entity::entityType type);
 	// Destructor
 	~j1Enemy();
-
-	bool Awake(pugi::xml_node&);
-	// Called before the first frame
-	bool Start();
-
-	// Called before all Updates
-	bool PreUpdate();
-
-	// Called each loop iteration
-	bool Update(float dt);
-
-	bool PostUpdate();
-
-	// Called before quitting
-	void CleanUp();
 
 	void Load(pugi::xml_node& file);
 	void Save(pugi::xml_node& file) const;

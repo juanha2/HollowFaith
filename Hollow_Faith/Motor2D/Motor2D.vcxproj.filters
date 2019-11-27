@@ -64,6 +64,12 @@
     <ClCompile Include="j1Particles.cpp">
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="J1EnemyFly.cpp">
+      <Filter>Desenvolupament  ========\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="j1EnemyLand.cpp">
+      <Filter>Desenvolupament  ========\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -148,6 +154,12 @@
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClInclude>
     <ClInclude Include="j1Particles.h">
+      <Filter>Desenvolupament  ========\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="j1EnemyFly.h">
+      <Filter>Desenvolupament  ========\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="j1EnemyLand.h">
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClInclude>
   </ItemGroup>
