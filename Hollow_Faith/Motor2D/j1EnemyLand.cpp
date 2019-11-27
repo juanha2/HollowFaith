@@ -95,7 +95,7 @@ bool j1EnemyLand::Update(float dt)
 
 	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < agroDistance)
 	{
-		if (timer > 5)
+		if (timer > 1)
 		{
 
 			pathToPlayer.Clear();
