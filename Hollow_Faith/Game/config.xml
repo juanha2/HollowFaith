@@ -23,6 +23,7 @@
   <objects>
     <graphics_player path="Assets/Sprites/Monster.png"/>
     <graphics_enemy path="Assets/Sprites/enemy.png"/>
+    <graphics_bat path="Assets/Sprites/bat.png"/>
 
     <data>
 
@@ -91,15 +92,26 @@
         <animValues loop="false" speed="0.15f"/>
       </animation>
 
-      <animation name ="idle">
-        <sprite x ="7" y ="164" w ="17" h="28"/>
-        <sprite x ="39" y ="164" w ="17" h="28"/>
-        <sprite x ="70" y ="163" w ="18" h="29"/>
-        <sprite x ="7" y ="164" w ="17" h="28"/>
+      <animation name ="idleBat">
+        <sprite x ="4" y ="2" w ="26" h="23"/>
+        <sprite x ="36" y ="16" w ="19" h="14"/>
+        <sprite x ="68" y ="16" w ="14" h="29"/>
+        <sprite x ="99" y ="12" w ="18" h="13"/>
+        <sprite x ="130" y ="7" w ="21" h="18"/>
 
-        <animValues loop="true" speed="0.06f"/>
+        <animValues loop="true" speed="0.15f"/>
       </animation>
+      
+      <animation name ="idle">
+        
+      <sprite x ="7" y ="164" w ="17" h="28"/>
+      <sprite x ="39" y ="164" w ="17" h="28"/>
+      <sprite x ="70" y ="163" w ="18" h="29"/>
+      <sprite x ="7" y ="164" w ="17" h="28"/>
+        <animValues loop="true" speed="0.06f"/>
 
+      </animation>
+      
       <animation name ="walk">
         <sprite x ="7" y ="37" w ="17" h="27"/>
         <sprite x ="39" y ="36" w ="17" h="28"/>

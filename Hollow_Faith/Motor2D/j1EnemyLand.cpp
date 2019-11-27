@@ -114,16 +114,22 @@ bool j1EnemyLand::Update(float dt)
 
 	if (chase)
 	{
-		if (pathToPlayer.Count() > 0)
+		if (pathToPlayer.Count() > 1)
 		{
 			iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
 			if (abs(abs(position.x) - abs(current.x)) > 3 || abs(abs(position.y) - abs(current.y)) > 3) {
 
 				if (current.x > position.x)
+				{
 					speed.x += 3;
+					flip = SDL_FLIP_NONE;
+				}
 				else
+				{
 					speed.x -= 3;
+					flip = SDL_FLIP_HORIZONTAL;
+				}
 
 				if (current.y < position.y)
 					speed.y -= 3;

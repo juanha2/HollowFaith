@@ -15,6 +15,7 @@
 #include "j1Enemy.h"
 #include "j1Scene.h"
 #include "j1EnemyFly.h"
+#include "j1Player.h"
 
 j1EnemyFly::j1EnemyFly() : j1Enemy(entityType::ENEMY_FLY)
 {
@@ -31,11 +32,11 @@ bool j1EnemyFly::Awake(pugi::xml_node& config)
 	LOG("Loading Enemy Parser");
 	bool ret = true;
 
-	texture_path = config.child("graphics_enemy").attribute("path").as_string();
+	texture_path = config.child("graphics_bat").attribute("path").as_string();
 
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
-	animation.load_animation(animIterator, "idle");
+	animation.load_animation(animIterator, "idleBat");
 
 	// Loading all FX
 	pugi::xml_node fxIterator = config.child("fx");
@@ -78,6 +79,7 @@ bool j1EnemyFly::PreUpdate()
 		App->objects->DeleteEntity();
 	}
 
+	
 	PositionUpdate(App->dt);
 
 
@@ -100,14 +102,16 @@ bool j1EnemyFly::Update(float dt)
 
 			pathToPlayer.Clear();
 			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
+						
+			
 
 			for (uint i = 0; i < App->pathfinding->GetLastPath()->Count(); i++)
 			{
 				pathToPlayer.PushBack(*App->pathfinding->GetLastPath()->At(i));
 			}
 
-			pathToPlayer.Flip();
-
+			pathToPlayer.Flip();			
+		
 			chase = true;
 			timer = 0;
 		}
@@ -122,9 +126,15 @@ bool j1EnemyFly::Update(float dt)
 			if (abs(abs(position.x) - abs(current.x)) > 3 || abs(abs(position.y) - abs(current.y)) > 3) {
 
 				if (current.x > position.x)
+				{
 					speed.x += 3;
+					flip = SDL_FLIP_NONE;
+				}					
 				else
+				{
 					speed.x -= 3;
+					flip = SDL_FLIP_HORIZONTAL;
+				}					
 
 				if (current.y < position.y)
 					speed.y -= 3;
@@ -170,8 +180,9 @@ bool j1EnemyFly::PostUpdate()
 		}
 	}
 
-	Draw(App->dt);
-
+	//Draw(App->dt);
+	App->render->Blit(texture, position.x, position.y,
+		&current_animation->GetCurrentFrame(App->dt), 1.0, 1.0, flip, NULL, entity_collider.w / 2+10,10);
 	return ret;
 }
 
