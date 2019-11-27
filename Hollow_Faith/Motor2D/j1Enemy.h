@@ -16,8 +16,7 @@ class j1Enemy : public j1Entity
 {
 
 public:
-
-	Animation animation;
+	
 	p2DynArray<iPoint> pathToPlayer;
 	iPoint originalPos;
 

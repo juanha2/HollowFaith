@@ -18,7 +18,9 @@ class j1EnemyLand : public j1Enemy
 
 public:
 
-	Animation animation;
+	Animation idle;
+	Animation walk;
+
 public:
 
 	j1EnemyLand();

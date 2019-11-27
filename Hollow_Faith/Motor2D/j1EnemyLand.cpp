@@ -34,7 +34,8 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
-	animation.load_animation(animIterator, "idle");
+	idle.load_animation(animIterator, "idleLand");
+	walk.load_animation(animIterator, "walkLand");
 
 	// Loading all FX
 	pugi::xml_node fxIterator = config.child("fx");
@@ -55,7 +56,7 @@ bool j1EnemyLand::Start()
 
 	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
-	current_animation = &animation;
+	current_animation = &idle;
 	App->audio->LoadFx(death.GetString());
 
 	ignoreColl = false;
@@ -122,11 +123,13 @@ bool j1EnemyLand::Update(float dt)
 
 				if (current.x > position.x)
 				{
+					current_animation = &walk;
 					speed.x += 3;
 					flip = SDL_FLIP_NONE;
 				}
 				else
 				{
+					current_animation = &walk;
 					speed.x -= 3;
 					flip = SDL_FLIP_HORIZONTAL;
 				}
@@ -153,12 +156,13 @@ bool j1EnemyLand::Update(float dt)
 		{
 			pathToPlayer.Clear();
 			chase = false;
+			current_animation = &idle;
 
 			speed.x = 0;
 			speed.y = 0;
 		}
 	}
-
+	
 	return ret;
 }
 

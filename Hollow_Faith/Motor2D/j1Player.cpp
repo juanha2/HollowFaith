@@ -442,10 +442,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if (ignoreColl == false) {
 
 			if ((c2->type == COLLIDER_DEATH))
-			{		
-				
-				//inputs.add(IN_DEAD);
-				//dead = true;
+			{						
+				inputs.add(IN_DEAD);
+				dead = true;
 			}
 			
 			if ((c2->type == COLLIDER_WIN))

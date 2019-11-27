@@ -111,6 +111,27 @@
         <animValues loop="true" speed="0.06f"/>
 
       </animation>
+
+      <animation name ="idleLand">
+
+        <sprite x ="3" y ="166" w ="21" h="26"/>
+        <sprite x ="36" y ="165" w ="20" h="27"/>
+        <sprite x ="67" y ="165" w ="21" h="27"/>
+      
+        <animValues loop="true" speed="0.06f"/>
+
+      </animation>
+
+      <animation name ="walkLand">
+
+        <sprite x ="36" y ="38" w ="20" h="26"/>
+        <sprite x ="68" y ="37" w ="20" h="27"/>
+        <sprite x ="99" y ="39" w ="21" h="25"/>
+        <sprite x ="131" y ="38" w ="21" h="26"/>
+        <sprite x ="164" y ="37" w ="20" h="27"/>
+        <animValues loop="true" speed="0.08f"/>
+
+      </animation>
       
       <animation name ="walk">
         <sprite x ="7" y ="37" w ="17" h="27"/>
