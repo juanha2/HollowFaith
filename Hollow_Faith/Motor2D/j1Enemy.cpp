@@ -122,7 +122,6 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 		{
 
 			switch (dirCheck) {
-
 			case DIR_UP:
 
 				position.y = c2->rect.y + c2->rect.h + 1;

@@ -92,6 +92,7 @@ bool j1EnemyLand::Update(float dt)
 	bool ret = true;
 	timer += dt;
 
+	speed.y += gravityForce * (dt * 51);
 
 	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < agroDistance)
 	{
@@ -119,7 +120,7 @@ bool j1EnemyLand::Update(float dt)
 		{
 			iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
-			if (abs(abs(position.x) - abs(current.x)) > 3 || abs(abs(position.y) - abs(current.y)) > 3) {
+			if (abs(abs(position.x) - abs(current.x)) > 3) {
 
 				if (current.x > position.x)
 				{
@@ -134,17 +135,9 @@ bool j1EnemyLand::Update(float dt)
 					flip = SDL_FLIP_HORIZONTAL;
 				}
 
-				if (current.y < position.y)
-					speed.y -= 3;
-				else
-					speed.y += 3;
-
-
 				if (abs(abs(position.x) - abs(current.x)) < 3)
 					speed.x = 1;
 
-				if (abs(abs(position.y) - abs(current.y)) < 3)
-					speed.y = 1;
 
 			}
 			else
@@ -159,7 +152,6 @@ bool j1EnemyLand::Update(float dt)
 			current_animation = &idle;
 
 			speed.x = 0;
-			speed.y = 0;
 		}
 	}
 	
