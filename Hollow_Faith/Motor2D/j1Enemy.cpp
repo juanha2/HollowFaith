@@ -141,12 +141,9 @@ bool j1Enemy::Update(float dt)
 
 			}
 			else
-			{
-				
-				
+			{				
 				pathToPlayer.Pop(pathToPlayer[pathToPlayer.Count() - 1]);
-			}
-			
+			}			
 		}
 		else
 		{		
@@ -156,9 +153,7 @@ bool j1Enemy::Update(float dt)
 			speed.x = 0;
 			speed.y = 0;
 		}		
-	}
-	
-	
+	}		
 
 	return ret;
 }

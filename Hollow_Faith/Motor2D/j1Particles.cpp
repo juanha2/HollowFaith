@@ -22,7 +22,6 @@ j1Particles::~j1Particles()
 
 bool j1Particles::Awake(pugi::xml_node& config)
 {
-
 	texture_path = config.child("graphics_player").attribute("path").as_string();
 
 	// Loading Particle Animations
@@ -40,15 +39,14 @@ bool j1Particles::Awake(pugi::xml_node& config)
 	death.anim.load_animation(animIterator, "death");
 	death.life = deathlife;	
 	return true;
-
 }
+
 bool j1Particles::Start()
 {
 	texture = App->tex->Load(texture_path.GetString());	
 	elim = true;	
 	return true;
 }
-
 
 // Unload assets
 void j1Particles::CleanUp()
@@ -86,6 +84,7 @@ bool j1Particles::Update(float dt)
 
 		else if (SDL_GetTicks() >= p->born)
 		{
+			
 			App->render->Blit(texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame(dt)), 1.0, 1.0, p->fliped, NULL, entity_collider.w / 2);
 			if (p->fx_played == false)
 			{
@@ -99,7 +98,7 @@ bool j1Particles::Update(float dt)
 }
 
 
-void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type, Uint32 delay)
+void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type, p2SString name,Uint32 delay)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -110,9 +109,10 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_Render
 			p->position.x = x;
 			p->position.y = y;
 			p->fliped = fliped;
+			p->name = name.GetString();			
 
 			if (collider_type != COLLIDER_NONE)
-				p->collider = App->coll->AddCollider(p->anim.GetCurrentFrame(0), collider_type, nullptr);
+				p->collider = App->coll->AddCollider(p->anim.GetCurrentFrame(0), collider_type);
 
 			active[i] = p;
 
@@ -125,14 +125,12 @@ void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_Render
 // -------------------------------------------------------------
 
 void j1Particles::OnCollision(Collider* c1, Collider* c2)
-
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
-	{
+	{		
 		// Always destroy particles that collide
 		if (active[i] != nullptr && active[i]->collider == c1)
-		{
-			elim = true;
+		{			
 			delete active[i];
 			active[i] = nullptr;
 			break;
@@ -157,19 +155,25 @@ Particle::~Particle()
 		collider->to_delete = true;
 }
 
-
 bool Particle::Update()
 {
 	bool ret = true;
 
 	if (life > 0)
 	{
+		if (name == "stone") {
+			speed.y++;
+		}
 		if ((SDL_GetTicks() - born) > life) {
-			App->objects->particle->elim = true;
+			if (name == "stone")
+			{
+				App->objects->particle->elim = true;
+			}
+				
 			ret = false;
 		}
-
 	}
+
 	else
 		if (anim.Finished())
 			ret = false;
@@ -182,3 +186,4 @@ bool Particle::Update()
 
 	return ret;
 }
+

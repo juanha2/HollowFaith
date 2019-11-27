@@ -217,16 +217,19 @@ bool j1Player::PreUpdate()
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP ) { // Releasing Space
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && (current_state != ST_CLIMB || current_state != ST_CLIMB_IDLE)) {
+		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && !can_climb) {
+
 			if (flip)
 				App->objects->particle->stone.speed.x = -5;
 			else
 				App->objects->particle->stone.speed.x = 5;
 
+			App->objects->particle->stone.speed.y = -12;
+
 			if (App->objects->particle->elim)
 			{
 				App->objects->particle->elim = false;
-				App->objects->particle->AddParticle(App->objects->particle->stone, position.x, position.y + entity_collider.h / 4, flip, COLLIDER_STONE);
+				App->objects->particle->AddParticle(App->objects->particle->stone, position.x, position.y + entity_collider.h / 4, flip, COLLIDER_STONE, "stone");
 				App->audio->PlayFx(7, 0, 100);
 			}
 
@@ -444,7 +447,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				inputs.add(IN_DEAD);
 				dead = true;
 			}
-
+			
 			if ((c2->type == COLLIDER_WIN))
 			{
 				inputs.add(IN_WALK_RIGHT);

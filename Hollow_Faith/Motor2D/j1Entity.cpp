@@ -44,7 +44,6 @@ void j1Entity::PositionUpdate(float dt) // Entity movement * delta time
 	if (!godMode)
 		speed.y = speed.y + Acceleration * dt;
 
-
 	CollisionPosUpdate();
 }
 
