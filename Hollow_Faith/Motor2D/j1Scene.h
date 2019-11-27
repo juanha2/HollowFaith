@@ -11,7 +11,7 @@ class j1Scene : public j1Module
 public:
 
 	bool debug = false;
-
+	SDL_Texture* debug_tex;
 	int currentmap;
 	int savedcurrentmap;
 	bool different_map = false;
@@ -44,18 +44,15 @@ public:
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
 
-	
+	void SpawnEnemies();
 
-	SDL_Texture* debug_tex;
+	
 
 private:	
 	
+	
 	bool first = true;
 	SDL_Texture* graphics = nullptr;
-	
-	
-
-	
 
 };
 

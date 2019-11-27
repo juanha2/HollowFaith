@@ -60,14 +60,8 @@ bool j1Scene::Start()
 		}
 	}
 
-	if (currentmap == 1) {
+	SpawnEnemies();
 
-		App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { 100,100 });
-		App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { 20,100 });
-		App->objects->AddEntity(j1Entity::entityType::ENEMY_LAND, { 80,320 });
-	}
-	
-	
     App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
     graphics = App->tex->Load("Assets/Sprites/halo.png");
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
@@ -228,8 +222,30 @@ bool j1Scene::Load(pugi::xml_node& save)
 
 		App->fade_to_black->FadeToBlack(App->map->data.levels[savedcurrentmap - 1]->name.GetString(), 1.0f);
 	
-	}
-	
+	}	
 
 	return true;
+}
+
+void j1Scene::SpawnEnemies() {
+
+	for (p2List_item<ObjectsGroup*>* object = App->map->data.objectgroups.start; object; object = object->next)
+	{
+		if (object->data->name == ("Enemies"))
+		{
+			for (p2List_item<ObjectsData*>* object_data = object->data->objects.start; object_data; object_data = object_data->next)
+			{
+				if (object_data->data->name == 6)
+				{
+					App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { object_data->data->x,object_data->data->y });
+				}
+				if (object_data->data->name == 7)
+				{
+					App->objects->AddEntity(j1Entity::entityType::ENEMY_LAND, { object_data->data->x,object_data->data->y });
+				}
+
+			}
+		}
+	}
+
 }

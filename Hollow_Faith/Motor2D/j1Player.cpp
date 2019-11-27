@@ -731,8 +731,7 @@ void j1Player::Load(pugi::xml_node& data)
 	else if (!App->scene->different_map) {
 		
 		position.x = data.child("position").attribute("x").as_int();
-		position.y = data.child("position").attribute("y").as_int();
-		LOG("%i", position.x);
+		position.y = data.child("position").attribute("y").as_int();		
 	}
 	
 }

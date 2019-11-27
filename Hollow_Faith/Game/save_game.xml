@@ -11,16 +11,16 @@
 	</scene>
 	<objects>
 		<player>
-			<position x="218" y="277" />
+			<position x="201" y="277" />
 		</player>
 		<EnemyFly>
-			<position x="110" y="124" />
+			<position x="80" y="159" />
 		</EnemyFly>
 		<EnemyFly>
-			<position x="44" y="124" />
+			<position x="14" y="143" />
 		</EnemyFly>
 		<EnemyLand>
-			<position x="106" y="320" />
+			<position x="127" y="314" />
 		</EnemyLand>
 	</objects>
 	<colliders />
