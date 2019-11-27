@@ -24,11 +24,12 @@ public:
 	float timer;
 
 	bool chase = false;
-	int agroDistance = 200;
+	int agroDistance = 200;	
 
 public:
 
 	j1Enemy(j1Entity::entityType type);
+	j1Enemy(j1Entity::entityType type, iPoint pos);
 	// Destructor
 	~j1Enemy();
 

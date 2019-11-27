@@ -146,21 +146,6 @@ bool j1Objects::Draw(float dt)
 	return ret;
 }
 
-bool j1Objects::DebugDraw()
-{
-	/*p2List_item<j1Entity*>* tmp = Entities.start;
-	SDL_Rect col;
-	SDL_Rect col2;
-	while (tmp != nullptr)
-	{
-		col.h = tmp->data->Collider.h, col.w = tmp->data->Collider.w, col.x = tmp->data->Collider.x, col.y = tmp->data->Collider.y;
-		App->render->DrawQuad(col, 255, 0, 0, 50);
-
-		tmp = tmp->next;
-	}*/
-	return true;
-}
-
 
 j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 {
@@ -179,14 +164,12 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 
 	case j1Entity::entityType::ENEMY_FLY:
 		
-		tmp = new j1EnemyFly();
-		tmp->position = position;
+		tmp = new j1EnemyFly(position);		
 		break;
 
 	case j1Entity::entityType::ENEMY_LAND:
 
-		tmp = new j1EnemyLand();
-		tmp->position = position;
+		tmp = new j1EnemyLand(position);	
 		break;
 
 	case j1Entity::entityType::STONE:

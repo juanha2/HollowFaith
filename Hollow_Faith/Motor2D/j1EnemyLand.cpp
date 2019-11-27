@@ -21,6 +21,10 @@ j1EnemyLand::j1EnemyLand() : j1Enemy(entityType::ENEMY_LAND)
 	
 }
 
+j1EnemyLand::j1EnemyLand(iPoint pos) : j1Enemy(entityType::ENEMY_LAND, pos)
+{
+	position = pos;
+}
 
 j1EnemyLand::~j1EnemyLand() {};
 
@@ -90,9 +94,8 @@ bool j1EnemyLand::Update(float dt)
 	BROFILER_CATEGORY("EnemyPathLogic", Profiler::Color::DarkBlue);
 
 	bool ret = true;
-	timer += dt;
+	timer += dt;	
 
-	speed.y += gravityForce * (dt * 51);
 
 	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < agroDistance)
 	{
@@ -180,3 +183,7 @@ void j1EnemyLand::CleanUp()
 {
 
 }
+
+
+
+

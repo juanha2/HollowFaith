@@ -24,12 +24,21 @@ j1Enemy::j1Enemy(j1Entity::entityType type) : j1Entity(type)
 		App->objects->enemy = this;
 }
 
+j1Enemy::j1Enemy(j1Entity::entityType type, iPoint pos) : j1Entity(type)
+{
+	position = pos;
+	
+}
+
 j1Enemy::~j1Enemy() {};
+
 
 // Load Enemies State
 void j1Enemy::Load(pugi::xml_node& data)
 {
-	
+	chase = false;
+	speed = { 0,0 };
+
 	if (App->scene->different_map) {
 
 		App->scene->ready_to_load = true;

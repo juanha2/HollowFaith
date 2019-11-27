@@ -23,6 +23,11 @@ j1EnemyFly::j1EnemyFly() : j1Enemy(entityType::ENEMY_FLY)
 		App->objects->enemy = this;*/
 }
 
+j1EnemyFly::j1EnemyFly(iPoint pos) : j1Enemy(entityType::ENEMY_FLY, pos)
+{
+	position = pos;
+}
+
 
 j1EnemyFly::~j1EnemyFly() {};
 
@@ -94,7 +99,7 @@ bool j1EnemyFly::Update(float dt)
 	bool ret = true;
 	timer += dt;
 
-
+	
 	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < agroDistance)
 	{
 		if (timer > 1)
@@ -190,3 +195,5 @@ void j1EnemyFly::CleanUp()
 {
 	
 }
+
+

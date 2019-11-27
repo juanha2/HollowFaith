@@ -42,7 +42,6 @@ bool j1Scene::Start()
 	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });	
 	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
 
-
 	//Load first level at start
 	if (first) 
 	{
@@ -58,6 +57,8 @@ bool j1Scene::Start()
 			App->pathfinding->SetMap(w, h, data);
 			RELEASE_ARRAY(data);
 		}
+
+		
 	}
 
 	SpawnEnemies();

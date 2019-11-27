@@ -31,7 +31,6 @@ public:
 	bool Load(pugi::xml_node&);
 
 	bool Draw(float dt);
-	bool DebugDraw();
 
 	j1Entity* AddEntity(j1Entity::entityType type, iPoint position);
 	void DeleteEntities();

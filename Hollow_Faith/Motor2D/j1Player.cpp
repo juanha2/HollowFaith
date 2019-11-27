@@ -682,6 +682,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 				break;
 			case IN_WALK_LEFT: state = ST_WALK_LEFT;
 				break;
+			case IN_DEAD: state = ST_DEAD;	break;
 				
 			}
 			break;
@@ -696,6 +697,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 			case IN_WALK_LEFT: state = ST_WALK_LEFT;
 				break;
 			case IN_CLIMB: state = ST_CLIMB; break;
+			case IN_DEAD: state = ST_DEAD;	break;
 			}
 		}
 		break;

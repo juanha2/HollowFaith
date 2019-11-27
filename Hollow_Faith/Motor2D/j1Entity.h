@@ -72,6 +72,7 @@ public:
 	p2SString			texture_path;
 	SDL_Texture*		texture;
 	bool				elim = false;
+
 	
 };
 

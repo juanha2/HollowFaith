@@ -22,6 +22,7 @@ public:
 public:
 
 	j1EnemyFly();
+	j1EnemyFly(iPoint position);
 
 	// Destructor
 	~j1EnemyFly();
@@ -40,6 +41,7 @@ public:
 
 	// Called before quitting
 	void CleanUp();
+	
 
 };
 
