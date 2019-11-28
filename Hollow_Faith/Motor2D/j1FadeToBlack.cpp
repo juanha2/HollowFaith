@@ -9,7 +9,7 @@
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "j1Textures.h"
-#include "j1Objects.h"
+#include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 
 #include "SDL/include/SDL_render.h"

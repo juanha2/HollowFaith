@@ -22,7 +22,7 @@ class j1Scene;
 class j1Map;
 class j1FadeToBlack;
 class j1PathFinding;
-class j1Objects;
+class j1EntityManager;
 
 class j1App
 {
@@ -98,7 +98,7 @@ public:
 	j1Collision*		coll;	
 	j1FadeToBlack*		fade_to_black;	
 	j1PathFinding*		pathfinding;
-	j1Objects*			objects;
+	j1EntityManager*	objects;
 
 
 	j1PerfTimer			ptimer;

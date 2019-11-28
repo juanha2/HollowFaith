@@ -8,7 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
-#include "j1Objects.h"
+#include "j1EntityManager.h"
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "j1FadeToBlack.h"
@@ -62,7 +62,7 @@ bool j1Scene::Start()
 	}
 
 	SpawnEnemies();
-
+	
     App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
     graphics = App->tex->Load("Assets/Sprites/halo.png");
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");

@@ -1,5 +1,5 @@
-#ifndef __j1OBJECTS_H__
-#define __j1OBJECTS_H__
+#ifndef __j1ENTITYMANAGER_H__
+#define __j1ENTITYMANAGER_H__
 
 #include "j1Module.h"
 #include "p2List.h"
@@ -13,12 +13,12 @@
 
 class j1Entity;
 
-class j1Objects : public j1Module
+class j1EntityManager : public j1Module
 {
 	
 public:
-	j1Objects();
-	~j1Objects();
+	j1EntityManager();
+	~j1EntityManager();
 
 	bool Awake(pugi::xml_node& config);
 	bool Start();
@@ -43,7 +43,7 @@ public:
 	
 	
 	p2List<j1Entity*>	Entities;	
-	iPoint				savedPosition;
+	
 
 
 	j1Player* player;

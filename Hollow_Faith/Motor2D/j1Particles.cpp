@@ -6,7 +6,7 @@
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "p2Log.h"
-#include "j1Objects.h"
+#include "j1EntityManager.h"
 #include "j1Entity.h"
 
 #include "SDL/include/SDL_timer.h"
