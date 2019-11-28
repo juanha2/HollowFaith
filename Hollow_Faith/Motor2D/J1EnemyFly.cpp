@@ -153,8 +153,22 @@ bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance
 		if (timer > auxTimer)
 		{
 
+			int hostileValueX, hostileValueY; // Value to get inside the Player and kill him, and not to follow him friendly 
+
+			// 16 px are the Width and Height of each path tile (Not a magic number)
+			if (position.x > App->objects->player->position.x)
+				hostileValueX = -16;
+			else
+				hostileValueX = +16;
+
+			if (position.y > App->objects->player->position.y)
+				hostileValueY = -16;
+			else
+				hostileValueY = +16;
+
+
 			pathToPlayer.Clear();
-			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
+			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x + hostileValueX, App->objects->player->position.y + hostileValueY));
 
 			for (uint i = 0; i < App->pathfinding->GetLastPath()->Count(); i++)
 			{

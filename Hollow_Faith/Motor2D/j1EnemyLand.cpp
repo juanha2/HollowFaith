@@ -159,8 +159,16 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 		if (timer > auxTimer)
 		{
 
+			int hostileValue; // Value to get inside the Player and kill him, and not to follow him friendly.
+
+			if (position.x > App->objects->player->position.x)
+				hostileValue = -16;
+			else
+				hostileValue = +16;
+
+
 			pathToPlayer.Clear();
-			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
+			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x + hostileValue, App->objects->player->position.y));
 
 			for (uint i = 0; i < App->pathfinding->GetLastPath()->Count(); i++)
 			{
