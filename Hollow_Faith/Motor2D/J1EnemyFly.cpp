@@ -65,6 +65,7 @@ bool j1EnemyFly::Start()
 	current_animation = &animation;
 	App->audio->LoadFx(death.GetString());
 
+	checkingFall = true;
 	ignoreColl = false;
 	return ret;
 }

@@ -111,15 +111,7 @@ bool j1EnemyLand::Update(float dt)
 	}
 	
 
-	//Checking if there is no collision, then apply gravity
-
-	if (checkingFall) 
-	{
-		// current_animation = &jump;
-		speed.y += App->objects->gravityForce * (dt * 51);
-	}
-
-	checkingFall = true;
+	JumpFallLogic(dt);
 
 	return ret;
 }
@@ -222,3 +214,24 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed) {
 
 }
 
+
+
+void j1EnemyLand::JumpFallLogic(float dt)
+{
+
+	//Checking if there is no collision, then apply gravity
+
+	if (checkingFall)
+	{
+		// current_animation = &jump;
+		speed.y += App->objects->gravityForce * (dt * 51);
+	}
+
+	if (flip == SDL_FLIP_NONE && checkingFall)
+		speed.x += 5;
+	else if (flip == SDL_FLIP_HORIZONTAL && checkingFall)
+		speed.x -= 5;
+
+
+	checkingFall = true;
+}

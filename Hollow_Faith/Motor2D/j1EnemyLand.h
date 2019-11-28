@@ -48,6 +48,8 @@ public:
 	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
 	bool FollowingThePath(float speed);
 
+	void JumpFallLogic(float dt);
+
 };
 
 #endif // __ENEMYFLY_H__
