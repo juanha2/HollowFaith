@@ -192,8 +192,7 @@ bool j1Scene::CleanUp()
 	App->tex->CleanUp();
 	App->coll->CleanUp();
 
-	App->objects->player = nullptr;
-	App->objects->enemy = nullptr;
+	App->objects->player = nullptr;	
 	App->objects->particle = nullptr;
 
 	return true;

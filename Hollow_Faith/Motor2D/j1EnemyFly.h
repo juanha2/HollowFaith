@@ -40,7 +40,7 @@ public:
 	bool PostUpdate();
 
 	// Called before quitting
-	void CleanUp();
+	bool CleanUp();
 	
 	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
 	bool FollowingThePath(float speed);

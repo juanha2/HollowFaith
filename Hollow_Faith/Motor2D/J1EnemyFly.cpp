@@ -17,17 +17,9 @@
 #include "j1EnemyFly.h"
 #include "j1Player.h"
 
-j1EnemyFly::j1EnemyFly() : j1Enemy(entityType::ENEMY_FLY)
-{
-	/*if (App->objects->enemy == nullptr)
-		App->objects->enemy = this;*/
-}
+j1EnemyFly::j1EnemyFly() : j1Enemy(entityType::ENEMY_FLY) {}
 
-j1EnemyFly::j1EnemyFly(iPoint pos) : j1Enemy(entityType::ENEMY_FLY, pos)
-{
-	position = pos;
-}
-
+j1EnemyFly::j1EnemyFly(iPoint pos) : j1Enemy(entityType::ENEMY_FLY, pos){}
 
 j1EnemyFly::~j1EnemyFly() {};
 
@@ -137,9 +129,9 @@ bool j1EnemyFly::PostUpdate()
 	return ret;
 }
 
-void j1EnemyFly::CleanUp()
+bool j1EnemyFly::CleanUp()
 {
-	
+	return true;
 }
 
 

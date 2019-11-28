@@ -49,7 +49,7 @@ bool j1Particles::Start()
 }
 
 // Unload assets
-void j1Particles::CleanUp()
+bool j1Particles::CleanUp()
 {
 
 	// Unloading particles
@@ -62,6 +62,7 @@ void j1Particles::CleanUp()
 		}
 	}
 
+	return true;
 }
 
 // Update: draw background

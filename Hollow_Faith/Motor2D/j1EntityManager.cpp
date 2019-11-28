@@ -195,9 +195,7 @@ void j1EntityManager::DeleteEntities()
 		RELEASE(tmp->data);
 		Entities.del(tmp2);
 		tmp = tmp->prev;
-	}
-
-	//LOG("%i", App->objects->Entities.count());
+	}	
 }
 
 void j1EntityManager::DeleteEntity()

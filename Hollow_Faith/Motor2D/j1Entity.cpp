@@ -11,9 +11,6 @@
 #include "j1Render.h"
 #include "j1Window.h"
 
-j1Entity::j1Entity()
-{
-}
 
 j1Entity::j1Entity(entityType type) : type(type)
 {
@@ -50,7 +47,8 @@ void j1Entity::CollisionPosUpdate()
 	collider->SetPos((int)position.x, (int)position.y);
 }
 
-void j1Entity::CleanUp()
+bool j1Entity::CleanUp()
 {
 	App->tex->UnLoad(texture);
+	return true;
 }

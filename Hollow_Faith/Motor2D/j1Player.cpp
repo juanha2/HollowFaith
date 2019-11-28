@@ -79,7 +79,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	speedLimit.x = dataIterator.child("speed_limit").attribute("x").as_float();
 	speedLimit.y = dataIterator.child("speed_limit").attribute("y").as_float();
 	
-	App->objects->gravityForce = dataIterator.child("gravity").attribute("value").as_float();
+	gravityForce = dataIterator.child("gravity").attribute("value").as_float();
 	slowingValue = dataIterator.child("slowing_value").attribute("value").as_float();
 	slowlingLimitValue = dataIterator.child("slowing_limit").attribute("value").as_int();
 
@@ -123,11 +123,13 @@ bool j1Player::Start()
 }
 
 // Called before quitting
-void j1Player::CleanUp()
+bool j1Player::CleanUp()
 {	
 	LOG("CLEANUP PLAYER");
 	App->audio->UnLoad();
 	death.Reset();
+
+	return true;
 
 }
 // Called each loop iteration
@@ -271,7 +273,7 @@ bool j1Player::Update(float dt)
 		current_animation = &jump;
 		
 		if(!godMode)
-			speed.y += App->objects->gravityForce * (dt * 51) ;
+			speed.y += gravityForce * (dt * 51) ;
 		
 		break;
 

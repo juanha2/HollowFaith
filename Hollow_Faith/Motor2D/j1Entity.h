@@ -33,7 +33,7 @@ public:
 	};
 
 public:
-	j1Entity();
+	
 	j1Entity(entityType type);
 	~j1Entity();
 	
@@ -43,7 +43,7 @@ public:
 	virtual bool Update(float dt) { return true; };
 	virtual bool PostUpdate() { return true; };	
 
-	virtual void CleanUp();
+	virtual bool CleanUp();
 	virtual void Save(pugi::xml_node& file) const {};
 	virtual void Load(pugi::xml_node& file) {};	
 	
@@ -59,7 +59,6 @@ public:
 	entityType			type;
 	fPoint				speed;
 	iPoint				position;
-	iPoint				maxSpeed;	
 
 	Collider*			collider;
 	bool				ignoreColl = false;
@@ -73,6 +72,8 @@ public:
 	SDL_Texture*		texture;
 	bool				elim = false;
 	iPoint				savedPosition;
+
+	float				gravityForce = 30.0f; // World gravity
 	
 };
 

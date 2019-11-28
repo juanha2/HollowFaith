@@ -94,7 +94,7 @@ public:
 	bool PostUpdate();
 
 	// Called before quitting
-	void CleanUp();	
+	bool CleanUp();	
 
 	// State machine
 	player_states process_fsm(p2List<player_inputs>& inputs);

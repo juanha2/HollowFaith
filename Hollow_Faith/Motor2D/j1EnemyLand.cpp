@@ -16,15 +16,9 @@
 #include "j1Scene.h"
 #include "j1EnemyLand.h"
 
-j1EnemyLand::j1EnemyLand() : j1Enemy(entityType::ENEMY_LAND)
-{
-	
-}
+j1EnemyLand::j1EnemyLand() : j1Enemy(entityType::ENEMY_LAND) {}
 
-j1EnemyLand::j1EnemyLand(iPoint pos) : j1Enemy(entityType::ENEMY_LAND, pos)
-{
-	position = pos;
-}
+j1EnemyLand::j1EnemyLand(iPoint pos) : j1Enemy(entityType::ENEMY_LAND, pos) {}
 
 j1EnemyLand::~j1EnemyLand() {};
 
@@ -137,9 +131,9 @@ bool j1EnemyLand::PostUpdate()
 	return ret;
 }
 
-void j1EnemyLand::CleanUp()
+bool j1EnemyLand::CleanUp()
 {
-
+	return true;
 }
 
 
@@ -226,7 +220,7 @@ void j1EnemyLand::JumpFallLogic(float dt)
 	if (checkingFall)
 	{
 		// current_animation = &jump;
-		speed.y += App->objects->gravityForce * (dt * 51);
+		speed.y += gravityForce * (dt * 51);
 	}
 
 	if (flip == SDL_FLIP_NONE && checkingFall)

@@ -17,6 +17,7 @@ class j1EntityManager : public j1Module
 {
 	
 public:
+
 	j1EntityManager();
 	~j1EntityManager();
 
@@ -43,14 +44,10 @@ public:
 	
 	
 	p2List<j1Entity*>	Entities;	
-	
-
 
 	j1Player* player;
-	j1Enemy* enemy;
-
 	j1Particles* particle;
-	float gravityForce = 30.0f; // World gravity
+	
 };
 
 

@@ -20186,8 +20186,5 @@
   <object id="176" name="7" x="608" y="320" width="16" height="16"/>
   <object id="215" name="6" x="1056" y="128" width="16" height="16"/>
   <object id="216" name="7" x="1424" y="224" width="16" height="16"/>
-  <object id="220" name="7" x="224" y="288" width="16" height="16"/>
-  <object id="221" name="7" x="16" y="272" width="16" height="16"/>
-  <object id="222" name="6" x="96" y="224" width="16" height="16"/>
  </objectgroup>
 </map>
