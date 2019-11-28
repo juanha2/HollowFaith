@@ -1,4 +1,4 @@
-#include "j1Objects.h"
+#include "j1EntityManager.h"
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Scene.h"
@@ -11,16 +11,16 @@
 #include "j1EnemyLand.h"
 
 
-j1Objects::j1Objects()
+j1EntityManager::j1EntityManager()
 {
 	name.create("objects");
 }
 
-j1Objects::~j1Objects()
+j1EntityManager::~j1EntityManager()
 {
 }
 
-bool j1Objects::Awake(pugi::xml_node& config)
+bool j1EntityManager::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 
@@ -29,7 +29,7 @@ bool j1Objects::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-bool j1Objects::Start()
+bool j1EntityManager::Start()
 {
 	bool ret = true;
 
@@ -37,7 +37,7 @@ bool j1Objects::Start()
 	return ret;
 }
 
-bool j1Objects::PreUpdate()
+bool j1EntityManager::PreUpdate()
 {
 
 	bool ret = true;
@@ -50,7 +50,7 @@ bool j1Objects::PreUpdate()
 
 	return ret;
 }
-bool j1Objects::Update(float dt)
+bool j1EntityManager::Update(float dt)
 {
 
 	bool ret = true;
@@ -64,7 +64,7 @@ bool j1Objects::Update(float dt)
 	return ret;
 }
 
-bool j1Objects::PostUpdate()
+bool j1EntityManager::PostUpdate()
 {
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
@@ -76,7 +76,7 @@ bool j1Objects::PostUpdate()
 	return ret;
 }
 
-bool j1Objects::CleanUp()
+bool j1EntityManager::CleanUp()
 {
 	bool ret = true;
 
@@ -90,7 +90,7 @@ bool j1Objects::CleanUp()
 	return ret;
 }
 
-bool j1Objects::Save(pugi::xml_node& file) const
+bool j1EntityManager::Save(pugi::xml_node& file) const
 {
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
@@ -102,7 +102,7 @@ bool j1Objects::Save(pugi::xml_node& file) const
 	return ret;
 }
 
-bool j1Objects::Load(pugi::xml_node& file)
+bool j1EntityManager::Load(pugi::xml_node& file)
 {
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
@@ -133,7 +133,7 @@ bool j1Objects::Load(pugi::xml_node& file)
 }
 
 
-bool j1Objects::Draw(float dt)
+bool j1EntityManager::Draw(float dt)
 {
 
 	bool ret = true;
@@ -147,7 +147,7 @@ bool j1Objects::Draw(float dt)
 }
 
 
-j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
+j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, iPoint position)
 {
 	j1Entity* tmp = nullptr;
 
@@ -186,7 +186,7 @@ j1Entity* j1Objects::AddEntity(j1Entity::entityType type, iPoint position)
 	return tmp;
 }
 
-void j1Objects::DeleteEntities()
+void j1EntityManager::DeleteEntities()
 {
 	p2List_item<j1Entity*>* tmp = Entities.end;
 	while (tmp != nullptr)
@@ -200,7 +200,7 @@ void j1Objects::DeleteEntities()
 	//LOG("%i", App->objects->Entities.count());
 }
 
-void j1Objects::DeleteEntity()
+void j1EntityManager::DeleteEntity()
 {
 	p2List_item<j1Entity*>* tmp = Entities.end;
 

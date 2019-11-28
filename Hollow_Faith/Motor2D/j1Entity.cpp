@@ -1,4 +1,4 @@
-#include "j1Objects.h"
+#include "j1EntityManager.h"
 #include "j1Entity.h"
 #include "p2Defs.h"
 #include "p2Log.h"
@@ -10,9 +10,6 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
-#include "j1Objects.h"
-
-
 
 j1Entity::j1Entity()
 {

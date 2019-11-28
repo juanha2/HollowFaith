@@ -12,7 +12,7 @@
 #include "j1Window.h"
 #include "j1Scene.h"
 #include "j1FadeToBlack.h"
-#include "j1Objects.h"
+#include "j1EntityManager.h"
 
 
 
