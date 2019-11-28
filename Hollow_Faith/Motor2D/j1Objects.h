@@ -43,7 +43,7 @@ public:
 	
 	
 	p2List<j1Entity*>	Entities;	
-	iPoint				savedPosition;
+	
 
 
 	j1Player* player;

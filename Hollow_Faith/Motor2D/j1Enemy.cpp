@@ -43,8 +43,8 @@ void j1Enemy::Load(pugi::xml_node& data)
 
 		App->scene->ready_to_load = true;
 		ignoreColl = true;
-		App->objects->savedPosition.x = data.child("position").attribute("x").as_int();
-		App->objects->savedPosition.y = data.child("position").attribute("y").as_int();
+		savedPosition.x = data.child("position").attribute("x").as_int();
+		savedPosition.y = data.child("position").attribute("y").as_int();
 	}
 
 	else if (!App->scene->different_map) {

@@ -64,6 +64,7 @@ bool j1EnemyLand::Start()
 	App->audio->LoadFx(death.GetString());
 
 	ignoreColl = false;
+
 	return ret;
 }
 

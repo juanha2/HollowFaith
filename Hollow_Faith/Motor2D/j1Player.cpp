@@ -100,11 +100,9 @@ bool j1Player::Start()
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
 
-	if (App->scene->different_map) {
+	if (App->scene->different_map) { //We make sure to load all positions when F6 is pressed and we are changing scene
 	
-		position.x = App->objects->savedPosition.x;
-		position.y = App->objects->savedPosition.y;
-
+		App->LoadGame();
 		App->scene->different_map = false;
 	}
 	else
@@ -120,6 +118,7 @@ bool j1Player::Start()
 	App->audio->LoadFx(stone_Fx.GetString());
 
 	
+
 	return true;
 }
 
@@ -724,9 +723,9 @@ void j1Player::Load(pugi::xml_node& data)
 	if (App->scene->different_map) {
 
 		App->scene->ready_to_load = true;
-		ignoreColl = true;
-		App->objects->savedPosition.x = data.child("position").attribute("x").as_int();
-		App->objects->savedPosition.y= data.child("position").attribute("y").as_int();
+		ignoreColl = true;	
+		savedPosition.x = data.child("position").attribute("x").as_int();
+		savedPosition.y= data.child("position").attribute("y").as_int();
 	}	
 
 	else if (!App->scene->different_map) {
