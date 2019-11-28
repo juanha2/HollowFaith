@@ -110,6 +110,17 @@ bool j1EnemyLand::Update(float dt)
 		}
 	}
 	
+
+	//Checking if there is no collision, then apply gravity
+
+	if (checkingFall) 
+	{
+		// current_animation = &jump;
+		speed.y += App->objects->gravityForce * (dt * 51);
+	}
+
+	checkingFall = true;
+
 	return ret;
 }
 

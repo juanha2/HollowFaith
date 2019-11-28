@@ -20,15 +20,17 @@ public:
 	p2DynArray<iPoint> pathToPlayer;
 	iPoint originalPos;
 
-	p2SString			death;
+	p2SString death;
 	float timer;
 
 	bool chase = false;
+	bool checkingFall = false;
 
 	int agroDistance = 200;	
 	int pathCadency = 1;
 
 	float enemySpeed = 3.0f;
+	
 
 public:
 

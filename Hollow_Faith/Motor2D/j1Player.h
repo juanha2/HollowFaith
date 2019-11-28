@@ -152,8 +152,7 @@ private:
 	fPoint				speedLimit;								// Player max speed value
 
 	float				slowingValue;
-	int					slowlingLimitValue;
-	float				gravityForce;							//Player acceleration Y value
+	int					slowlingLimitValue;					
 
 	void braking();												//Player smoothly slow
 

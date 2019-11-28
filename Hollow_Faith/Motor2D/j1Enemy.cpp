@@ -139,7 +139,8 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 
 			case DIR_DOWN:
 
-				position.y = c2->rect.y - entity_collider.h;			
+				position.y = c2->rect.y - entity_collider.h;
+				checkingFall = false;
 				break;
 
 			case DIR_LEFT:
@@ -159,6 +160,13 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 			}
 
 		}
+
+		if ((c2->type == COLLIDER_DEATH))
+		{	
+			elim = true;		
+		}
+
+	
 		CollisionPosUpdate();
 
 		if (speed.y >= 0) {

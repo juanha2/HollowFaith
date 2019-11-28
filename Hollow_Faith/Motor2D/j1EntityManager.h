@@ -48,8 +48,9 @@ public:
 
 	j1Player* player;
 	j1Enemy* enemy;
-	j1Particles* particle;
 
+	j1Particles* particle;
+	float gravityForce = 30.0f; // World gravity
 };
 
 

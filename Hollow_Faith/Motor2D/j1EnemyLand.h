@@ -21,6 +21,8 @@ public:
 	Animation idle;
 	Animation walk;
 
+	
+
 public:
 
 	j1EnemyLand();
@@ -43,7 +45,7 @@ public:
 	// Called before quitting
 	void CleanUp();
 
-	bool GeneratingThePath(float timer, float dt);
+	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
 	bool FollowingThePath(float speed);
 
 };
