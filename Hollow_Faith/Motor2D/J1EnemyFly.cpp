@@ -97,78 +97,23 @@ bool j1EnemyFly::Update(float dt)
 	BROFILER_CATEGORY("EnemyPathLogic", Profiler::Color::DarkBlue);
 
 	bool ret = true;
-	timer += dt;
 
-	
-	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < agroDistance)
-	{
-		if (timer > 1)
-		{
-
-			pathToPlayer.Clear();
-			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
-						
-			
-
-			for (uint i = 0; i < App->pathfinding->GetLastPath()->Count(); i++)
-			{
-				pathToPlayer.PushBack(*App->pathfinding->GetLastPath()->At(i));
-			}
-
-			pathToPlayer.Flip();			
-		
-			chase = true;
-			timer = 0;
-		}
-	}
+	GeneratingThePath(pathCadency, dt, agroDistance); // Generates a path with a X cadency, using the time and only when the distance between player and enemy is X
 
 	if (chase)
 	{
-		if (pathToPlayer.Count() > 0)
-		{
-			iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
-
-			if (abs(abs(position.x) - abs(current.x)) > 3 || abs(abs(position.y) - abs(current.y)) > 3) {
-
-				if (current.x > position.x)
-				{
-					speed.x += 3;
-					flip = SDL_FLIP_NONE;
-				}					
-				else
-				{
-					speed.x -= 3;
-					flip = SDL_FLIP_HORIZONTAL;
-				}					
-
-				if (current.y < position.y)
-					speed.y -= 3;
-				else
-					speed.y += 3;
-
-
-				if (abs(abs(position.x) - abs(current.x)) < 3)
-					speed.x = 1;
-
-				if (abs(abs(position.y) - abs(current.y)) < 3)
-					speed.y = 1;
-
-			}
-			else
-			{
-				pathToPlayer.Pop(pathToPlayer[pathToPlayer.Count() - 1]);
-			}
-		}
-		else
+		if (!FollowingThePath(enemySpeed)) // Follows the path logic generated
 		{
 			pathToPlayer.Clear();
-			chase = false;
 
 			speed.x = 0;
 			speed.y = 0;
+
+			chase = false;		
 		}
 	}
 
+	
 	return ret;
 }
 
@@ -197,3 +142,74 @@ void j1EnemyFly::CleanUp()
 }
 
 
+bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance)
+{
+
+	timer += dt;
+
+
+	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < auxAgroDistance)
+	{
+		if (timer > auxTimer)
+		{
+
+			pathToPlayer.Clear();
+			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x, App->objects->player->position.y));
+
+			for (uint i = 0; i < App->pathfinding->GetLastPath()->Count(); i++)
+			{
+				pathToPlayer.PushBack(*App->pathfinding->GetLastPath()->At(i));
+			}
+
+			pathToPlayer.Flip();
+
+			chase = true;
+			timer = 0;
+		}
+	}
+
+	return true;
+}
+
+bool j1EnemyFly::FollowingThePath(float auxSpeed) {
+
+	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
+
+	if (abs(abs(position.x) - abs(current.x)) > 3 || abs(abs(position.y) - abs(current.y)) > 3) {
+
+		if (current.x > position.x)
+		{
+			speed.x += 3;
+			flip = SDL_FLIP_NONE;
+		}
+		else
+		{
+			speed.x -= 3;
+			flip = SDL_FLIP_HORIZONTAL;
+		}
+
+		if (current.y < position.y)
+			speed.y -= 3;
+		else
+			speed.y += 3;
+
+
+		if (abs(abs(position.x) - abs(current.x)) < 3)
+			speed.x = 1;
+
+		if (abs(abs(position.y) - abs(current.y)) < 3)
+			speed.y = 1;
+
+	}
+	else
+	{
+		pathToPlayer.Pop(pathToPlayer[pathToPlayer.Count() - 1]);
+	}
+
+
+	if (pathToPlayer.Count() > 1)
+		return true;
+	else
+		return false;
+
+}

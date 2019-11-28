@@ -24,7 +24,11 @@ public:
 	float timer;
 
 	bool chase = false;
+
 	int agroDistance = 200;	
+	int pathCadency = 1;
+
+	float enemySpeed = 3.0f;
 
 public:
 
@@ -37,6 +41,7 @@ public:
 	void Save(pugi::xml_node& file) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
+	
 	
 };
 

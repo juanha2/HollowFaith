@@ -43,6 +43,9 @@ public:
 	// Called before quitting
 	void CleanUp();
 
+	bool GeneratingThePath(float timer, float dt);
+	bool FollowingThePath(float speed);
+
 };
 
 #endif // __ENEMYFLY_H__
