@@ -36,8 +36,9 @@ public:
 
 	bool UnLoad();
 
+	int SpatialAudio(uint volume, int distance);
 
-	int FXvolume = 60;
+	int FXvolume = 70;
 
 private:
 

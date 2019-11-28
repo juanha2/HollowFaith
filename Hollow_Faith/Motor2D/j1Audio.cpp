@@ -187,3 +187,16 @@ bool j1Audio::UnLoad()
 
 	return true;
 }
+
+int j1Audio::SpatialAudio(uint volume, int distance) {
+
+	int spatialAudioResult;
+
+	spatialAudioResult = volume - distance / 4;
+
+	if (spatialAudioResult < 0)
+		spatialAudioResult = 0;
+
+	return spatialAudioResult;
+
+}

@@ -75,7 +75,8 @@ bool j1EnemyLand::PreUpdate()
 
 	if (elim) // When enemy dies
 	{
-		App->audio->PlayFx(8, 0, App->audio->FXvolume);
+
+		App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 		collider->to_delete = true;
 
@@ -96,6 +97,7 @@ bool j1EnemyLand::Update(float dt)
 
 	bool ret = true;
 	
+
 	GeneratingThePath(pathCadency, dt, agroDistance); // Generates a path with a X cadency, using the time and only when the distance between player and enemy is X
 
 	if (chase)
@@ -109,6 +111,7 @@ bool j1EnemyLand::Update(float dt)
 			chase = false;
 		}
 	}
+	
 	
 
 	JumpFallLogic(dt);
@@ -145,8 +148,9 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 	timer += dt;
 
+	distance = abs(abs(App->objects->player->position.x) - abs(position.x));
 
-	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < auxAgroDistance)
+	if (distance < auxAgroDistance)
 	{
 		if (timer > auxTimer)
 		{
@@ -213,8 +217,6 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed) {
 		return false;
 
 }
-
-
 
 void j1EnemyLand::JumpFallLogic(float dt)
 {

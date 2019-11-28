@@ -20,8 +20,8 @@ public:
 
 	Animation idle;
 	Animation walk;
-
 	
+
 
 public:
 

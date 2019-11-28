@@ -147,8 +147,8 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 
 				position.x = c2->rect.x + c2->rect.w + 1;
 
-				if (!checkingFall) {
-					App->audio->PlayFx(1, 0, App->audio->FXvolume);
+				if (!checkingFall && !canFly) {
+					App->audio->PlayFx(1, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
 					speed.y = -420.0f;
 				}
@@ -160,8 +160,8 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 
 				position.x = c2->rect.x - entity_collider.w - 1;
 
-				if (!checkingFall) {
-					App->audio->PlayFx(1, 0, App->audio->FXvolume);
+				if (!checkingFall && !canFly) {
+					App->audio->PlayFx(1, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
 					speed.y = -420.0f;
 				}
@@ -208,3 +208,4 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 	}
 }
+

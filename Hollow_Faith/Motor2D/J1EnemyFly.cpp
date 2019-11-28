@@ -65,7 +65,7 @@ bool j1EnemyFly::Start()
 	current_animation = &animation;
 	App->audio->LoadFx(death.GetString());
 
-	checkingFall = true;
+	canFly = true;
 	ignoreColl = false;
 	return ret;
 }
@@ -77,7 +77,7 @@ bool j1EnemyFly::PreUpdate()
 
 	if (elim)
 	{
-		App->audio->PlayFx(8, 0, App->audio->FXvolume);
+		App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 		collider->to_delete = true;
 
@@ -148,8 +148,9 @@ bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance
 
 	timer += dt;
 
+	distance = abs(abs(App->objects->player->position.x) - abs(position.x));
 
-	if (abs(abs(App->objects->player->position.x) - abs(position.x)) < auxAgroDistance)
+	if (distance < auxAgroDistance)
 	{
 		if (timer > auxTimer)
 		{
