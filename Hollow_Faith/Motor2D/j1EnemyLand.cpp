@@ -161,6 +161,7 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 			int hostileValue; // Value to get inside the Player and kill him, and not to follow him friendly.
 
+			// 16 px are the Width and Height of each path tile (Not a magic number)
 			if (position.x > App->objects->player->position.x)
 				hostileValue = -16;
 			else

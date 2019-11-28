@@ -146,12 +146,26 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 			case DIR_LEFT:
 
 				position.x = c2->rect.x + c2->rect.w + 1;
+
+				if (!checkingFall) {
+					App->audio->PlayFx(1, 0, App->audio->FXvolume);
+					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
+					speed.y = -420.0f;
+				}
+
 				speed.x = 0;
 				break;
 
 			case DIR_RIGHT:
 
 				position.x = c2->rect.x - entity_collider.w - 1;
+
+				if (!checkingFall) {
+					App->audio->PlayFx(1, 0, App->audio->FXvolume);
+					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
+					speed.y = -420.0f;
+				}
+
 				speed.x = 0;
 				break;
 
