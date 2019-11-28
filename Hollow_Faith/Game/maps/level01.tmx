@@ -14345,7 +14345,7 @@
    <tile gid="0"/>
    <tile gid="426"/>
    <tile gid="427"/>
-   <tile gid="428"/>
+   <tile gid="0"/>
    <tile gid="429"/>
    <tile gid="430"/>
    <tile gid="0"/>
@@ -14449,7 +14449,7 @@
    <tile gid="454"/>
    <tile gid="455"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="455"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -14843,11 +14843,11 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="527"/>
+   <tile gid="527"/>
+   <tile gid="527"/>
+   <tile gid="528"/>
+   <tile gid="529"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -15132,7 +15132,7 @@
    <tile gid="271"/>
   </data>
  </layer>
- <layer name="MainGround" width="100" height="25" offsetx="-16" offsety="0">
+ <layer name="MainGround" width="100" height="25" visible="0" offsetx="-16" offsety="0">
   <properties>
    <property name="speed_x" type="float" value="1"/>
   </properties>

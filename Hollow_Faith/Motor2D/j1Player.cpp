@@ -117,8 +117,6 @@ bool j1Player::Start()
 	App->audio->LoadFx(hover_Fx.GetString());
 	App->audio->LoadFx(stone_Fx.GetString());
 
-	
-
 	return true;
 }
 
@@ -485,7 +483,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				break;
 
 				case DIR_DOWN:
-			
+					
+					
 					position.y = c2->rect.y - entity_collider.h;
 					Acceleration = 0;
 					speed.y = 0;							
@@ -522,8 +521,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					break;
 
 				case DIR_DOWN:
+					
 					speed.y = movementForce.y / 2;
 					c2->callback->elim = true;
+					App->audio->PlayFx(6, 0, 100);
 					inputs.add(IN_JUMPING);
 					break;
 

@@ -52,6 +52,7 @@
       <landingFx path="audio/fx/landing.wav"/>
       <hoverFx path="audio/fx/hoversound.wav"/>
       <stoneFx path="audio/fx/stone.wav"/>
+      
       <death_enemyFx path="audio/fx/death_enemy.wav"/>
     </fx>
 
