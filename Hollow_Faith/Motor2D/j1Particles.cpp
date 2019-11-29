@@ -175,7 +175,6 @@ bool Particle::Update()
 			ret = false;
 		}
 	}
-
 	else
 		if (anim.Finished())
 			ret = false;
