@@ -154,6 +154,18 @@ bool j1Scene::Update(float dt)
 		App->objects->player->godMode = false;
 	}	
 
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) 
+	{
+		if (App->frameratecap == 30)
+			App->frameratecap = 1000;
+		else
+			App->frameratecap = 30;
+		
+
+	}
+		
+
 	App->map->Draw();
 
 	int x, y;

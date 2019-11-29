@@ -204,14 +204,13 @@ void j1App::FinishUpdate()
 	frames_on_last_update = prev_last_sec_frame_count;
 
 
-	// TODO 2: Use SDL_Delay to make sure you get your capped framerate
+
 	if (last_frame_ms < (1000 / frameratecap))
 	{
 		j1PerfTimer timer;
 		SDL_Delay((1000 / frameratecap) - last_frame_ms);
 
-		// TODO3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
-		//LOG("We waited for %f milliseconds and got back in %u", timer.ReadMs(), frames_on_last_update);
+	
 	}
 }
 
