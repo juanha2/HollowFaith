@@ -43,7 +43,6 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 
 	canJump = true;
-	canFly = false;
 	originalPos = position;
 
 	return ret;
@@ -235,4 +234,146 @@ void j1EnemyLand::JumpFallLogic(float dt)
 
 
 	checkingFall = true;
+}
+
+
+void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
+
+
+	// - - - - - - - COLLISIONS LOGIC - - - - - - - 
+
+	int detectCollDir[DIR_MAX];
+	detectCollDir[DIR_UP] = (c2->rect.y + c2->rect.h) - position.y;
+	detectCollDir[DIR_DOWN] = (position.y + entity_collider.h) - c2->rect.y;
+	detectCollDir[DIR_RIGHT] = (position.x + entity_collider.w) - c2->rect.x;
+	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - position.x;
+
+
+
+	bool collDir[DIR_MAX];
+	collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && speed.y < 0);
+	collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && speed.y > 0);
+	collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && speed.x < 0);
+	collDir[DIR_LEFT] = !(detectCollDir[DIR_LEFT] > 0 && speed.x > 0);
+
+
+	int dirCheck = DIR_UNKNOWN;
+
+	for (int i = 0; i < DIR_MAX; ++i)
+	{
+		if (dirCheck == DIR_UNKNOWN)
+			dirCheck = i;
+		else if ((detectCollDir[i] < detectCollDir[dirCheck]))
+			dirCheck = i;
+	}
+
+	// - - - - - - - CHECK COLLISIONS - - - - - - - 
+
+	if (ignoreColl == false) {
+
+		if ((c2->type == COLLIDER_PLAYER))
+		{
+			switch (dirCheck) {
+
+			case DIR_UP:
+
+				break;
+
+			}
+		}
+
+		if ((c2->type == COLLIDER_STONE))
+		{
+			elim = true;
+
+			App->audio->PlayFx(8, 0, App->audio->FXvolume);
+			App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
+			collider->to_delete = true;
+
+			App->objects->DeleteEntity();
+		}
+
+		if ((c2->type == COLLIDER_FLOOR))
+		{
+
+			switch (dirCheck) {
+			case DIR_UP:
+
+				position.y = c2->rect.y + c2->rect.h + 1;
+				speed.y = 0;
+				break;
+
+			case DIR_DOWN:
+
+				position.y = c2->rect.y - entity_collider.h;
+				checkingFall = false;
+				canJump = true;
+				break;
+
+			case DIR_LEFT:
+
+				position.x = c2->rect.x + c2->rect.w - 1;
+
+				if (canJump && !checkingFall) {
+					App->audio->PlayFx(1, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
+					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
+					speed.y = -420.0f;
+					canJump = false;
+				}
+
+				speed.x = 0;
+				break;
+
+			case DIR_RIGHT:
+
+				position.x = c2->rect.x - entity_collider.w + 1;
+
+				if (canJump && !checkingFall) {
+					App->audio->PlayFx(1, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
+					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
+					speed.y = -420.0f;
+					canJump = false;
+				}
+
+				speed.x = 0;
+				break;
+
+			case -1:
+				break;
+			}
+
+		}
+
+		if ((c2->type == COLLIDER_DEATH))
+		{
+			elim = true;
+		}
+
+
+		CollisionPosUpdate();
+
+		if (speed.y >= 0) {
+
+			if ((c2->type == COLLIDER_PLATFORM))
+			{
+				switch (dirCheck) {
+
+				case DIR_UP:
+					break;
+
+				case DIR_DOWN:
+					position.y = c2->rect.y - entity_collider.h;
+					break;
+
+				case DIR_LEFT:
+					break;
+
+				case DIR_RIGHT:
+					break;
+				case -1:
+					break;
+				}
+			}
+		}
+	}
 }

@@ -44,6 +44,7 @@ public:
 	
 	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
 	bool FollowingThePath(float speed);
+	void OnCollision(Collider* c1, Collider* c2);
 
 };
 

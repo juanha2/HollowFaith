@@ -20166,7 +20166,7 @@
   </data>
  </layer>
  <objectgroup id="10" name="Enemies">
-  <object id="134" name="7" x="336" y="336"/>
+  <object id="134" name="7" x="272.083" y="336.083" width="16" height="16"/>
   <object id="135" name="6" x="304" y="64"/>
  </objectgroup>
 </map>

@@ -25,10 +25,9 @@ public:
 
 	bool chase = false;
 	bool checkingFall = false;
-	bool canFly = false;
 	bool canJump = false;
 
-	int	distance;
+	
 	int agroDistance = 200;	
 	int pathCadency = 1;
 
@@ -45,7 +44,6 @@ public:
 	void Load(pugi::xml_node& file);
 	void Save(pugi::xml_node& file) const;
 
-	void OnCollision(Collider* c1, Collider* c2);
 	
 };
 

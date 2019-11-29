@@ -48,7 +48,7 @@ public:
 	bool FollowingThePath(float speed);
 
 	void JumpFallLogic(float dt);
-
+	void OnCollision(Collider* c1, Collider* c2);
 };
 
 #endif // __ENEMYFLY_H__

@@ -495,13 +495,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 				case DIR_LEFT:
 
-					position.x = c2->rect.x + c2->rect.w + 1;
+					position.x = c2->rect.x + c2->rect.w - 1;
 					speed.x = 0;
 					break;
 
 				case DIR_RIGHT:
 
-					position.x = c2->rect.x - entity_collider.w;
+					position.x = c2->rect.x - entity_collider.w + 1;
 					speed.x = 0;
 					break;
 
@@ -524,7 +524,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					
 					speed.y = movementForce.y / 2;
 					c2->callback->elim = true;
-					App->audio->PlayFx(6, 0, 100);
+					App->audio->PlayFx(6, 0, App->audio->SpatialAudio(100, c2->callback->distance));
 					inputs.add(IN_JUMPING);
 					break;
 

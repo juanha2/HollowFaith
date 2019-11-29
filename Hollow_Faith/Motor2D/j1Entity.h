@@ -59,6 +59,7 @@ public:
 	entityType			type;
 	fPoint				speed;
 	iPoint				position;
+	int					distance;	
 
 	Collider*			collider;
 	bool				ignoreColl = false;
