@@ -168,7 +168,6 @@ bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance
 				pathToPlayer.PushBack(*App->pathfinding->GetLastPath()->At(i));
 			}
 
-			pathToPlayer.Flip();
 
 			chase = true;
 			timer = 0;
@@ -185,15 +184,16 @@ bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
 	if (abs(position.x - current.x) > pathMinDist || abs(abs(position.y) - abs(current.y)) > pathMinDist) {
 
 		if (current.x > position.x)
-		{
-			speed.x += auxSpeed * dt;
-			flip = SDL_FLIP_NONE;
-		}
+			speed.x += auxSpeed * dt;		
 		else
-		{
 			speed.x -= auxSpeed * dt;
+				
+
+		if (speed.x > 0) 
+			flip = SDL_FLIP_NONE;	
+		else
 			flip = SDL_FLIP_HORIZONTAL;
-		}
+
 
 		if (current.y < position.y)
 			speed.y -= auxSpeed * dt;
@@ -201,24 +201,13 @@ bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
 			speed.y += auxSpeed * dt;
 
 
-		if (abs(abs(position.x) - abs(current.x)) < 3)
-			speed.x = 1;
-
-		if (abs(abs(position.y) - abs(current.y)) < 3)
-			speed.y = 1;
-
 	}
 	else
 	{
-		pathToPlayer.Pop(pathToPlayer[pathToPlayer.Count() - 1]);
+		pathToPlayer.Pop(current);
 	}
 
-
-	if (pathToPlayer.Count() > 1)
-		return true;
-	else
-		return false;
-
+	return true;
 }
 
 void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {

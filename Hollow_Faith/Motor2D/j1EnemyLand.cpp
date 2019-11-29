@@ -42,9 +42,6 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 	entity_collider = { 0, 0, 17, 27 };
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 
-	bottomTrigger = new Collider({ 0, 0, 5, 5 }, COLLIDER_BOTTRIGGER, this);
-	topTrigger = new Collider({ 0, 0, 5, 5 }, COLLIDER_TOPTRIGGER, this);
-
 	canJump = true;
 	originalPos = position;
 
@@ -58,8 +55,6 @@ bool j1EnemyLand::Start()
 
 	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
-	App->coll->AddColliderEntity(bottomTrigger);
-	App->coll->AddColliderEntity(topTrigger);
 
 	current_animation = &idle;
 	App->audio->LoadFx(death.GetString());
@@ -81,8 +76,6 @@ bool j1EnemyLand::PreUpdate()
 		App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 		collider->to_delete = true;
-		bottomTrigger->to_delete = true;
-		topTrigger->to_delete = true;
 
 		pathToPlayer.Clear();
 		App->objects->DeleteEntity();
@@ -172,6 +165,7 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 
 			pathToPlayer.Clear();
+
 			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y + collider->rect.h / 2), 
 				App->map->WorldToMap(App->objects->player->position.x + hostileValue, App->objects->player->position.y + App->objects->player->collider->rect.h / 2));
 
@@ -180,7 +174,6 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 				pathToPlayer.PushBack(*App->pathfinding->GetLastPath()->At(i));
 			}
 
-			pathToPlayer.Flip();
 
 			chase = true;
 			timer = 0;
@@ -193,6 +186,46 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
 	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
+	
+
+	if (pathToPlayer.Count() > 1)
+	{
+		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 1 };
+
+		if (App->pathfinding->IsWalkable(next))
+		{
+
+			bool foundIt = false;
+
+			for (uint i = pathToPlayer.Count() - 2; i >= 0; --i)
+			{
+				
+				next = { pathToPlayer[i].x, pathToPlayer[i].y + 1 };
+
+				if (!App->pathfinding->IsWalkable(next))
+				{
+					foundIt = true;
+					break;
+				}
+			}
+
+			if (foundIt)
+			{
+				LOG("WE ARE JUMPING BOIZ");
+
+				if (canJump)
+				{
+					speed.y = movementForce.y;
+					canJump = false;
+				}
+
+
+			}
+
+		}
+
+	}
+
 
 	if (abs(position.x - current.x) > pathMinDist) {
 
@@ -209,21 +242,18 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 
-		if (abs(abs(position.x) - abs(current.x)) < 3)
-			speed.x = 0;
-
 	}
 	else
 	{
-		pathToPlayer.Pop(pathToPlayer[pathToPlayer.Count() - 1]);
+		pathToPlayer.Pop(current);
 	}
 
 
-	if (pathToPlayer.Count() > 1)
-		return true;
-	else
+	if (pathToPlayer.Count() <= 0) 
 		return false;
-
+	else
+		return true;
+	
 }
 
 void j1EnemyLand::JumpFallLogic(float dt)
@@ -237,17 +267,6 @@ void j1EnemyLand::JumpFallLogic(float dt)
 		speed.y += gravityForce * (dt * DT_CALIBRATED);
 	}
 
-	if (flip == SDL_FLIP_NONE) 
-	{
-		bottomTrigger->SetPos((int)position.x + 10 + collider->rect.w, (int)position.y + collider->rect.h + 5);
-		topTrigger->SetPos((int)position.x + 10 + collider->rect.w, (int)position.y);
-	}
-	else if (flip == SDL_FLIP_HORIZONTAL) 
-	{
-		bottomTrigger->SetPos((int)position.x - 10, (int)position.y + collider->rect.h + 5);
-		topTrigger->SetPos((int)position.x - 10, (int)position.y);
-	}
-
 
 	if (flip == SDL_FLIP_NONE && checkingFall)
 		speed.x += movementForce.x * dt;
@@ -255,30 +274,7 @@ void j1EnemyLand::JumpFallLogic(float dt)
 		speed.x -= movementForce.x * dt;
 
 
-	if (!bBotTrigger) 
-	{
-		if (distance < 90)
-		{
-			if (canJump) {
-				App->audio->PlayFx(1, 0, App->audio->FXvolume);
-				App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
-				speed.y = movementForce.y;
-
-				canJump = false;
-			}
-			
-		}
-		else 
-		{
-			speed.x = 0;
-			current_animation = &idle;
-		}
-			
-	}
-
-
-	bBotTrigger = false;
-	bTopTrigger = false;
+	
 	checkingFall = true;
 }
 
@@ -379,15 +375,6 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 			elim = true;
 		}
 
-		if (c1->type == COLLIDER_BOTTRIGGER)
-		{
-			bBotTrigger = true;
-		}
-
-		if (c1->type == COLLIDER_TOPTRIGGER)
-		{
-			bTopTrigger = true;
-		}
 
 		CollisionPosUpdate();
 
