@@ -166,7 +166,7 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 			pathToPlayer.Clear();
 
-			App->pathfinding->CreatePath(App->map->WorldToMap(round(position.x + 1), round(position.y)),
+			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y),
 				App->map->WorldToMap(App->objects->player->position.x + hostileValue, App->objects->player->position.y));
 
 			for (uint i = 0; i < App->pathfinding->GetLastPath()->Count(); i++)
@@ -193,12 +193,20 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 		if (current.x > position.x)
 		{
 			current_animation = &walk;
+
+			if (speed.x < 0)
+				speed.x = 0;
+
 			speed.x += auxSpeed * dt;
 			flip = SDL_FLIP_NONE;
 		}
 		else
 		{
 			current_animation = &walk;
+
+			if (speed.x > 0)
+				speed.x = 0;
+
 			speed.x -= auxSpeed * dt;
 			flip = SDL_FLIP_HORIZONTAL;
 		}

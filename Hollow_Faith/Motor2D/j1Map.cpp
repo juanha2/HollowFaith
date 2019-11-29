@@ -522,8 +522,8 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		ret.y = (y / (data.tile_height / 2) - x / (data.tile_width / 2)) / 2;
 		break;
 	case MAPTYPE_ORTHOGONAL:
-		ret.x = x / data.tile_width;
-		ret.y = y / data.tile_height;
+		ret.x = round(x / data.tile_width);
+		ret.y = round(y / data.tile_height);
 		break;
 
 	}
