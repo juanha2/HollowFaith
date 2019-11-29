@@ -19,7 +19,7 @@
 
 j1EnemyFly::j1EnemyFly() : j1Enemy(entityType::ENEMY_FLY) {}
 
-j1EnemyFly::j1EnemyFly(fPoint pos) : j1Enemy(entityType::ENEMY_FLY, pos){}
+j1EnemyFly::j1EnemyFly(fPoint pos) : j1Enemy(entityType::ENEMY_FLY, pos) {}
 
 j1EnemyFly::~j1EnemyFly() {};
 
@@ -76,7 +76,7 @@ bool j1EnemyFly::PreUpdate()
 		App->objects->DeleteEntity();
 	}
 
-	
+
 	PositionUpdate(App->dt);
 
 
@@ -101,11 +101,11 @@ bool j1EnemyFly::Update(float dt)
 			speed.x = 0;
 			speed.y = 0;
 
-			chase = false;		
+			chase = false;
 		}
 	}
 
-	
+
 	return ret;
 }
 
@@ -124,7 +124,7 @@ bool j1EnemyFly::PostUpdate()
 
 	//Draw(App->dt);
 	App->render->Blit(texture, position.x, position.y,
-		&current_animation->GetCurrentFrame(App->dt), 1.0, 1.0, flip, NULL, entity_collider.w / 2+10,10);
+		&current_animation->GetCurrentFrame(App->dt), 1.0, 1.0, flip, NULL, entity_collider.w / 2 + 10, 10);
 	return ret;
 }
 
@@ -273,9 +273,9 @@ void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 
 			App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 			App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
-			
-			
-			
+
+
+
 		}
 
 		if ((c2->type == COLLIDER_FLOOR))

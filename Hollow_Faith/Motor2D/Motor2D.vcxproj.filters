@@ -61,14 +61,14 @@
     <ClCompile Include="j1Particles.cpp">
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="J1EnemyFly.cpp">
-      <Filter>Desenvolupament  ========\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="j1EnemyLand.cpp">
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClCompile>
     <ClCompile Include="j1EntityManager.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1EnemyFly.cpp">
+      <Filter>Desenvolupament  ========\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

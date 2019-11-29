@@ -78,7 +78,7 @@
   <ItemGroup>
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Enemy.cpp" />
-    <ClCompile Include="J1EnemyFly.cpp" />
+    <ClCompile Include="j1EnemyFly.cpp" />
     <ClCompile Include="j1EnemyLand.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
