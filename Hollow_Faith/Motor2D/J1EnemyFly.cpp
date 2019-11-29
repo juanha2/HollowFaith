@@ -300,7 +300,7 @@ void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 
 			case DIR_RIGHT:
 
-				position.x = c2->rect.x - entity_collider.w;
+				position.x = c2->rect.x - entity_collider.w - 1;
 
 
 				speed.x = 0;
