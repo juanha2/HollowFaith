@@ -115,6 +115,10 @@ bool j1EnemyLand::Update(float dt)
 			chase = false;
 		}
 	}
+	else 
+	{
+		// Apatrullando la ciudad
+	}
 	
 	
 	JumpFallLogic(dt);
@@ -151,7 +155,7 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 	timer += dt;
 
-	distance = abs(abs(App->objects->player->position.x) - abs(position.x));
+	distance = abs(App->objects->player->position.x - position.x);
 
 	if (distance < auxAgroDistance)
 	{
@@ -168,7 +172,8 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 
 			pathToPlayer.Clear();
-			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->objects->player->position.x + hostileValue, App->objects->player->position.y));
+			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y + collider->rect.h / 2), 
+				App->map->WorldToMap(App->objects->player->position.x + hostileValue, App->objects->player->position.y + App->objects->player->collider->rect.h / 2));
 
 			for (uint i = 0; i < App->pathfinding->GetLastPath()->Count(); i++)
 			{
@@ -189,7 +194,7 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
 	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
-	if (abs(abs(position.x) - abs(current.x)) > 3) {
+	if (abs(position.x - current.x) > pathMinDist) {
 
 		if (current.x > position.x)
 		{
@@ -205,7 +210,7 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 		}
 
 		if (abs(abs(position.x) - abs(current.x)) < 3)
-			speed.x = 1;
+			speed.x = 0;
 
 	}
 	else
