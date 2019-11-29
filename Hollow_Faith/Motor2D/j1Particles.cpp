@@ -113,7 +113,7 @@ void j1Particles::AddParticle(const Particle& particle, float x, float y, SDL_Re
 			p->name = name.GetString();			
 
 			if (collider_type != COLLIDER_NONE)
-				p->collider = App->coll->AddCollider(p->anim.GetCurrentFrame(0), collider_type);
+				p->collider = App->coll->AddCollider(p->anim.GetCurrentFrame(0), collider_type, this);
 
 			active[i] = p;
 
@@ -131,7 +131,8 @@ void j1Particles::OnCollision(Collider* c1, Collider* c2)
 	{		
 		// Always destroy particles that collide
 		if (active[i] != nullptr && active[i]->collider == c1)
-		{			
+		{		
+			elim = true;
 			delete active[i];
 			active[i] = nullptr;
 			break;

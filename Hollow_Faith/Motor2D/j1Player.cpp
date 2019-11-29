@@ -752,7 +752,7 @@ void j1Player::Win_Lose_Condition() {
 
 	// Winning at map 1--------------------------
 	if (win && App->scene->currentmap == 1) {
-		
+
 		if (!App->scene->sound_repeat && App->scene->currentmap == 1) {
 			App->audio->PlayFx(3, 0, App->audio->FXvolume);
 			App->scene->sound_repeat = true;
@@ -765,10 +765,10 @@ void j1Player::Win_Lose_Condition() {
 				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
 		}
 	}
-	
+
 	// Winning at map 2--------------------------
 	else if (win && App->scene->currentmap == 2) {
-		
+
 		if (!App->scene->sound_repeat && App->scene->currentmap == 2) {
 			App->audio->PlayFx(4, 0, App->audio->FXvolume);
 			App->scene->sound_repeat = true;
@@ -783,13 +783,31 @@ void j1Player::Win_Lose_Condition() {
 	}
 
 	// Dying -----------------------------------------
-	if (dead) {		
+	if (dead && App->scene->currentmap == 1) {
 
 		if (!App->scene->sound_repeat) {
 			App->audio->PlayFx(2, 0, App->audio->FXvolume);
 			death.Reset();
 			App->scene->sound_repeat = true;
 		}
+
+		App->scene->currentmap = 1;
+
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
+			if (App->scene->currentmap == i)
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
+		}
+	}
+
+	else if (dead && App->scene->currentmap == 2) {
+
+		if (!App->scene->sound_repeat) {
+			App->audio->PlayFx(2, 0, App->audio->FXvolume);
+			death.Reset();
+			App->scene->sound_repeat = true;
+		}
+
+		App->scene->currentmap = 2;
 
 		for (int i = 1; i <= App->map->data.numLevels; i++) {
 			if (App->scene->currentmap == i)
