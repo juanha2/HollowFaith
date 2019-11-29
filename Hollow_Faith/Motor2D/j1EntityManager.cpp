@@ -147,7 +147,7 @@ bool j1EntityManager::Draw(float dt)
 }
 
 
-j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, iPoint position)
+j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position)
 {
 	j1Entity* tmp = nullptr;
 

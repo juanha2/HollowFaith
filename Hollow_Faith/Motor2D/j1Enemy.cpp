@@ -23,7 +23,7 @@ j1Enemy::j1Enemy(j1Entity::entityType type) : j1Entity(type)
 
 }
 
-j1Enemy::j1Enemy(j1Entity::entityType type, iPoint pos) : j1Entity(type)
+j1Enemy::j1Enemy(j1Entity::entityType type, fPoint pos) : j1Entity(type)
 {
 	position = pos;	
 }

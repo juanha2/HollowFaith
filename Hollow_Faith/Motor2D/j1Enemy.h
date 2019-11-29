@@ -18,7 +18,7 @@ class j1Enemy : public j1Entity
 public:
 	
 	p2DynArray<iPoint> pathToPlayer;
-	iPoint originalPos;
+	fPoint originalPos;
 
 	p2SString death;
 	float timer;
@@ -37,7 +37,7 @@ public:
 public:
 
 	j1Enemy(j1Entity::entityType type);
-	j1Enemy(j1Entity::entityType type, iPoint pos);
+	j1Enemy(j1Entity::entityType type, fPoint pos);
 	// Destructor
 	~j1Enemy();
 

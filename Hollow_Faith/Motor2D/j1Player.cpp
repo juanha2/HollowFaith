@@ -412,7 +412,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	
 	// - - - - - - - COLLISIONS LOGIC - - - - - - - 
 
-	int detectCollDir[DIR_MAX];
+	float detectCollDir[DIR_MAX];
 	detectCollDir[DIR_UP] = (c2->rect.y + c2->rect.h) - position.y;
 	detectCollDir[DIR_DOWN] = (position.y + entity_collider.h) - c2->rect.y;
 	detectCollDir[DIR_RIGHT] = (position.x + entity_collider.w) - c2->rect.x;
@@ -459,16 +459,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					&& (position.y + entity_collider.h - 1 < c2->rect.y + c2->rect.h)
 					&& (position.x + 5 < c2->rect.x + c2->rect.w))
 					can_climb = true;
+
 				else if (position.y +15< c2->rect.y) {
 					position.y = c2->rect.y - 14;
 					can_climb = true;
 				}
 				
-				else{
-					
+				else					
 					can_climb = false;
-					current_state = ST_AT_AIR;
-				}
 			}
 
 			if ((c2->type == COLLIDER_FLOOR))
@@ -727,14 +725,14 @@ void j1Player::Load(pugi::xml_node& data)
 
 		App->scene->ready_to_load = true;
 		ignoreColl = true;	
-		savedPosition.x = data.child("position").attribute("x").as_int();
-		savedPosition.y= data.child("position").attribute("y").as_int();
+		savedPosition.x = data.child("position").attribute("x").as_float();
+		savedPosition.y= data.child("position").attribute("y").as_float();
 	}	
 
 	else if (!App->scene->different_map) {
 		
-		position.x = data.child("position").attribute("x").as_int();
-		position.y = data.child("position").attribute("y").as_int();		
+		position.x = data.child("position").attribute("x").as_float();
+		position.y = data.child("position").attribute("y").as_float();
 	}
 	
 }

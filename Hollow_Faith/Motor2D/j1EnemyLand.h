@@ -25,7 +25,7 @@ public:
 public:
 
 	j1EnemyLand();
-	j1EnemyLand(iPoint position);
+	j1EnemyLand(fPoint position);
 	// Destructor
 	~j1EnemyLand();
 

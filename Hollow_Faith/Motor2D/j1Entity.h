@@ -58,8 +58,10 @@ public:
 	Animation*			current_animation = nullptr;
 	entityType			type;
 	fPoint				speed;
-	iPoint				position;
+
 	int					distance;	
+	fPoint				position;
+
 
 	Collider*			collider;
 	bool				ignoreColl = false;
@@ -72,7 +74,7 @@ public:
 	p2SString			texture_path;
 	SDL_Texture*		texture;
 	bool				elim = false;
-	iPoint				savedPosition;
+	fPoint				savedPosition;
 
 	float				gravityForce = 30.0f; // World gravity
 	

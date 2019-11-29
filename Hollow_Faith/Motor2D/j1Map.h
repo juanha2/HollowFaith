@@ -76,8 +76,8 @@ struct TileSet
 struct ObjectsData
 {
 	uint		name;
-	int			x;
-	int			y;
+	float			x;
+	float			y;
 	uint		width;
 	uint		height;
 	Collider*	colliders[100] = { nullptr };

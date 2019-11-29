@@ -19,7 +19,7 @@
 
 j1EnemyFly::j1EnemyFly() : j1Enemy(entityType::ENEMY_FLY) {}
 
-j1EnemyFly::j1EnemyFly(iPoint pos) : j1Enemy(entityType::ENEMY_FLY, pos){}
+j1EnemyFly::j1EnemyFly(fPoint pos) : j1Enemy(entityType::ENEMY_FLY, pos){}
 
 j1EnemyFly::~j1EnemyFly() {};
 
