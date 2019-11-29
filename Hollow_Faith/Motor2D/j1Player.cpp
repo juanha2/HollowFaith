@@ -459,16 +459,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					&& (position.y + entity_collider.h - 1 < c2->rect.y + c2->rect.h)
 					&& (position.x + 5 < c2->rect.x + c2->rect.w))
 					can_climb = true;
+
 				else if (position.y +15< c2->rect.y) {
 					position.y = c2->rect.y - 14;
 					can_climb = true;
 				}
 				
-				else{
-					
+				else					
 					can_climb = false;
-					current_state = ST_AT_AIR;
-				}
 			}
 
 			if ((c2->type == COLLIDER_FLOOR))
