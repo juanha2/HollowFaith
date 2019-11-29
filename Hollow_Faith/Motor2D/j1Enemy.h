@@ -26,6 +26,7 @@ public:
 	bool chase = false;
 	bool checkingFall = false;
 	bool canFly = false;
+	bool canJump = false;
 
 	int	distance;
 	int agroDistance = 200;	

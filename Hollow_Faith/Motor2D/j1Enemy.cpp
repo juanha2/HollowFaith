@@ -80,6 +80,7 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 	detectCollDir[DIR_DOWN] = (position.y + entity_collider.h) - c2->rect.y;
 	detectCollDir[DIR_RIGHT] = (position.x + entity_collider.w) - c2->rect.x;
 	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - position.x;
+	
 
 
 	bool collDir[DIR_MAX];
@@ -139,16 +140,18 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 
 				position.y = c2->rect.y - entity_collider.h;
 				checkingFall = false;
+				canJump = true;
 				break;
 
 			case DIR_LEFT:
 
 				position.x = c2->rect.x + c2->rect.w + 1;
 
-				if (!checkingFall && !canFly) {
+				if (canJump && !canFly) {
 					App->audio->PlayFx(1, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
 					speed.y = -420.0f;
+					canJump = false;
 				}
 
 				speed.x = 0;
@@ -158,10 +161,11 @@ void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
 
 				position.x = c2->rect.x - entity_collider.w - 1;
 
-				if (!checkingFall && !canFly) {
+				if (canJump && !canFly) {
 					App->audio->PlayFx(1, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
 					speed.y = -420.0f;
+					canJump = false;
 				}
 
 				speed.x = 0;

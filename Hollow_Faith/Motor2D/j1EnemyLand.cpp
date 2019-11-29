@@ -18,7 +18,7 @@
 
 j1EnemyLand::j1EnemyLand() : j1Enemy(entityType::ENEMY_LAND) {}
 
-j1EnemyLand::j1EnemyLand(iPoint pos) : j1Enemy(entityType::ENEMY_LAND, pos) {}
+j1EnemyLand::j1EnemyLand(iPoint pos) : j1Enemy(entityType::ENEMY_LAND, pos) {  }
 
 j1EnemyLand::~j1EnemyLand() {};
 
@@ -42,6 +42,8 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 	entity_collider = { 0, 0, 17, 27 };
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 
+	canJump = true;
+	canFly = false;
 	originalPos = position;
 
 	return ret;
@@ -57,6 +59,7 @@ bool j1EnemyLand::Start()
 	current_animation = &idle;
 	App->audio->LoadFx(death.GetString());
 
+	
 	ignoreColl = false;
 
 	return ret;
@@ -91,6 +94,7 @@ bool j1EnemyLand::Update(float dt)
 
 	bool ret = true;
 	
+	JumpFallLogic(dt);
 
 	GeneratingThePath(pathCadency, dt, agroDistance); // Generates a path with a X cadency, using the time and only when the distance between player and enemy is X
 
@@ -107,8 +111,7 @@ bool j1EnemyLand::Update(float dt)
 	}
 	
 	
-
-	JumpFallLogic(dt);
+	
 
 	return ret;
 }
@@ -222,6 +225,8 @@ void j1EnemyLand::JumpFallLogic(float dt)
 		// current_animation = &jump;
 		speed.y += gravityForce * (dt * 51);
 	}
+
+	
 
 	if (flip == SDL_FLIP_NONE && checkingFall)
 		speed.x += 5;
