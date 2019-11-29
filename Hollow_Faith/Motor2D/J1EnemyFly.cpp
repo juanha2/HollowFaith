@@ -39,7 +39,7 @@ bool j1EnemyFly::Awake(pugi::xml_node& config)
 	pugi::xml_node fxIterator = config.child("fx");
 	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
 
-	entity_collider = { 0, 0, 16, 16 };
+	entity_collider = { 0, 0, 14, 14 };
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 
 	originalPos = position;
@@ -224,14 +224,14 @@ bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
 void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 
 
+
 	// - - - - - - - COLLISIONS LOGIC - - - - - - - 
 
-	int detectCollDir[DIR_MAX];
+	float detectCollDir[DIR_MAX];
 	detectCollDir[DIR_UP] = (c2->rect.y + c2->rect.h) - position.y;
 	detectCollDir[DIR_DOWN] = (position.y + entity_collider.h) - c2->rect.y;
 	detectCollDir[DIR_RIGHT] = (position.x + entity_collider.w) - c2->rect.x;
 	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - position.x;
-
 
 
 	bool collDir[DIR_MAX];
@@ -252,6 +252,7 @@ void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 	}
 
 	// - - - - - - - CHECK COLLISIONS - - - - - - - 
+
 
 	if (ignoreColl == false) {
 
@@ -301,7 +302,6 @@ void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 			case DIR_RIGHT:
 
 				position.x = c2->rect.x - entity_collider.w - 1;
-
 
 				speed.x = 0;
 				break;
