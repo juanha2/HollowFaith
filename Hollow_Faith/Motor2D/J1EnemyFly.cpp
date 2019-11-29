@@ -271,7 +271,7 @@ void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 		{
 			elim = true;
 
-			App->audio->PlayFx(8, 0, App->audio->FXvolume);
+			App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 			App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 			collider->to_delete = true;
 
