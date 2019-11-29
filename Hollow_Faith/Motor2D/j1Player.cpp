@@ -139,7 +139,7 @@ bool j1Player::PreUpdate()
 		//		- - - - - - PLAYER INPUTS - - - - - - 
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && can_climb) { // Pressing W (Climbing)
-			position.y -= playerClimbSpeed * (App->dt * 50);
+			position.y -= playerClimbSpeed * (App->dt * DT_CALIBRATED);
 			inputs.add(IN_CLIMB);
 		} 
 		else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_UP) { // Releasing W		
@@ -147,7 +147,7 @@ bool j1Player::PreUpdate()
 		}
 	
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && can_climb) { // Pressing S (Climbing)
-			position.y += playerClimbSpeed * (App->dt * 50);
+			position.y += playerClimbSpeed * (App->dt * DT_CALIBRATED);
 			inputs.add(IN_CLIMB);	
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_UP) { // Releasing S
@@ -156,11 +156,11 @@ bool j1Player::PreUpdate()
 		}
 
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && can_climb && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Pressing A (Running)
-			position.x -= playerClimbSpeed * (App->dt * 50);
+			position.x -= playerClimbSpeed * (App->dt * DT_CALIBRATED);
 			inputs.add(IN_CLIMB);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && can_climb && (current_state == ST_CLIMB || current_state == ST_CLIMB_IDLE)) { // Pressing A (Running)
-			position.x += playerClimbSpeed * (App->dt * 50);
+			position.x += playerClimbSpeed * (App->dt * DT_CALIBRATED);
 			inputs.add(IN_CLIMB);
 		}
 
@@ -210,7 +210,7 @@ bool j1Player::PreUpdate()
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && current_state == ST_AT_AIR) { // Stay pressing Space (Hovering)
 
 			if (Acceleration > hoverAcceleration && speed.y < hoverSpeedActivation)
-				Acceleration += (movementForce.y / hoverFallSmooth) * (App->dt * 43);
+				Acceleration += (movementForce.y / hoverFallSmooth) * (App->dt * DT_CALIBRATED);
 
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP ) { // Releasing Space
@@ -271,7 +271,7 @@ bool j1Player::Update(float dt)
 		current_animation = &jump;
 		
 		if(!godMode)
-			speed.y += gravityForce * (dt * 51) ;
+			speed.y += gravityForce * (dt * DT_CALIBRATED) ;
 		
 		break;
 
@@ -493,13 +493,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 				case DIR_LEFT:
 
-					position.x = c2->rect.x + c2->rect.w - 1;
+					position.x = c2->rect.x + c2->rect.w + 1;
 					speed.x = 0;
 					break;
 
 				case DIR_RIGHT:
 
-					position.x = c2->rect.x - entity_collider.w + 1;
+					position.x = c2->rect.x - entity_collider.w - 1;
 					speed.x = 0;
 					break;
 
