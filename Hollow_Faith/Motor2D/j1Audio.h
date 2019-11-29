@@ -32,18 +32,18 @@ public:
 	unsigned int LoadFx(const char* path);
 
 	// Play a previously loaded WAV
-	bool PlayFx(unsigned int fx, int repeat, uint volume);
+	bool PlayFx(unsigned int fx, int repeat, uint volume, int channel = -1);
 
 	bool UnLoad();
 
 	int SpatialAudio(uint volume, int distance);
 
 	int FXvolume = 70;
-
+	
 private:
-
-	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
+	_Mix_Music*			music;
+
 };
 
 #endif // __j1AUDIO_H__
