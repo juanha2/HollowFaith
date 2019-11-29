@@ -100,14 +100,13 @@ bool j1EnemyLand::Update(float dt)
 	BROFILER_CATEGORY("EnemyPathLogic", Profiler::Color::DarkBlue);
 
 	bool ret = true;
-	
-	
+
 
 	GeneratingThePath(pathCadency, dt, agroDistance); // Generates a path with a X cadency, using the time and only when the distance between player and enemy is X
 
 	if (chase)
 	{	
-		if(!FollowingThePath(enemySpeed)) // Follows the path logic generated
+		if(!FollowingThePath(movementForce.x, dt)) // Follows the path logic generated
 		{
 			pathToPlayer.Clear();
 			speed.x = 0;
@@ -186,7 +185,7 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 	return true;
 }
 
-bool j1EnemyLand::FollowingThePath(float auxSpeed) {
+bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
 	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
@@ -195,13 +194,13 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed) {
 		if (current.x > position.x)
 		{
 			current_animation = &walk;
-			speed.x += auxSpeed;
+			speed.x += auxSpeed * dt;
 			flip = SDL_FLIP_NONE;
 		}
 		else
 		{
 			current_animation = &walk;
-			speed.x -= auxSpeed;
+			speed.x -= auxSpeed * dt;
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 
@@ -230,7 +229,7 @@ void j1EnemyLand::JumpFallLogic(float dt)
 	if (checkingFall)
 	{
 		// current_animation = &jump;
-		speed.y += gravityForce * (dt * 51);
+		speed.y += gravityForce * (dt * DT_CALIBRATED);
 	}
 
 	if (flip == SDL_FLIP_NONE) 
@@ -246,9 +245,9 @@ void j1EnemyLand::JumpFallLogic(float dt)
 
 
 	if (flip == SDL_FLIP_NONE && checkingFall)
-		speed.x += 5;
+		speed.x += movementForce.x * dt;
 	else if (flip == SDL_FLIP_HORIZONTAL && checkingFall)
-		speed.x -= 5;
+		speed.x -= movementForce.x * dt;
 
 
 	if (!bBotTrigger) 
@@ -258,7 +257,7 @@ void j1EnemyLand::JumpFallLogic(float dt)
 			if (canJump) {
 				App->audio->PlayFx(1, 0, App->audio->FXvolume);
 				App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
-				speed.y = -420.0f;
+				speed.y = movementForce.y;
 
 				canJump = false;
 			}
@@ -356,12 +355,7 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 				position.x = c2->rect.x + c2->rect.w - 1;
 
-				if (canJump && !checkingFall) {
-					App->audio->PlayFx(1, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
-					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
-					speed.y = -420.0f;
-					canJump = false;
-				}
+	
 
 				speed.x = 0;
 				break;
@@ -370,12 +364,6 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 				position.x = c2->rect.x - entity_collider.w + 1;
 
-				if (canJump && !checkingFall) {
-					App->audio->PlayFx(1, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
-					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
-					speed.y = -420.0f;
-					canJump = false;
-				}
 
 				speed.x = 0;
 				break;

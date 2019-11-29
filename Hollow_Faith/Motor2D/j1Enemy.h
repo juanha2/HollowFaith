@@ -19,6 +19,7 @@ public:
 	
 	p2DynArray<iPoint> pathToPlayer;
 	fPoint originalPos;
+	fPoint	movementForce = { 80.0f, -420.0f };
 
 	p2SString death;
 	float timer;
@@ -30,8 +31,6 @@ public:
 	
 	int agroDistance = 200;	
 	int pathCadency = 1;
-
-	float enemySpeed = 3.0f;
 	
 
 public:

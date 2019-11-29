@@ -157,10 +157,10 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) 
 	{
-		if (App->frameratecap == 30)
+		if (App->frameratecap == App->desiredFrameratecap)
 			App->frameratecap = 1000;
 		else
-			App->frameratecap = 30;
+			App->frameratecap = App->desiredFrameratecap;
 		
 
 	}

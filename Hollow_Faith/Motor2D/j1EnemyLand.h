@@ -51,7 +51,7 @@ public:
 	bool CleanUp();
 
 	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
-	bool FollowingThePath(float speed);
+	bool FollowingThePath(float speed, float dt);
 
 	void JumpFallLogic(float dt);
 	void OnCollision(Collider* c1, Collider* c2);

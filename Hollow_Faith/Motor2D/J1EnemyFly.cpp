@@ -94,7 +94,7 @@ bool j1EnemyFly::Update(float dt)
 
 	if (chase)
 	{
-		if (!FollowingThePath(enemySpeed)) // Follows the path logic generated
+		if (!FollowingThePath(movementForce.x, dt)) // Follows the path logic generated
 		{
 			pathToPlayer.Clear();
 
@@ -178,7 +178,7 @@ bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance
 	return true;
 }
 
-bool j1EnemyFly::FollowingThePath(float auxSpeed) {
+bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
 
 	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
@@ -186,19 +186,19 @@ bool j1EnemyFly::FollowingThePath(float auxSpeed) {
 
 		if (current.x > position.x)
 		{
-			speed.x += 3;
+			speed.x += auxSpeed * dt;
 			flip = SDL_FLIP_NONE;
 		}
 		else
 		{
-			speed.x -= 3;
+			speed.x -= auxSpeed * dt;
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 
 		if (current.y < position.y)
-			speed.y -= 3;
+			speed.y -= auxSpeed * dt;
 		else
-			speed.y += 3;
+			speed.y += auxSpeed * dt;
 
 
 		if (abs(abs(position.x) - abs(current.x)) < 3)

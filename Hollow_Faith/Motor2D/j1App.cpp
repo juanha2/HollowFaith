@@ -96,6 +96,7 @@ bool j1App::Awake()
 		organization.create(app_config.child("organization").child_value());
 
 		frameratecap = app_config.child("frameratecap").attribute("value").as_int();
+		desiredFrameratecap = frameratecap;
 	}
 
 	if(ret == true)

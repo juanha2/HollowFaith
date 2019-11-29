@@ -115,6 +115,7 @@ public:
 
 
 	uint32				frameratecap;
+	uint32				desiredFrameratecap;
 	uint32				last_frame_ms;
 
 

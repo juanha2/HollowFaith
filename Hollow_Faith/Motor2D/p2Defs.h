@@ -10,6 +10,8 @@
 #endif
 #define NULL  0
 
+#define DT_CALIBRATED 50
+
 // Deletes a buffer
 #define RELEASE( x ) \
     {                        \
