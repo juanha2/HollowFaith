@@ -166,8 +166,8 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 			pathToPlayer.Clear();
 
-			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y + collider->rect.h / 2), 
-				App->map->WorldToMap(App->objects->player->position.x + hostileValue, App->objects->player->position.y + App->objects->player->collider->rect.h / 2));
+			App->pathfinding->CreatePath(App->map->WorldToMap(round(position.x + 1), round(position.y)),
+				App->map->WorldToMap(App->objects->player->position.x + hostileValue, App->objects->player->position.y));
 
 			for (uint i = 0; i < App->pathfinding->GetLastPath()->Count(); i++)
 			{
@@ -212,7 +212,7 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
 	if (pathToPlayer.Count() > 1)
 	{
-		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 1 };
+		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 2 };
 
 		if (App->pathfinding->IsWalkable(next))
 		{
@@ -222,7 +222,7 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 			for (uint i = pathToPlayer.Count() - 2; i >= 0; --i)
 			{
 
-				next = { pathToPlayer[i].x, pathToPlayer[i].y + 1 };
+				next = { pathToPlayer[i].x, pathToPlayer[i].y + 2 };
 
 				if (!App->pathfinding->IsWalkable(next))
 				{
@@ -356,7 +356,6 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 				if (!canJump) 
 				{
-					pathToPlayer.Clear();
 					canJump = true;
 				}
 

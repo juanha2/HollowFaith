@@ -31,7 +31,7 @@ public:
 	
 	int agroDistance = 200;	
 
-	int pathCadency = 1;
+	float pathCadency = 0.25f;
 	int pathMinDist = 2;
 	
 

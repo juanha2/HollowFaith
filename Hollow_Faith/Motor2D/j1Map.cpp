@@ -520,7 +520,6 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	case MAPTYPE_ISOMETRIC:
 		ret.x = (x / (data.tile_width / 2) + y / (data.tile_height / 2)) / 2;
 		ret.y = (y / (data.tile_height / 2) - x / (data.tile_width / 2)) / 2;
-
 		break;
 	case MAPTYPE_ORTHOGONAL:
 		ret.x = x / data.tile_width;
