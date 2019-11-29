@@ -8,11 +8,15 @@
 #include "j1EntityManager.h"
 #include "j1Entity.h"
 #include "j1Bonfire.h"
+#include "j1Scene.h"
 
 
 j1Bonfire::j1Bonfire(fPoint pos) : j1Entity(entityType::BONFIRE)
 {
 	position = pos;
+
+	if (App->objects->bonfire == nullptr)
+		App->objects->bonfire = this;
 }
 
 
@@ -64,6 +68,7 @@ bool j1Bonfire::Start()
 bool j1Bonfire::CleanUp()
 {
 
+	App->audio->UnLoad();	
 
 	return true;
 
@@ -102,6 +107,7 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 	{
 		if (!alreadyCollided)
 		{
+			App->scene->checkpoint = true;
 			App->audio->PlayFx(13, 0, App->audio->SpatialAudio(100, distance * 2));
 			App->audio->PlayFx(12, 10, App->audio->SpatialAudio(200, distance * 2), 3);
 			fired = true;

@@ -87,6 +87,10 @@ bool j1EntityManager::CleanUp()
 		tmp = tmp->next;
 	}
 
+	App->objects->player = nullptr;
+	App->objects->particle = nullptr;
+	App->objects->bonfire = nullptr;
+
 	return ret;
 }
 

@@ -96,7 +96,7 @@ bool j1Player::Start()
 	App->coll->AddColliderEntity(collider);
 	win = false;
 	dead = false;
-	
+	   
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
 
@@ -106,8 +106,12 @@ bool j1Player::Start()
 		App->scene->different_map = false;
 	}
 	else
-		position = startPosLevel1;
-
+	{		
+		if (App->scene->checkpoint)
+			position = App->scene->checkpointpos;
+		else
+			position = startPosLevel1;	
+	}
 
 	App->audio->LoadFx(jump_fx.GetString());
 	App->audio->LoadFx(death_fx.GetString());
@@ -438,6 +442,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 		// - - - - - - - CHECK COLLISIONS - - - - - - - 
 
+	if ((c2->type == COLLIDER_BONFIRE))
+	{
+		App->scene->checkpointpos = c2->callback->position;		
+	}
+
 		if (ignoreColl == false) {
 
 			if ((c2->type == COLLIDER_DEATH))
@@ -450,7 +459,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			{
 				inputs.add(IN_WALK_RIGHT);
 				win = true;
-			}
+			}			
 			
 			if ((c2->type == COLLIDER_CLIMB))
 			{		
@@ -759,7 +768,7 @@ void j1Player::Win_Lose_Condition() {
 		}
 
 		App->scene->currentmap = 2;
-
+		App->scene->checkpoint = false;
 		for (int i = 1; i <= App->map->data.numLevels; i++) {
 			if (App->scene->currentmap == i)
 				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
@@ -775,6 +784,7 @@ void j1Player::Win_Lose_Condition() {
 		}
 
 		App->scene->currentmap = 1;
+		App->scene->checkpoint = false;
 
 		for (int i = 1; i <= App->map->data.numLevels; i++) {
 			if (App->scene->currentmap == i)

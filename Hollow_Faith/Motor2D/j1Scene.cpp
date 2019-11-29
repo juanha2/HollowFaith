@@ -56,9 +56,7 @@ bool j1Scene::Start()
 		{
 			App->pathfinding->SetMap(w, h, data);
 			RELEASE_ARRAY(data);
-		}
-
-		
+		}		
 	}
 
 	SpawnEnemies();
@@ -111,13 +109,14 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
 	{ // Start at the level 1 begin
 		currentmap = 1;
+		checkpoint = false;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
 
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
 	{ // Start at the level 2 begin
-		
+		checkpoint = false;
 		currentmap = 2;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
@@ -203,9 +202,6 @@ bool j1Scene::CleanUp()
 	App->tex->UnLoad(debug_tex);
 	App->tex->CleanUp();
 	App->coll->CleanUp();
-
-	App->objects->player = nullptr;	
-	App->objects->particle = nullptr;
 
 	return true;
 }

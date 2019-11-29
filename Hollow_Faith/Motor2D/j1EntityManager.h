@@ -10,6 +10,7 @@
 #include "j1Enemy.h"
 #include "j1Particles.h"
 #include "j1EnemyFly.h"
+#include "j1Bonfire.h"
 
 class j1Entity;
 
@@ -47,6 +48,7 @@ public:
 
 	j1Player* player;
 	j1Particles* particle;
+	j1Bonfire* bonfire;
 	
 };
 

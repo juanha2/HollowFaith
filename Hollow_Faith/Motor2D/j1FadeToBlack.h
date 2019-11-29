@@ -20,7 +20,7 @@ public:
 	bool IsFading() const;
 	
 	bool black_screen = false;
-
+	
 private:
 
 	enum fade_step

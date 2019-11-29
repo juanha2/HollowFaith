@@ -65,7 +65,7 @@ public:
 	bool				dead = false;
 	bool				win = false;
 	bool				can_climb = false;
-
+	
 	// - - - - INPUT - - - - 
 
 	p2List<player_inputs>	 inputs;							//Stores player related inputs
