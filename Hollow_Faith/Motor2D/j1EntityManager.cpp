@@ -9,7 +9,7 @@
 #include "j1Particles.h"
 #include "j1EnemyFly.h"
 #include "j1EnemyLand.h"
-
+#include "j1Bonfire.h"
 
 j1EntityManager::j1EntityManager()
 {
@@ -174,6 +174,10 @@ j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position)
 
 	case j1Entity::entityType::STONE:
 		tmp = new j1Particles();
+		break;
+
+	case j1Entity::entityType::BONFIRE:
+		tmp = new j1Bonfire(position);
 		break;
 	}
 

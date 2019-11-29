@@ -30,6 +30,7 @@ public:
 		ENEMY_FLY,
 		ENEMY_LAND,
 		STONE,
+		BONFIRE,
 	};
 
 public:

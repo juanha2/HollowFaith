@@ -44,7 +44,7 @@ bool j1Particles::Awake(pugi::xml_node& config)
 bool j1Particles::Start()
 {
 	texture = App->tex->Load(texture_path.GetString());	
-	cooldown = true;	
+	elim = true;	
 	return true;
 }
 
@@ -132,7 +132,7 @@ void j1Particles::OnCollision(Collider* c1, Collider* c2)
 		// Always destroy particles that collide
 		if (active[i] != nullptr && active[i]->collider == c1)
 		{		
-			cooldown = true;
+			elim = true;
 			delete active[i];
 			active[i] = nullptr;
 			break;
@@ -164,23 +164,26 @@ bool Particle::Update()
 	if (life > 0)
 	{
 		if (name == "stone") {
-			speed.y++;
+			speed.y++;					
 		}
+
+		
 		if ((SDL_GetTicks() - born) > life) {
 			if (name == "stone")
 			{
-				App->objects->particle->cooldown = true;
+				App->objects->particle->elim = true;
 			}
 				
 			ret = false;
 		}
 	}
+
 	else
 		if (anim.Finished())
 			ret = false;
 
-	position.x += speed.x;
-	position.y += speed.y;
+	position.x += speed.x * (App->dt * 50.0f);
+	position.y += speed.y * (App->dt*20.0f);
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);

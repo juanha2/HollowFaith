@@ -122,9 +122,8 @@ bool j1EnemyFly::PostUpdate()
 		}
 	}
 
-	//Draw(App->dt);
-	App->render->Blit(texture, position.x, position.y,
-		&current_animation->GetCurrentFrame(App->dt), 1.0, 1.0, flip, NULL, entity_collider.w / 2 + 10, 10);
+	Draw(App->dt);
+
 	return ret;
 }
 
