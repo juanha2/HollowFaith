@@ -24,6 +24,7 @@
     <graphics_player path="Assets/Sprites/Monster.png"/>
     <graphics_enemy path="Assets/Sprites/enemy.png"/>
     <graphics_bat path="Assets/Sprites/bat.png"/>
+    <graphics_bonfire path="Assets/Sprites/bonfire.png"/>
 
     <data>
 
@@ -51,9 +52,11 @@
       <win2Fx path="audio/fx/victory2.wav"/>
       <landingFx path="audio/fx/landing.wav"/>
       <hoverFx path="audio/fx/hoversound.wav"/>
-      <stoneFx path="audio/fx/stone.wav"/>
+      <stoneFx path="audio/fx/stone.wav"/>     
       
       <death_enemyFx path="audio/fx/death_enemy.wav"/>
+      <bonfireFx path="audio/fx/bonfire.wav"/>
+      <fuseFx path="audio/fx/fuse.wav"/>
     </fx>
 
     <animations>
@@ -176,6 +179,23 @@
         <sprite x ="69" y ="131" w ="20" h="29"/>
         <sprite x ="100" y ="131" w ="19" h="29"/>
 
+        <animValues loop="true" speed="0.15f"/>
+      </animation>
+
+      <animation name ="bonfire">
+        <sprite x ="10" y ="8" w ="29" h="40"/>
+        <animValues loop="false" speed="0.4f"/>
+      </animation>
+      
+      <animation name ="light">
+        <sprite x ="46" y ="8" w ="29" h="40"/>
+        <sprite x ="82" y ="8" w ="29" h="40"/>
+        <sprite x ="118" y ="8" w ="29" h="40"/>
+        <sprite x ="153" y ="8" w ="29" h="40"/>
+        <sprite x ="188" y ="8" w ="28" h="40"/>
+        <sprite x ="224" y ="8" w ="29" h="40"/>
+        <sprite x ="260" y ="8" w ="29" h="40"/>
+        <sprite x ="296" y ="8" w ="29" h="40"/>
         <animValues loop="true" speed="0.15f"/>
       </animation>
     </animations>

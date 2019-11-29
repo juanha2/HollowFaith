@@ -21,7 +21,8 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;	
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_BONFIRE] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
 	matrix[COLLIDER_ENEMY][COLLIDER_STONE] = true;
 
@@ -34,7 +35,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_ENEMY][COLLIDER_NONE] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_PLATFORM] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_DEATH] = true;
-
+	matrix[COLLIDER_BONFIRE][COLLIDER_PLAYER] = true;
 }
 
 // Destructor

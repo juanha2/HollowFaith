@@ -255,6 +255,10 @@ void j1Scene::SpawnEnemies() {
 				{
 					App->objects->AddEntity(j1Entity::entityType::ENEMY_LAND, { object_data->data->x,object_data->data->y });
 				}
+				if (object_data->data->name == 8)
+				{
+					App->objects->AddEntity(j1Entity::entityType::BONFIRE, { object_data->data->x,object_data->data->y });
+				}
 
 			}
 		}
