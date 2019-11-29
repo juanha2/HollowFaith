@@ -99,7 +99,7 @@ bool j1Particles::Update(float dt)
 }
 
 
-void j1Particles::AddParticle(const Particle& particle, int x, int y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type, p2SString name,Uint32 delay)
+void j1Particles::AddParticle(const Particle& particle, float x, float y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type, p2SString name,Uint32 delay)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{

@@ -22,7 +22,7 @@ public:
 public:
 
 	j1EnemyFly();
-	j1EnemyFly(iPoint position);
+	j1EnemyFly(fPoint position);
 
 	// Destructor
 	~j1EnemyFly();

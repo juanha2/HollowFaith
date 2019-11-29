@@ -58,8 +58,8 @@ class j1Player : public j1Entity
 
 public:	
 
-	iPoint				startPosLevel1;
-	iPoint				startPosLevel2;
+	fPoint				startPosLevel1;
+	fPoint				startPosLevel2;
 	
 	bool				checkingFall = false;
 	bool				dead = false;

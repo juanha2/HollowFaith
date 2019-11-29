@@ -45,7 +45,7 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
-	void AddParticle(const Particle& particle, int x, int y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type = COLLIDER_NONE, p2SString name="", Uint32 delay = 0);
+	void AddParticle(const Particle& particle, float x, float y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type = COLLIDER_NONE, p2SString name="", Uint32 delay = 0);
 
 private:
 

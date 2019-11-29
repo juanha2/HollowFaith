@@ -18,7 +18,7 @@
 
 j1EnemyLand::j1EnemyLand() : j1Enemy(entityType::ENEMY_LAND) {}
 
-j1EnemyLand::j1EnemyLand(iPoint pos) : j1Enemy(entityType::ENEMY_LAND, pos) {  }
+j1EnemyLand::j1EnemyLand(fPoint pos) : j1Enemy(entityType::ENEMY_LAND, pos) {  }
 
 j1EnemyLand::~j1EnemyLand() {};
 
