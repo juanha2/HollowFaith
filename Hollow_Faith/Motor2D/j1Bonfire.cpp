@@ -80,7 +80,13 @@ bool j1Bonfire::PreUpdate()
 // Called each loop iteration
 bool j1Bonfire::Update(float dt)
 {
+	distance = abs(App->objects->player->position.x - position.x);
 
+	if (fired) 
+	{
+		App->audio->PlayFx(13, 0, App->audio->SpatialAudio(100, distance * 2));
+		App->audio->PlayFx(12, 10, App->audio->SpatialAudio(200, distance * 2));
+	}
 
 	return true;
 }
@@ -99,8 +105,8 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 	{
 		if (!alreadyCollided)
 		{
-			App->audio->PlayFx(13, 0, 100);
-			App->audio->PlayFx(12, 10, 200);
+			
+			fired = true;
 			current_animation = &light_on;
 			//this->collider->type = COLLIDER_NONE;
 			alreadyCollided = true;

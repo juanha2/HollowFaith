@@ -25,6 +25,7 @@ public:
 	p2SString fuse_Fx;
 
 	bool alreadyCollided;
+	bool fired;
 public:
 
 	j1Bonfire(fPoint pos);
