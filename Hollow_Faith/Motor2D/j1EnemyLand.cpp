@@ -185,47 +185,8 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
-	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 	
-
-	if (pathToPlayer.Count() > 1)
-	{
-		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 1 };
-
-		if (App->pathfinding->IsWalkable(next))
-		{
-
-			bool foundIt = false;
-
-			for (uint i = pathToPlayer.Count() - 2; i >= 0; --i)
-			{
-				
-				next = { pathToPlayer[i].x, pathToPlayer[i].y + 1 };
-
-				if (!App->pathfinding->IsWalkable(next))
-				{
-					foundIt = true;
-					break;
-				}
-			}
-
-			if (foundIt)
-			{
-				LOG("WE ARE JUMPING BOIZ");
-
-				if (canJump)
-				{
-					speed.y = movementForce.y;
-					canJump = false;
-				}
-
-
-			}
-
-		}
-
-	}
-
+	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
 	if (abs(position.x - current.x) > pathMinDist) {
 
@@ -248,6 +209,51 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 		pathToPlayer.Pop(current);
 	}
 
+
+	if (pathToPlayer.Count() > 1)
+	{
+		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 1 };
+
+		if (App->pathfinding->IsWalkable(next))
+		{
+
+			bool foundIt = false;
+
+			for (uint i = pathToPlayer.Count() - 2; i >= 0; --i)
+			{
+
+				next = { pathToPlayer[i].x, pathToPlayer[i].y + 1 };
+
+				if (!App->pathfinding->IsWalkable(next))
+				{
+					foundIt = true;
+					break;
+				}
+			}
+
+			if (foundIt)
+			{
+				LOG("WE ARE JUMPING BOIZ %d", distance);
+
+				if (distance < 100)
+				{
+					if (canJump)
+					{
+						speed.y = movementForce.y;
+						canJump = false;
+					}
+				}
+				else
+				{
+					speed.x = 0;
+					current_animation = &idle;
+				}
+
+			}
+
+		}
+
+	}
 
 	if (pathToPlayer.Count() <= 0) 
 		return false;
@@ -347,7 +353,13 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 				position.y = c2->rect.y - entity_collider.h;
 				checkingFall = false;
-				canJump = true;
+
+				if (!canJump) 
+				{
+					pathToPlayer.Clear();
+					canJump = true;
+				}
+
 				break;
 
 			case DIR_LEFT:

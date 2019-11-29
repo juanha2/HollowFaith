@@ -22,12 +22,6 @@ public:
 	Animation idle;
 	Animation walk;
 
-	Collider* bottomTrigger;
-	Collider* topTrigger;
-
-	bool bTopTrigger = false;
-	bool bBotTrigger = false;
-
 public:
 
 	j1EnemyLand();

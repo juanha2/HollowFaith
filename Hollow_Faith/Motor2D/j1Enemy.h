@@ -32,7 +32,7 @@ public:
 	int agroDistance = 200;	
 
 	int pathCadency = 1;
-	int pathMinDist = 3;
+	int pathMinDist = 2;
 	
 
 public:
