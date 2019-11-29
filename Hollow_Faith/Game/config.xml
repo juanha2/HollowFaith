@@ -35,7 +35,7 @@
       <acceleration value="0.0f"/>
       <MovementForce x="-20.0f " y="-420.0f "/>
       <hover_acceleration value="-1300.0f"/>
-      <hover_speed_activation value="-40.0f"/>
+      <hover_speed_activation value="-90.0f"/>
       <hover_fall_smooth value="6.0f"/>
       <speed_limit x=" 250.0f" y="420.0f"/>
       <gravity value="30.0f"/>
