@@ -62,7 +62,7 @@ public:
 	Particle stone;
 	Particle death;
 
-	bool elim;
+	bool cooldown;
 
 };
 

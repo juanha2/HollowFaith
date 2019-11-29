@@ -225,9 +225,9 @@ bool j1Player::PreUpdate()
 
 			App->objects->particle->stone.speed.y = -12;
 
-			if (App->objects->particle->elim)
+			if (App->objects->particle->cooldown)
 			{
-				App->objects->particle->elim = false;
+				App->objects->particle->cooldown = false;
 				App->objects->particle->AddParticle(App->objects->particle->stone, position.x, position.y + entity_collider.h / 4, flip, COLLIDER_STONE, "stone");
 				App->audio->PlayFx(7, 0, 100);
 			}
