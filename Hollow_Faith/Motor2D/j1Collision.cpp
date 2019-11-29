@@ -35,7 +35,10 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_ENEMY][COLLIDER_PLATFORM] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_DEATH] = true;
 
-
+	matrix[COLLIDER_BOTTRIGGER][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_TOPTRIGGER][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_BOTTRIGGER][COLLIDER_PLATFORM] = true;
+	matrix[COLLIDER_TOPTRIGGER][COLLIDER_PLATFORM] = true;
 }
 
 // Destructor
@@ -153,6 +156,12 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_STONE:
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			break;
+		case COLLIDER_TOPTRIGGER:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
+			break;
+		case COLLIDER_BOTTRIGGER:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
 		}
 	}

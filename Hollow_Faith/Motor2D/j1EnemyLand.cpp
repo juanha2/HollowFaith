@@ -42,6 +42,9 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 	entity_collider = { 0, 0, 17, 27 };
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 
+	bottomTrigger = new Collider({ 0, 0, 5, 5 }, COLLIDER_BOTTRIGGER, this);
+	topTrigger = new Collider({ 0, 0, 5, 5 }, COLLIDER_TOPTRIGGER, this);
+
 	canJump = true;
 	originalPos = position;
 
@@ -55,6 +58,9 @@ bool j1EnemyLand::Start()
 
 	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
+	App->coll->AddColliderEntity(bottomTrigger);
+	App->coll->AddColliderEntity(topTrigger);
+
 	current_animation = &idle;
 	App->audio->LoadFx(death.GetString());
 
@@ -75,6 +81,8 @@ bool j1EnemyLand::PreUpdate()
 		App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 		collider->to_delete = true;
+		bottomTrigger->to_delete = true;
+		topTrigger->to_delete = true;
 
 		pathToPlayer.Clear();
 		App->objects->DeleteEntity();
@@ -93,7 +101,7 @@ bool j1EnemyLand::Update(float dt)
 
 	bool ret = true;
 	
-	JumpFallLogic(dt);
+	
 
 	GeneratingThePath(pathCadency, dt, agroDistance); // Generates a path with a X cadency, using the time and only when the distance between player and enemy is X
 
@@ -110,7 +118,7 @@ bool j1EnemyLand::Update(float dt)
 	}
 	
 	
-	
+	JumpFallLogic(dt);
 
 	return ret;
 }
@@ -225,7 +233,17 @@ void j1EnemyLand::JumpFallLogic(float dt)
 		speed.y += gravityForce * (dt * 51);
 	}
 
-	
+	if (flip == SDL_FLIP_NONE) 
+	{
+		bottomTrigger->SetPos((int)position.x + 10 + collider->rect.w, (int)position.y + collider->rect.h + 5);
+		topTrigger->SetPos((int)position.x + 10 + collider->rect.w, (int)position.y);
+	}
+	else if (flip == SDL_FLIP_HORIZONTAL) 
+	{
+		bottomTrigger->SetPos((int)position.x - 10, (int)position.y + collider->rect.h + 5);
+		topTrigger->SetPos((int)position.x - 10, (int)position.y);
+	}
+
 
 	if (flip == SDL_FLIP_NONE && checkingFall)
 		speed.x += 5;
@@ -233,6 +251,30 @@ void j1EnemyLand::JumpFallLogic(float dt)
 		speed.x -= 5;
 
 
+	if (!bBotTrigger) 
+	{
+		if (distance < 90)
+		{
+			if (canJump) {
+				App->audio->PlayFx(1, 0, App->audio->FXvolume);
+				App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
+				speed.y = -420.0f;
+
+				canJump = false;
+			}
+			
+		}
+		else 
+		{
+			speed.x = 0;
+			current_animation = &idle;
+		}
+			
+	}
+
+
+	bBotTrigger = false;
+	bTopTrigger = false;
 	checkingFall = true;
 }
 
@@ -349,6 +391,15 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 			elim = true;
 		}
 
+		if (c1->type == COLLIDER_BOTTRIGGER)
+		{
+			bBotTrigger = true;
+		}
+
+		if (c1->type == COLLIDER_TOPTRIGGER)
+		{
+			bTopTrigger = true;
+		}
 
 		CollisionPosUpdate();
 

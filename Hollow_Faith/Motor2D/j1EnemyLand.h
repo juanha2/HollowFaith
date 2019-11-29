@@ -9,6 +9,7 @@
 #include "j1Timer.h"
 #include "p2Point.h"
 #include "j1Enemy.h"
+#include "j1Collision.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -21,6 +22,11 @@ public:
 	Animation idle;
 	Animation walk;
 
+	Collider* bottomTrigger;
+	Collider* topTrigger;
+
+	bool bTopTrigger = false;
+	bool bBotTrigger = false;
 
 public:
 
@@ -51,4 +57,4 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 };
 
-#endif // __ENEMYFLY_H__
+#endif // __ENEMYLAND_H_
