@@ -162,6 +162,7 @@ bool j1EnemyLand::PostUpdate()
 
 bool j1EnemyLand::CleanUp()
 {
+	App->tex->UnLoad(texture);
 	return true;
 }
 
