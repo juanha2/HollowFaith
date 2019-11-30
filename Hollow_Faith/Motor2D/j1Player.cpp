@@ -84,7 +84,7 @@ bool j1Player::Start()
 	App->coll->AddColliderEntity(collider);
 	win = false;
 	dead = false;
-
+	death.Reset();
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
 
@@ -121,6 +121,7 @@ bool j1Player::PreUpdate()
 {	
 	
 	if (!dead) {
+
 		
 		//		- - - - - - PLAYER INPUTS - - - - - - 
 
@@ -218,6 +219,8 @@ bool j1Player::PreUpdate()
 				App->audio->PlayFx(7, 0, 100);
 			}		
 		}
+
+		death.Reset();
 	}	
 
 	//Refresh the player state
@@ -237,9 +240,8 @@ bool j1Player::PreUpdate()
 
 // Called each loop iteration
 bool j1Player::Update(float dt)
-{
+{	
 	
-	Win_Lose_Condition();
 	//current_animation = &idle;
 	switch (current_state)
 	{
@@ -309,10 +311,7 @@ bool j1Player::Update(float dt)
 	if (checkingFall)
 		inputs.add(IN_FALLING);
 
-	checkingFall = true;	
-
-
-	
+	checkingFall = true;
 
 	return true;
 }
@@ -728,74 +727,4 @@ void j1Player::Save(pugi::xml_node& data) const
 	pos.append_attribute("x").set_value(position.x);
 	pos.append_attribute("y").set_value(position.y);
 
-}
-
-
-void j1Player::Win_Lose_Condition() {
-
-	// Winning at map 1--------------------------
-	if (win && App->scene->currentmap == 1) {
-
-		if (!App->scene->sound_repeat && App->scene->currentmap == 1) {
-			App->audio->PlayFx(3, 0, App->audio->FXvolume);
-			App->scene->sound_repeat = true;
-		}
-
-		App->scene->currentmap = 2;
-	
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (App->scene->currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
-		}
-	}
-
-	// Winning at map 2--------------------------
-	else if (win && App->scene->currentmap == 2) {
-
-		if (!App->scene->sound_repeat && App->scene->currentmap == 2) {
-			App->audio->PlayFx(4, 0, App->audio->FXvolume);
-			App->scene->sound_repeat = true;
-		}
-
-		App->scene->currentmap = 1;
-		App->scene->checkpoint = false;
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (App->scene->currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 3.0f);
-		}
-	}
-
-	// Dying -----------------------------------------
-	if (dead && App->scene->currentmap == 1) {
-
-		if (!App->scene->sound_repeat) {
-			App->audio->PlayFx(2, 0, App->audio->FXvolume);
-			death.Reset();
-			App->scene->sound_repeat = true;
-		}
-
-		App->scene->currentmap = 1;
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (App->scene->currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
-		}
-	}
-
-	else if (dead && App->scene->currentmap == 2) {
-
-		if (!App->scene->sound_repeat) {
-			App->audio->PlayFx(2, 0, App->audio->FXvolume);
-			death.Reset();
-			App->scene->sound_repeat = true;
-		}
-
-		App->scene->currentmap = 2;
-
-		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (App->scene->currentmap == i)
-				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
-		}
-	}
 }

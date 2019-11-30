@@ -11,30 +11,24 @@
 	</scene>
 	<objects>
 		<player>
-			<position x="1226.85254" y="309" />
+			<position x="888" y="181" />
 		</player>
 		<EnemyFly>
-			<position x="756.350647" y="173.665039" />
+			<position x="919.08252" y="165.742264" />
 		</EnemyFly>
 		<EnemyLand>
 			<position x="608" y="309" />
 		</EnemyLand>
 		<EnemyFly>
-			<position x="942.140503" y="242.665695" />
+			<position x="1027.40015" y="249.094131" />
 		</EnemyFly>
 		<EnemyLand>
-			<position x="1420.77869" y="213" />
+			<position x="1424" y="213" />
 		</EnemyLand>
-		<EnemyFly>
-			<position x="128" y="192" />
-		</EnemyFly>
-		<EnemyFly>
-			<position x="192" y="128" />
-		</EnemyFly>
 	</objects>
 	<colliders />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-1975" y="-10" />
+		<camera x="-1298" y="-10" />
 	</renderer>
 </game_state>

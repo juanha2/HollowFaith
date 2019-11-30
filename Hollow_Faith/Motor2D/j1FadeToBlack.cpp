@@ -64,9 +64,10 @@ bool j1FadeToBlack::PostUpdate()
 			if (App->map->Reset()) {
 				
 				if (App->map->Load(level_to_load.GetString())) {
+				
+					App->scene->Enable();
 					App->objects->Enable();
-					App->scene->Enable();	
-
+					
 					int w, h;
 					uchar* data = nullptr;
 					if (App->map->CreateWalkabilityMap(w, h, &data))

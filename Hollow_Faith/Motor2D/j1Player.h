@@ -75,7 +75,7 @@ public:
 
 
 public:
-
+	
 	j1Player();
 
 	// Destructor
@@ -103,7 +103,7 @@ public:
 	void Save(pugi::xml_node& file) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
-	void Win_Lose_Condition();	
+
 
 private:
 

@@ -50,7 +50,7 @@ public:
 
 	void SpawnEnemies();
 
-	
+	void sceneswitch();	
 
 private:	
 	

@@ -174,6 +174,8 @@ bool j1Scene::PostUpdate()
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
+	sceneswitch();
+
 	return ret;
 }
 
@@ -242,6 +244,61 @@ void j1Scene::SpawnEnemies() {
 				}
 
 			}
+		}
+	}
+
+}
+
+void j1Scene::sceneswitch()
+{
+	// Winning -------------------------
+	if (App->objects->player->win) {
+
+		App->objects->player->ignoreColl = true;
+
+
+		if (currentmap == 1) 
+		{
+			if (!sound_repeat) {
+				App->audio->PlayFx(3, 0, App->audio->FXvolume);
+				sound_repeat = true;
+			}
+			currentmap = 2;
+		}
+		else if (currentmap == 2)
+		{
+			if (!sound_repeat) {
+				App->audio->PlayFx(4, 0, App->audio->FXvolume);
+				sound_repeat = true;
+			}
+			currentmap = 1;
+		}
+	
+		App->scene->checkpoint = false;
+
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
+			if (App->scene->currentmap == i)
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
+		}
+
+	}
+	// Losing -------------------------
+
+	if (App->objects->player->dead) {
+
+		if (!sound_repeat) {
+			App->audio->PlayFx(2, 0, App->audio->FXvolume);			
+			sound_repeat = true;		
+		}
+
+		if (currentmap == 1)
+			currentmap = 1;
+		else if (currentmap == 2)
+			currentmap = 2;
+
+		for (int i = 1; i <= App->map->data.numLevels; i++) {
+			if (App->scene->currentmap == i)
+				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
 		}
 	}
 
