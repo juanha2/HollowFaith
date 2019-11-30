@@ -126,15 +126,26 @@ bool j1EnemyLand::Update(float dt)
 	}
 	
 
-	if (chase)	
-		if(!FollowingThePath(movementForce.x, dt)) // Follows the path logic generated
+	if (chase) 
+	{	
+		if (Stop().x != -1)
 		{
-			pathToPlayer.Clear();
+			if (!FollowingThePath(movementForce.x, dt)) // Follows the path logic generated
+			{
+				pathToPlayer.Clear();
+				speed.x = 0;
+				current_animation = &idle;
+
+				chase = false;
+			}
+		}
+		else 
+		{
 			speed.x = 0;
 			current_animation = &idle;
-		
-			chase = false;
 		}
+	}
+	
 	
 	
 	JumpFallLogic(dt);
@@ -251,13 +262,13 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
 			iPoint result = { -1, -1 };
 
-			iPoint next = { pathToPlayer.At(pathToPlayer.Count() - 1)->x, pathToPlayer.At(pathToPlayer.Count() - 1)->y + 2 };
+			iPoint next = { pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y + 2 };
 
 			if (App->pathfinding->IsWalkable(next) && !checkingFall)
 			{
 				for (uint i = pathToPlayer.Count() - 1; i > 0; --i)
 				{
-					next = { pathToPlayer.At(i)->x, pathToPlayer.At(i)->y + 2 };
+					next = { pathToPlayer[i].x, pathToPlayer[i].y + 2 };
 					if (!App->pathfinding->IsWalkable(next))
 					{
 						result = next;
@@ -279,11 +290,6 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 						canJump = false;
 					}
 				}
-				else 
-				{
-					speed.x = 0;
-					current_animation = &idle;
-				}	
 			}
 		}
 	}
@@ -292,6 +298,28 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 		return false;
 	else
 		return true;
+}
+
+iPoint j1EnemyLand::Stop()
+{
+	iPoint ret = { -1, -1 };
+
+	iPoint next = { pathToPlayer[pathToPlayer.Count() - 1].x, App->map->WorldToMap(position.x, round(position.y)).y + 3 };
+
+	if (!App->pathfinding->IsWalkable(next))
+	{
+		for (uint i = pathToPlayer.Count() - 1; i > 0; --i)
+		{
+			next = { pathToPlayer[i].x, App->map->WorldToMap(position.x, round(position.y)).y + 3 };
+
+			if (!App->pathfinding->IsWalkable(next))
+			{
+				ret = next;
+				break;
+			}
+		}
+	}
+	return ret;
 }
 
 void j1EnemyLand::JumpFallLogic(float dt)

@@ -27,7 +27,7 @@ public:
 	
 	bool				canJump = false;
 	bool				checkingFall = false;
-	int					jumpDistance = 120;
+	int					jumpDistance = 150;
 
 
 	//  - - - - SPEED - - - - 
@@ -64,6 +64,8 @@ public:
 
 	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
 	bool FollowingThePath(float speed, float dt);
+
+	iPoint Stop();
 };
 
 #endif // __ENEMYLAND_H_
