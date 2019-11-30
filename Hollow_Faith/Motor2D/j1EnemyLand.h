@@ -26,6 +26,12 @@ public:
 
 	int jumpDistance = 120;
 
+
+	//  - - - - SPEED - - - - 
+
+	void				speedLimitChecker();					// Player limit speed in AXIS
+	fPoint				speedLimit;								// Player max speed value
+
 public:
 
 	j1EnemyLand();

@@ -27,12 +27,18 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 	LOG("Loading Enemy Parser");
 	bool ret = true;
 
+	pugi::xml_node dataIterator = config.child("data");
+
 	texture_path = config.child("graphics_enemy").attribute("path").as_string();
 
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 	idle.load_animation(animIterator, "idleLand");
 	walk.load_animation(animIterator, "walkLand");
+
+	speedLimit.y = dataIterator.child("speed_limit").attribute("y").as_float();
+	speedLimit.x = dataIterator.child("speed_limit").attribute("x").as_float();
+	
 
 	entity_collider = { 0, 0, 17, 27 };
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
@@ -84,9 +90,9 @@ bool j1EnemyLand::PreUpdate()
 			speed.y = movementForce.y / 3;
 
 			if (flip == SDL_FLIP_NONE)
-				speed.x = -movementForce.y;
-			else
 				speed.x = movementForce.y;
+			else
+				speed.x = -movementForce.y;
 	
 		}
 		else 
@@ -97,8 +103,9 @@ bool j1EnemyLand::PreUpdate()
 		}		
 	}
 
+	
 	PositionUpdate(App->dt);
-
+	speedLimitChecker();
 
 	return ret;
 }
@@ -309,6 +316,34 @@ void j1EnemyLand::JumpFallLogic(float dt)
 	checkingFall = true;
 }
 
+
+void j1EnemyLand::speedLimitChecker()
+{
+
+	//POSITIVE
+
+	if (speed.x > speedLimit.x)
+		speed.x = speedLimit.x;
+
+	if (speed.y > speedLimit.y)
+	{
+		speed.y = speedLimit.y;
+		Acceleration = Acceleration;
+	}
+
+
+	//NEGATIVE
+
+	if (speed.x < -speedLimit.x)
+		speed.x = -speedLimit.x;
+
+	if (speed.y < -speedLimit.y)
+	{
+		speed.y = -speedLimit.y;
+		Acceleration = Acceleration;
+	}
+
+}
 
 void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 

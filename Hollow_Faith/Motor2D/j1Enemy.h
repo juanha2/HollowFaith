@@ -28,7 +28,7 @@ public:
 	
 	int agroDistance = 200;	
 
-	float pathCadency = 0.25f;
+	float pathCadency = 0.5f;
 	int pathMinDist = 16;
 
 	bool hurted = false;

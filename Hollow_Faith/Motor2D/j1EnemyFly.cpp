@@ -83,9 +83,9 @@ bool j1EnemyFly::PreUpdate()
 			speed.y = movementForce.y / 3;
 
 			if (flip == SDL_FLIP_NONE)
-				speed.x = -movementForce.y;
-			else
 				speed.x = movementForce.y;
+			else
+				speed.x = -movementForce.y;
 
 		}
 		else

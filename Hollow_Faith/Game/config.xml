@@ -38,7 +38,7 @@
       <hover_acceleration value="-1300.0f"/>
       <hover_speed_activation value="-90.0f"/>
       <hover_fall_smooth value="6.0f"/>
-      <speed_limit x=" 250.0f" y="420.0f"/>
+      <speed_limit x=" 250.0f" y="400.0f"/>
       <gravity value="30.0f"/>
       <slowing_value value="10.0f"/>
       <slowing_limit value=" 200"/>
