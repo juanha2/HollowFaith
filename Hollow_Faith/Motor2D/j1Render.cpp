@@ -4,7 +4,7 @@
 #include "j1Window.h"
 #include "j1Render.h"
 
-#define VSYNC true
+#define VSYNC false
 
 j1Render::j1Render() : j1Module()
 {
@@ -50,6 +50,8 @@ bool j1Render::Awake(pugi::xml_node& config)
 		camera_init = camera;
 		
 	}
+
+	vsync = VSYNC;
 
 	return ret;
 }

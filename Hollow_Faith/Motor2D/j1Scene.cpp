@@ -98,14 +98,6 @@ bool j1Scene::Update(float dt)
 	}
 	
 
-	//if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
-	//{ // Start at the current level begin
-	//	App->player->ignoreColl = true;		
-	//	App->player->playerPosition = App->player->startPosLevel1; 
-	//	App->render->camera.x = 0;
-	//}
-
-
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) 
 	{ // Save State
 		App->SaveGame();
@@ -160,9 +152,17 @@ bool j1Scene::PostUpdate()
 	SDL_Rect rect = { 0,0, App->win->screen_surface->w / App->win->scale, App->win->screen_surface->h / App->win->scale };
 	App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
 
+	bool capped;
+	
+	if (App->frameratecap == App->desiredFrameratecap)
+		capped = true;
+	else
+		capped = false;
+	
+
 	static char title[256];
-	sprintf_s(title, 256, "%s || Actual FPS: %i | Av.FPS: %.2f Last Frame Ms: %02u Time since startup: %.3f Frame Count: %lu ",
-		App->GetTitle(), App->frames_on_last_update , App->avg_fps, App->last_frame_ms, App->seconds_since_startup, App->frame_count);
+	sprintf_s(title, 256, "%s || Actual FPS: %i | Av.FPS: %.2f | Last Frame MS: %02u | VSYNC: %d | Frames Cap: %d",
+		App->GetTitle(), App->frames_on_last_update , App->avg_fps, App->last_frame_ms, App->render->vsync, capped);
 
 	App->win->SetTitle(title);
 
@@ -188,8 +188,6 @@ bool j1Scene::CleanUp()
 
 bool j1Scene::Save(pugi::xml_node& save) const
 {
-	/*App->player->savedPosition.x = App->player->playerPosition.x;
-	App->player->savedPosition.y = App->player->playerPosition.y;*/
 
 	pugi::xml_node current_map = save.append_child("currentmap");
 

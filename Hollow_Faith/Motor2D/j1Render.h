@@ -55,6 +55,8 @@ public:
 
 	SDL_Rect		camera_init;
 
+	bool vsync;
+
 };
 
 #endif // __j1RENDER_H__
