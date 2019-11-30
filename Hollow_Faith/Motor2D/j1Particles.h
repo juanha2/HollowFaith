@@ -50,8 +50,7 @@ public:
 	~j1Particles();
 
 	bool Start();
-	bool Awake(pugi::xml_node&);
-	bool Update(float dt);
+	bool Awake(pugi::xml_node&);	
 	bool PostUpdate();
 	bool CleanUp();
 

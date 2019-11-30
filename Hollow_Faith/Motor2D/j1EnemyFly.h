@@ -20,7 +20,7 @@ public:
 
 	// - - - - ANIMATIONS - - - -
 
-	Animation			animation;	
+	Animation			fly;	
 
 
 public:

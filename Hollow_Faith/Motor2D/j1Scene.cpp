@@ -61,8 +61,7 @@ bool j1Scene::Start()
 	
 	SpawnEnemies();
 
-	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
-	graphics = App->tex->Load("Assets/Sprites/halo.png");
+	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music	
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 
 	ready_to_load = false;
@@ -155,7 +154,6 @@ bool j1Scene::PostUpdate()
 
 	bool ret = true;
 	SDL_Rect rect = { 0,0, App->win->screen_surface->w / App->win->scale, App->win->screen_surface->h / App->win->scale };
-	App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
 
 	bool capped;
 	
@@ -186,8 +184,7 @@ bool j1Scene::CleanUp()
 	
 	App->audio->UnLoad();
 	App->objects->DeleteEntities();
-	//App->objects->CleanUp();
-	App->tex->UnLoad(graphics);
+	//App->objects->CleanUp();	
 	App->tex->UnLoad(debug_tex);	
 	App->coll->CleanUp();
 	App->tex->CleanUp();

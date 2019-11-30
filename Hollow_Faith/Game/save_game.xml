@@ -8,13 +8,13 @@
 	<pathfinding />
 	<objects>
 		<player>
-			<position x="480.904755" y="309" />
+			<position x="90.4122696" y="325" />
 		</player>
 		<EnemyFly>
 			<position x="832" y="48" />
 		</EnemyFly>
 		<EnemyLand>
-			<position x="527.088196" y="309" />
+			<position x="608" y="309" />
 		</EnemyLand>
 		<EnemyFly>
 			<position x="1056" y="128" />
@@ -29,6 +29,6 @@
 	<colliders />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-483" y="-10" />
+		<camera x="0" y="-10" />
 	</renderer>
 </game_state>

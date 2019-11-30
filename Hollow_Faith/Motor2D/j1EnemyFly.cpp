@@ -33,7 +33,7 @@ bool j1EnemyFly::Awake(pugi::xml_node& config)
 
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
-	animation.load_animation(animIterator, "idleBat");
+	fly.load_animation(animIterator, "idleBat");
 
 
 	entity_collider = { 0, 0, 14, 14 };
@@ -51,7 +51,7 @@ bool j1EnemyFly::Start()
 
 	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
-	current_animation = &animation;
+	current_animation = &fly;
 
 
 	ignoreColl = false;
@@ -149,6 +149,8 @@ bool j1EnemyFly::PostUpdate()
 
 bool j1EnemyFly::CleanUp()
 {
+	App->tex->UnLoad(texture);
+	App->audio->UnLoad();
 	return true;
 }
 

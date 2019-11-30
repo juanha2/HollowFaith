@@ -67,18 +67,8 @@ bool j1Particles::CleanUp()
 	return true;
 }
 
-// Update: draw background
-bool j1Particles::Update(float dt)
-{	
-
-	return true;
-}
-
-
 bool j1Particles::PostUpdate()
-{
-
-	
+{	
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		Particle* p = active[i];
