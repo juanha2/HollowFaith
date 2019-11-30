@@ -306,11 +306,25 @@ bool j1EnemyLand::PathJumping()
 			{
 				if (distance < jumpDistance)
 				{
-					if (canJump)
+					if (position.x < App->objects->player->position.x && flip == SDL_FLIP_NONE)
 					{
-						speed.y = movementForce.y - 20;
-						canJump = false;
+						if (canJump)
+						{
+							speed.y = movementForce.y - 20;
+							canJump = false;
+						}
+
 					}
+					else if (position.x > App->objects->player->position.x && flip == SDL_FLIP_HORIZONTAL)
+					{
+						if (canJump)
+						{
+							speed.y = movementForce.y - 20;
+							canJump = false;
+						}
+					}
+					else
+						return true;
 				}
 				else
 					return true;
@@ -478,6 +492,7 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 				position.x = c2->rect.x + c2->rect.w + 1;
 
+				current_animation = &idle;
 				speed.x = 0;
 				break;
 
@@ -485,6 +500,7 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 				position.x = c2->rect.x - entity_collider.w - 1;
 
+				current_animation = &idle;
 				speed.x = 0;
 				break;
 
@@ -498,9 +514,6 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 		{
 			elim = true;
 		}
-
-
-		CollisionPosUpdate();
 
 		if (speed.y >= 0) {
 
@@ -525,5 +538,8 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 				}
 			}
 		}
+
+		CollisionPosUpdate();
+
 	}
 }
