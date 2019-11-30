@@ -305,14 +305,6 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - position.x;
 
 
-
-	bool collDir[DIR_MAX];
-	collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && speed.y < 0);
-	collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && speed.y > 0);
-	collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && speed.x < 0);
-	collDir[DIR_LEFT] = !(detectCollDir[DIR_LEFT] > 0 && speed.x > 0);
-
-
 	int dirCheck = DIR_UNKNOWN;
 
 	for (int i = 0; i < DIR_MAX; ++i)

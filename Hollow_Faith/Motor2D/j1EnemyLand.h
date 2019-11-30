@@ -22,6 +22,9 @@ public:
 	Animation idle;
 	Animation walk;
 
+	bool checkingFall = false;
+	bool canJump = false;
+
 public:
 
 	j1EnemyLand();

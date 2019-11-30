@@ -25,8 +25,6 @@ public:
 	float timer;
 
 	bool chase = false;
-	bool checkingFall = false;
-	bool canJump = false;
 
 	
 	int agroDistance = 200;	

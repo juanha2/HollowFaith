@@ -222,12 +222,6 @@ void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - position.x;
 
 
-	bool collDir[DIR_MAX];
-	collDir[DIR_UP] = !(detectCollDir[DIR_UP] > 0 && speed.y < 0);
-	collDir[DIR_DOWN] = !(detectCollDir[DIR_DOWN] > 0 && speed.y > 0);
-	collDir[DIR_RIGHT] = !(detectCollDir[DIR_RIGHT] > 0 && speed.x < 0);
-	collDir[DIR_LEFT] = !(detectCollDir[DIR_LEFT] > 0 && speed.x > 0);
-
 
 	int dirCheck = DIR_UNKNOWN;
 
@@ -242,94 +236,61 @@ void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 	// - - - - - - - CHECK COLLISIONS - - - - - - - 
 
 
-	if (ignoreColl == false) {
+	if ((c2->type == COLLIDER_STONE))
+	{
+		elim = true;
 
-		if ((c2->type == COLLIDER_PLAYER))
-		{
-			switch (dirCheck) {
+		App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
+		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 
-			case DIR_UP:
-
-				break;
-
-			}
-		}
-
-		if ((c2->type == COLLIDER_STONE))
-		{
-			elim = true;
-
-			App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
-			App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
-
-
-
-		}
-
-		if ((c2->type == COLLIDER_FLOOR))
-		{
-
-			switch (dirCheck) {
-			case DIR_UP:
-
-				position.y = c2->rect.y + c2->rect.h + 1;
-				speed.y = 0;
-				break;
-
-			case DIR_DOWN:
-
-				position.y = c2->rect.y - entity_collider.h;
-
-			case DIR_LEFT:
-
-				position.x = c2->rect.x + c2->rect.w + 1;
-
-				speed.x = 0;
-				break;
-
-			case DIR_RIGHT:
-
-				position.x = c2->rect.x - entity_collider.w - 1;
-
-				speed.x = 0;
-				break;
-
-			case -1:
-				break;
-			}
-
-		}
-
-		if ((c2->type == COLLIDER_DEATH))
-		{
-			elim = true;
-		}
-
-
-		CollisionPosUpdate();
-
-		if (speed.y >= 0) {
-
-			if ((c2->type == COLLIDER_PLATFORM))
-			{
-				switch (dirCheck) {
-
-				case DIR_UP:
-					break;
-
-				case DIR_DOWN:
-					position.y = c2->rect.y - entity_collider.h;
-					break;
-
-				case DIR_LEFT:
-					break;
-
-				case DIR_RIGHT:
-					break;
-				case -1:
-					break;
-				}
-			}
-		}
 	}
+
+	if ((c2->type == COLLIDER_FLOOR))
+	{
+
+		switch (dirCheck) {
+		case DIR_UP:
+
+			position.y = c2->rect.y + c2->rect.h + 1;
+
+			speed.y = 0;
+			break;
+
+		case DIR_DOWN:
+
+			position.y = c2->rect.y - entity_collider.h;
+
+			speed.y = 0;
+			break;
+
+		case DIR_LEFT:
+
+			position.x = c2->rect.x + c2->rect.w + 1;
+
+			speed.x = 0;	
+			break;
+
+		case DIR_RIGHT:
+
+			position.x = c2->rect.x - entity_collider.w - 1;
+
+			speed.x = 0;
+			break;
+
+		case -1:
+			break;
+		}
+
+	}
+
+	if ((c2->type == COLLIDER_DEATH))
+	{
+		elim = true;
+	}
+
+
+	CollisionPosUpdate();
+
+
+
 }
