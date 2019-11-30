@@ -288,7 +288,7 @@ bool j1EnemyLand::PathJumping()
 
 			if (App->pathfinding->IsWalkable(next) && !checkingFall)
 			{
-				for (uint i = pathToPlayer.Count() - 1; i > 0; --i)
+				for (uint i = pathToPlayer.Count(); i > 0; --i)
 				{
 					next = { pathToPlayer[i].x, pathToPlayer[i].y + 2 };
 
