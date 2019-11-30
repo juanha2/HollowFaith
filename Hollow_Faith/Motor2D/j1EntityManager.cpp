@@ -145,6 +145,7 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	pugi::xml_node EnemyFly = file.child("EnemyFly");
 	pugi::xml_node EnemyLand = file.child("EnemyLand");
+	pugi::xml_node Bonfire = file.child("Bonfire");
 
 	while (tmp != nullptr)
 	{
@@ -161,8 +162,14 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 		else if (tmp->data->type == j1Entity::entityType::ENEMY_LAND)
 		{
 			tmp->data->Load(EnemyLand);
-			EnemyLand = EnemyLand.next_sibling("EnemyLand");	
-		}		
+			EnemyLand = EnemyLand.next_sibling("EnemyLand");
+		}
+
+		else if (tmp->data->type == j1Entity::entityType::BONFIRE)
+		{
+			tmp->data->Load(file.child("Bonfire"));
+			Bonfire = Bonfire.next_sibling("Bonfire");
+		}
 
 		tmp = tmp->next;
 	}
