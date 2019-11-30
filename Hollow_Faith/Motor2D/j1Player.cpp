@@ -24,11 +24,10 @@ j1Player::j1Player() : j1Entity(entityType::PLAYER)
 }
 
 j1Player::~j1Player() {};
-
 bool j1Player::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Player Parser");
-	bool ret = true;	
+	bool ret = true;
 
 	texture_path = config.child("graphics_player").attribute("path").as_string();
 
@@ -41,27 +40,16 @@ bool j1Player::Awake(pugi::xml_node& config)
 	death.load_animation(animIterator, "death");
 	climb.load_animation(animIterator, "climb");
 
-	// Loading all Player FX
-
-	pugi::xml_node fxIterator = config.child("fx");
-	jump_fx = fxIterator.child("jumpFx").attribute("path").as_string();
-	death_fx = fxIterator.child("deathFx").attribute("path").as_string();
-	win1_Fx = fxIterator.child("win1Fx").attribute("path").as_string();
-	win2_Fx = fxIterator.child("win2Fx").attribute("path").as_string();
-	landing_Fx = fxIterator.child("landingFx").attribute("path").as_string();
-	hover_Fx = fxIterator.child("hoverFx").attribute("path").as_string();
-	stone_Fx = fxIterator.child("stoneFx").attribute("path").as_string();	
-
 	// Player data
 
 	pugi::xml_node dataIterator = config.child("data");
-	
+
 	startPosLevel1.x = dataIterator.child("StartPosLevel1").attribute("x").as_float();
 	startPosLevel1.y = dataIterator.child("StartPosLevel1").attribute("y").as_float();
-	
+
 	startPosLevel2.x = dataIterator.child("StartPosLevel2").attribute("x").as_float();
 	startPosLevel2.y = dataIterator.child("StartPosLevel2").attribute("y").as_float();
-	
+
 	playerClimbSpeed = dataIterator.child("climbspeed").attribute("value").as_float();
 
 	speed.x = dataIterator.child("speed").attribute("x").as_float();
@@ -78,48 +66,42 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	speedLimit.x = dataIterator.child("speed_limit").attribute("x").as_float();
 	speedLimit.y = dataIterator.child("speed_limit").attribute("y").as_float();
-	
+
 	gravityForce = dataIterator.child("gravity").attribute("value").as_float();
 	slowingValue = dataIterator.child("slowing_value").attribute("value").as_float();
 	slowlingLimitValue = dataIterator.child("slowing_limit").attribute("value").as_int();
 
 	entity_collider = { 0, 0, 17, 27 };
-	collider = new Collider(entity_collider, COLLIDER_PLAYER, this);	
-	
+	collider = new Collider(entity_collider, COLLIDER_PLAYER, this);
+
 	return ret;
 }
 
 // Called before the first frame
 bool j1Player::Start()
-{	
+{
 	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
 	win = false;
 	dead = false;
-	   
+
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
 
 	if (App->scene->different_map) { //We make sure to load all positions when F6 is pressed and we are changing scene
-	
+
 		App->LoadGame();
 		App->scene->different_map = false;
 	}
 	else
-	{		
+	{
 		if (App->scene->checkpoint)
 			position = App->scene->checkpointpos;
 		else
-			position = startPosLevel1;	
+			position = startPosLevel1;
 	}
 
-	App->audio->LoadFx(jump_fx.GetString());
-	App->audio->LoadFx(death_fx.GetString());
-	App->audio->LoadFx(win1_Fx.GetString());
-	App->audio->LoadFx(win2_Fx.GetString());
-	App->audio->LoadFx(landing_Fx.GetString());
-	App->audio->LoadFx(hover_Fx.GetString());
-	App->audio->LoadFx(stone_Fx.GetString());
+
 
 	return true;
 }
@@ -760,7 +742,7 @@ void j1Player::Win_Lose_Condition() {
 		}
 
 		App->scene->currentmap = 2;
-		App->scene->checkpoint = false;
+	
 		for (int i = 1; i <= App->map->data.numLevels; i++) {
 			if (App->scene->currentmap == i)
 				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);

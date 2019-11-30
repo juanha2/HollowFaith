@@ -44,11 +44,25 @@ public:
 public:
 	
 	
-	p2List<j1Entity*>	Entities;	
+	p2List<j1Entity*>	Entities;
 
 	j1Player* player;
 	j1Particles* particle;
-	j1Bonfire* bonfire;
+	j1Bonfire* bonfire[3];
+
+	p2SString			jump_fx;
+	p2SString			death_fx;
+	p2SString			win1_Fx;
+	p2SString			win2_Fx;
+	p2SString			landing_Fx;
+	p2SString			hover_Fx;
+	p2SString			bounce_Fx;
+	p2SString			stone_Fx;
+	p2SString			fire_Fx;
+	p2SString			fuse_Fx;
+	p2SString			death;
+
+	int					count;
 	
 };
 

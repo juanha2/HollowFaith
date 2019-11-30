@@ -22,7 +22,6 @@ j1EnemyLand::j1EnemyLand(fPoint pos) : j1Enemy(entityType::ENEMY_LAND, pos) {  }
 
 j1EnemyLand::~j1EnemyLand() {};
 
-
 bool j1EnemyLand::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Enemy Parser");
@@ -34,10 +33,6 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 	idle.load_animation(animIterator, "idleLand");
 	walk.load_animation(animIterator, "walkLand");
-
-	// Loading all FX
-	pugi::xml_node fxIterator = config.child("fx");
-	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
 
 	entity_collider = { 0, 0, 17, 27 };
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
@@ -57,13 +52,11 @@ bool j1EnemyLand::Start()
 	App->coll->AddColliderEntity(collider);
 
 	current_animation = &idle;
-	App->audio->LoadFx(death.GetString());
-
-	
 	ignoreColl = false;
 
 	return ret;
 }
+
 
 
 bool j1EnemyLand::PreUpdate()

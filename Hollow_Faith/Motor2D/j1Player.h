@@ -170,19 +170,6 @@ private:
 	// - - - - - - - - - - - - - - 
 
 
-	//  - - - - - - FX - - - - - - 
-		
-	p2SString			jump_fx;
-	p2SString			death_fx;
-	p2SString			win1_Fx;
-	p2SString			win2_Fx;
-	p2SString			landing_Fx;
-	p2SString			hover_Fx;
-	p2SString			bounce_Fx;
-	p2SString			stone_Fx;
-
-	// - - - - - - - - - - - - - - 
-
 };
 
 #endif // __j1PLAYER_H__

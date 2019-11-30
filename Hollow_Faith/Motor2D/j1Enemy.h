@@ -21,7 +21,6 @@ public:
 	fPoint originalPos;
 	fPoint	movementForce = { 80.0f, -420.0f };
 
-	p2SString death;
 	float timer;
 
 	bool chase = false;

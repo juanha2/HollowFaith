@@ -38,17 +38,13 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->objects->DeleteEntities();
-	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });	
-	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
-
 	//Load first level at start
-	if (first) 
+	if (first)
 	{
 		p2List_item<Levels*>* levelData = App->map->data.levels.start;
-        App->map->Load(levelData->data->name.GetString());
-        currentmap = 1;
-        first = false;				
+		App->map->Load(levelData->data->name.GetString());
+		currentmap = 1;
+		first = false;
 
 		int w, h;
 		uchar* data = nullptr;
@@ -56,18 +52,22 @@ bool j1Scene::Start()
 		{
 			App->pathfinding->SetMap(w, h, data);
 			RELEASE_ARRAY(data);
-		}		
+		}
 	}
 
+	App->objects->DeleteEntities();
+	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
+	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
+	LOG("%i", currentmap);
 	SpawnEnemies();
-	
-    App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
-    graphics = App->tex->Load("Assets/Sprites/halo.png");
+
+	//App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
+	graphics = App->tex->Load("Assets/Sprites/halo.png");
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 
 	ready_to_load = false;
-	sound_repeat = false; 
-    App->render->camera = App->render->camera_init; //Sets camera on inicial position.
+	sound_repeat = false;
+	App->render->camera = App->render->camera_init; //Sets camera on inicial position.
 	return true;
 }
 

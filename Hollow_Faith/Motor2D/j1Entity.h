@@ -59,7 +59,7 @@ public:
 	Animation*			current_animation = nullptr;
 	entityType			type;
 	fPoint				speed;
-
+	int					num;
 	int					distance;	
 	fPoint				position;
 

@@ -21,14 +21,14 @@ public:
 
 	Animation light_off;
 	Animation light_on;
-	p2SString fire_Fx;
-	p2SString fuse_Fx;
+
 
 	bool alreadyCollided;
-	bool fired;
+
+
 public:
 
-	j1Bonfire(fPoint pos);
+	j1Bonfire(fPoint pos, int count);
 
 	// Destructor
 	~j1Bonfire();
@@ -53,7 +53,7 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
-	
+
 
 };
 

@@ -35,9 +35,6 @@ bool j1EnemyFly::Awake(pugi::xml_node& config)
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 	animation.load_animation(animIterator, "idleBat");
 
-	// Loading all FX
-	pugi::xml_node fxIterator = config.child("fx");
-	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
 
 	entity_collider = { 0, 0, 14, 14 };
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
@@ -55,7 +52,7 @@ bool j1EnemyFly::Start()
 	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
 	current_animation = &animation;
-	App->audio->LoadFx(death.GetString());
+
 
 	ignoreColl = false;
 	return ret;

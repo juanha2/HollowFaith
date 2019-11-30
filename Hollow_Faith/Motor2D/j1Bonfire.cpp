@@ -11,12 +11,14 @@
 #include "j1Scene.h"
 
 
-j1Bonfire::j1Bonfire(fPoint pos) : j1Entity(entityType::BONFIRE)
+j1Bonfire::j1Bonfire(fPoint pos, int count) : j1Entity(entityType::BONFIRE)
 {
 	position = pos;
 
-	if (App->objects->bonfire == nullptr)
-		App->objects->bonfire = this;
+	if (App->objects->bonfire[count] == nullptr)
+		App->objects->bonfire[count] = this;
+
+	num = count + 1;
 }
 
 
@@ -32,12 +34,7 @@ bool j1Bonfire::Awake(pugi::xml_node& config)
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 	light_on.load_animation(animIterator, "light");
-	light_off.load_animation(animIterator, "bonfire");
-
-	// Loading all FX
-	pugi::xml_node fxIterator = config.child("fx");
-	fire_Fx = fxIterator.child("bonfireFx").attribute("path").as_string();
-	fuse_Fx = fxIterator.child("fuseFx").attribute("path").as_string();
+	light_off.load_animation(animIterator, "bonfire");	
 
 	entity_collider = { 0, 0, 29, 40 };
 	collider = new Collider(entity_collider, COLLIDER_BONFIRE, this);
@@ -54,9 +51,6 @@ bool j1Bonfire::Start()
 	texture = App->tex->Load(texture_path.GetString());
 	App->coll->AddColliderEntity(collider);
 	current_animation = &light_off;
-
-	App->audio->LoadFx(fire_Fx.GetString());
-	App->audio->LoadFx(fuse_Fx.GetString());
 	
 	ignoreColl = false;
 	alreadyCollided = false;
@@ -85,7 +79,9 @@ bool j1Bonfire::PreUpdate()
 // Called each loop iteration
 bool j1Bonfire::Update(float dt)
 {
-	this->distance = abs(App->objects->player->position.x - this->position.x);
+	if (App->scene->checkpoint)
+		distance = abs(App->objects->player->position.x - App->objects->bonfire[App->scene->num_checkpoint - 1]->position.x);
+
 	Mix_Volume(3, App->audio->SpatialAudio(100, this->distance / 2));
 	
 
@@ -104,16 +100,22 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 
 	if ((c2->type == COLLIDER_PLAYER))
 	{
+		distance = abs(App->objects->player->position.x - App->objects->bonfire[c1->callback->num - 1]->position.x);
+
 		if (!alreadyCollided)
 		{
+			App->scene->num_checkpoint = c1->callback->num;
 			App->scene->checkpoint = true;
-			App->audio->PlayFx(13, 0, App->audio->SpatialAudio(100, distance * 2));
-			
-			fired = true;
+
+			App->audio->PlayFx(9, 0, App->audio->SpatialAudio(100, distance * 2));
+			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(200, distance * 2), 3);
+
 			current_animation = &light_on;
-			//this->collider->type = COLLIDER_NONE;
+
+
 			alreadyCollided = true;
-		}			
+
+		}
 	}
 }
 
