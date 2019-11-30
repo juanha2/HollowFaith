@@ -62,10 +62,11 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 - Only blit current Camera Tiles
 
 ### 2nd Pack Innovations:
-- Throw a rock with parabolic path
+- Extra feature: Throw a rock with parabolic path
 - Skills with cooldown (Rock)
 - Checkpoint autosave
 - Spatial Audio
+- Land Enemies Jump when they detect the floor has end with Pathfinding
 
 ## Member contributions
 
