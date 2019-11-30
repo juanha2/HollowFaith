@@ -4,7 +4,6 @@
 #include "j1Window.h"
 #include "j1Render.h"
 
-#define VSYNC false
 
 j1Render::j1Render() : j1Module()
 {
@@ -51,7 +50,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 		
 	}
 
-	vsync = VSYNC;
+	vsync = config.child("vsync").attribute("value").as_bool(true);
 
 	return ret;
 }
