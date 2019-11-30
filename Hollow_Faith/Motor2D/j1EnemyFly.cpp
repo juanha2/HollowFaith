@@ -188,17 +188,16 @@ bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
 			speed.x -= auxSpeed * dt;
 				
 
-		if (speed.x > 0) 
-			flip = SDL_FLIP_NONE;	
-		else
-			flip = SDL_FLIP_HORIZONTAL;
-
-
 		if (current.y < position.y)
 			speed.y -= auxSpeed * dt;
 		else
 			speed.y += auxSpeed * dt;
 
+
+		if (speed.x > 0)
+			flip = SDL_FLIP_NONE;
+		else
+			flip = SDL_FLIP_HORIZONTAL;
 
 	}
 	else
@@ -258,7 +257,7 @@ void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 
 		case DIR_DOWN:
 
-			position.y = c2->rect.y - entity_collider.h;
+			position.y = c2->rect.y - entity_collider.h - 1;
 
 			speed.y = 0;
 			break;
