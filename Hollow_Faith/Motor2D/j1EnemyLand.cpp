@@ -66,7 +66,7 @@ bool j1EnemyLand::PreUpdate()
 	if (elim) // When enemy dies
 	{
 
-		App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
+		App->audio->PlayFx(10, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 		collider->to_delete = true;
 
@@ -388,6 +388,8 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 				if (!canJump) 
 				{
+					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
+					App->audio->PlayFx(5, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 					canJump = true;
 				}
 
