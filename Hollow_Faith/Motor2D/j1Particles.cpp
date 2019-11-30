@@ -186,7 +186,8 @@ bool Particle::Update()
 	position.x += speed.x * App->dt;
 	position.y += speed.y * App->dt;
 
-	speed.y += App->objects->player->gravityForce * (App->dt * DT_CALIBRATED);
+	if(name == "stone")
+		speed.y += App->objects->player->gravityForce * (App->dt * DT_CALIBRATED);
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
