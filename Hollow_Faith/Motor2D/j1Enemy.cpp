@@ -1,6 +1,5 @@
 #include "p2Defs.h"
 #include "p2Log.h"
-
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Textures.h"
@@ -20,7 +19,8 @@
 
 j1Enemy::j1Enemy(j1Entity::entityType type) : j1Entity(type)
 {
-
+	if (App->objects->enemy == nullptr)
+		App->objects->enemy = this;
 }
 
 j1Enemy::j1Enemy(j1Entity::entityType type, fPoint pos) : j1Entity(type)
@@ -36,25 +36,12 @@ void j1Enemy::Load(pugi::xml_node& data)
 {
 	chase = false;
 	speed = { 0,0 };
-
-	if (App->scene->different_map) {
-
-		App->scene->ready_to_load = true;
-		ignoreColl = true;
-		savedPosition.x = data.child("position").attribute("x").as_int();
-		savedPosition.y = data.child("position").attribute("y").as_int();
-	}
-
-	else if (!App->scene->different_map) {
-
-		position.x = data.child("position").attribute("x").as_int();
-		position.y = data.child("position").attribute("y").as_int();		
-	}
+	elim = true;
 }
 
 // Save Enemies State
 void j1Enemy::Save(pugi::xml_node& data) const
-{	
+{		
 
 	if (type == ENEMY_FLY)
 	{

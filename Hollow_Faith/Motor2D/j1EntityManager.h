@@ -36,16 +36,17 @@ public:
 
 	j1Entity* AddEntity(j1Entity::entityType type, fPoint position);
 	void DeleteEntities();
-	void DeleteEntity();	
+	void DeleteEntity();
+	void DeleteEnemies();
 
 	void OnCollision(Collider* c1, Collider* c2) {};
 
 public:
 	
-	
 	p2List<j1Entity*>	Entities;
 
 	j1Player* player;
+	j1Enemy* enemy;
 	j1Particles* particle;
 	j1Bonfire* bonfire[3];
 

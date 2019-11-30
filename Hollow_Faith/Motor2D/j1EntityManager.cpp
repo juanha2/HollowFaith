@@ -12,6 +12,7 @@
 #include "j1Bonfire.h"
 #include "j1Audio.h"
 
+
 j1EntityManager::j1EntityManager()
 {
 	name.create("objects");
@@ -129,6 +130,7 @@ bool j1EntityManager::CleanUp()
 
 bool j1EntityManager::Save(pugi::xml_node& file) const
 {
+	
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)
@@ -136,6 +138,7 @@ bool j1EntityManager::Save(pugi::xml_node& file) const
 		tmp->data->Save(file);
 		tmp = tmp->next;
 	}
+	
 	return ret;
 }
 
@@ -145,25 +148,14 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	pugi::xml_node EnemyFly = file.child("EnemyFly");
 	pugi::xml_node EnemyLand = file.child("EnemyLand");
-	pugi::xml_node Bonfire = file.child("Bonfire");
+	pugi::xml_node Bonfire = file.child("Bonfire");	
 
 	while (tmp != nullptr)
 	{
 		if (tmp->data->type == j1Entity::entityType::PLAYER)
 		{
 			tmp->data->Load(file.child("player"));
-		}
-		else if (tmp->data->type == j1Entity::entityType::ENEMY_FLY)
-		{
-			tmp->data->Load(EnemyFly);
-			EnemyFly = EnemyFly.next_sibling("EnemyFly");
-
-		}
-		else if (tmp->data->type == j1Entity::entityType::ENEMY_LAND)
-		{
-			tmp->data->Load(EnemyLand);
-			EnemyLand = EnemyLand.next_sibling("EnemyLand");
-		}
+		}		
 
 		else if (tmp->data->type == j1Entity::entityType::BONFIRE)
 		{
@@ -172,6 +164,27 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 		}
 
 		tmp = tmp->next;
+	}
+
+	DeleteEnemies();
+
+	p2SString enemyLand="EnemyLand";
+	p2SString enemyFly="EnemyFly";
+
+	for (pugi::xml_node iterator = file.child("EnemyLand"); iterator; iterator = iterator.next_sibling())
+	{		
+		if (enemyLand == iterator.name())
+		{
+			AddEntity(j1Entity::entityType::ENEMY_LAND, { iterator.child("position").attribute("x").as_float(),iterator.child("position").attribute("y").as_float() });
+		}
+	}
+
+	for (pugi::xml_node iterator = file.child("EnemyFly"); iterator; iterator = iterator.next_sibling())
+	{
+		if (enemyFly == iterator.name())
+		{
+			AddEntity(j1Entity::entityType::ENEMY_FLY, { iterator.child("position").attribute("x").as_float(),iterator.child("position").attribute("y").as_float() });
+		}
 	}
 	return ret;
 }
@@ -265,4 +278,25 @@ void j1EntityManager::DeleteEntity()
 		tmp = tmp->prev;
 	}
 	
+}
+
+void j1EntityManager::DeleteEnemies()
+{
+	p2List_item<j1Entity*>* tmp = Entities.end;
+
+	while (tmp != nullptr)
+	{
+		p2List_item<j1Entity*>* tmp2 = tmp;
+
+		if ((tmp->data->type == j1Entity::entityType::ENEMY_FLY) || (tmp->data->type == j1Entity::entityType::ENEMY_LAND))
+		{			
+			tmp->data->collider->to_delete = true;
+			RELEASE(tmp->data);
+			Entities.del(tmp2);
+			tmp = tmp->prev;
+		}
+		else
+			tmp = tmp->prev;		
+	}
+
 }
