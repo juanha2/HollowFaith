@@ -6,29 +6,29 @@
 	<textures />
 	<audio />
 	<pathfinding />
-	<scene>
-		<currentmap value="1" />
-	</scene>
 	<objects>
 		<player>
-			<position x="888" y="181" />
+			<position x="480.904755" y="309" />
 		</player>
 		<EnemyFly>
-			<position x="919.08252" y="165.742264" />
+			<position x="832" y="48" />
 		</EnemyFly>
 		<EnemyLand>
-			<position x="608" y="309" />
+			<position x="527.088196" y="309" />
 		</EnemyLand>
 		<EnemyFly>
-			<position x="1027.40015" y="249.094131" />
+			<position x="1056" y="128" />
 		</EnemyFly>
 		<EnemyLand>
 			<position x="1424" y="213" />
 		</EnemyLand>
 	</objects>
+	<scene>
+		<currentmap value="1" />
+	</scene>
 	<colliders />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-1298" y="-10" />
+		<camera x="-483" y="-10" />
 	</renderer>
 </game_state>

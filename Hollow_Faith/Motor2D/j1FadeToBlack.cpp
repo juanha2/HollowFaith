@@ -62,8 +62,7 @@ bool j1FadeToBlack::PostUpdate()
 			App->objects->Disable();			
 			App->scene->Disable();
 			App->input->blockingInput();
-			App->input->Disable();
-			
+			App->input->Disable();			
 					
 			if (App->map->Reset()) {
 				

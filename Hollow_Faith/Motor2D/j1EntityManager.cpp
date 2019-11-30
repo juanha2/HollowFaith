@@ -45,7 +45,7 @@ bool j1EntityManager::Start()
 {
 	bool ret = true;
 
-	//We load every Fx here so each entity doesn't have to repeat loading the same one
+	//We load every Fx here so each entity doesn't have to repeat loading the same one	
 
 	App->audio->LoadFx(jump_fx.GetString());		//1
 	App->audio->LoadFx(death_fx.GetString());		//2
@@ -57,8 +57,8 @@ bool j1EntityManager::Start()
 	App->audio->LoadFx(fire_Fx.GetString());		//8
 	App->audio->LoadFx(fuse_Fx.GetString());		//9
 	App->audio->LoadFx(death.GetString());			//10
-	App->audio->LoadFx(hurt_Fx.GetString());			//11
-
+	App->audio->LoadFx(hurt_Fx.GetString());		//11
+	
 	return ret;
 }
 
@@ -108,7 +108,7 @@ bool j1EntityManager::PostUpdate()
 bool j1EntityManager::CleanUp()
 {
 	bool ret = true;
-
+		
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)
 	{

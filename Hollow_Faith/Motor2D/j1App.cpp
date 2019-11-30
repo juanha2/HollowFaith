@@ -43,8 +43,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);	
 	AddModule(pathfinding);
-	AddModule(scene);
-	AddModule(objects);	
+	AddModule(objects);
+	AddModule(scene);	
 	AddModule(coll);	
 	AddModule(fade_to_black);
 	
