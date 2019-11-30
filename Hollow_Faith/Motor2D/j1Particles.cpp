@@ -164,7 +164,7 @@ bool Particle::Update()
 	if (life > 0)
 	{
 		if (name == "stone") {
-			speed.y++;					
+			speed.y++;
 		}
 
 		
@@ -182,8 +182,11 @@ bool Particle::Update()
 		if (anim.Finished())
 			ret = false;
 
-	position.x += speed.x * (App->dt * 50.0f);
-	position.y += speed.y * (App->dt*20.0f);
+	position.x += speed.x * App->dt;
+	position.y += speed.y * App->dt;
+
+	speed.y += 30 * (App->dt * DT_CALIBRATED);
+
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);

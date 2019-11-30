@@ -223,11 +223,11 @@ bool j1Player::PreUpdate()
 		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && !can_climb) {
 
 			if (flip)
-				App->objects->particle->stone.speed.x = -5;
+				App->objects->particle->stone.speed.x = -200;
 			else
-				App->objects->particle->stone.speed.x = 5;
+				App->objects->particle->stone.speed.x = 200;
 
-			App->objects->particle->stone.speed.y = -12.0f;
+			App->objects->particle->stone.speed.y = movementForce.y;
 
 			if (App->objects->particle->elim)
 			{
