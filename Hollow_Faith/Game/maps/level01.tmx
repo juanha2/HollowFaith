@@ -90,7 +90,7 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Layer01" width="100" height="25" offsetx="-16" offsety="0">
+ <layer name="Layer01" width="100" height="25">
   <properties>
    <property name="speed_x" type="float" value="0"/>
   </properties>
@@ -2597,7 +2597,7 @@
    <tile gid="867"/>
   </data>
  </layer>
- <layer name="Layer02" width="100" height="25" offsetx="-16" offsety="0">
+ <layer name="Layer02" width="100" height="25">
   <properties>
    <property name="speed_x" type="float" value="0.3"/>
   </properties>
@@ -5104,7 +5104,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Layer03" width="100" height="25" offsetx="-16" offsety="0">
+ <layer name="Layer03" width="100" height="25">
   <properties>
    <property name="speed_x" type="float" value="0.5"/>
   </properties>
@@ -7611,7 +7611,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Layer04" width="100" height="25" offsetx="-16" offsety="0">
+ <layer name="Layer04" width="100" height="25">
   <properties>
    <property name="speed_x" type="float" value="0.7"/>
   </properties>
@@ -10118,7 +10118,7 @@
    <tile gid="1610"/>
   </data>
  </layer>
- <layer name="Layer05" width="100" height="25" offsetx="-16" offsety="0">
+ <layer name="Layer05" width="100" height="25">
   <properties>
    <property name="speed_x" type="float" value="0.9"/>
   </properties>
@@ -15132,7 +15132,7 @@
    <tile gid="271"/>
   </data>
  </layer>
- <layer name="MainGround" width="100" height="25" offsetx="-16" offsety="0">
+ <layer name="MainGround" width="100" height="25">
   <properties>
    <property name="speed_x" type="float" value="1"/>
   </properties>
@@ -20148,7 +20148,7 @@
    <tile gid="2236"/>
   </data>
  </layer>
- <objectgroup name="Collisions" offsetx="-16" offsety="0">
+ <objectgroup name="Collisions">
   <properties>
    <property name="speed_x" type="float" value="1"/>
   </properties>
