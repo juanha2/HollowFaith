@@ -65,7 +65,7 @@ bool j1EnemyFly::PreUpdate()
 
 	if (elim)
 	{
-		App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
+		App->audio->PlayFx(10, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 		collider->to_delete = true;
 

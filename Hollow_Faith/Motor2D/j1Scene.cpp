@@ -61,7 +61,7 @@ bool j1Scene::Start()
 	LOG("%i", currentmap);
 	SpawnEnemies();
 
-	//App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
+	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
 	graphics = App->tex->Load("Assets/Sprites/halo.png");
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 
