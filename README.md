@@ -64,9 +64,9 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 ### 2nd Pack Innovations:
 - Extra feature: Throw a rock with parabolic path
 - Skills with cooldown (Rock)
-- Checkpoint autosave
+- Checkpoints autosave
 - Spatial Audio
-- Land Enemies Jump when they detect the floor has end with Pathfinding
+- Land Enemies can jump (when they detect the floor has end with Pathfinding, and if the player is near enough)
 
 ## Member contributions
 
