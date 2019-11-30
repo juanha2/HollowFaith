@@ -115,8 +115,8 @@ bool j1Player::CleanUp()
 	death.Reset();
 
 	return true;
-
 }
+
 // Called each loop iteration
 bool j1Player::PreUpdate()
 {	
@@ -216,7 +216,7 @@ bool j1Player::PreUpdate()
 			if (App->objects->particle->elim)
 			{
 				App->objects->particle->elim = false;
-				App->objects->particle->AddParticle(App->objects->particle->stone, position.x, position.y + entity_collider.h / 4, flip, COLLIDER_STONE, "stone");
+				App->objects->particle->AddParticle(App->objects->particle->stone, position.x, position.y + entity_collider.h / 4, flip, COLLIDER_STONE, 1);
 				App->audio->PlayFx(7, 0, 100);
 			}		
 		}

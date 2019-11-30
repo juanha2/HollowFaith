@@ -59,10 +59,9 @@ public:
 	Animation*			current_animation = nullptr;
 	entityType			type;
 	fPoint				speed;
-	int					num;
+	int					num_bonfire;
 	int					distance;	
 	fPoint				position;
-
 
 	Collider*			collider;
 	bool				ignoreColl = false;

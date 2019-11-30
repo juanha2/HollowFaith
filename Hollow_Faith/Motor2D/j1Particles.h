@@ -13,7 +13,7 @@ struct SDL_Texture;
 
 struct Particle
 {	
-	p2SString name;
+	int id;
 	Collider* collider = nullptr;
 	Animation anim;
 	uint fx = 0;
@@ -46,7 +46,7 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
-	void AddParticle(const Particle& particle, float x, float y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type = COLLIDER_NONE, p2SString name="", Uint32 delay = 0);
+	void AddParticle(const Particle& particle, float x, float y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type = COLLIDER_NONE, int num=0, Uint32 delay = 0);
 
 private:
 

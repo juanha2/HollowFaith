@@ -69,9 +69,7 @@ bool j1Particles::CleanUp()
 
 // Update: draw background
 bool j1Particles::Update(float dt)
-{
-
-	
+{	
 
 	return true;
 }
@@ -109,7 +107,7 @@ bool j1Particles::PostUpdate()
 	return true;
 }
 
-void j1Particles::AddParticle(const Particle& particle, float x, float y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type, p2SString name,Uint32 delay)
+void j1Particles::AddParticle(const Particle& particle, float x, float y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type, int id,Uint32 delay)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -120,7 +118,7 @@ void j1Particles::AddParticle(const Particle& particle, float x, float y, SDL_Re
 			p->position.x = x;
 			p->position.y = y;
 			p->fliped = fliped;
-			p->name = name.GetString();			
+			p->id = id;			
 
 			if (collider_type != COLLIDER_NONE)
 				p->collider = App->coll->AddCollider(p->anim.GetCurrentFrame(0), collider_type, this);
@@ -175,13 +173,13 @@ bool Particle::Update()
 
 	if (life > 0)
 	{
-		if (name == "stone") {
+		if (id == 1) {
 			speed.y++;
 		}
 
 		
 		if ((SDL_GetTicks() - born) > life) {
-			if (name == "stone")
+			if (id == 1)
 			{
 				App->objects->particle->elim = true;
 			}
@@ -196,7 +194,7 @@ bool Particle::Update()
 	position.x += speed.x * App->dt;
 	position.y += speed.y * App->dt;
 
-	if(name == "stone")
+	if(id == 1)
 		speed.y += App->objects->player->gravityForce * (App->dt * DT_CALIBRATED);
 
 	if (collider != nullptr)

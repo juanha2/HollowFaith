@@ -18,7 +18,7 @@ j1Bonfire::j1Bonfire(fPoint pos, int count) : j1Entity(entityType::BONFIRE)
 	if (App->objects->bonfire[count] == nullptr)
 		App->objects->bonfire[count] = this;
 
-	num = count + 1;
+	num_bonfire = count + 1;
 }
 
 
@@ -100,11 +100,11 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 
 	if ((c2->type == COLLIDER_PLAYER))
 	{
-		distance = abs(App->objects->player->position.x - App->objects->bonfire[c1->callback->num - 1]->position.x);
+		distance = abs(App->objects->player->position.x - App->objects->bonfire[c1->callback->num_bonfire - 1]->position.x);
 
 		if (!alreadyCollided)
 		{
-			App->scene->num_checkpoint = c1->callback->num;
+			App->scene->num_checkpoint = c1->callback->num_bonfire;
 			App->scene->checkpoint = true;
 
 			App->audio->PlayFx(9, 0, App->audio->SpatialAudio(100, distance * 2));

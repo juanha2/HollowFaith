@@ -22,9 +22,8 @@ public:
 	Animation light_off;
 	Animation light_on;
 
-
-	bool alreadyCollided;
-
+	bool		alreadyCollided;
+	
 
 public:
 
