@@ -61,6 +61,7 @@ public:
 	p2SString			fire_Fx;
 	p2SString			fuse_Fx;
 	p2SString			death;
+	p2SString			hurt_Fx;
 
 	int					count;
 	

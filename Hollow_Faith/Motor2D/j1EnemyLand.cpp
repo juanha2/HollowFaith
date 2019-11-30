@@ -373,6 +373,7 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 			}
 			else 
 			{
+				App->audio->PlayFx(11, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 				hurtedConsec = true;
 				hurted = true;
 			}

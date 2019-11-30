@@ -57,6 +57,7 @@
       <death_enemyFx path="audio/fx/death_enemy.wav"/>
       <bonfireFx path="audio/fx/bonfire.wav"/>
       <fuseFx path="audio/fx/fuse.wav"/>
+      <hurtFx path="audio/fx/hurt.wav"/>
     </fx>
 
     <animations>

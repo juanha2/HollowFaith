@@ -36,6 +36,7 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 	fire_Fx = fxIterator.child("bonfireFx").attribute("path").as_string();
 	fuse_Fx = fxIterator.child("fuseFx").attribute("path").as_string();
 	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
+	hurt_Fx = fxIterator.child("hurtFx").attribute("path").as_string();
 
 	return ret;
 }
@@ -56,6 +57,7 @@ bool j1EntityManager::Start()
 	App->audio->LoadFx(fire_Fx.GetString());		//8
 	App->audio->LoadFx(fuse_Fx.GetString());		//9
 	App->audio->LoadFx(death.GetString());			//10
+	App->audio->LoadFx(hurt_Fx.GetString());			//11
 
 	return ret;
 }
