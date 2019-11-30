@@ -1,6 +1,8 @@
 ﻿# HollowFaith
 Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM during the "development of videogames" subject. The first level gives you time to adapt to the mechanics, in the second level those skills will be put to test.
 
+*All feedback has been applied at the project. Thanks for it.
+
 ## How to play:
 
 ### General
@@ -10,10 +12,12 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 - D: Move right
 - W: Climb up
 - S: Climb down
-- Space: Jump
+
+- Space: Jump (jump on enemy to eliminate him in only one action (It is dangerous))
 - Hold Space while in air: hover
 
-*When a crow appears, it means you have no sight of landing. You have to max jump and hover everytime you see this bird.
+- N: Throw a rock to hit the enemies. (You need two hits to eliminate them)
+
 
 ## Find this project's repository in:
 https://github.com/juanha2/HollowFaith
@@ -47,6 +51,8 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 
 
 ## Innovations:
+
+### 1rst Pack Innovations:
 - Animation loading from XML
 - Particle effects system
 - Procedural collision system
@@ -54,6 +60,12 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 - Parallax made from Tiled
 - Music path from Tiled Map editor
 - Only blit current Camera Tiles
+
+### 2nd Pack Innovations:
+- Throw a rock with parabolic path
+- Skills with cooldown (Rock)
+- Checkpoint autosave
+- Spatial Audio
 
 ## Member contributions
 
@@ -78,6 +90,10 @@ Aarón Guerrero Cruz
 - Added particles effects in-game
 - Added debug functions
 - Hover mechanic
+- Pathfinding Logic and Sub-systems
+- Delta Time (Cap frames and balancing it)
+- Enemies behavior
+- Brofiler Implementation at the Code
 
 
 ## Debug functionality:
@@ -86,8 +102,10 @@ Aarón Guerrero Cruz
 - F3 ​Start from current level
 - F5 ​Save the current state
 - F6 ​Load the previous state
-- F9​ See paths and colliders
-- F10​ God Mode
+- F9 ​See paths and colliders
+- F10 ​God Mode
+- F11 ​Cap/Uncap Frames
+
 ## License:
 MIT License
 
