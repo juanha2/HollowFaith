@@ -19,6 +19,9 @@ class j1EnemyFly : public j1Enemy
 public:
 
 	Animation animation;	
+
+
+
 public:
 
 	j1EnemyFly();

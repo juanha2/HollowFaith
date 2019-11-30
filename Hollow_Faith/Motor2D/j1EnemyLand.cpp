@@ -81,6 +81,32 @@ bool j1EnemyLand::PreUpdate()
 		App->objects->DeleteEntity();
 	}
 
+	if (hurtedConsec) 
+	{
+		timeConsec += App->dt;
+
+		if (timeConsec <= 0.10f)
+		{
+			SDL_SetTextureColorMod(texture, 255, 0, 0);
+			speed.y = movementForce.y / 3;
+
+			if (flip == SDL_FLIP_NONE)
+				speed.x = -movementForce.y;
+			else
+				speed.x = movementForce.y;
+	
+		}
+		else 
+		{
+			SDL_SetTextureColorMod(texture, 255, 255, 255);
+			speed.x = 0;
+			hurtedConsec = false;
+		}
+		
+	}
+
+
+
 	PositionUpdate(App->dt);
 
 
@@ -337,11 +363,17 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 		if ((c2->type == COLLIDER_STONE))
 		{
-			elim = true;
-
-			App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
-			App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
-
+			if (hurted == true) 
+			{
+				elim = true;
+				App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
+				App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
+			}
+			else 
+			{
+				hurtedConsec = true;
+				hurted = true;
+			}
 		}
 
 		if ((c2->type == COLLIDER_FLOOR))

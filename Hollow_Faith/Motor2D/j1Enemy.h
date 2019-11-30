@@ -31,6 +31,10 @@ public:
 
 	float pathCadency = 0.25f;
 	int pathMinDist = 2;
+
+	bool hurted = false;
+	bool hurtedConsec = false;
+	float timeConsec = 0.0f;
 	
 
 public:
