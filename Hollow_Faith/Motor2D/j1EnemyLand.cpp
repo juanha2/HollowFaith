@@ -94,11 +94,8 @@ bool j1EnemyLand::PreUpdate()
 			SDL_SetTextureColorMod(texture, 255, 255, 255);
 			speed.x = 0;
 			hurtedConsec = false;
-		}
-		
+		}		
 	}
-
-
 
 	PositionUpdate(App->dt);
 
@@ -120,11 +117,9 @@ bool j1EnemyLand::Update(float dt)
 		pathToPlayer.Clear();
 		chase = false;
 	}
-		
+	
 
-
-	if (chase)
-	{	
+	if (chase)	
 		if(!FollowingThePath(movementForce.x, dt)) // Follows the path logic generated
 		{
 			pathToPlayer.Clear();
@@ -133,11 +128,6 @@ bool j1EnemyLand::Update(float dt)
 		
 			chase = false;
 		}
-	}
-	else 
-	{
-		// Apatrullando la ciudad
-	}
 	
 	
 	JumpFallLogic(dt);
@@ -216,8 +206,8 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 	
 	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
-	if (abs(position.x - current.x) > pathMinDist) {
-
+	if ((abs(position.x - current.x) > pathMinDist)) 
+	{
 		if (current.x > position.x)
 		{
 			current_animation = &walk;
@@ -238,7 +228,6 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 			speed.x -= auxSpeed * dt;
 			flip = SDL_FLIP_HORIZONTAL;
 		}
-
 	}
 	else
 	{
@@ -248,59 +237,54 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
 	if (pathToPlayer.Count() > 1)
 	{
-		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 2 };
+		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 2};
 
-		if (App->pathfinding->IsWalkable(next))
+		if (App->pathfinding->IsWalkable(next) && !checkingFall)
 		{
 
-			bool jumpStated = false;
+			iPoint result = { -1, -1 };
 
-			for (uint i = pathToPlayer.Count() - 2; i >= 0; --i)
+			iPoint next = { pathToPlayer.At(pathToPlayer.Count() - 1)->x, pathToPlayer.At(pathToPlayer.Count() - 1)->y + 2 };
+
+			if (App->pathfinding->IsWalkable(next) && !checkingFall)
 			{
-
-				next = { pathToPlayer[i].x, pathToPlayer[i].y + 2 };
-
-				if (!App->pathfinding->IsWalkable(next))
+				for (uint i = pathToPlayer.Count() - 1; i > 0; --i)
 				{
-					jumpStated = true;
-					break;
+					next = { pathToPlayer.At(i)->x, pathToPlayer.At(i)->y + 2 };
+					if (!App->pathfinding->IsWalkable(next))
+					{
+						result = next;
+						break;
+					}
 				}
 			}
 
-			if (jumpStated)
+			iPoint auxNext = result;
+
+			if (auxNext.x != -1 && auxNext.y != -1)
 			{
 
 				if (distance < jumpDistance)
 				{
 					if (canJump)
 					{
-						speed.y = movementForce.y;
-						
-						/*if (flip == SDL_FLIP_NONE)
-							speed.x += 200;
-						else
-							speed.x -= 200;*/
-
+						speed.y = movementForce.y - 20;
 						canJump = false;
 					}
 				}
-				else
+				else 
 				{
 					speed.x = 0;
 					current_animation = &idle;
-				}
-
+				}	
 			}
-
 		}
-
 	}
 
-	if (pathToPlayer.Count() <= 0) 
+	if (pathToPlayer.Count() <= 0)
 		return false;
 	else
 		return true;
-	
 }
 
 void j1EnemyLand::JumpFallLogic(float dt)
@@ -316,9 +300,9 @@ void j1EnemyLand::JumpFallLogic(float dt)
 
 
 	if (flip == SDL_FLIP_NONE && checkingFall)
-		speed.x += movementForce.x * dt;
+		speed.x += (movementForce.x * 10) * dt;
 	else if (flip == SDL_FLIP_HORIZONTAL && checkingFall)
-		speed.x -= movementForce.x * dt;
+		speed.x -= (movementForce.x * 10) * dt;
 
 
 	
@@ -398,6 +382,7 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 				{
 					App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
 					App->audio->PlayFx(5, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
+					speed.x = 0;
 					canJump = true;
 				}
 

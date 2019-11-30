@@ -24,7 +24,7 @@ public:
 	bool checkingFall = false;
 	bool canJump = false;
 
-	int jumpDistance = 150;
+	int jumpDistance = 120;
 
 public:
 
