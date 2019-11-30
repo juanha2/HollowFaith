@@ -27,6 +27,7 @@ public:
 	
 	bool				canJump = false;
 	bool				checkingFall = false;
+
 	int					jumpDistance = 150;
 
 
@@ -65,6 +66,7 @@ public:
 	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
 	bool FollowingThePath(float speed, float dt);
 
+	bool PathJumping();
 	iPoint Stop();
 };
 

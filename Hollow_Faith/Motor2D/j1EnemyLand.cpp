@@ -128,7 +128,18 @@ bool j1EnemyLand::Update(float dt)
 
 	if (chase) 
 	{	
-		if (Stop().x != -1)
+		if (!PathJumping()) 
+		{
+			if (!FollowingThePath(movementForce.x, dt)) // Follows the path logic generated
+			{
+				pathToPlayer.Clear();
+				speed.x = 0;
+				current_animation = &idle;
+
+				chase = false;
+			}
+		}
+		else if (Stop().x != -1)
 		{
 			if (!FollowingThePath(movementForce.x, dt)) // Follows the path logic generated
 			{
@@ -254,9 +265,19 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 	}
 
 
+	
+	if (pathToPlayer.Count() <= 0)
+		return false;
+	else
+		return true;
+}
+
+bool j1EnemyLand::PathJumping() 
+{
+
 	if (pathToPlayer.Count() > 1)
 	{
-		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 2};
+		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 2 };
 
 		if (App->pathfinding->IsWalkable(next) && !checkingFall)
 		{
@@ -270,6 +291,7 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 				for (uint i = pathToPlayer.Count() - 1; i > 0; --i)
 				{
 					next = { pathToPlayer[i].x, pathToPlayer[i].y + 2 };
+
 					if (!App->pathfinding->IsWalkable(next))
 					{
 						result = next;
@@ -282,7 +304,6 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
 			if (auxNext.x != -1 && auxNext.y != -1)
 			{
-
 				if (distance < jumpDistance)
 				{
 					if (canJump)
@@ -291,14 +312,14 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 						canJump = false;
 					}
 				}
+				else
+					return true;
 			}
+			return true;
 		}
 	}
 
-	if (pathToPlayer.Count() <= 0)
-		return false;
-	else
-		return true;
+	return false;
 }
 
 iPoint j1EnemyLand::Stop()
@@ -325,7 +346,6 @@ iPoint j1EnemyLand::Stop()
 
 void j1EnemyLand::JumpFallLogic(float dt)
 {
-
 	//Checking if there is no collision, then apply gravity
 
 	if (checkingFall)
