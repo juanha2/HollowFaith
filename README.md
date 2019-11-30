@@ -80,6 +80,8 @@ Juan Hernández Almagro
 - Camera limits
 - Blit only current map tiles
 - Climb mechanic
+- Creation of entity system
+- Checkpoints logic
 
 Aarón Guerrero Cruz
 - Creation of player time/movement logic system
