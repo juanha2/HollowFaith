@@ -43,6 +43,9 @@ bool j1FadeToBlack::Start()
 // Update: draw background
 bool j1FadeToBlack::PostUpdate()
 {
+
+	BROFILER_CATEGORY("OnlyFadeToBlack_DontPanic", Profiler::Color::GhostWhite);
+
 	if (current_step == fade_step::none)
 		return true;
 

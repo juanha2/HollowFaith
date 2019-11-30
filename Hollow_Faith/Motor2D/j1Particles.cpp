@@ -159,6 +159,8 @@ Particle::~Particle()
 
 bool Particle::Update()
 {
+	BROFILER_CATEGORY("Particle_Update", Profiler::Color::DeepPink);
+
 	bool ret = true;
 
 	if (life > 0)

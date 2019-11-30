@@ -121,6 +121,8 @@ PathNode::PathNode(PathNode& node) : g(node.g), h(node.h), pos(node.pos), parent
 // ----------------------------------------------------------------------------------
 uint PathNode::FindWalkableAdjacents(PathList& list_to_fill)
 {
+	BROFILER_CATEGORY("Searching_Walkable_Adjacents", Profiler::Color::Violet);
+
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 
@@ -193,7 +195,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	BROFILER_CATEGORY("PathfindingLogic", Profiler::Color::Yellow);
+	BROFILER_CATEGORY("CreatingPath_PathfindingScript", Profiler::Color::Yellow);
 
 	if (!IsWalkable(origin) || !IsWalkable(destination))
 		return -1;

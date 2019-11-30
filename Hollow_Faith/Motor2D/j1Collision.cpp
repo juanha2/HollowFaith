@@ -44,6 +44,7 @@ j1Collision::~j1Collision()
 
 bool j1Collision::PreUpdate()
 {
+	BROFILER_CATEGORY("Collisions_PreUpdate", Profiler::Color::SandyBrown);
 
 	// Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -61,6 +62,7 @@ bool j1Collision::PreUpdate()
 // Called before render is available
 bool j1Collision::Update(float dt)
 {
+	BROFILER_CATEGORY("Collisions_Update", Profiler::Color::Brown);
 
 	// Calculate collisions
 	Collider* c1;
@@ -101,6 +103,7 @@ bool j1Collision::Update(float dt)
 
 bool j1Collision::PostUpdate()
 {
+	BROFILER_CATEGORY("Collisions_PostUpdate", Profiler::Color::SaddleBrown);
 
 	DebugDraw();
 	return true;

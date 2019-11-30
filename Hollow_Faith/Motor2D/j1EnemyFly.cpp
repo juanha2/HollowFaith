@@ -109,7 +109,7 @@ bool j1EnemyFly::PreUpdate()
 
 bool j1EnemyFly::Update(float dt)
 {
-	BROFILER_CATEGORY("EnemyPathLogic", Profiler::Color::DarkBlue);
+	BROFILER_CATEGORY("ALL_FlyingEnemyPathLogic", Profiler::Color::DarkBlue);
 
 	bool ret = true;
 
@@ -158,7 +158,7 @@ bool j1EnemyFly::CleanUp()
 
 bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance)
 {
-
+	BROFILER_CATEGORY("FlyingEnemy_GENERATING_PathLogic", Profiler::Color::Blue);
 	timer += dt;
 
 	distance = abs(App->objects->player->position.x - position.x);
@@ -200,6 +200,8 @@ bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance
 }
 
 bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
+
+	BROFILER_CATEGORY("FlyingEnemy_FOLLOWING_PathLogic", Profiler::Color::CadetBlue);
 
 	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 

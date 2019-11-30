@@ -39,6 +39,7 @@ bool j1EntityManager::Start()
 
 bool j1EntityManager::PreUpdate()
 {
+	BROFILER_CATEGORY("AllEntities_PreUpdate", Profiler::Color::PaleTurquoise);
 
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
@@ -52,6 +53,7 @@ bool j1EntityManager::PreUpdate()
 }
 bool j1EntityManager::Update(float dt)
 {
+	BROFILER_CATEGORY("AllEntities_Update", Profiler::Color::Turquoise);
 
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
@@ -66,6 +68,8 @@ bool j1EntityManager::Update(float dt)
 
 bool j1EntityManager::PostUpdate()
 {
+	BROFILER_CATEGORY("AllEntities_PostUpdate", Profiler::Color::DarkTurquoise);
+
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)

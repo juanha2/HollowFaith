@@ -72,39 +72,15 @@ bool j1Scene::Start()
 }
 
 // Called each loop iteration
-bool j1Scene::PreUpdate()
-{
-
-	// debug pathfing ------------------
-	static iPoint origin;
-	static bool origin_selected = false;
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if (origin_selected == true)
-		{
-			App->pathfinding->CreatePath(origin, p);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
-		}
-	}
-
+bool j1Scene::PreUpdate() {
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+
+	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
 	{ // Start at the level 1 begin
@@ -177,13 +153,17 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
+
+	BROFILER_CATEGORY("Scene_PostUpdate", Profiler::Color::DarkOliveGreen);
+
 	bool ret = true;
 	SDL_Rect rect = { 0,0, App->win->screen_surface->w / App->win->scale, App->win->screen_surface->h / App->win->scale };
 	App->render->Blit(graphics, -App->render->camera.x, -App->render->camera.y, &rect, App->win->GetScale(), App->win->GetScale()); // Printing player texture
 
 	static char title[256];
-	sprintf_s(title, 256, "%s || Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
-		App->GetTitle(), App->avg_fps, App->last_frame_ms, App->frames_on_last_update, App->seconds_since_startup, App->frame_count);
+	sprintf_s(title, 256, "%s || Actual FPS: %i | Av.FPS: %.2f Last Frame Ms: %02u Time since startup: %.3f Frame Count: %lu ",
+		App->GetTitle(), App->frames_on_last_update , App->avg_fps, App->last_frame_ms, App->seconds_since_startup, App->frame_count);
+
 	App->win->SetTitle(title);
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -236,6 +216,8 @@ bool j1Scene::Load(pugi::xml_node& save)
 }
 
 void j1Scene::SpawnEnemies() {
+
+	BROFILER_CATEGORY("SpawningEnemies", Profiler::Color::PapayaWhip);
 
 	for (p2List_item<ObjectsGroup*>* object = App->map->data.objectgroups.start; object; object = object->next)
 	{

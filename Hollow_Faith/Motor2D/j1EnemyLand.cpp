@@ -116,7 +116,7 @@ bool j1EnemyLand::PreUpdate()
 
 bool j1EnemyLand::Update(float dt)
 {
-	BROFILER_CATEGORY("EnemyPathLogic", Profiler::Color::DarkBlue);
+	BROFILER_CATEGORY("ALL_LandEnemyPathLogic", Profiler::Color::DarkGreen);
 
 	bool ret = true;
 
@@ -171,6 +171,7 @@ bool j1EnemyLand::CleanUp()
 
 bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance)
 {
+	BROFILER_CATEGORY("LandEnemy_GENERATING_PathLogic", Profiler::Color::ForestGreen);
 
 	timer += dt;
 
@@ -211,6 +212,7 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
+	BROFILER_CATEGORY("LandEnemy_FOLLOWING_PathLogic", Profiler::Color::Green);
 	
 	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
