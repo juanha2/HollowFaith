@@ -111,6 +111,7 @@ bool j1Player::CleanUp()
 {	
 	LOG("CLEANUP PLAYER");
 	App->audio->UnLoad();
+	App->tex->UnLoad(texture);
 	death.Reset();
 
 	return true;

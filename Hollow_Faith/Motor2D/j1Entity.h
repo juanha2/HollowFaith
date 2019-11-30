@@ -44,7 +44,7 @@ public:
 	virtual bool Update(float dt) { return true; };
 	virtual bool PostUpdate() { return true; };	
 
-	virtual bool CleanUp();
+	virtual bool CleanUp() { return true; };
 	virtual void Save(pugi::xml_node& file) const {};
 	virtual void Load(pugi::xml_node& file) {};	
 	

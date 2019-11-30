@@ -36,8 +36,7 @@ public:
 
 	j1Entity* AddEntity(j1Entity::entityType type, fPoint position);
 	void DeleteEntities();
-	void DeleteEntity();
-	
+	void DeleteEntity();	
 
 	void OnCollision(Collider* c1, Collider* c2) {};
 
@@ -62,7 +61,7 @@ public:
 	p2SString			fuse_Fx;
 	p2SString			death;
 	p2SString			hurt_Fx;
-
+	
 	int					count;
 	
 };

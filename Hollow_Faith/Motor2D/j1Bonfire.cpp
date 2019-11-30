@@ -61,7 +61,7 @@ bool j1Bonfire::Start()
 // Called before quitting
 bool j1Bonfire::CleanUp()
 {
-
+	App->tex->UnLoad(texture);
 	App->audio->UnLoad();	
 
 	return true;

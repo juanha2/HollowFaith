@@ -54,11 +54,11 @@ bool j1Scene::Start()
 			RELEASE_ARRAY(data);
 		}
 	}
-
+	
 	App->objects->DeleteEntities();
 	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
 	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
-	LOG("%i", currentmap);
+	
 	SpawnEnemies();
 
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
@@ -184,11 +184,13 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");		
 	
+	App->audio->UnLoad();
 	App->objects->DeleteEntities();
+	//App->objects->CleanUp();
 	App->tex->UnLoad(graphics);
-	App->tex->UnLoad(debug_tex);
-	App->tex->CleanUp();
+	App->tex->UnLoad(debug_tex);	
 	App->coll->CleanUp();
+	App->tex->CleanUp();
 
 	return true;
 }

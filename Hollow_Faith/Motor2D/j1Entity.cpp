@@ -47,8 +47,3 @@ void j1Entity::CollisionPosUpdate()
 	collider->SetPos((int)position.x, (int)position.y);
 }
 
-bool j1Entity::CleanUp()
-{
-	App->tex->UnLoad(texture);
-	return true;
-}

@@ -8,6 +8,7 @@
 #include "p2Log.h"
 #include "j1EntityManager.h"
 #include "j1Entity.h"
+#include "j1Audio.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -51,7 +52,8 @@ bool j1Particles::Start()
 // Unload assets
 bool j1Particles::CleanUp()
 {
-
+	App->tex->UnLoad(texture);
+	
 	// Unloading particles
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -69,6 +71,16 @@ bool j1Particles::CleanUp()
 bool j1Particles::Update(float dt)
 {
 
+	
+
+	return true;
+}
+
+
+bool j1Particles::PostUpdate()
+{
+
+	
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		Particle* p = active[i];
@@ -85,8 +97,8 @@ bool j1Particles::Update(float dt)
 
 		else if (SDL_GetTicks() >= p->born)
 		{
-			
-			App->render->Blit(texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame(dt)), 1.0, 1.0, p->fliped, NULL, entity_collider.w / 2);
+
+			App->render->Blit(texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame(App->dt)), 1.0, 1.0, p->fliped, NULL, entity_collider.w / 2);
 			if (p->fx_played == false)
 			{
 				// Play particle fx here
@@ -94,10 +106,8 @@ bool j1Particles::Update(float dt)
 			}
 		}
 	}
-
 	return true;
 }
-
 
 void j1Particles::AddParticle(const Particle& particle, float x, float y, SDL_RendererFlip fliped, COLLIDER_TYPE collider_type, p2SString name,Uint32 delay)
 {
