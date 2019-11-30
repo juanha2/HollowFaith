@@ -66,7 +66,7 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 - Skills with cooldown (Rock)
 - Checkpoints autosave
 - Spatial Audio
-- Land Enemies can jump (when they detect the floor has end with Pathfinding, and if the player is near enough)
+- Land Enemies can jump (when they detect the floor has end with Pathfinding or if the player is higher, and if the player is near enough)
 
 ## Member contributions
 
