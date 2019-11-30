@@ -87,7 +87,8 @@ private:
 
 public:
 
-	// Modules
+	// - - - - MODULES - - - -
+
 	j1Window*			win;
 	j1Input*			input;
 	j1Render*			render;
@@ -101,6 +102,8 @@ public:
 	j1EntityManager*	objects;
 
 
+	// - - - - DELTA TIME - - - -
+
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
 	j1Timer				startup_time;
@@ -109,25 +112,37 @@ public:
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
 	uint32				frames_on_last_update;
+	uint32				last_frame_ms;
 	float				avg_fps;
 	float				seconds_since_startup;
 	float				dt;
 
 
+	// - - - - FRAMERATE CAP - - - -
+
 	uint32				frameratecap;
 	uint32				desiredFrameratecap;
-	uint32				last_frame_ms;
+	
 
 
 private:
+
+
+	// - - - - APP BASICS - - - -
 
 	p2List<j1Module*>	modules;
 	uint				frames;
 	int					argc;
 	char**				args;
 
+
+	// - - - - INFO - - - -
+
 	p2SString			title;
 	p2SString			organization;
+
+
+	// - - - - LOAD/SAVING - - - -
 
 	mutable bool		want_to_save;
 	bool				want_to_load;
@@ -135,6 +150,6 @@ private:
 	mutable p2SString	save_game;
 };
 
-extern j1App* App; // No student is asking me about that ... odd :-S
+extern j1App* App; 
 
 #endif

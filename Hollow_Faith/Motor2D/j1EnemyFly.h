@@ -18,8 +18,9 @@ class j1EnemyFly : public j1Enemy
 
 public:
 
-	Animation animation;	
+	// - - - - ANIMATIONS - - - -
 
+	Animation			animation;	
 
 
 public:
@@ -44,10 +45,14 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-	
+
+	void OnCollision(Collider* c1, Collider* c2);
+
+
+	// - - - - PATHFINDING LAND ENEMY LOGIC - - - -
+
 	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
 	bool FollowingThePath(float speed, float dt);
-	void OnCollision(Collider* c1, Collider* c2);
 
 };
 

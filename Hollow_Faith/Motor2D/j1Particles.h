@@ -13,16 +13,27 @@ struct SDL_Texture;
 
 struct Particle
 {	
+	// - - - - PARTICLE BASICS - - - -
+
 	int id;
+	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 	Collider* collider = nullptr;
 	Animation anim;
 	uint fx = 0;
+	bool fx_played = false;
+
+
+	// - - - - MOBILITY - - - -
+
 	fPoint position;
 	fPoint speed;
+
+
+	// - - - - LIFE - - - -
+
 	Uint32 born = 0;
 	Uint32 life = 0;
-	bool fx_played = false;
-	SDL_RendererFlip fliped = SDL_FLIP_NONE;
+	
 
 	Particle();
 	Particle(const Particle& p);
@@ -50,20 +61,31 @@ public:
 
 private:
 
-	uint last_particle = 0;
-	Uint32 defaultParticleLife = 200;
-	Uint32 stoneLife = 1000;
-	Uint32 deathlife = 500;
+	// - - - - PARTICLES - - - -
+
+	uint		last_particle = 0;
+
+
+	// - - - - DESTROY - - -
+
+	Uint32		defaultParticleLife = 200;
+	Uint32		stoneLife = 1000;
+	Uint32		deathlife = 500;
 
 public:
 
-	Particle* active[MAX_ACTIVE_PARTICLES];
-	Particle dustJumping;
-	Particle dustRunning;
-	Particle stone;
-	Particle death;
+	// - - - - PARTICLES - - - -
 
-	bool elim;
+	Particle*	active[MAX_ACTIVE_PARTICLES];
+	Particle	dustJumping;
+	Particle	dustRunning;
+	Particle	stone;
+	Particle	death;
+
+
+	// - - - - DESTROY - - -
+
+	bool		elim;
 
 };
 

@@ -18,19 +18,22 @@ class j1EnemyLand : public j1Enemy
 {
 
 public:
+	// - - - - ANIMATIONS - - - -
+
 	Animation idle;
 	Animation walk;
 
-	bool checkingFall = false;
-	bool canJump = false;
-
-	int jumpDistance = 120;
+	// - - - - TRIGGERS - - - -
+	
+	bool				canJump = false;
+	bool				checkingFall = false;
+	int					jumpDistance = 120;
 
 
 	//  - - - - SPEED - - - - 
 
-	void				speedLimitChecker();					// Player limit speed in AXIS
-	fPoint				speedLimit;								// Player max speed value
+	void				speedLimitChecker();					// Enemy limit speed in AXIS
+	fPoint				speedLimit;								// Enemy max speed value
 
 public:
 
@@ -54,11 +57,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
-	bool FollowingThePath(float speed, float dt);
-
 	void JumpFallLogic(float dt);
 	void OnCollision(Collider* c1, Collider* c2);
+
+	// - - - - PATHFINDING LAND ENEMY LOGIC - - - -
+
+	bool GeneratingThePath(float timer, float dt, int auxAgroDistance);
+	bool FollowingThePath(float speed, float dt);
 };
 
 #endif // __ENEMYLAND_H_

@@ -56,27 +56,39 @@ public:
 
 public:
 	
-	Animation*			current_animation = nullptr;
+	// - - - - ENTITY BASICS - - - -
+
 	entityType			type;
-	fPoint				speed;
-	int					num_bonfire;
-	int					distance;	
-	fPoint				position;
 
 	Collider*			collider;
-	bool				ignoreColl = false;
-	bool				godMode = false;
-	float				Acceleration;						// Player acceleration AXIS value
-	SDL_RendererFlip	flip = SDL_RendererFlip::SDL_FLIP_NONE;
-
 	SDL_Rect			entity_collider;
-	
+
 	p2SString			texture_path;
 	SDL_Texture*		texture;
-	bool				elim = false;
-	fPoint				savedPosition;
+	SDL_RendererFlip	flip = SDL_RendererFlip::SDL_FLIP_NONE;
 
-	float				gravityForce = 30.0f; // World gravity
+	bool				ignoreColl = false;
+	bool				godMode = false;
+
+	bool				elim = false;
+
+	// - - - - MOBILITY - - - -
+
+	fPoint				speed;
+	fPoint				position;
+	float				Acceleration;
+
+	int					distance;
+
+	// - - - - ANIMATIONS - - - -
+
+	Animation*			current_animation = nullptr;
+	
+	
+	// - - - - WORLD - - - -
+	
+	fPoint				savedPosition;
+	int					num_bonfire;
 	
 };
 

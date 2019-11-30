@@ -17,36 +17,41 @@ class j1Enemy : public j1Entity
 
 public:
 	
-	p2DynArray<iPoint> pathToPlayer;
-	fPoint originalPos;
-	fPoint	movementForce = { 80.0f, -420.0f };
+	// - - - - PATHFINDING - - - -
 
-	float timer;
+	p2DynArray<iPoint>		pathToPlayer;
+	float					pathCadency = 0.5f;
+	int						pathMinDist = 16;
+	int						agroDistance = 200;
 
-	bool chase = false;
+	float					timer;
+	bool					chase = false;
 
-	
-	int agroDistance = 200;	
 
-	float pathCadency = 0.5f;
-	int pathMinDist = 16;
+	// - - - - MOBILITY - - - -
 
-	bool hurted = false;
-	bool hurtedConsec = false;
-	float timeConsec = 0.0f;
+	fPoint					originalPos;
+	fPoint					movementForce = { 80.0f, -420.0f };
+
+
+	// - - - - FIGHT - - - -
+
+	bool					hurted = false;
+	bool					hurtedConsec = false;
+	float					timeConsec = 0.0f;
 	
 
 public:
 
 	j1Enemy(j1Entity::entityType type);
 	j1Enemy(j1Entity::entityType type, fPoint pos);
+
 	// Destructor
 	~j1Enemy();
 
 	void Load(pugi::xml_node& file);
 	void Save(pugi::xml_node& file) const;
 
-	
 };
 
 #endif // __ENEMY_H__

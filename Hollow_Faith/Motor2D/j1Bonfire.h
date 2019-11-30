@@ -19,10 +19,15 @@ class j1Bonfire : public j1Entity
 
 public:
 
-	Animation light_off;
-	Animation light_on;
+	// - - - - ANIMATIONS  - - - -
 
-	bool		alreadyCollided;
+	Animation		light_off;
+	Animation		light_on;
+
+
+	// - - - - TRIGGERS - - - -
+
+	bool			alreadyCollided;
 	
 
 public:
@@ -51,9 +56,6 @@ public:
 	void Save(pugi::xml_node& file) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
-
-
-
 };
 
 #endif //  __j1BONFIRE_H__
