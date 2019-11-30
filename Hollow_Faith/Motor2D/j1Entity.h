@@ -72,6 +72,7 @@ public:
 
 	bool				elim = false;
 
+
 	// - - - - MOBILITY - - - -
 
 	fPoint				speed;
@@ -79,6 +80,7 @@ public:
 	float				Acceleration;
 
 	int					distance;
+
 
 	// - - - - ANIMATIONS - - - -
 
@@ -89,7 +91,7 @@ public:
 	
 	fPoint				savedPosition;
 	int					num_bonfire;
-	float				gravityForce = 30.0f; // World gravity
+	float				gravityForce = 30.0f;
 	
 };
 
