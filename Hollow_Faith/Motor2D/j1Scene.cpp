@@ -97,6 +97,11 @@ bool j1Scene::Update(float dt)
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
 	
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
+	{ // Start at the current level begin
+		checkpoint = false;
+		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) 
 	{ // Save State
