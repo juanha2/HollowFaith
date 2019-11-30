@@ -82,7 +82,7 @@ bool j1Bonfire::Update(float dt)
 	if (App->scene->checkpoint)
 		distance = abs(App->objects->player->position.x - App->objects->bonfire[App->scene->num_checkpoint - 1]->position.x);
 
-	Mix_Volume(3, App->audio->SpatialAudio(100, this->distance / 2));
+	Mix_Volume(3, App->audio->SpatialAudio(100, this->distance));
 	
 
 	return true;
