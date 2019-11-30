@@ -299,9 +299,9 @@ void j1EnemyLand::JumpFallLogic(float dt)
 	}
 
 
-	if (flip == SDL_FLIP_NONE && checkingFall)
+	if (flip == SDL_FLIP_NONE && !canJump)
 		speed.x += (movementForce.x * 10) * dt;
-	else if (flip == SDL_FLIP_HORIZONTAL && checkingFall)
+	else if (flip == SDL_FLIP_HORIZONTAL && !canJump)
 		speed.x -= (movementForce.x * 10) * dt;
 
 
@@ -356,11 +356,13 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 				App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 			}
 			else 
-			{
-				App->audio->PlayFx(11, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
+			{			
 				hurtedConsec = true;
 				hurted = true;
 			}
+
+
+			App->audio->PlayFx(11, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 		}
 
 		if ((c2->type == COLLIDER_FLOOR))
