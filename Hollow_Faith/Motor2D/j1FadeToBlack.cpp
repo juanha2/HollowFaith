@@ -11,6 +11,7 @@
 #include "j1Textures.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
+#include "j1Input.h"
 
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
@@ -59,7 +60,10 @@ bool j1FadeToBlack::PostUpdate()
 		if (now >= total_time)
 		{
 			App->objects->Disable();			
-			App->scene->Disable();		
+			App->scene->Disable();
+			App->input->blockingInput();
+			App->input->Disable();
+			
 					
 			if (App->map->Reset()) {
 				
@@ -88,8 +92,12 @@ bool j1FadeToBlack::PostUpdate()
 	{
 		normalized = 1.0f - normalized;	
 		black_screen = false;
-		if (now >= total_time)
+		if (now >= total_time) 
+		{
 			current_step = fade_step::none;
+			App->input->Enable();
+		}
+			
 	} break;
 	}
 
