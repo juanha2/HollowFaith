@@ -18,7 +18,6 @@ class j1EnemyLand : public j1Enemy
 {
 
 public:
-
 	Animation idle;
 	Animation walk;
 

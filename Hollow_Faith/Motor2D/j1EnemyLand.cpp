@@ -225,7 +225,7 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 		if (App->pathfinding->IsWalkable(next))
 		{
 
-			bool foundIt = false;
+			bool jumpStated = false;
 
 			for (uint i = pathToPlayer.Count() - 2; i >= 0; --i)
 			{
@@ -234,14 +234,13 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
 				if (!App->pathfinding->IsWalkable(next))
 				{
-					foundIt = true;
+					jumpStated = true;
 					break;
 				}
 			}
 
-			if (foundIt)
+			if (jumpStated)
 			{
-				LOG("WE ARE JUMPING BOIZ %d", distance);
 
 				if (distance < 100)
 				{

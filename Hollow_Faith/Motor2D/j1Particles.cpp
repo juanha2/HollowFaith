@@ -177,7 +177,6 @@ bool Particle::Update()
 			ret = false;
 		}
 	}
-
 	else
 		if (anim.Finished())
 			ret = false;
@@ -186,7 +185,6 @@ bool Particle::Update()
 	position.y += speed.y * App->dt;
 
 	speed.y += App->objects->player->gravityForce * (App->dt * DT_CALIBRATED);
-
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
