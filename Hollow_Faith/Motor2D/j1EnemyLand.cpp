@@ -113,8 +113,15 @@ bool j1EnemyLand::Update(float dt)
 
 	bool ret = true;
 
+	if (canJump)
+		GeneratingThePath(pathCadency, dt, agroDistance); // Generates a path with a X cadency, using the time and only when the distance between player and enemy is X
+	else 
+	{
+		pathToPlayer.Clear();
+		chase = false;
+	}
+		
 
-	GeneratingThePath(pathCadency, dt, agroDistance); // Generates a path with a X cadency, using the time and only when the distance between player and enemy is X
 
 	if (chase)
 	{	
@@ -269,10 +276,10 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 					{
 						speed.y = movementForce.y;
 						
-						if (flip == SDL_FLIP_NONE)
+						/*if (flip == SDL_FLIP_NONE)
 							speed.x += 200;
 						else
-							speed.x -= 200;
+							speed.x -= 200;*/
 
 						canJump = false;
 					}
