@@ -16,7 +16,7 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 - Space: Jump (jump on enemy to eliminate him in only one action (It is dangerous))
 - Hold Space while in air: hover
 
-- J: Throw a rock to hit the enemies. (You need two hits to eliminate them)
+- K: Throw a rock to hit the enemies. (You need two hits to eliminate them)
 
 
 ## Find this project's repository in:
