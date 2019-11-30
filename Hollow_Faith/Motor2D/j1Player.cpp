@@ -415,12 +415,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	}
 
 		// - - - - - - - CHECK COLLISIONS - - - - - - - 
-
-	if ((c2->type == COLLIDER_BONFIRE))
-	{
-		App->scene->checkpointpos = c2->callback->position;		
-	}
-
+	
 		if (ignoreColl == false) {
 
 			if ((c2->type == COLLIDER_DEATH))

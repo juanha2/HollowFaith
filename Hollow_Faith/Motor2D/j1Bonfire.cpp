@@ -104,6 +104,7 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 
 		if (!alreadyCollided)
 		{
+			App->scene->checkpointpos = position;
 			App->scene->num_checkpoint = c1->callback->num_bonfire;
 			App->scene->checkpoint = true;
 
@@ -122,12 +123,33 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 // Load Game State
 void j1Bonfire::Load(pugi::xml_node& data)
 {
+	App->scene->num_checkpoint = data.attribute("num").as_int();
+
+	if (App->scene->num_checkpoint == 0) {
+		App->objects->bonfire[App->scene->num_checkpoint]->current_animation = &light_off;
+		alreadyCollided = false;
+		App->scene->checkpoint = false;
+	}
+	else if (App->scene->num_checkpoint == 1) {
+		App->objects->bonfire[App->scene->num_checkpoint - 1]->current_animation = &light_on;
+		App->objects->bonfire[App->scene->num_checkpoint]->current_animation = &light_off;
+		App->scene->checkpointpos = App->objects->bonfire[App->scene->num_checkpoint - 1]->position;
+		App->scene->num_checkpoint = 1;
+		alreadyCollided = false;
+	}
+	else if (App->scene->num_checkpoint == 2) {
+		App->objects->bonfire[App->scene->num_checkpoint - 1]->current_animation = &light_on;
+		App->scene->checkpointpos = App->objects->bonfire[App->scene->num_checkpoint - 1]->position;
+		App->scene->num_checkpoint = 2;
+		alreadyCollided = false;
+	}
 
 }
 
 // Save Game State
 void j1Bonfire::Save(pugi::xml_node& data) const
 {
-	
+	pugi::xml_node checkp = data.append_child("Bonfire");
+	checkp.append_attribute("num").set_value(App->scene->num_checkpoint);
 
 }

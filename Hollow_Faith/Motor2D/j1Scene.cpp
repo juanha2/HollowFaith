@@ -66,6 +66,7 @@ bool j1Scene::Start()
 
 	ready_to_load = false;
 	sound_repeat = false;
+	num_checkpoint = 0;
 	App->render->camera = App->render->camera_init; //Sets camera on inicial position.
 	return true;
 }
@@ -104,12 +105,12 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) 
 	{ // Save State
-		App->SaveGame();
+		App->SaveGame();		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
 	{ // Load State				
-		App->LoadGame();
+		App->LoadGame();		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
@@ -211,7 +212,9 @@ bool j1Scene::Load(pugi::xml_node& save)
 	{
 		currentmap = savedcurrentmap;
 		different_map = true;
-
+		App->objects->player->ignoreColl = true;
+		App->objects->player->speed = { 0,0 };
+		App->objects->player->gravityForce = 0.0f;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[savedcurrentmap - 1]->name.GetString(), 1.0f);
 	
 	}	
