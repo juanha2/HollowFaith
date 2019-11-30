@@ -24,6 +24,8 @@ public:
 	bool checkingFall = false;
 	bool canJump = false;
 
+	int jumpDistance = 150;
+
 public:
 
 	j1EnemyLand();

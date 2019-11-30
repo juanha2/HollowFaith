@@ -242,11 +242,17 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 			if (jumpStated)
 			{
 
-				if (distance < 100)
+				if (distance < jumpDistance)
 				{
 					if (canJump)
 					{
 						speed.y = movementForce.y;
+						
+						if (flip == SDL_FLIP_NONE)
+							speed.x += 200;
+						else
+							speed.x -= 200;
+
 						canJump = false;
 					}
 				}

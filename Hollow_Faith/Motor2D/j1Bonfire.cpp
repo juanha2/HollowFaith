@@ -86,9 +86,6 @@ bool j1Bonfire::PreUpdate()
 bool j1Bonfire::Update(float dt)
 {
 	this->distance = abs(App->objects->player->position.x - this->position.x);
-
-	LOG("%d", this->distance);
-
 	Mix_Volume(3, App->audio->SpatialAudio(100, this->distance / 2));
 	
 
