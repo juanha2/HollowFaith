@@ -149,8 +149,7 @@ bool j1EnemyFly::PostUpdate()
 
 bool j1EnemyFly::CleanUp()
 {
-	App->tex->UnLoad(texture);
-	App->audio->UnLoad();
+	App->tex->UnLoad(texture);	
 	return true;
 }
 

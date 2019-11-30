@@ -16,6 +16,7 @@ j1Particles::j1Particles() : j1Entity(entityType::STONE)
 {
 	if (App->objects->particle == nullptr)
 		App->objects->particle = this;
+	
 }
 
 j1Particles::~j1Particles()
@@ -85,7 +86,7 @@ bool j1Particles::PostUpdate()
 
 		else if (SDL_GetTicks() >= p->born)
 		{
-
+			
 			App->render->Blit(texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame(App->dt)), 1.0, 1.0, p->fliped, NULL, entity_collider.w / 2);
 			if (p->fx_played == false)
 			{
