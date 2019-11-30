@@ -151,7 +151,7 @@ bool j1Player::PreUpdate()
 		}
 
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // Pressing A (Running)
-			speed.x += movementForce.x;
+			speed.x += movementForce.x * (App->dt * DT_CALIBRATED);
 			flip = SDL_FLIP_HORIZONTAL;
 			inputs.add(IN_WALK_LEFT);
 		}
@@ -159,7 +159,7 @@ bool j1Player::PreUpdate()
 			inputs.add(IN_LEFT_UP);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) { // Pressing D (Running)
-			speed.x -= movementForce.x;
+			speed.x -= movementForce.x * (App->dt * DT_CALIBRATED);
 			flip = SDL_FLIP_NONE;
 			inputs.add(IN_WALK_RIGHT);
 		}		
