@@ -204,7 +204,7 @@ bool j1Player::PreUpdate()
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP ) { // Releasing Space
 
 		}
-		if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN && !can_climb) {
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && !can_climb) {
 
 			if (flip)
 				App->objects->particle->stone.speed.x = -200;
