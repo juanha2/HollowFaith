@@ -2,8 +2,6 @@
 #include "p2Log.h"
 #include "j1EntityManager.h"
 #include "j1App.h"
-#include "j1Enemy.h"
-#include "j1Scene.h"
 #include "p2Point.h"
 
 j1Checkpoint::j1Checkpoint() {

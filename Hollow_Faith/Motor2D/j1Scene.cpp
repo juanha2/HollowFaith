@@ -203,6 +203,10 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
+
+// ----------------------------------------------------------------------------------
+// Save Game State
+// ----------------------------------------------------------------------------------
 bool j1Scene::Save(pugi::xml_node& save) const
 {
 
@@ -212,6 +216,10 @@ bool j1Scene::Save(pugi::xml_node& save) const
 	return true;
 }
 
+
+// ----------------------------------------------------------------------------------
+// Load Game State
+// ----------------------------------------------------------------------------------
 bool j1Scene::Load(pugi::xml_node& save)
 {
 	savedcurrentmap = save.child("currentmap").attribute("value").as_int();	

@@ -9,16 +9,7 @@ struct SDL_Texture;
 class j1Scene : public j1Module
 {
 public:
-
-	bool			debug = false;
-	SDL_Texture*	debug_tex;
-	int				currentmap;
-	int				savedcurrentmap;
-	bool			different_map = false;
-	bool			ready_to_load = false;
-	bool			sound_repeat = false;
-	bool			first = true;
-
+	
 	j1Scene();
 
 	// Destructor
@@ -50,6 +41,18 @@ public:
 
 	void sceneswitch();	
 
+public:
+
+	// - - - - SCENE DATA - - - -
+
+	bool			debug = false;
+	SDL_Texture*	debug_tex;
+	int				currentmap;
+	int				savedcurrentmap;
+	bool			different_map = false;
+	bool			ready_to_load = false;
+	bool			sound_repeat = false;
+	bool			first = true;
 };
 
 #endif // __j1SCENE_H__

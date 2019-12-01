@@ -8,10 +8,8 @@
 #include "j1Particles.h"
 #include "j1Collision.h"
 #include "j1Player.h"
-#include "j1Map.h"
 #include "j1Window.h"
 #include "j1Scene.h"
-#include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
 #include "j1Checkpoint.h"
 
@@ -68,9 +66,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 	entity_collider.x = dataIterator.child("collider").attribute("x").as_int();
 	entity_collider.y = dataIterator.child("collider").attribute("y").as_int();
 	entity_collider.w = dataIterator.child("collider").attribute("w").as_int();
-	entity_collider.h = dataIterator.child("collider").attribute("h").as_int();
-
-	
+	entity_collider.h = dataIterator.child("collider").attribute("h").as_int();	
 
 	return ret;
 }
@@ -78,20 +74,25 @@ bool j1Player::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Player::Start()
 {
+	//Loading texture and collider
 	texture = App->tex->Load(texture_path.GetString());
 	collider = new Collider(entity_collider, COLLIDER_PLAYER, this);
 	App->coll->AddColliderEntity(collider);	
+
+	// Setting initial values
 	win = false;
 	dead = false;
 	death.Reset();
 	current_state = ST_AT_AIR;
 	current_animation = &idle;
 
-	if (App->scene->different_map) { //We make sure to load all positions when F6 is pressed and we are changing scene
+	//We make sure to load all positions when F6 is pressed and we are changing scene
+	if (App->scene->different_map) { 
 
 		App->LoadGame();
 		App->scene->different_map = false;
 	}
+
 	else
 	{
 		if (App->checkpoint->checkpoint) 			
@@ -107,6 +108,7 @@ bool j1Player::Start()
 // Called before quitting
 bool j1Player::CleanUp()
 {	
+	//Unloading data
 	LOG("CLEANUP PLAYER");
 	App->audio->UnLoad();
 	App->tex->UnLoad(texture);
@@ -120,7 +122,6 @@ bool j1Player::PreUpdate()
 {	
 	
 	if (!dead) {
-
 		
 		//		- - - - - - PLAYER INPUTS - - - - - - 
 
@@ -420,9 +421,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	detectCollDir[DIR_UP] = (c2->rect.y + c2->rect.h) - position.y;
 	detectCollDir[DIR_DOWN] = (position.y + entity_collider.h) - c2->rect.y;
 	detectCollDir[DIR_RIGHT] = (position.x + entity_collider.w) - c2->rect.x;
-	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - position.x;
-	
-		
+	detectCollDir[DIR_LEFT] = (c2->rect.x + c2->rect.w) - position.x;		
 		
 	int dirCheck = DIR_UNKNOWN;
 

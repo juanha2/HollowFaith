@@ -7,12 +7,9 @@
 #include "j1Render.h"
 #include "j1Map.h"
 #include "j1Scene.h"
-#include "j1Audio.h"
-#include "j1Textures.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "j1Input.h"
-
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 

@@ -8,13 +8,11 @@
 #include "j1Render.h"
 #include "j1Particles.h"
 #include "j1Collision.h"
-#include "j1Player.h"
 #include "j1Map.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
-#include "j1Enemy.h"
-#include "j1Scene.h"
 #include "j1EnemyLand.h"
+#include "j1Scene.h"
 
 j1EnemyLand::j1EnemyLand() : j1Enemy(entityType::ENEMY_LAND) {}
 
@@ -61,9 +59,8 @@ bool j1EnemyLand::Start()
 {
 	bool ret = true;
 
+	// Loading Texture and collider
 	texture = App->tex->Load(texture_path.GetString());
-
-	//Creating the collider
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 	App->coll->AddColliderEntity(collider);
 
@@ -200,6 +197,7 @@ bool j1EnemyLand::PostUpdate()
 
 bool j1EnemyLand::CleanUp()
 {
+	//Unloading data
 	App->tex->UnLoad(texture);
 	return true;
 }

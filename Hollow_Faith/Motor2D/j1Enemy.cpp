@@ -1,10 +1,7 @@
-#include "p2Defs.h"
-#include "p2Log.h"
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
-#include "j1Render.h"
 #include "j1Particles.h"
 #include "j1Collision.h"
 #include "j1Player.h"
@@ -14,6 +11,7 @@
 #include "j1Enemy.h"
 #include "j1Scene.h"
 #include "j1EnemyFly.h"
+#include "j1Player.h"
 #include "j1Checkpoint.h"
 
 
@@ -30,24 +28,27 @@ j1Enemy::j1Enemy(j1Entity::entityType type, fPoint pos) : j1Entity(type)
 
 j1Enemy::~j1Enemy() {};
 
-// Load Enemies State
+
+// ----------------------------------------------------------------------------------
+// Load Game State
+// ----------------------------------------------------------------------------------
 bool j1Enemy::Load(pugi::xml_node& data)
 {
-	chase = false;
-	speed = { 0,0 };
-	elim = true;
-
-	App->objects->DeleteEntities();
+	App->objects->DeleteEntities();		//We delete and create all enemies everytime we load
 	return true;
 }
 
-// Save Enemies State
+
+// ----------------------------------------------------------------------------------
+// Save Game State
+// ----------------------------------------------------------------------------------
 bool j1Enemy::Save(pugi::xml_node& data) const
-{		
-	
+{	
+	//Saving enemy Fly position
 	if (type == ENEMY_FLY)
 	{
-		if (!App->checkpoint->save_checkpoints) {
+		//When we cross a checkpoint, we save enemy's position to its original position, otherwise we save it's actual position.
+		if (!App->checkpoint->save_checkpoints) {		
 			pugi::xml_node fly_enemy = data.append_child("EnemyFly");;
 			fly_enemy.append_child("position").append_attribute("x") = position.x;
 			fly_enemy.child("position").append_attribute("y") = position.y;
@@ -60,9 +61,12 @@ bool j1Enemy::Save(pugi::xml_node& data) const
 		}
 		
 	}
+
+	//Saving enemy Land position
 	else if (type == ENEMY_LAND)
 	{
-		if (!App->checkpoint->save_checkpoints) {
+		//When we cross a checkpoint, we save enemy's position to its original position, otherwise we save it's actual position.
+		if (!App->checkpoint->save_checkpoints) {		
 			pugi::xml_node land_enemy = data.append_child("EnemyLand");;
 			land_enemy.append_child("position").append_attribute("x") = position.x;
 			land_enemy.child("position").append_attribute("y") = position.y;

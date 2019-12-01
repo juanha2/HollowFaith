@@ -12,10 +12,7 @@
 #include "j1Map.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
-#include "j1Enemy.h"
 #include "j1Scene.h"
-#include "j1EnemyFly.h"
-#include "j1Player.h"
 
 j1EnemyFly::j1EnemyFly() : j1Enemy(entityType::ENEMY_FLY) {}
 
@@ -56,9 +53,8 @@ bool j1EnemyFly::Start()
 {
 	bool ret = true;
 
-	texture = App->tex->Load(texture_path.GetString());
-
-	// Creating the collider
+	// Loading Texture and collider
+	texture = App->tex->Load(texture_path.GetString());	
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 	App->coll->AddColliderEntity(collider);
 
@@ -163,6 +159,7 @@ bool j1EnemyFly::PostUpdate()
 
 bool j1EnemyFly::CleanUp()
 {
+	//Unloading data
 	App->tex->UnLoad(texture);	
 	return true;
 }

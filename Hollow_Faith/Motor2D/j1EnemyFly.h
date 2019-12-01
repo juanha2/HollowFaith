@@ -3,12 +3,11 @@
 
 #include "p2Point.h"
 #include "p2Animation.h"
-#include "j1Entity.h"
 #include "j1Module.h"
 #include "p2DynArray.h"
 #include "j1Timer.h"
 #include "p2Point.h"
-#include "j1Enemy.h"
+
 
 struct SDL_Texture;
 struct Collider;

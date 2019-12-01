@@ -4,7 +4,6 @@
 
 #include "j1Module.h"
 #include "p2Animation.h"
-#include "j1Entity.h"
 #include "j1Collision.h"
 
 #define MAX_ACTIVE_PARTICLES 100
