@@ -99,7 +99,7 @@ bool j1Map::CleanUp()
 	int count = 0;
 	while (item != NULL)
 	{
-		
+		App->tex->UnLoad(item->data->texture);
 		RELEASE(item->data);
 		item = item->next;		
 	}
@@ -139,9 +139,7 @@ bool j1Map::CleanUp()
 				{
 					item4->data->colliders[i]->to_delete = true;				
 				}
-				else
-				{
-				}
+
 			}
 
 			RELEASE(item4->data);
