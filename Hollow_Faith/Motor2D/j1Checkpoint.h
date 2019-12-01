@@ -19,7 +19,6 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
-	bool Update();
 	// Called before quitting
 	bool CleanUp();
 
@@ -34,6 +33,7 @@ public:
 	p2SString			load_game;
 
 	bool				save_checkpoints = false;
+	bool				load_checkpoints = false;
 
 	bool				checkpoint = false;
 	fPoint				checkpointpos;

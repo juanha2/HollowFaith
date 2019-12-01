@@ -11,15 +11,13 @@ j1Checkpoint::j1Checkpoint() {
 	name.create("checkpoint");
 }
 
-j1Checkpoint::~j1Checkpoint() {
-
-
-}
+j1Checkpoint::~j1Checkpoint() {}
 
 bool j1Checkpoint::Awake(pugi::xml_node&) {
 
 	save_game = "checkpoint.xml";
 	load_game = "checkpoint.xml";
+
 	return true;
 }
 
@@ -60,11 +58,10 @@ void j1Checkpoint::SaveCheckPoints() {
 	save_checkpoints = false;
 }
 
-
-
 void j1Checkpoint::LoadCheckPoints()
 {
-	
+	load_checkpoints = true;
+
 	pugi::xml_document data;
 	pugi::xml_node root;
 
@@ -82,10 +79,9 @@ void j1Checkpoint::LoadCheckPoints()
 	}
 	else
 		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
+
+	load_checkpoints = false;
 }
 
-bool j1Checkpoint::CleanUp() {
-		
+bool j1Checkpoint::CleanUp() { return true; }
 
-	return true;
-}

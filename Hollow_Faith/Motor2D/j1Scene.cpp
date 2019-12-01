@@ -55,6 +55,7 @@ bool j1Scene::Start()
 			RELEASE_ARRAY(data);
 		}
 	}
+
 	App->objects->DeleteEntities();
 	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
 	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
@@ -68,6 +69,7 @@ bool j1Scene::Start()
 
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music	
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
+
 
 	ready_to_load = false;
 	sound_repeat = false;
@@ -190,6 +192,7 @@ bool j1Scene::CleanUp()
 	
 	App->audio->UnLoad();
 	App->objects->DeleteEntities();
+	App->pathfinding->CleanUp();
 	//App->objects->CleanUp();	
 	App->tex->UnLoad(debug_tex);	
 	App->coll->CleanUp();

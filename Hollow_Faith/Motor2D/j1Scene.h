@@ -17,6 +17,7 @@ public:
 	bool			different_map = false;
 	bool			ready_to_load = false;
 	bool			sound_repeat = false;
+	bool			first = true;
 
 	j1Scene();
 
@@ -48,11 +49,6 @@ public:
 	void SpawnEnemies();
 
 	void sceneswitch();	
-
-private:	
-	
-	
-	bool first = true;	
 
 };
 

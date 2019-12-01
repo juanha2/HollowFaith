@@ -8,25 +8,25 @@
 	<pathfinding />
 	<objects>
 		<player>
-			<position x="50" y="325" />
+			<position x="502.692871" y="247.310196" />
 		</player>
-		<EnemyFly>
-			<position x="832" y="48" />
-		</EnemyFly>
 		<EnemyLand>
-			<position x="608" y="309" />
+			<position x="547.66449" y="221.123749" />
 		</EnemyLand>
-		<EnemyFly>
-			<position x="1056" y="128" />
-		</EnemyFly>
 		<EnemyLand>
 			<position x="1424" y="213" />
 		</EnemyLand>
-		<Bonfire num="0">
+		<EnemyFly>
+			<position x="832" y="48" />
+		</EnemyFly>
+		<EnemyFly>
+			<position x="1056" y="128" />
+		</EnemyFly>
+		<Bonfire num="2">
 			<position x="112" y="320" />
-			<active value="false" />
+			<active value="true" />
 		</Bonfire>
-		<Bonfire num="0">
+		<Bonfire num="2">
 			<position x="888" y="175" />
 			<active value="false" />
 		</Bonfire>
@@ -38,6 +38,6 @@
 	<checkpoint />
 	<FadeToBlack />
 	<renderer>
-		<camera x="0" y="-10" />
+		<camera x="-527" y="-10" />
 	</renderer>
 </game_state>

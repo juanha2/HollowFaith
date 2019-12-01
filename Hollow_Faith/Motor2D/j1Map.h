@@ -41,6 +41,7 @@ struct Levels
 
 struct MapLayer
 {
+
 	p2SString	name;
 	uint		width;
 	uint		height;
@@ -48,6 +49,13 @@ struct MapLayer
 	Properties	properties;
 	float		speed_x;	
 	
+	MapLayer() : gid(NULL)
+	{}
+
+	~MapLayer()
+	{
+		RELEASE(gid);
+	}
 
 	inline uint Get(int x, int y) const {
 		return gid[x + (y * width)];

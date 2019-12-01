@@ -48,8 +48,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-
-
 void j1Map::Draw()
 {
 	BROFILER_CATEGORY("MapLogic", Profiler::Color::Orchid);
@@ -245,9 +243,6 @@ bool j1Map::Load(const char* file_name)
 
 	}
 
-	
-	
-
 	// LOG properties ----------------------------------------------
 	if (ret == true)
 	{
@@ -257,7 +252,7 @@ bool j1Map::Load(const char* file_name)
 
 	
 	map_loaded = ret;
-
+	//map_file.reset();
 	return ret;
 }
 
