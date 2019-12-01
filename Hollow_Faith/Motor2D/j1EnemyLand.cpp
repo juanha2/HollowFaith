@@ -115,7 +115,10 @@ bool j1EnemyLand::PreUpdate()
 	}
 
 	
+	// Update with dt the enemy position all frames
 	PositionUpdate(App->dt);
+
+	// We check after update the speed
 	speedLimitChecker(); 
 
 	return ret;
@@ -179,7 +182,7 @@ bool j1EnemyLand::PostUpdate()
 {
 	bool ret = true;
 
-	if (App->scene->debug)
+	if (App->scene->debug) // PathFinding personal debug
 	{
 		for (uint i = 0; i < pathToPlayer.Count(); ++i)
 		{
@@ -188,6 +191,8 @@ bool j1EnemyLand::PostUpdate()
 		}
 	}
 
+
+	// Normalized Animations with DeltaTime
 	Draw(App->dt);
 
 	return ret;
@@ -200,13 +205,16 @@ bool j1EnemyLand::CleanUp()
 }
 
 
+// ----------------------------------------------------------------------------------------
+// We generate the path from our Enemy position to the Player position
+// ----------------------------------------------------------------------------------------
 bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance)
 {
 	BROFILER_CATEGORY("LandEnemy_GENERATING_PathLogic", Profiler::Color::ForestGreen);
 
 	timer += dt;
 
-	distance = abs(App->objects->player->position.x - position.x);
+	distance = abs(App->objects->player->position.x - position.x); // Always get the distance only in X axis
 
 	if (distance < auxAgroDistance)
 	{
@@ -241,6 +249,10 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 	return true;
 }
 
+
+// ----------------------------------------------------------------------------------------
+//  We follow the generated path in X Axis
+// ----------------------------------------------------------------------------------------
 bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 
 	BROFILER_CATEGORY("LandEnemy_FOLLOWING_PathLogic", Profiler::Color::Green);
@@ -283,6 +295,10 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 		return true;
 }
 
+
+// ----------------------------------------------------------------------------------------
+//  We detect if the enemy is ready to jump with pathfinding, distance and enemy state 
+// ----------------------------------------------------------------------------------------
 bool j1EnemyLand::PathJumping() 
 {
 
@@ -349,6 +365,10 @@ bool j1EnemyLand::PathJumping()
 	return false;
 }
 
+
+// ----------------------------------------------------------------------------------------
+// We detect if there is floor in the next path tile and return the position 
+// ----------------------------------------------------------------------------------------
 iPoint j1EnemyLand::Stop()
 {
 
@@ -374,9 +394,12 @@ iPoint j1EnemyLand::Stop()
 	return ret;
 }
 
+// ----------------------------------------------------------------------------------------
+// All the logic when we are jumping or falling down
+// ----------------------------------------------------------------------------------------
 void j1EnemyLand::JumpFallLogic(float dt)
 {
-	//Checking if there is no collision, then apply gravity
+	//Checking if there is no collision, then apply gravity // 
 
 	if (checkingFall)
 	{
@@ -385,17 +408,23 @@ void j1EnemyLand::JumpFallLogic(float dt)
 	}
 
 
+	// When it's jumping we apply some AXIS X force //
+
 	if (flip == SDL_FLIP_NONE && !canJump)
 		speed.x += (movementForce.x * 10) * dt;
 	else if (flip == SDL_FLIP_HORIZONTAL && !canJump)
 		speed.x -= (movementForce.x * 10) * dt;
 
 
-	
+	// We always get checkingFall to true, and COLL system put it to false if detect floor/platform COLL //
+
 	checkingFall = true;
 }
 
 
+// ----------------------------------------------------------------------------------------
+// After Update the position with speed, we use this function to check the limit we want
+// ----------------------------------------------------------------------------------------
 void j1EnemyLand::speedLimitChecker()
 {
 
@@ -424,7 +453,14 @@ void j1EnemyLand::speedLimitChecker()
 
 }
 
+
+// ----------------------------------------------------------------------------------------
+// All Collision logic system via directions to optimize and avoid creating more collisions
+// ----------------------------------------------------------------------------------------
 void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
+
+	// Improved coll system from the first assignment //
+	// We only check DIR when we need it, with floor, platforms and enemies //
 
 
 	// - - - - - - - COLLISIONS LOGIC - - - - - - - 

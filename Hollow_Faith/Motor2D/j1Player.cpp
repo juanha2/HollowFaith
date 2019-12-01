@@ -150,6 +150,8 @@ bool j1Player::PreUpdate()
 			inputs.add(IN_CLIMB);
 		}
 
+		// * We need to put the speed.x with inputs and not only states because we need to be available to move to left or right when jumping also, for example.
+
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) { // Pressing A (Running)
 			speed.x += movementForce.x * (App->dt * DT_CALIBRATED);
 			flip = SDL_FLIP_HORIZONTAL;
@@ -241,7 +243,8 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {	
 	
-	//current_animation = &idle;
+	// State Machine //
+
 	switch (current_state)
 	{
 	case ST_IDLE:		
@@ -315,13 +318,19 @@ bool j1Player::Update(float dt)
 	return true;
 }
 
+
+
 bool j1Player::PostUpdate() {
 
+	// Normalized Animations with DeltaTime
 	Draw(App->dt);
 
 	return true;
 }
 
+// ----------------------------------------------------------------------------------------
+// Camera update with Delta Time
+// ----------------------------------------------------------------------------------------
 void j1Player::CameraPositionUpdate(float dt) { // Camera movement system
 
 	// X AXIS POS	
@@ -334,6 +343,10 @@ void j1Player::CameraPositionUpdate(float dt) { // Camera movement system
 	App->render->camera.y = App->render->camera.y + cameraSpeed.y * dt;
 }
 
+
+// ----------------------------------------------------------------------------------------
+// Player speed limit
+// ----------------------------------------------------------------------------------------
 void j1Player::speedLimitChecker()
 {
 
@@ -362,6 +375,10 @@ void j1Player::speedLimitChecker()
 
 }
 
+
+// ----------------------------------------------------------------------------------------
+// Camera speed limit
+// ----------------------------------------------------------------------------------------
 void j1Player::cameraSpeedLimitChecker() {
 
 	//POSITIVE
@@ -388,9 +405,14 @@ void j1Player::cameraSpeedLimitChecker() {
 }
 
 
-
+// ----------------------------------------------------------------------------------------
+// All Collision logic system via directions to optimize and avoid creating more collisions
+// ----------------------------------------------------------------------------------------
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
+
+	// Improved coll system from the first assignment //
+	// We only check DIR when we need it, with floor, platforms and enemies //
 	
 	// - - - - - - - COLLISIONS LOGIC - - - - - - - 
 
@@ -549,6 +571,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 }
 
 
+// ----------------------------------------------------------------------------------
+// Smooth braking when we stop advancing
+// ----------------------------------------------------------------------------------
 void j1Player::cameraBraking()
 {
 	if (cameraSpeed.x > 0)
@@ -557,6 +582,10 @@ void j1Player::cameraBraking()
 		cameraSpeed.x /= -slowingValue;
 }
 
+
+// ----------------------------------------------------------------------------------
+// Smooth braking when we stop advancing
+// ----------------------------------------------------------------------------------
 void j1Player::braking()
 {
 	if(speed.x < 0)
@@ -573,6 +602,9 @@ void j1Player::braking()
 }
 
 
+// ----------------------------------------------------------------------------------
+// All our states machine
+// ----------------------------------------------------------------------------------
 player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 {
 	
@@ -693,7 +725,10 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 	return state;
 }
 
+
+// ----------------------------------------------------------------------------------
 // Load Game State
+// ----------------------------------------------------------------------------------
 bool j1Player::Load(pugi::xml_node& data)
 {	
 	
@@ -715,7 +750,10 @@ bool j1Player::Load(pugi::xml_node& data)
 	
 }
 
+
+// ----------------------------------------------------------------------------------
 // Save Game State
+// ----------------------------------------------------------------------------------
 bool j1Player::Save(pugi::xml_node& data) const
 {	
 	pugi::xml_node pos = data.append_child("player").append_child("position");

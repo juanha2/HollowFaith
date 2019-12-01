@@ -36,6 +36,7 @@ bool j1Enemy::Load(pugi::xml_node& data)
 	chase = false;
 	speed = { 0,0 };
 	elim = true;
+
 	App->objects->DeleteEntities();
 	return true;
 }

@@ -108,6 +108,7 @@ bool j1EnemyFly::PreUpdate()
 
 	}
 
+	// Update with dt the enemy position all frames
 	PositionUpdate(App->dt);
 
 
@@ -144,7 +145,7 @@ bool j1EnemyFly::PostUpdate()
 {
 	bool ret = true;
 
-	if (App->scene->debug)
+	if (App->scene->debug) // PathFinding personal debug
 	{
 		for (uint i = 0; i < pathToPlayer.Count(); ++i)
 		{
@@ -153,6 +154,8 @@ bool j1EnemyFly::PostUpdate()
 		}
 	}
 
+
+	// Normalized Animations with DeltaTime
 	Draw(App->dt);
 
 	return ret;
@@ -164,13 +167,15 @@ bool j1EnemyFly::CleanUp()
 	return true;
 }
 
-
+// ----------------------------------------------------------------------------------
+// We generate the path from our Enemy position to the Player position
+// ----------------------------------------------------------------------------------
 bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance)
 {
 	BROFILER_CATEGORY("FlyingEnemy_GENERATING_PathLogic", Profiler::Color::Blue);
 	timer += dt;
 
-	distance = abs(App->objects->player->position.x - position.x);
+	distance = abs(App->objects->player->position.x - position.x); // Always get the distance only in X axis
 
 	if (distance < auxAgroDistance)
 	{
@@ -208,6 +213,10 @@ bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance
 	return true;
 }
 
+
+// ----------------------------------------------------------------------------------
+// We follow the generated path in X & Y Axis
+// ----------------------------------------------------------------------------------
 bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
 
 	BROFILER_CATEGORY("FlyingEnemy_FOLLOWING_PathLogic", Profiler::Color::CadetBlue);
@@ -242,9 +251,14 @@ bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
 	return true;
 }
 
+
+// ----------------------------------------------------------------------------------------
+// All Collision logic system via directions to optimize and avoid creating more collisions
+// ----------------------------------------------------------------------------------------
 void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 
-
+	// Improved coll system from the first assignment //
+	// We only check DIR when we need it, with floor, platforms and enemies //
 
 	// - - - - - - - COLLISIONS LOGIC - - - - - - - 
 
