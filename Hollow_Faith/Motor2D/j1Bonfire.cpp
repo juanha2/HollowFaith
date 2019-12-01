@@ -85,15 +85,10 @@ bool j1Bonfire::Update(float dt)
 {
 
 	if (active) {
-		current_animation = &light_on;
-		distance = abs(App->objects->player->position.x - App->objects->bonfire[App->checkpoint->num_checkpoint - 1]->position.x);
+		current_animation = &light_on;		
 	}
-	else
-	{
-		distance = 0;
-	}
-
 	
+	//distance = abs(App->objects->player->position.x - App->objects->bonfire[App->checkpoint->num_checkpoint - 1]->position.x);
 
 	Mix_Volume(3, App->audio->SpatialAudio(100, this->distance));
 	
