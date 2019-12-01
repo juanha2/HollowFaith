@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="j1Checkpoint.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Enemy.cpp" />
     <ClCompile Include="j1EnemyFly.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="j1Checkpoint.h" />
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1Enemy.h" />
     <ClInclude Include="j1EnemyFly.h" />

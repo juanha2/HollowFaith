@@ -150,26 +150,12 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 	pugi::xml_node EnemyLand = file.child("EnemyLand");
 	pugi::xml_node Bonfire = file.child("Bonfire");	
 
-	while (tmp != nullptr)
-	{
-		if (tmp->data->type == j1Entity::entityType::PLAYER)
-		{
-			tmp->data->Load(file.child("player"));
-		}		
-
-		else if (tmp->data->type == j1Entity::entityType::BONFIRE)
-		{
-			tmp->data->Load(file.child("Bonfire"));
-			Bonfire = Bonfire.next_sibling("Bonfire");
-		}
-
-		tmp = tmp->next;
-	}
-
+	
 	DeleteEnemies();
 
 	p2SString enemyLand="EnemyLand";
 	p2SString enemyFly="EnemyFly";
+	p2SString bonfire = "Bonfire";
 
 	for (pugi::xml_node iterator = file.child("EnemyLand"); iterator; iterator = iterator.next_sibling())
 	{		
@@ -186,6 +172,33 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 			AddEntity(j1Entity::entityType::ENEMY_FLY, { iterator.child("position").attribute("x").as_float(),iterator.child("position").attribute("y").as_float() });
 		}
 	}
+
+	count = 1;
+
+	for (pugi::xml_node iterator = file.child("Bonfire"); iterator; iterator = iterator.next_sibling())
+	{
+		if (bonfire == iterator.name())
+		{
+			AddEntity(j1Entity::entityType::BONFIRE, { iterator.child("position").attribute("x").as_float(),iterator.child("position").attribute("y").as_float() }
+				,iterator.child("active").attribute("value").as_bool() );			
+			count++;
+		}
+	}
+	count = 0;
+
+	while (tmp != nullptr)
+	{
+		if (tmp->data->type == j1Entity::entityType::PLAYER)
+		{
+			tmp->data->Load(file.child("player"));
+		}
+		if (tmp->data->type == j1Entity::entityType::BONFIRE)
+		{
+			tmp->data->Load(file.child("Bonfire"));
+		}
+		tmp = tmp->next;
+	}
+
 	return ret;
 }
 
@@ -204,7 +217,7 @@ bool j1EntityManager::Draw(float dt)
 }
 
 
-j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position)
+j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position,  bool active)
 {
 	j1Entity* tmp = nullptr;
 
@@ -234,7 +247,7 @@ j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position)
 		break;
 
 	case j1Entity::entityType::BONFIRE:
-		tmp = new j1Bonfire(position, count);
+		tmp = new j1Bonfire(position, count, active);
 		count++;
 		break;
 	}
@@ -288,7 +301,8 @@ void j1EntityManager::DeleteEnemies()
 	{
 		p2List_item<j1Entity*>* tmp2 = tmp;
 
-		if ((tmp->data->type == j1Entity::entityType::ENEMY_FLY) || (tmp->data->type == j1Entity::entityType::ENEMY_LAND))
+		if ((tmp->data->type == j1Entity::entityType::ENEMY_FLY) || (tmp->data->type == j1Entity::entityType::ENEMY_LAND)
+			|| (tmp->data->type == j1Entity::entityType::BONFIRE))
 		{			
 			tmp->data->collider->to_delete = true;
 			RELEASE(tmp->data);

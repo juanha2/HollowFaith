@@ -49,8 +49,8 @@ public:
 	// Destructor
 	~j1Enemy();
 
-	void Load(pugi::xml_node& file);
-	void Save(pugi::xml_node& file) const;
+	bool Load(pugi::xml_node& file);
+	bool Save(pugi::xml_node& file) const;
 
 };
 

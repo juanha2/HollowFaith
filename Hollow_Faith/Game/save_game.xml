@@ -8,7 +8,7 @@
 	<pathfinding />
 	<objects>
 		<player>
-			<position x="198.932999" y="325" />
+			<position x="50" y="325" />
 		</player>
 		<EnemyFly>
 			<position x="832" y="48" />
@@ -22,13 +22,20 @@
 		<EnemyLand>
 			<position x="1424" y="213" />
 		</EnemyLand>
-		<Bonfire num="1" />
-		<Bonfire num="1" />
+		<Bonfire num="0">
+			<position x="112" y="320" />
+			<active value="false" />
+		</Bonfire>
+		<Bonfire num="0">
+			<position x="888" y="175" />
+			<active value="false" />
+		</Bonfire>
 	</objects>
 	<scene>
 		<currentmap value="1" />
 	</scene>
 	<colliders />
+	<:anonymous />
 	<FadeToBlack />
 	<renderer>
 		<camera x="0" y="-10" />

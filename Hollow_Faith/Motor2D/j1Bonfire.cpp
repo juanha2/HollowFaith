@@ -9,16 +9,19 @@
 #include "j1Entity.h"
 #include "j1Bonfire.h"
 #include "j1Scene.h"
+#include "j1Checkpoint.h"
 
 
-j1Bonfire::j1Bonfire(fPoint pos, int count) : j1Entity(entityType::BONFIRE)
+j1Bonfire::j1Bonfire(fPoint pos, int count, bool actv) : j1Entity(entityType::BONFIRE)
 {
 	position = pos;
 
 	if (App->objects->bonfire[count] == nullptr)
 		App->objects->bonfire[count] = this;
-
+	
 	num_bonfire = count + 1;
+	active = actv;
+
 }
 
 
@@ -63,6 +66,7 @@ bool j1Bonfire::CleanUp()
 {
 	App->tex->UnLoad(texture);
 	App->audio->UnLoad();	
+	collider->to_delete = true;
 
 	return true;
 
@@ -79,8 +83,17 @@ bool j1Bonfire::PreUpdate()
 // Called each loop iteration
 bool j1Bonfire::Update(float dt)
 {
-	if (App->scene->checkpoint)
-		distance = abs(App->objects->player->position.x - App->objects->bonfire[App->scene->num_checkpoint - 1]->position.x);
+
+	if (active) {
+		current_animation = &light_on;
+		distance = abs(App->objects->player->position.x - App->objects->bonfire[App->checkpoint->num_checkpoint - 1]->position.x);
+	}
+	else
+	{
+		distance = 0;
+	}
+
+	
 
 	Mix_Volume(3, App->audio->SpatialAudio(100, this->distance));
 	
@@ -100,56 +113,60 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 
 	if ((c2->type == COLLIDER_PLAYER))
 	{
-		distance = abs(App->objects->player->position.x - App->objects->bonfire[c1->callback->num_bonfire - 1]->position.x);
+		distance = abs(App->objects->player->position.x - c1->callback->position.x);
 
 		if (!alreadyCollided)
-		{
-			App->scene->checkpointpos = position;
-			App->scene->num_checkpoint = c1->callback->num_bonfire;
-			App->scene->checkpoint = true;
+		{			
+			App->checkpoint->checkpointpos = position;
+				
+			App->checkpoint->num_checkpoint = c1->callback->num_bonfire;
+			App->checkpoint->checkpoint = true;
 
 			App->audio->PlayFx(9, 0, App->audio->SpatialAudio(100, distance * 2));
-			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(200, distance * 2), 3);
+			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(200, distance * 2), 3);			
+			active = true;
 
-			current_animation = &light_on;
-
-
+			App->checkpoint->SaveCheckPoints();
 			alreadyCollided = true;
-
 		}
 	}
 }
 
 // Load Game State
-void j1Bonfire::Load(pugi::xml_node& data)
+bool j1Bonfire::Load(pugi::xml_node& data)
 {
-	App->scene->num_checkpoint = data.attribute("num").as_int();
+	App->checkpoint->num_checkpoint = data.attribute("num").as_int();
+	alreadyCollided = false;
 
-	if (App->scene->num_checkpoint == 0) {
-		App->objects->bonfire[App->scene->num_checkpoint]->current_animation = &light_off;
-		alreadyCollided = false;
-		App->scene->checkpoint = false;
+	if (App->checkpoint->num_checkpoint == 0) {
+		
+		App->checkpoint->checkpoint = false;
 	}
-	else if (App->scene->num_checkpoint == 1) {
-		App->objects->bonfire[App->scene->num_checkpoint - 1]->current_animation = &light_on;
-		App->objects->bonfire[App->scene->num_checkpoint]->current_animation = &light_off;
-		App->scene->checkpointpos = App->objects->bonfire[App->scene->num_checkpoint - 1]->position;
-		App->scene->num_checkpoint = 1;
-		alreadyCollided = false;
+	else if (App->checkpoint->num_checkpoint == 1) {
+		
+		App->checkpoint->checkpointpos = position;
+		App->checkpoint->num_checkpoint = 1;
+		
 	}
-	else if (App->scene->num_checkpoint == 2) {
-		App->objects->bonfire[App->scene->num_checkpoint - 1]->current_animation = &light_on;
-		App->scene->checkpointpos = App->objects->bonfire[App->scene->num_checkpoint - 1]->position;
-		App->scene->num_checkpoint = 2;
-		alreadyCollided = false;
+	else if (App->checkpoint->num_checkpoint == 2) {
+		App->checkpoint->checkpointpos = position;
+		App->checkpoint->num_checkpoint = 2;
+		
 	}
 
+	
+	return true;
 }
 
 // Save Game State
-void j1Bonfire::Save(pugi::xml_node& data) const
+bool j1Bonfire::Save(pugi::xml_node& data) const
 {
-	pugi::xml_node checkp = data.append_child("Bonfire");
-	checkp.append_attribute("num").set_value(App->scene->num_checkpoint);
+	pugi::xml_node bonfire = data.append_child("Bonfire");
+	bonfire.append_child("position").append_attribute("x") = position.x;
+	bonfire.child("position").append_attribute("y") = position.y;
+	bonfire.append_child("active").append_attribute("value") = active;
+
+		bonfire.append_attribute("num") = App->checkpoint->num_checkpoint;
+	return true;
 
 }

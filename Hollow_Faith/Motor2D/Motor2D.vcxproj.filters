@@ -73,6 +73,9 @@
     <ClCompile Include="j1Bonfire.cpp">
       <Filter>Desenvolupament  ========\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="j1Checkpoint.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -167,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="j1Bonfire.h">
       <Filter>Desenvolupament  ========\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Checkpoint.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

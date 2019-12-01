@@ -23,6 +23,7 @@ class j1Map;
 class j1FadeToBlack;
 class j1PathFinding;
 class j1EntityManager;
+class j1Checkpoint;
 
 class j1App
 {
@@ -100,6 +101,7 @@ public:
 	j1FadeToBlack*		fade_to_black;	
 	j1PathFinding*		pathfinding;
 	j1EntityManager*	objects;
+	j1Checkpoint* checkpoint;
 
 
 	// - - - - DELTA TIME - - - -

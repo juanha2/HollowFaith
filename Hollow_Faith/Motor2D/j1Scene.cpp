@@ -15,6 +15,7 @@
 #include "j1Pathfinding.h"
 #include "j1Entity.h"
 #include "j1Enemy.h"
+#include "j1Checkpoint.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -54,19 +55,23 @@ bool j1Scene::Start()
 			RELEASE_ARRAY(data);
 		}
 	}
-	
 	App->objects->DeleteEntities();
 	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
 	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
-	
-	SpawnEnemies();
+
+	if (App->checkpoint->checkpoint)
+		App->checkpoint->LoadCheckPoints();
+	else {
+		
+		SpawnEnemies();
+	}		
 
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music	
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 
 	ready_to_load = false;
 	sound_repeat = false;
-	num_checkpoint = 0;
+	App->checkpoint->num_checkpoint = 0;
 	App->render->camera = App->render->camera_init; //Sets camera on inicial position.
 	return true;
 }
@@ -85,21 +90,21 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
 	{ // Start at the level 1 begin
 		currentmap = 1;
-		checkpoint = false;
+		App->checkpoint->checkpoint = false;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
 
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
 	{ // Start at the level 2 begin
-		checkpoint = false;
+		App->checkpoint->checkpoint = false;
 		currentmap = 2;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
 	
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
 	{ // Start at the current level begin
-		checkpoint = false;
+		App->checkpoint->checkpoint = false;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 	}
 
@@ -206,7 +211,7 @@ bool j1Scene::Save(pugi::xml_node& save) const
 bool j1Scene::Load(pugi::xml_node& save)
 {
 	savedcurrentmap = save.child("currentmap").attribute("value").as_int();
-	LOG("%i", savedcurrentmap);
+	
 
 	if (savedcurrentmap != currentmap) 
 	{
@@ -215,8 +220,7 @@ bool j1Scene::Load(pugi::xml_node& save)
 		App->objects->player->ignoreColl = true;
 		App->objects->player->speed = { 0,0 };
 		App->objects->player->gravityForce = 0.0f;
-		App->fade_to_black->FadeToBlack(App->map->data.levels[savedcurrentmap - 1]->name.GetString(), 1.0f);
-	
+		App->fade_to_black->FadeToBlack(App->map->data.levels[savedcurrentmap - 1]->name.GetString(), 1.0f);	
 	}	
 
 	return true;
@@ -276,7 +280,7 @@ void j1Scene::sceneswitch()
 			currentmap = 1;
 		}
 	
-		App->scene->checkpoint = false;
+		App->checkpoint->checkpoint = false;
 
 		for (int i = 1; i <= App->map->data.numLevels; i++) {
 			if (App->scene->currentmap == i)

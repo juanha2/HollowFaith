@@ -34,7 +34,7 @@ public:
 
 	bool Draw(float dt);
 
-	j1Entity* AddEntity(j1Entity::entityType type, fPoint position);
+	j1Entity* AddEntity(j1Entity::entityType type, fPoint position, bool active=false);
 	void DeleteEntities();
 	void DeleteEntity();
 	void DeleteEnemies();

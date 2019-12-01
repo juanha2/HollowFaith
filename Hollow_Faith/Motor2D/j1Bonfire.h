@@ -23,16 +23,17 @@ public:
 
 	Animation		light_off;
 	Animation		light_on;
-
+	
 
 	// - - - - TRIGGERS - - - -
 
 	bool			alreadyCollided;
+	bool			active = false;
 	
 
 public:
 
-	j1Bonfire(fPoint pos, int count);
+	j1Bonfire(fPoint pos, int count, bool actv=false);
 
 	// Destructor
 	~j1Bonfire();
@@ -52,8 +53,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void Load(pugi::xml_node& file);
-	void Save(pugi::xml_node& file) const;
+	bool Load(pugi::xml_node& file);
+	bool Save(pugi::xml_node& file) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
 };

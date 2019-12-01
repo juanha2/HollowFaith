@@ -13,7 +13,7 @@
 #include "j1Scene.h"
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
-
+#include "j1Checkpoint.h"
 
 
 
@@ -95,8 +95,12 @@ bool j1Player::Start()
 	}
 	else
 	{
-		if (App->scene->checkpoint)
-			position = App->scene->checkpointpos;
+		if (App->checkpoint->checkpoint) {
+			
+			App->checkpoint->LoadCheckPoints();
+			//position = App->scene->checkpointpos;
+		}
+		
 		else
 			position = startPosLevel1;
 	}
@@ -696,7 +700,7 @@ player_states j1Player::process_fsm(p2List<player_inputs>& inputs)
 }
 
 // Load Game State
-void j1Player::Load(pugi::xml_node& data)
+bool j1Player::Load(pugi::xml_node& data)
 {	
 	
 	if (App->scene->different_map) {
@@ -707,20 +711,33 @@ void j1Player::Load(pugi::xml_node& data)
 		savedPosition.y= data.child("position").attribute("y").as_float();
 	}	
 
-	else if (!App->scene->different_map) {
+	else if (!App->scene->different_map) {		
 		
 		position.x = data.child("position").attribute("x").as_float();
 		position.y = data.child("position").attribute("y").as_float();
 	}
+
+	return true;
 	
 }
 
 // Save Game State
-void j1Player::Save(pugi::xml_node& data) const
+bool j1Player::Save(pugi::xml_node& data) const
 {	
 	pugi::xml_node pos = data.append_child("player").append_child("position");
 
-	pos.append_attribute("x").set_value(position.x);
-	pos.append_attribute("y").set_value(position.y);
+	if (!App->checkpoint->save_checkpoints) {
+		pos.append_attribute("x").set_value(position.x);
+		pos.append_attribute("y").set_value(position.y);
+	}
+
+	else
+	{
+		pos.append_attribute("x").set_value(App->checkpoint->checkpointpos.x);
+		pos.append_attribute("y").set_value(App->checkpoint->checkpointpos.y);
+	}
+	
+
+	return true;
 
 }

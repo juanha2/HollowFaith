@@ -99,8 +99,8 @@ public:
 	// State machine
 	player_states process_fsm(p2List<player_inputs>& inputs);
 
-	void Load(pugi::xml_node& file);
-	void Save(pugi::xml_node& file) const;
+	bool Load(pugi::xml_node& file);
+	bool Save(pugi::xml_node& file) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
 

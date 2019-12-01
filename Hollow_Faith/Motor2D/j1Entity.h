@@ -45,8 +45,8 @@ public:
 	virtual bool PostUpdate() { return true; };	
 
 	virtual bool CleanUp() { return true; };
-	virtual void Save(pugi::xml_node& file) const {};
-	virtual void Load(pugi::xml_node& file) {};	
+	virtual bool Save(pugi::xml_node& file) const { return true; };
+	virtual bool Load(pugi::xml_node& file) { return true;  };
 	
 	void PositionUpdate(float dt);						//Update entity's position
 	void Draw(float dt);	

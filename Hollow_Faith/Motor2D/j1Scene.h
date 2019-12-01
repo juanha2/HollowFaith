@@ -17,9 +17,6 @@ public:
 	bool different_map = false;
 	bool ready_to_load = false;
 	bool sound_repeat = false;
-	bool				checkpoint = false;
-	fPoint				checkpointpos;
-	int					num_checkpoint = 0;
 
 	j1Scene();
 

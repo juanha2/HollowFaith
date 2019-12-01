@@ -13,6 +13,7 @@
 #include "j1Pathfinding.h"
 #include "j1FadeToBlack.h"
 #include "j1EntityManager.h"
+#include "j1Checkpoint.h"
 #include "j1App.h"
 
 
@@ -33,7 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	coll = new j1Collision();
 	objects = new j1EntityManager();
 	pathfinding = new j1PathFinding();
-	
+	checkpoint = new j1Checkpoint();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -46,6 +47,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(objects);
 	AddModule(scene);	
 	AddModule(coll);	
+	AddModule(checkpoint);
 	AddModule(fade_to_black);
 	
 	// render last to swap buffer
