@@ -101,7 +101,7 @@ public:
 	j1FadeToBlack*		fade_to_black;	
 	j1PathFinding*		pathfinding;
 	j1EntityManager*	objects;
-	j1Checkpoint* checkpoint;
+	j1Checkpoint*		checkpoint;
 
 
 	// - - - - DELTA TIME - - - -

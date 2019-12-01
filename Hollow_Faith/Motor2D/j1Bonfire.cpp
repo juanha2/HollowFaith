@@ -156,11 +156,12 @@ bool j1Bonfire::Load(pugi::xml_node& data)
 bool j1Bonfire::Save(pugi::xml_node& data) const
 {
 	pugi::xml_node bonfire = data.append_child("Bonfire");
+
 	bonfire.append_child("position").append_attribute("x") = position.x;
 	bonfire.child("position").append_attribute("y") = position.y;
 	bonfire.append_child("active").append_attribute("value") = active;
+	bonfire.append_attribute("num") = App->checkpoint->num_checkpoint;
 
-		bonfire.append_attribute("num") = App->checkpoint->num_checkpoint;
 	return true;
 
 }

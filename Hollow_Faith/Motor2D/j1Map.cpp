@@ -404,7 +404,6 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->width = node.attribute("width").as_uint();
 	layer->height = node.attribute("height").as_uint();
 	layer->gid = new uint[layer->width * layer->height];
-	//layer->speed_x = node.child("properties").child("property").attribute("value").as_float();
 
 	memset(layer->gid, 0, (layer->width * layer->height) * sizeof(uint)); //Fill with zeros
 
@@ -605,14 +604,6 @@ void j1Map::log_properties() {
 		item_group = item_group->next;	
 	}
 
-	/*p2List_item<Properties*>* item_property = data.properties.start;
-	while (item_property != NULL)
-	{
-		Properties* p = item_property->data;
-		
-
-		item_property = item_property->next;
-	}*/
 }
 
 bool j1Map::CreateColliders(ObjectsData* data, int i)
