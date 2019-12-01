@@ -114,14 +114,18 @@ bool j1EntityManager::CleanUp()
 	while (tmp != nullptr)
 	{
 		tmp->data->CleanUp();
+		RELEASE(tmp->data);
+		Entities.del(tmp);
 		tmp = tmp->next;
 	}
 
 	App->objects->player = nullptr;
 	App->objects->particle = nullptr;
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i <= MAX_BONFIRES; i++) {
 		App->objects->bonfire[i] = nullptr;
+	}
+		
 
 	count = 0;
 
