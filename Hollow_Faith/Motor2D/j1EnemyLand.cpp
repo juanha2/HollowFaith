@@ -374,7 +374,7 @@ iPoint j1EnemyLand::Stop()
 
 	BROFILER_CATEGORY("LandEnemy_PATHSTOP_PathLogic", Profiler::Color::Green);
 
-	iPoint ret = { -1, -1 }; 
+	iPoint result = { -1, -1 }; 
 
 	iPoint next = { pathToPlayer[pathToPlayer.Count() - 1].x, App->map->WorldToMap(position.x, round(position.y)).y + 3 };
 
@@ -386,12 +386,12 @@ iPoint j1EnemyLand::Stop()
 
 			if (!App->pathfinding->IsWalkable(next))
 			{
-				ret = next;
+				result = next;
 				break;
 			}
 		}
 	}
-	return ret;
+	return result;
 }
 
 // ----------------------------------------------------------------------------------------
