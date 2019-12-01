@@ -49,10 +49,10 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 	jump.load_animation(animIterator, "jumpLand");
 
 	// Loading collider
-	entity_collider.x = enemydata.child("colliderLand").attribute("x").as_int();
-	entity_collider.y = enemydata.child("colliderLand").attribute("y").as_int();
-	entity_collider.w = enemydata.child("colliderLand").attribute("w").as_int();
-	entity_collider.h= enemydata.child("colliderLand").attribute("h").as_int();
+	entity_collider.x = dataIterator.child("collider").attribute("x").as_int();
+	entity_collider.y = dataIterator.child("collider").attribute("y").as_int();
+	entity_collider.w = dataIterator.child("collider").attribute("w").as_int();
+	entity_collider.h= dataIterator.child("collider").attribute("h").as_int();
 
 	return ret;
 }

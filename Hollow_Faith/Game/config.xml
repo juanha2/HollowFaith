@@ -44,6 +44,7 @@
       <slowing_value value="10.0f"/>
       <slowing_limit value=" 200"/>
       <gracityForce value="30.0f"/>
+      <collider x="0" y="0" w="17" h="27"/>
 
     </data>
 
@@ -60,8 +61,7 @@
       <pathCadency value= "0.5f"/>
       <pathMinDist value= "16"/>
       <agroDistance value= "200"/>
-      <colliderFly x="0" y="0" w="14" h="14"/>
-      <colliderLand x="0" y="0" w="17" h="27"/>
+      <colliderFly x="0" y="0" w="14" h="14"/>     
       <movementForce x="80.0f" y="-420.0f"/>
       <jumpDistance value="130"/>
       <extraJumpForce value="-5"/>

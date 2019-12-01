@@ -63,9 +63,14 @@ bool j1Player::Awake(pugi::xml_node& config)
 	slowingValue = dataIterator.child("slowing_value").attribute("value").as_float();
 	slowlingLimitValue = dataIterator.child("slowing_limit").attribute("value").as_int();
 
+
+	// Loading collider
+	entity_collider.x = dataIterator.child("collider").attribute("x").as_int();
+	entity_collider.y = dataIterator.child("collider").attribute("y").as_int();
+	entity_collider.w = dataIterator.child("collider").attribute("w").as_int();
+	entity_collider.h = dataIterator.child("collider").attribute("h").as_int();
+
 	
-	entity_collider = { 0, 0, 17, 27 };
-	collider = new Collider(entity_collider, COLLIDER_PLAYER, this);
 
 	return ret;
 }
@@ -74,7 +79,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 bool j1Player::Start()
 {
 	texture = App->tex->Load(texture_path.GetString());
-	App->coll->AddColliderEntity(collider);
+	collider = new Collider(entity_collider, COLLIDER_PLAYER, this);
+	App->coll->AddColliderEntity(collider);	
 	win = false;
 	dead = false;
 	death.Reset();
@@ -94,8 +100,6 @@ bool j1Player::Start()
 		else
 			position = startPosLevel1;
 	}
-
-
 
 	return true;
 }
