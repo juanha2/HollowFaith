@@ -8,10 +8,10 @@
 	<pathfinding />
 	<objects>
 		<player>
-			<position x="502.692871" y="247.310196" />
+			<position x="489.558014" y="325" />
 		</player>
 		<EnemyLand>
-			<position x="547.66449" y="221.123749" />
+			<position x="608" y="309" />
 		</EnemyLand>
 		<EnemyLand>
 			<position x="1424" y="213" />
@@ -38,6 +38,6 @@
 	<checkpoint />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-527" y="-10" />
+		<camera x="-501" y="-10" />
 	</renderer>
 </game_state>

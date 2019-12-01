@@ -32,12 +32,11 @@ public:
 	p2SString			save_game;
 	p2SString			load_game;
 
-	bool				save_checkpoints = false;
-	bool				load_checkpoints = false;
+	bool				save_checkpoints = false;	
 
 	bool				checkpoint = false;
 	fPoint				checkpointpos;
-	int					num_checkpoint = 0;
+	int					num_checkpoint = 0;	
 
 };
 

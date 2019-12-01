@@ -45,7 +45,7 @@
       <slowing_limit value=" 200"/>
       <gracityForce value="30.0f"/>
       <collider x="0" y="0" w="17" h="27"/>
-
+      <collider_bonfire x="0" y="0" w="29" h="40"/>
     </data>
 
     <particledata>

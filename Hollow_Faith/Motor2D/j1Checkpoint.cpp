@@ -23,10 +23,11 @@ bool j1Checkpoint::Awake(pugi::xml_node&) {
 
 void j1Checkpoint::SaveCheckPoints() {
 
-	save_checkpoints = true;
+	save_checkpoints = true;	//We set this bool to true to let entities know if they have to save from save_game.xml or chekpoint.xml
+
 	bool ret = true;
 
-	LOG("Saving Game CHECKPOINTS to %s...", save_game.GetString());
+	LOG("Saving CHECKPOINTS data to %s...", save_game.GetString());
 
 	// xml object were we will store all data
 	pugi::xml_document data;
@@ -41,26 +42,26 @@ void j1Checkpoint::SaveCheckPoints() {
 
 	while (entities != NULL && ret == true)
 	{	
-		ret = entities->data->Save(root);
+		ret = entities->data->Save(root);	//We call save method of each entity	
 
 		entities = entities->next;
 	}
 
 	if (ret == true)
 	{
-		data.save_file("checkpoint.xml"); //save_game.GetString()
-		LOG("... finished saving", );
+		data.save_file("checkpoint.xml"); //checkpoint.GetString()
+		LOG("... finished saving CHECKPOINTS state", );
 	}
 	else
-		LOG("NO");
+		LOG("Couldn't save succesful CHECKPOINTS data");
 
 	data.reset();
+
 	save_checkpoints = false;
 }
 
 void j1Checkpoint::LoadCheckPoints()
 {
-	load_checkpoints = true;
 
 	pugi::xml_document data;
 	pugi::xml_node root;
@@ -69,18 +70,17 @@ void j1Checkpoint::LoadCheckPoints()
 
 	if (result != NULL)
 	{
-		LOG("Loading new Game State from %s...", load_game.GetString());
+		LOG("Loading CHEKPOITNS state from %s...", load_game.GetString());
 
 		root = data.child("game_state");
 
-		App->objects->Load(root);		
-		data.reset();
-		
+		App->objects->Load(root);		//We call load method of each entity	
+			
 	}
 	else
 		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
 
-	load_checkpoints = false;
+	data.reset();
 }
 
 bool j1Checkpoint::CleanUp() { return true; }

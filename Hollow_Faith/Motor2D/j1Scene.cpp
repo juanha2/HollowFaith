@@ -39,13 +39,14 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
+
 	//Load first level at start
 	if (first)
 	{
 		p2List_item<Levels*>* levelData = App->map->data.levels.start;
 		App->map->Load(levelData->data->name.GetString());
-		currentmap = 1;
-		first = false;
+		currentmap = 1;		
 
 		int w, h;
 		uchar* data = nullptr;
@@ -54,32 +55,37 @@ bool j1Scene::Start()
 			App->pathfinding->SetMap(w, h, data);
 			RELEASE_ARRAY(data);
 		}
+
+		first = false;
 	}
+	
+	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
+
+	//We delete and create all entities at the start of the scene
 
 	App->objects->DeleteEntities();
 	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
 	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
-
-	if (App->checkpoint->checkpoint)
+	
+	//If we come from a checkpoint, instead of spawning enemies from map, we load them from checkpoint.xml data
+	if (App->checkpoint->checkpoint)		
 		App->checkpoint->LoadCheckPoints();
-	else {
-		
+
+	else		
 		SpawnEnemies();
-	}		
+	
 
-	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music	
-	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
-
-
+	// We set initial values
 	ready_to_load = false;
 	sound_repeat = false;
-	App->checkpoint->num_checkpoint = 0;
+	App->checkpoint->num_checkpoint = 0;			// Checkpoint restart
 	App->render->camera = App->render->camera_init; //Sets camera on inicial position.
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate() {
+
 	return true;
 }
 
@@ -95,7 +101,6 @@ bool j1Scene::Update(float dt)
 		App->checkpoint->checkpoint = false;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
 	}
-
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
 	{ // Start at the level 2 begin
@@ -133,15 +138,13 @@ bool j1Scene::Update(float dt)
 		App->objects->player->godMode = false;
 	}	
 
-
+	//Changing frameratecap
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) 
 	{
 		if (App->frameratecap == App->desiredFrameratecap)
 			App->frameratecap = 1000;
 		else
 			App->frameratecap = App->desiredFrameratecap;
-		
-
 	}
 		
 
@@ -192,8 +195,7 @@ bool j1Scene::CleanUp()
 	
 	App->audio->UnLoad();
 	App->objects->DeleteEntities();
-	App->pathfinding->CleanUp();
-	//App->objects->CleanUp();	
+	App->pathfinding->CleanUp();	
 	App->tex->UnLoad(debug_tex);	
 	App->coll->CleanUp();
 	App->tex->CleanUp();
@@ -205,7 +207,6 @@ bool j1Scene::Save(pugi::xml_node& save) const
 {
 
 	pugi::xml_node current_map = save.append_child("currentmap");
-
 	current_map.append_attribute("value").set_value(currentmap);
 
 	return true;
@@ -213,9 +214,9 @@ bool j1Scene::Save(pugi::xml_node& save) const
 
 bool j1Scene::Load(pugi::xml_node& save)
 {
-	savedcurrentmap = save.child("currentmap").attribute("value").as_int();
-	
+	savedcurrentmap = save.child("currentmap").attribute("value").as_int();	
 
+	// If we want to load from a different map, we change scene.
 	if (savedcurrentmap != currentmap) 
 	{
 		currentmap = savedcurrentmap;
@@ -251,7 +252,6 @@ void j1Scene::SpawnEnemies() {
 				{
 					App->objects->AddEntity(j1Entity::entityType::BONFIRE, { object_data->data->x,object_data->data->y });
 				}
-
 			}
 		}
 	}
@@ -264,7 +264,6 @@ void j1Scene::sceneswitch()
 	if (App->objects->player->win) {
 
 		App->objects->player->ignoreColl = true;
-
 
 		if (currentmap == 1) 
 		{
@@ -286,7 +285,7 @@ void j1Scene::sceneswitch()
 		App->checkpoint->checkpoint = false;
 
 		for (int i = 1; i <= App->map->data.numLevels; i++) {
-			if (App->scene->currentmap == i)
+			if (currentmap == i)
 				App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
 		}
 

@@ -66,7 +66,7 @@ public:
 	p2SString			hurt_Fx;
 	
 	int					count;
-	float				savedPos;
+	
 	
 };
 

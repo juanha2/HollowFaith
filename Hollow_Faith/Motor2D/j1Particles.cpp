@@ -24,12 +24,11 @@ j1Particles::~j1Particles()
 
 bool j1Particles::Awake(pugi::xml_node& config)
 {
+	//Loading texture
 	texture_path = config.child("graphics_player").attribute("path").as_string();	
 
-	pugi::xml_node particlesdata = config.child("particledata");
-
 	// Loading Particle Data
-
+	pugi::xml_node particlesdata = config.child("particledata");
 	gravityForce = config.child("data").child("gravity").attribute("value").as_float();
 	defaultParticleLife = particlesdata.child("defaultParticleLife").attribute("value").as_uint();	
 	stoneLife = particlesdata.child("stoneLife").attribute("value").as_uint();
@@ -39,14 +38,11 @@ bool j1Particles::Awake(pugi::xml_node& config)
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 
 	dustJumping.anim.load_animation(animIterator, "dustJumping");
-	dustJumping.life = defaultParticleLife;
-	
+	dustJumping.life = defaultParticleLife;	
 	dustRunning.anim.load_animation(animIterator, "dustRunning");
 	dustRunning.life = defaultParticleLife;
-
 	stone.anim.load_animation(animIterator, "stone");
 	stone.life = stoneLife;
-
 	death.anim.load_animation(animIterator, "death");
 	death.life = deathlife;
 
@@ -93,10 +89,8 @@ bool j1Particles::PostUpdate()
 			active[i] = nullptr;
 		}
 
-
-		else if (SDL_GetTicks() >= p->born)
-		{
-			
+		else if (SDL_GetTicks() >= p->born)	//If particle is alive, Blit it
+		{			
 			App->render->Blit(texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame(App->dt)), 1.0, 1.0, p->fliped, NULL, entity_collider.w / 2);
 			if (p->fx_played == false)
 			{
@@ -130,6 +124,7 @@ void j1Particles::AddParticle(const Particle& particle, float x, float y, SDL_Re
 		}
 	}
 }
+
 // Detecting particles collision
 
 // -------------------------------------------------------------
@@ -175,14 +170,13 @@ bool Particle::Update()
 	if (life > 0)
 	{
 		if (id == 1) {
-			speed.y++;
+			speed.y++;		//if STONE, we increment speed.y to set the parabolic movement
 		}
-
 		
 		if ((SDL_GetTicks() - born) > life) {
 			if (id == 1)
 			{
-				App->objects->particle->elim = true;
+				App->objects->particle->elim = true; //If STONE dies, we set this bool to true in order to throw more stones.
 			}
 				
 			ret = false;
@@ -195,6 +189,7 @@ bool Particle::Update()
 	position.x += speed.x * App->dt;
 	position.y += speed.y * App->dt;
 
+	//If particles is a STONE, we set its speed.y to make a parabolic movement.
 	if(id == 1)
 		speed.y += App->objects->player->gravityForce * (App->dt * DT_CALIBRATED);
 

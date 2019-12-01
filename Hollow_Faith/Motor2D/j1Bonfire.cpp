@@ -28,18 +28,22 @@ j1Bonfire::~j1Bonfire() {};
 
 bool j1Bonfire::Awake(pugi::xml_node& config)
 {
-
 	bool ret = true;
+	pugi::xml_node dataIterator = config.child("data");
 
-	texture_path = config.child("graphics_bonfire").attribute("path").as_string();
+	//Loading texture
+	texture_path = config.child("graphics_bonfire").attribute("path").as_string();	
 
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 	light_on.load_animation(animIterator, "light");
 	light_off.load_animation(animIterator, "bonfire");	
 
-	entity_collider = { 0, 0, 29, 40 };
-	collider = new Collider(entity_collider, COLLIDER_BONFIRE, this);
+	// Loading collider
+	entity_collider.x = dataIterator.child("collider_bonfire").attribute("x").as_int();
+	entity_collider.y = dataIterator.child("collider_bonfire").attribute("y").as_int();
+	entity_collider.w = dataIterator.child("collider_bonfire").attribute("w").as_int();
+	entity_collider.h = dataIterator.child("collider_bonfire").attribute("h").as_int();	
 
 	return ret;
 }
@@ -50,10 +54,13 @@ bool j1Bonfire::Start()
 {
 	bool ret = true;
 
+	//Loading texture and collider
 	texture = App->tex->Load(texture_path.GetString());
+	collider = new Collider(entity_collider, COLLIDER_BONFIRE, this);
 	App->coll->AddColliderEntity(collider);
-	current_animation = &light_off;
-	
+
+	//Setting initial values
+	current_animation = &light_off;	
 	ignoreColl = false;
 	alreadyCollided = false;
 
@@ -63,6 +70,7 @@ bool j1Bonfire::Start()
 // Called before quitting
 bool j1Bonfire::CleanUp()
 {
+	//Unloading data
 	App->tex->UnLoad(texture);
 	App->audio->UnLoad();	
 	collider->to_delete = true;
@@ -71,10 +79,9 @@ bool j1Bonfire::CleanUp()
 
 }
 // Called each loop iteration
-bool j1Bonfire::PreUpdate()
-{
+bool j1Bonfire::PreUpdate(){
 
-	PositionUpdate(App->dt);
+	PositionUpdate(App->dt); //We check position each frame
 
 	return true;
 }
@@ -82,12 +89,12 @@ bool j1Bonfire::PreUpdate()
 // Called each loop iteration
 bool j1Bonfire::Update(float dt)
 {
-
+	//If bonfire is active, we set its animation to on and apply spatial audio
 	if (active) 
 	{
 		current_animation = &light_on;		
 
-		distance = abs(App->objects->player->position.x - App->objects->savedPos);
+		distance = abs(App->objects->player->position.x - App->checkpoint->checkpointpos.x);
 		Mix_Volume(1, App->audio->SpatialAudio(100, distance));
 	}
 	
@@ -96,7 +103,7 @@ bool j1Bonfire::Update(float dt)
 
 bool j1Bonfire::PostUpdate() {
 
-	Draw(App->dt);
+	Draw(App->dt); 
 
 	return true;
 }
@@ -104,22 +111,21 @@ bool j1Bonfire::PostUpdate() {
 
 void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 
-	if ((c2->type == COLLIDER_PLAYER))
-	{
-		App->objects->savedPos =  c1->callback->position.x;
+	// Saving bonfire data when collides with player
 
+	if ((c2->type == COLLIDER_PLAYER))
+	{		
+		App->checkpoint->checkpointpos = position;  
 
 		if (!alreadyCollided)
-		{			
-			App->checkpoint->checkpointpos = position;
-				
-			App->checkpoint->num_checkpoint = c1->callback->num_bonfire;
-			App->checkpoint->checkpoint = true;
-
+		{		
 			App->audio->PlayFx(9, 0, App->audio->SpatialAudio(100, distance * 2));
-			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(200, distance * 2), 1);			
-			active = true;
+			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(200, distance * 2), 1);
 
+			App->checkpoint->checkpoint = true;
+			App->checkpoint->num_checkpoint = c1->callback->num_bonfire;					
+			
+			active = true;
 			App->checkpoint->SaveCheckPoints();
 			alreadyCollided = true;
 		}
@@ -130,10 +136,9 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 bool j1Bonfire::Load(pugi::xml_node& data)
 {
 	App->checkpoint->num_checkpoint = data.attribute("num").as_int();
-	
 
 	// Checkpoints Logic ----------------------------------------
-	
+
 	alreadyCollided = false;
 
 	for (int i = 0; i < MAX_BONFIRES; i++) {
@@ -150,16 +155,13 @@ bool j1Bonfire::Load(pugi::xml_node& data)
 		}			
 	}	
 	
-	
-	//App->checkpoint->SaveCheckPoints(); // We make sure everytime we load, we restart all checkpoints value to checkpoint.xml
-	
 	return true;
 }
 
 // Save Game State
 bool j1Bonfire::Save(pugi::xml_node& data) const
 {
-	pugi::xml_node bonfire = data.append_child("Bonfire");
+	pugi::xml_node bonfire = data.append_child("Bonfire");	
 
 	bonfire.append_child("position").append_attribute("x") = position.x;
 	bonfire.child("position").append_attribute("y") = position.y;
