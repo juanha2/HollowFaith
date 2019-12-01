@@ -92,9 +92,6 @@ bool j1Bonfire::Update(float dt)
 		Mix_Volume(1, App->audio->SpatialAudio(100, distance));
 	}
 	
-	
-	
-	LOG("%d", distance);
 	return true;
 }
 
