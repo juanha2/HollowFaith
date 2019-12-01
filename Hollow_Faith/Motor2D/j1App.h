@@ -103,7 +103,7 @@ public:
 	j1EntityManager*	objects;
 	j1Checkpoint*		checkpoint;
 
-
+	pugi::xml_document	config_file;
 	// - - - - DELTA TIME - - - -
 
 	j1PerfTimer			ptimer;

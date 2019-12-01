@@ -67,7 +67,8 @@ public:
 	
 	int					count;
 	
-	
+	pugi::xml_node		config_node;
+
 };
 
 

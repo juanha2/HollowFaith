@@ -39,6 +39,9 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
 	hurt_Fx = fxIterator.child("hurtFx").attribute("path").as_string();
 
+
+	config_node = config;
+
 	return ret;
 }
 
@@ -222,12 +225,7 @@ bool j1EntityManager::Draw(float dt)
 
 j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position,  bool active)
 {
-	j1Entity* tmp = nullptr;
-
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-
-	config = App->LoadConfig(config_file);
+	j1Entity* tmp = nullptr;	
 
 	switch (type)
 	{
@@ -257,7 +255,7 @@ j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position,
 
 	if (tmp) {
 		Entities.add(tmp);
-		tmp->Awake(config.child(App->objects->name.GetString()));
+		tmp->Awake(config_node);
 		tmp->Start();
 	}
 	
