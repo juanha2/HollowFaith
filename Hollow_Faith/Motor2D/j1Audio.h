@@ -41,8 +41,8 @@ public:
 	int FXvolume = 70;
 	
 private:
-	p2List<Mix_Chunk*>	fx;
-	_Mix_Music*			music;
+	p2List<Mix_Chunk*>		fx;
+	_Mix_Music*				music;
 
 };
 

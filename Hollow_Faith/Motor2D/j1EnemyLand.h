@@ -20,8 +20,9 @@ class j1EnemyLand : public j1Enemy
 public:
 	// - - - - ANIMATIONS - - - -
 
-	Animation idle;
-	Animation walk;
+	Animation			idle;
+	Animation			walk;
+	Animation			jump;
 
 	// - - - - TRIGGERS - - - -
 	

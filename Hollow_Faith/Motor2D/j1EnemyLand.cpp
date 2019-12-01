@@ -35,6 +35,7 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 	idle.load_animation(animIterator, "idleLand");
 	walk.load_animation(animIterator, "walkLand");
+	jump.load_animation(animIterator, "jumpLand");
 
 	speedLimit.y = dataIterator.child("speed_limit").attribute("y").as_float();
 	speedLimit.x = dataIterator.child("speed_limit").attribute("x").as_float();
@@ -369,7 +370,7 @@ void j1EnemyLand::JumpFallLogic(float dt)
 
 	if (checkingFall)
 	{
-		// current_animation = &jump;
+		current_animation = &jump;
 		speed.y += gravityForce * (dt * DT_CALIBRATED);
 	}
 
@@ -531,6 +532,16 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 				case DIR_DOWN:
 					position.y = c2->rect.y - entity_collider.h;
+					checkingFall = false;
+
+					if (!canJump)
+					{
+						App->objects->particle->AddParticle(App->objects->particle->dustJumping, position.x, position.y + entity_collider.h, flip, COLLIDER_NONE);
+						App->audio->PlayFx(5, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
+						speed.x = 0;
+						canJump = true;
+					}
+
 					break;
 
 				case DIR_LEFT:

@@ -138,6 +138,21 @@
 
       </animation>
       
+       <animation name ="jumpLand">
+
+        <sprite x ="231" y ="36" w ="17" h="28"/>
+        <sprite x ="261" y ="38" w ="20" h="26"/>
+        <sprite x ="292" y ="38" w ="22" h="26"/>
+        <sprite x ="327" y ="34" w ="17" h="30"/>
+        <sprite x ="358" y ="32" w ="18" h="29"/>
+        <sprite x ="389" y ="34" w ="20" h="29"/>
+        <sprite x ="420" y ="37" w ="22" h="27"/>
+        <sprite x ="454" y ="38" w ="18" h="26"/>
+
+        <animValues loop="true" speed="0.15f"/>
+
+      </animation>
+      
       <animation name ="walk">
         <sprite x ="7" y ="37" w ="17" h="27"/>
         <sprite x ="39" y ="36" w ="17" h="28"/>

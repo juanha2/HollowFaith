@@ -11,8 +11,8 @@ struct Properties
 {
 	struct Property
 	{
-		p2SString name;
-		float value;
+		p2SString	name;
+		float		value;
 	};
 
 	~Properties()
@@ -36,17 +36,17 @@ struct Properties
 
 struct Levels
 {
-	p2SString name;
+	p2SString	name;
 };
 
 struct MapLayer
 {
-	p2SString name;
-	uint width;
-	uint height;
-	uint* gid = nullptr;
+	p2SString	name;
+	uint		width;
+	uint		height;
+	uint*		gid = nullptr;
 	Properties	properties;
-	float speed_x;	
+	float		speed_x;	
 	
 
 	inline uint Get(int x, int y) const {
@@ -76,8 +76,8 @@ struct TileSet
 struct ObjectsData
 {
 	uint		name;
-	float			x;
-	float			y;
+	float		x;
+	float		y;
 	uint		width;
 	uint		height;
 	Collider*	colliders[100] = { nullptr };
