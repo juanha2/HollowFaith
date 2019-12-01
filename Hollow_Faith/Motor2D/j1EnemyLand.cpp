@@ -313,7 +313,7 @@ bool j1EnemyLand::PathJumping()
 					{
 						if (canJump)
 						{
-							speed.y = movementForce.y - 20;
+							speed.y = movementForce.y - 40;
 							canJump = false;
 						}
 
@@ -322,7 +322,7 @@ bool j1EnemyLand::PathJumping()
 					{
 						if (canJump)
 						{
-							speed.y = movementForce.y - 20;
+							speed.y = movementForce.y - 40;
 							canJump = false;
 						}
 					}
@@ -371,7 +371,7 @@ void j1EnemyLand::JumpFallLogic(float dt)
 	if (checkingFall)
 	{
 		current_animation = &jump;
-		speed.y += gravityForce * (dt * DT_CALIBRATED);
+		speed.y += (extraJumpForce + gravityForce) * (dt * DT_CALIBRATED);
 	}
 
 
@@ -532,6 +532,7 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 
 				case DIR_DOWN:
 					position.y = c2->rect.y - entity_collider.h;
+
 					checkingFall = false;
 
 					if (!canJump)
