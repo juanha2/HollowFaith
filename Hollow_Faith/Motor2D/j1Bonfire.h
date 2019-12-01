@@ -30,6 +30,7 @@ public:
 	bool			alreadyCollided;
 	bool			active = false;
 	
+	
 
 public:
 

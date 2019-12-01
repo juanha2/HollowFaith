@@ -1,6 +1,8 @@
 #ifndef __j1ENTITYMANAGER_H__
 #define __j1ENTITYMANAGER_H__
 
+#define MAX_BONFIRES 3
+
 #include "j1Module.h"
 #include "p2List.h"
 #include "p2Point.h"
@@ -45,10 +47,10 @@ public:
 	
 	p2List<j1Entity*>	Entities;
 
-	j1Player* player;
-	j1Enemy* enemy;
-	j1Particles* particle;
-	j1Bonfire* bonfire[3];
+	j1Player*			player;
+	j1Enemy*			enemy;
+	j1Particles*		particle;
+	j1Bonfire*			bonfire[MAX_BONFIRES];
 
 	p2SString			jump_fx;
 	p2SString			death_fx;
@@ -64,6 +66,7 @@ public:
 	p2SString			hurt_Fx;
 	
 	int					count;
+	float				savedPos;
 	
 };
 

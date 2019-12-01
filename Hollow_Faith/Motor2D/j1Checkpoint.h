@@ -27,10 +27,10 @@ public:
 	void LoadCheckPoints();
 
 public:
-	p2SString save_game;
-	p2SString load_game;
+	p2SString			save_game;
+	p2SString			load_game;
 
-	bool	save_checkpoints = false;
+	bool				save_checkpoints = false;
 
 	bool				checkpoint = false;
 	fPoint				checkpointpos;

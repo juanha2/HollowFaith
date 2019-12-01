@@ -84,15 +84,17 @@ bool j1Bonfire::PreUpdate()
 bool j1Bonfire::Update(float dt)
 {
 
-	if (active) {
+	if (active) 
+	{
 		current_animation = &light_on;		
+
+		distance = abs(App->objects->player->position.x - App->objects->savedPos);
+		Mix_Volume(1, App->audio->SpatialAudio(100, distance));
 	}
 	
-	//distance = abs(App->objects->player->position.x - App->objects->bonfire[App->checkpoint->num_checkpoint - 1]->position.x);
-
-	Mix_Volume(3, App->audio->SpatialAudio(100, this->distance));
 	
-
+	
+	LOG("%d", distance);
 	return true;
 }
 
@@ -108,7 +110,8 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 
 	if ((c2->type == COLLIDER_PLAYER))
 	{
-		distance = abs(App->objects->player->position.x - c1->callback->position.x);
+		App->objects->savedPos =  c1->callback->position.x;
+
 
 		if (!alreadyCollided)
 		{			
@@ -118,7 +121,7 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 			App->checkpoint->checkpoint = true;
 
 			App->audio->PlayFx(9, 0, App->audio->SpatialAudio(100, distance * 2));
-			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(200, distance * 2), 3);			
+			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(200, distance * 2), 1);			
 			active = true;
 
 			App->checkpoint->SaveCheckPoints();
