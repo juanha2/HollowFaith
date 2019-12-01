@@ -82,6 +82,7 @@ Juan Hernández Almagro
 - Climb mechanic
 - Creation of entity system
 - Checkpoints logic
+- UML Entities
 
 Aarón Guerrero Cruz
 - Creation of player time/movement logic system
