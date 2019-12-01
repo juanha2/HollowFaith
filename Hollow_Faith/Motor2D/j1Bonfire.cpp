@@ -130,24 +130,27 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 bool j1Bonfire::Load(pugi::xml_node& data)
 {
 	App->checkpoint->num_checkpoint = data.attribute("num").as_int();
+	
+
+	// Checkpoints Logic ----------------------------------------
+	
 	alreadyCollided = false;
 
-	if (App->checkpoint->num_checkpoint == 0) {
-		
-		App->checkpoint->checkpoint = false;
-	}
-	else if (App->checkpoint->num_checkpoint == 1) {
-		
-		App->checkpoint->checkpointpos = position;
-		App->checkpoint->num_checkpoint = 1;
-		
-	}
-	else if (App->checkpoint->num_checkpoint == 2) {
-		App->checkpoint->checkpointpos = position;
-		App->checkpoint->num_checkpoint = 2;
-		
-	}
+	for (int i = 0; i < MAX_BONFIRES; i++) {
 
+		if (App->checkpoint->num_checkpoint == i)
+		{
+			if (i == 0)
+				App->checkpoint->checkpoint = false;
+			else
+			{
+				App->checkpoint->checkpointpos = position;
+				App->checkpoint->num_checkpoint = i;
+			}			
+		}			
+	}	
+	
+	App->checkpoint->SaveCheckPoints();
 	
 	return true;
 }
@@ -160,7 +163,11 @@ bool j1Bonfire::Save(pugi::xml_node& data) const
 	bonfire.append_child("position").append_attribute("x") = position.x;
 	bonfire.child("position").append_attribute("y") = position.y;
 	bonfire.append_child("active").append_attribute("value") = active;
-	bonfire.append_attribute("num") = App->checkpoint->num_checkpoint;
+
+	if(App->checkpoint->save_checkpoints)
+		bonfire.append_attribute("num") = num_bonfire;
+	else
+		bonfire.append_attribute("num") = App->checkpoint->num_checkpoint;
 
 	return true;
 

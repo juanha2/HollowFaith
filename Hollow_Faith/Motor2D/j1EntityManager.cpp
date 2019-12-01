@@ -174,7 +174,6 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 	}
 
 	count = 1;
-
 	for (pugi::xml_node iterator = file.child("Bonfire"); iterator; iterator = iterator.next_sibling())
 	{
 		if (bonfire == iterator.name())

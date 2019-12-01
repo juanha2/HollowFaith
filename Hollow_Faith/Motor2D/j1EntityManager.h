@@ -1,7 +1,7 @@
 #ifndef __j1ENTITYMANAGER_H__
 #define __j1ENTITYMANAGER_H__
 
-#define MAX_BONFIRES 3
+#define MAX_BONFIRES 2
 
 #include "j1Module.h"
 #include "p2List.h"

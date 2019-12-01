@@ -8,7 +8,7 @@
 
 j1Checkpoint::j1Checkpoint() {
 
-
+	name.create("checkpoint");
 }
 
 j1Checkpoint::~j1Checkpoint() {

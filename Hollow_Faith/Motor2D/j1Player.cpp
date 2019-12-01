@@ -95,11 +95,8 @@ bool j1Player::Start()
 	}
 	else
 	{
-		if (App->checkpoint->checkpoint) {
-			
-			App->checkpoint->LoadCheckPoints();
-			//position = App->scene->checkpointpos;
-		}
+		if (App->checkpoint->checkpoint) 			
+			App->checkpoint->LoadCheckPoints();		
 		
 		else
 			position = startPosLevel1;
