@@ -80,7 +80,7 @@ bool j1EnemyLand::PreUpdate()
 		App->objects->DeleteEntity();
 	}
 
-	if (hurtedConsec) 
+	if (hurtedConsec) // Gets the first stone hit
 	{
 		timeConsec += App->dt;
 
@@ -105,7 +105,7 @@ bool j1EnemyLand::PreUpdate()
 
 	
 	PositionUpdate(App->dt);
-	speedLimitChecker();
+	speedLimitChecker(); 
 
 	return ret;
 }
@@ -113,11 +113,11 @@ bool j1EnemyLand::PreUpdate()
 
 bool j1EnemyLand::Update(float dt)
 {
-	BROFILER_CATEGORY("ALL_LandEnemyPathLogic", Profiler::Color::DarkGreen);
+	BROFILER_CATEGORY("Update_LandEnemy", Profiler::Color::DarkGreen);
 
 	bool ret = true;
 
-	if (canJump)
+	if (canJump) // If the enemy isn't in the air
 		GeneratingThePath(pathCadency, dt, agroDistance); // Generates a path with a X cadency, using the time and only when the distance between player and enemy is X
 	else 
 	{
@@ -126,9 +126,9 @@ bool j1EnemyLand::Update(float dt)
 	}
 	
 
-	if (chase) 
+	if (chase)  
 	{	
-		if (!PathJumping()) 
+		if (!PathJumping()) // If the enemy is not ready to jump let's follow the path
 		{
 			if (!FollowingThePath(movementForce.x, dt)) // Follows the path logic generated
 			{
@@ -139,7 +139,7 @@ bool j1EnemyLand::Update(float dt)
 				chase = false;
 			}
 		}
-		else if (Stop().x != -1)
+		else if (Stop().x != -1) // If there is floor in the next path tile, let's follows the path
 		{
 			if (!FollowingThePath(movementForce.x, dt)) // Follows the path logic generated
 			{
@@ -150,7 +150,7 @@ bool j1EnemyLand::Update(float dt)
 				chase = false;
 			}
 		}
-		else 
+		else // If enemy won't jump or follow the path, let's Stop.
 		{
 			speed.x = 0;
 			current_animation = &idle;
@@ -159,7 +159,7 @@ bool j1EnemyLand::Update(float dt)
 	
 	
 	
-	JumpFallLogic(dt);
+	JumpFallLogic(dt); // gravity and X jump force
 
 	return ret;
 }
@@ -236,7 +236,7 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 	
 	iPoint current = App->map->MapToWorld(pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y);
 
-	if ((abs(position.x - current.x) > pathMinDist)) 
+	if ((abs(position.x - current.x) > pathMinDist)) // Go to the next tile
 	{
 		if (current.x > position.x)
 		{
@@ -261,7 +261,7 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 	}
 	else
 	{
-		pathToPlayer.Pop(current);
+		pathToPlayer.Pop(current); // When we reach the next tile, pop it, and go to the next or stop if that was the last one.
 	}
 
 
@@ -275,16 +275,18 @@ bool j1EnemyLand::FollowingThePath(float auxSpeed, float dt) {
 bool j1EnemyLand::PathJumping() 
 {
 
+	BROFILER_CATEGORY("LandEnemy_PATHJUMP_PathLogic", Profiler::Color::Green);
+
 	if (pathToPlayer.Count() > 1)
 	{
-		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 2 };
+		iPoint next = { pathToPlayer[pathToPlayer.Count() - 2].x, pathToPlayer[pathToPlayer.Count() - 2].y + 2 }; 
 
 		if (App->pathfinding->IsWalkable(next) && !checkingFall)
 		{
 
 			iPoint result = { -1, -1 };
 
-			iPoint next = { pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y + 2 };
+			iPoint next = { pathToPlayer[pathToPlayer.Count() - 1].x, pathToPlayer[pathToPlayer.Count() - 1].y + 2 }; 
 
 			if (App->pathfinding->IsWalkable(next) && !checkingFall)
 			{
@@ -294,7 +296,7 @@ bool j1EnemyLand::PathJumping()
 
 					if (!App->pathfinding->IsWalkable(next))
 					{
-						result = next;
+						result = next; // Get if there will be some floor to land
 						break;
 					}
 				}
@@ -306,7 +308,7 @@ bool j1EnemyLand::PathJumping()
 			{
 				if (distance < jumpDistance)
 				{
-					if (position.x < App->objects->player->position.x && flip == SDL_FLIP_NONE)
+					if (position.x < App->objects->player->position.x && flip == SDL_FLIP_NONE) // If the player is close enough and the sprite is looking and it, can jump
 					{
 						if (canJump)
 						{
@@ -338,7 +340,10 @@ bool j1EnemyLand::PathJumping()
 
 iPoint j1EnemyLand::Stop()
 {
-	iPoint ret = { -1, -1 };
+
+	BROFILER_CATEGORY("LandEnemy_PATHSTOP_PathLogic", Profiler::Color::Green);
+
+	iPoint ret = { -1, -1 }; 
 
 	iPoint next = { pathToPlayer[pathToPlayer.Count() - 1].x, App->map->WorldToMap(position.x, round(position.y)).y + 3 };
 

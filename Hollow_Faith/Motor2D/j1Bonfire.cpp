@@ -24,7 +24,6 @@ j1Bonfire::j1Bonfire(fPoint pos, int count, bool actv) : j1Entity(entityType::BO
 
 }
 
-
 j1Bonfire::~j1Bonfire() {};
 
 bool j1Bonfire::Awake(pugi::xml_node& config)

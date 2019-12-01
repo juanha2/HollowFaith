@@ -27,6 +27,9 @@ public:
 	void LoadCheckPoints();
 
 public:
+
+	// - - - - CHECKPOINT BASICS - - - -
+
 	p2SString			save_game;
 	p2SString			load_game;
 

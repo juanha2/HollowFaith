@@ -1,13 +1,25 @@
 <?xml version="1.0"?>
 <game_state>
 	<player>
-		<position x="869" y="111" />
+		<position x="118" y="255" />
 	</player>
 	<EnemyLand>
 		<position x="272" y="336" />
 	</EnemyLand>
+	<EnemyLand>
+		<position x="720" y="256" />
+	</EnemyLand>
+	<EnemyLand>
+		<position x="1456" y="352" />
+	</EnemyLand>
 	<EnemyFly>
 		<position x="304" y="64" />
+	</EnemyFly>
+	<EnemyFly>
+		<position x="1075" y="46" />
+	</EnemyFly>
+	<EnemyFly>
+		<position x="1456" y="64" />
 	</EnemyFly>
 	<Bonfire num="2">
 		<position x="118" y="255" />
@@ -15,15 +27,6 @@
 	</Bonfire>
 	<Bonfire num="2">
 		<position x="869" y="111" />
-		<active value="true" />
+		<active value="false" />
 	</Bonfire>
-	<EnemyFly>
-		<position x="1075" y="46" />
-	</EnemyFly>
-	<EnemyFly>
-		<position x="1456" y="64" />
-	</EnemyFly>
-	<EnemyLand>
-		<position x="1456" y="352" />
-	</EnemyLand>
 </game_state>

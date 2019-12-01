@@ -63,7 +63,7 @@ bool j1EnemyFly::PreUpdate()
 {
 	bool ret = true;
 
-	if (elim)
+	if (elim) // When enemy dies
 	{
 		App->audio->PlayFx(10, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
@@ -73,7 +73,7 @@ bool j1EnemyFly::PreUpdate()
 		App->objects->DeleteEntity();
 	}
 
-	if (hurtedConsec)
+	if (hurtedConsec) // Gets the first stone hit
 	{
 		timeConsec += App->dt;
 
@@ -106,7 +106,7 @@ bool j1EnemyFly::PreUpdate()
 
 bool j1EnemyFly::Update(float dt)
 {
-	BROFILER_CATEGORY("ALL_FlyingEnemyPathLogic", Profiler::Color::DarkBlue);
+	BROFILER_CATEGORY("Update_FlyingEnemyPathLogic", Profiler::Color::DarkBlue);
 
 	bool ret = true;
 
@@ -205,7 +205,7 @@ bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
 
 	if (abs(position.x - current.x) > pathMinDist || abs(abs(position.y) - abs(current.y)) > pathMinDist) {
 
-		if (current.x > position.x)
+		if (current.x > position.x) // Go to the next tile
 			speed.x += auxSpeed * dt;		
 		else
 			speed.x -= auxSpeed * dt;
@@ -225,7 +225,7 @@ bool j1EnemyFly::FollowingThePath(float auxSpeed, float dt) {
 	}
 	else
 	{
-		pathToPlayer.Pop(current);
+		pathToPlayer.Pop(current); // When we reach the next tile, pop it, and go to the next or stop if that was the last one.
 	}
 
 	return true;
