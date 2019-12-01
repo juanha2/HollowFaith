@@ -23,13 +23,24 @@ j1EnemyLand::j1EnemyLand(fPoint pos) : j1Enemy(entityType::ENEMY_LAND, pos) {  }
 j1EnemyLand::~j1EnemyLand() {};
 
 bool j1EnemyLand::Awake(pugi::xml_node& config)
-{
-	LOG("Loading Enemy Parser");
+{	
 	bool ret = true;
 
 	pugi::xml_node dataIterator = config.child("data");
+	pugi::xml_node enemydata = config.child("enemydata");	
 
+	//Loading enemy Data
 	texture_path = config.child("graphics_enemy").attribute("path").as_string();
+	speedLimit.y = dataIterator.child("speed_limit").attribute("y").as_float();
+	speedLimit.x = dataIterator.child("speed_limit").attribute("x").as_float();
+	pathCadency = enemydata.child("pathCadency").attribute("value").as_float();
+	pathMinDist = enemydata.child("pathMinDist").attribute("value").as_int();
+	agroDistance = enemydata.child("agroDistance").attribute("value").as_int();
+	movementForce.x = enemydata.child("movementForce").attribute("x").as_float();
+	movementForce.y = enemydata.child("movementForce").attribute("y").as_float();
+	jumpDistance = enemydata.child("jumpDistance").attribute("value").as_int();
+	extraJumpForce = enemydata.child("extraJumpForce").attribute("value").as_int();	
+	gravityForce = config.child("data").child("gravity").attribute("value").as_float();
 
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
@@ -37,34 +48,33 @@ bool j1EnemyLand::Awake(pugi::xml_node& config)
 	walk.load_animation(animIterator, "walkLand");
 	jump.load_animation(animIterator, "jumpLand");
 
-	speedLimit.y = dataIterator.child("speed_limit").attribute("y").as_float();
-	speedLimit.x = dataIterator.child("speed_limit").attribute("x").as_float();
-	
-
-	entity_collider = { 0, 0, 17, 27 };
-	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
-
-	canJump = true;
-	originalPos = position;
+	// Loading collider
+	entity_collider.x = enemydata.child("colliderLand").attribute("x").as_int();
+	entity_collider.y = enemydata.child("colliderLand").attribute("y").as_int();
+	entity_collider.w = enemydata.child("colliderLand").attribute("w").as_int();
+	entity_collider.h= enemydata.child("colliderLand").attribute("h").as_int();
 
 	return ret;
 }
-
 
 bool j1EnemyLand::Start()
 {
 	bool ret = true;
 
 	texture = App->tex->Load(texture_path.GetString());
+
+	//Creating the collider
+	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 	App->coll->AddColliderEntity(collider);
 
+	//Setting initial values
 	current_animation = &idle;
 	ignoreColl = false;
+	canJump = true;
+	originalPos = position;
 
 	return ret;
 }
-
-
 
 bool j1EnemyLand::PreUpdate()
 {

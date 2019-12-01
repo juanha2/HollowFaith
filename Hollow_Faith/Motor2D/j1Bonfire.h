@@ -6,7 +6,6 @@
 
 #define JUMP_TIME 3000
 
-
 #include "j1Module.h"
 #include "p2Animation.h"
 #include "j1Entity.h"
@@ -28,9 +27,7 @@ public:
 	// - - - - TRIGGERS - - - -
 
 	bool			alreadyCollided;
-	bool			active = false;
-	
-	
+	bool			active = false;	
 
 public:
 

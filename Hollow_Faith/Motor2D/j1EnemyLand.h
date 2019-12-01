@@ -29,8 +29,8 @@ public:
 	bool				canJump = false;
 	bool				checkingFall = false;
 
-	int					jumpDistance = 130;
-	int					extraJumpForce = -5;
+	int					jumpDistance;
+	int					extraJumpForce;
 
 
 	//  - - - - SPEED - - - - 

@@ -20,19 +20,17 @@ public:
 	// - - - - PATHFINDING - - - -
 
 	p2DynArray<iPoint>		pathToPlayer;
-	float					pathCadency = 0.5f;
-	int						pathMinDist = 16;
-	int						agroDistance = 200;
+	float					pathCadency;
+	int						pathMinDist;
+	int						agroDistance;
 
 	float					timer;
 	bool					chase = false;
 
-
 	// - - - - MOBILITY - - - -
 
 	fPoint					originalPos;
-	fPoint					movementForce = { 80.0f, -420.0f };
-
+	fPoint					movementForce;
 
 	// - - - - FIGHT - - - -
 
@@ -48,7 +46,7 @@ public:
 
 	// Destructor
 	~j1Enemy();
-
+	
 	bool Load(pugi::xml_node& file);
 	bool Save(pugi::xml_node& file) const;
 

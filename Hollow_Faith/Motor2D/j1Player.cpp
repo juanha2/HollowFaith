@@ -46,31 +46,24 @@ bool j1Player::Awake(pugi::xml_node& config)
 
 	startPosLevel1.x = dataIterator.child("StartPosLevel1").attribute("x").as_float();
 	startPosLevel1.y = dataIterator.child("StartPosLevel1").attribute("y").as_float();
-
 	startPosLevel2.x = dataIterator.child("StartPosLevel2").attribute("x").as_float();
 	startPosLevel2.y = dataIterator.child("StartPosLevel2").attribute("y").as_float();
-
 	playerClimbSpeed = dataIterator.child("climbspeed").attribute("value").as_float();
-
 	speed.x = dataIterator.child("speed").attribute("x").as_float();
 	speed.x = dataIterator.child("speed").attribute("y").as_float();
-
 	Acceleration = dataIterator.child("acceleration").attribute("value").as_float();
-
 	movementForce.x = dataIterator.child("MovementForce").attribute("x").as_float();
 	movementForce.y = dataIterator.child("MovementForce").attribute("y").as_float();
-
 	hoverAcceleration = dataIterator.child("hover_acceleration").attribute("value").as_float();
 	hoverSpeedActivation = dataIterator.child("hover_speed_activation").attribute("value").as_float();
 	hoverFallSmooth = dataIterator.child("hover_fall_smooth").attribute("value").as_float();
-
 	speedLimit.x = dataIterator.child("speed_limit").attribute("x").as_float();
 	speedLimit.y = dataIterator.child("speed_limit").attribute("y").as_float();
-
 	gravityForce = dataIterator.child("gravity").attribute("value").as_float();
 	slowingValue = dataIterator.child("slowing_value").attribute("value").as_float();
 	slowlingLimitValue = dataIterator.child("slowing_limit").attribute("value").as_int();
 
+	
 	entity_collider = { 0, 0, 17, 27 };
 	collider = new Collider(entity_collider, COLLIDER_PLAYER, this);
 

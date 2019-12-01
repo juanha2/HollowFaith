@@ -150,7 +150,7 @@ bool j1Bonfire::Load(pugi::xml_node& data)
 		}			
 	}	
 	
-	App->checkpoint->SaveCheckPoints();
+	App->checkpoint->SaveCheckPoints(); // We make sure everytime we load, we restart all checkpoints value to checkpoint.xml
 	
 	return true;
 }

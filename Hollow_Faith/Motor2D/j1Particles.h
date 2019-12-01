@@ -67,9 +67,9 @@ private:
 
 	// - - - - DESTROY - - -
 
-	Uint32		defaultParticleLife = 200;
-	Uint32		stoneLife = 1000;
-	Uint32		deathlife = 500;
+	Uint32		defaultParticleLife;
+	Uint32		stoneLife;
+	Uint32		deathlife;
 
 public:
 

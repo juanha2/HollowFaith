@@ -24,7 +24,16 @@ j1Particles::~j1Particles()
 
 bool j1Particles::Awake(pugi::xml_node& config)
 {
-	texture_path = config.child("graphics_player").attribute("path").as_string();
+	texture_path = config.child("graphics_player").attribute("path").as_string();	
+
+	pugi::xml_node particlesdata = config.child("particledata");
+
+	// Loading Particle Data
+
+	gravityForce = config.child("data").child("gravity").attribute("value").as_float();
+	defaultParticleLife = particlesdata.child("defaultParticleLife").attribute("value").as_uint();	
+	stoneLife = particlesdata.child("stoneLife").attribute("value").as_uint();
+	deathlife = particlesdata.child("deathlife").attribute("value").as_uint();
 
 	// Loading Particle Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
@@ -39,7 +48,8 @@ bool j1Particles::Awake(pugi::xml_node& config)
 	stone.life = stoneLife;
 
 	death.anim.load_animation(animIterator, "death");
-	death.life = deathlife;	
+	death.life = deathlife;
+
 	return true;
 }
 

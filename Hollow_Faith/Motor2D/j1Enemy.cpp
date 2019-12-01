@@ -30,7 +30,6 @@ j1Enemy::j1Enemy(j1Entity::entityType type, fPoint pos) : j1Entity(type)
 
 j1Enemy::~j1Enemy() {};
 
-
 // Load Enemies State
 bool j1Enemy::Load(pugi::xml_node& data)
 {

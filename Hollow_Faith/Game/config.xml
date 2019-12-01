@@ -21,6 +21,7 @@
   </window>
 
   <objects>
+    
     <graphics_player path="Assets/Sprites/Monster.png"/>
     <graphics_enemy path="Assets/Sprites/enemy.png"/>
     <graphics_bat path="Assets/Sprites/bat.png"/>
@@ -42,9 +43,31 @@
       <gravity value="30.0f"/>
       <slowing_value value="10.0f"/>
       <slowing_limit value=" 200"/>
+      <gracityForce value="30.0f"/>
 
     </data>
 
+    <particledata>
+
+      <defaultParticleLife  value= "200"/>;
+      <stoneLife  value= "1000"/>;
+      <deathlife  value= "500"/>;    
+
+    </particledata>
+    
+    <enemydata>
+      
+      <pathCadency value= "0.5f"/>
+      <pathMinDist value= "16"/>
+      <agroDistance value= "200"/>
+      <colliderFly x="0" y="0" w="14" h="14"/>
+      <colliderLand x="0" y="0" w="17" h="27"/>
+      <movementForce x="80.0f" y="-420.0f"/>
+      <jumpDistance value="130"/>
+      <extraJumpForce value="-5"/>
+      
+    </enemydata>
+    
     <fx>
       <jumpFx path="audio/fx/jump.wav"/>
       <deathFx path="audio/fx/death.wav"/>
@@ -229,25 +252,5 @@
       <level name="level02.tmx"/>
     </levels>
   </map>
-
-  <enemies>
-
-
-    <animations>
-      <animation name ="fly">
-        <sprite x ="3" y ="7" w ="21" h="25"/>
-        <sprite x ="35" y ="6" w ="21" h="26"/>
-        <sprite x ="68" y ="5" w ="20" h="27"/>
-        <sprite x ="99" y ="7" w ="21" h="25"/>
-        <sprite x ="132" y ="6" w ="20" h="26"/>
-        <sprite x ="164" y ="5" w ="20" h="27"/>
-        <animValues loop="true" speed="0.06f"/>
-      </animation>
-    </animations>
-
-    <death_enemyFx path="audio/fx/death.wav"/>
-
-  </enemies>
-
 
 </config>

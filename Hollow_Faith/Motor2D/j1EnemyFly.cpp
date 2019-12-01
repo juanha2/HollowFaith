@@ -26,35 +26,46 @@ j1EnemyFly::~j1EnemyFly() {};
 
 bool j1EnemyFly::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Enemy Parser");
 	bool ret = true;
+	
+	pugi::xml_node enemydata = config.child("enemydata");
 
+	//Loading enemy Data
 	texture_path = config.child("graphics_bat").attribute("path").as_string();
+	pathCadency = enemydata.child("pathCadency").attribute("value").as_float();
+	pathMinDist = enemydata.child("pathMinDist").attribute("value").as_int();
+	agroDistance = enemydata.child("agroDistance").attribute("value").as_int();
+	movementForce.x = enemydata.child("movementForce").attribute("x").as_float();
+	movementForce.y = enemydata.child("movementForce").attribute("y").as_float();	
+	gravityForce = config.child("data").child("gravity").attribute("value").as_float();
 
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 	fly.load_animation(animIterator, "idleBat");
 
-
-	entity_collider = { 0, 0, 14, 14 };
-	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
-
-	originalPos = position;
+	// Loading collider
+	entity_collider.x = enemydata.child("colliderFly").attribute("x").as_int();
+	entity_collider.y = enemydata.child("colliderFly").attribute("y").as_int();
+	entity_collider.w = enemydata.child("colliderFly").attribute("w").as_int();
+	entity_collider.h = enemydata.child("colliderFly").attribute("h").as_int();
 
 	return ret;
 }
-
 
 bool j1EnemyFly::Start()
 {
 	bool ret = true;
 
 	texture = App->tex->Load(texture_path.GetString());
+
+	// Creating the collider
+	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 	App->coll->AddColliderEntity(collider);
+
+	// Setting initial values
 	current_animation = &fly;
-
-
 	ignoreColl = false;
+	originalPos = position;
 	return ret;
 }
 
