@@ -10,13 +10,13 @@ class j1Scene : public j1Module
 {
 public:
 
-	bool debug = false;
-	SDL_Texture* debug_tex;
-	int currentmap;
-	int savedcurrentmap;
-	bool different_map = false;
-	bool ready_to_load = false;
-	bool sound_repeat = false;
+	bool			debug = false;
+	SDL_Texture*	debug_tex;
+	int				currentmap;
+	int				savedcurrentmap;
+	bool			different_map = false;
+	bool			ready_to_load = false;
+	bool			sound_repeat = false;
 
 	j1Scene();
 

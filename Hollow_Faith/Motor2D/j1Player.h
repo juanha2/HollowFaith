@@ -58,6 +58,9 @@ class j1Player : public j1Entity
 
 public:	
 
+
+	// - - - - PLAYER STATE - - - -
+
 	fPoint				startPosLevel1;
 	fPoint				startPosLevel2;
 	
@@ -65,6 +68,9 @@ public:
 	bool				dead = false;
 	bool				win = false;
 	bool				can_climb = false;
+
+	// - - - - - - - - - - - 
+
 	
 	// - - - - INPUT - - - - 
 

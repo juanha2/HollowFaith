@@ -47,12 +47,12 @@ public:
 private:
 
 	// size of the map
-	uint width;
-	uint height;
+	uint				width;
+	uint				height;
 	// all map walkability values [0..255]
-	uchar* map;
+	uchar*				map;
 	// we store the created path here
-	p2DynArray<iPoint> last_path;
+	p2DynArray<iPoint>	last_path;
 };
 
 // forward declaration
@@ -76,10 +76,10 @@ struct PathNode
 	int CalculateF(const iPoint& destination);
 
 	// -----------
-	int g;
-	int h;
-	iPoint pos;
-	PathNode* parent; // needed to reconstruct the path in the end
+	int			g;
+	int			h;
+	iPoint		pos;
+	PathNode*	parent; 
 };
 
 // ---------------------------------------------------------------------

@@ -26,10 +26,11 @@ enum COLLIDER_TYPE
 
 struct Collider
 {
-	SDL_Rect rect;
-	bool to_delete = false;
-	COLLIDER_TYPE type;
-	j1Entity* callback = nullptr;
+	SDL_Rect		rect;
+	bool			to_delete = false;
+	COLLIDER_TYPE	type;
+	j1Entity*		callback = nullptr;
+
 
 	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, j1Entity* callback = nullptr) :
 		rect(rectangle),
@@ -53,6 +54,7 @@ struct Collider
 
 class j1Collision : public j1Module
 {
+
 public:
 
 	j1Collision();
@@ -68,11 +70,12 @@ public:
 	void DebugDraw();
 
 
+
 private:
 
-	bool debug = false;
-	Collider* colliders[MAX_COLLIDERS];
-	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
+	bool		debug = false;
+	Collider*	colliders[MAX_COLLIDERS];
+	bool		matrix[COLLIDER_MAX][COLLIDER_MAX];
 
 };
 
