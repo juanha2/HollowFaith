@@ -125,8 +125,10 @@ bool j1EntityManager::CleanUp()
 	App->objects->player = nullptr;
 	App->objects->particle = nullptr;
 
-	for (int i = 0; i <= MAX_BONFIRES; i++) {
-		App->objects->bonfire[i] = nullptr;
+	for (int i = 0; i <= MAX_BONFIRES; i++) 
+	{
+		if(App->objects->bonfire[i] != nullptr)
+			App->objects->bonfire[i] = nullptr;
 	}
 		
 
@@ -164,7 +166,7 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 	p2SString enemyFly="EnemyFly";
 	p2SString bonfire = "Bonfire";
 
-	for (pugi::xml_node iterator = file.child("EnemyLand"); iterator; iterator = iterator.next_sibling())
+	for (pugi::xml_node iterator = file.child("EnemyLand"); iterator; iterator = iterator.next_sibling("EnemyLand"))
 	{		
 		if (enemyLand == iterator.name())
 		{
@@ -172,7 +174,7 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 		}
 	}
 
-	for (pugi::xml_node iterator = file.child("EnemyFly"); iterator; iterator = iterator.next_sibling())
+	for (pugi::xml_node iterator = file.child("EnemyFly"); iterator; iterator = iterator.next_sibling("EnemyFly"))
 	{
 		if (enemyFly == iterator.name())
 		{
@@ -181,7 +183,7 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 	}
 
 	count = 1;
-	for (pugi::xml_node iterator = file.child("Bonfire"); iterator; iterator = iterator.next_sibling())
+	for (pugi::xml_node iterator = file.child("Bonfire"); iterator; iterator = iterator.next_sibling("Bonfire"))
 	{
 		if (bonfire == iterator.name())
 		{
@@ -253,7 +255,8 @@ j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position,
 		break;
 	}
 
-	if (tmp) {
+	if (tmp) 
+	{
 		Entities.add(tmp);
 		tmp->Awake(config_node);
 		tmp->Start();

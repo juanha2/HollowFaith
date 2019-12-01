@@ -22,6 +22,7 @@ j1Particles::~j1Particles()
 
 bool j1Particles::Awake(pugi::xml_node& config)
 {
+
 	//Loading texture
 	texture_path = config.child("graphics_player").attribute("path").as_string();	
 
@@ -43,6 +44,11 @@ bool j1Particles::Awake(pugi::xml_node& config)
 	stone.life = stoneLife;
 	death.anim.load_animation(animIterator, "death");
 	death.life = deathlife;
+
+	for (int i = 0; i < MAX_ACTIVE_PARTICLES; i++)
+	{
+		active[i] = nullptr;
+	}
 
 	return true;
 }
@@ -81,10 +87,11 @@ bool j1Particles::PostUpdate()
 		if (p == nullptr)
 			continue;
 
+		
 		if (p->Update() == false)
-		{
+		{	
 			delete p;
-			active[i] = nullptr;
+			active[i] = nullptr;			
 		}
 
 		else if (SDL_GetTicks() >= p->born)	//If particle is alive, Blit it
@@ -142,11 +149,14 @@ void j1Particles::OnCollision(Collider* c1, Collider* c2)
 	}
 
 }
+
+
 Particle::Particle()
 {
 	position.SetToZero();
 	speed.SetToZero();
 }
+
 
 Particle::Particle(const Particle& p) :
 	anim(p.anim), position(p.position), speed(p.speed),
@@ -193,7 +203,7 @@ bool Particle::Update()
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
-
+		
 	return ret;
 }
 
