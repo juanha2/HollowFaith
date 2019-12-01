@@ -122,6 +122,7 @@ private:
 	float				hoverSpeedActivation;
 	float				hoverFallSmooth;
 
+	float				stoneForce = 200.0f;
 	float				particlePosMargin = 10.0f;	
 
 	// - - - - - - - - - - - 
