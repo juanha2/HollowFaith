@@ -68,7 +68,8 @@ bool j1EnemyLand::Start()
 	current_animation = &idle;
 	ignoreColl = false;
 	canJump = true;
-	originalPos = position;
+	originalPos.x = position.x;
+	originalPos.y = position.y;
 
 	return ret;
 }
@@ -79,12 +80,7 @@ bool j1EnemyLand::PreUpdate()
 
 	if (elim) // When enemy dies
 	{
-
-		App->audio->PlayFx(10, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
-		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
 		collider->to_delete = true;
-
-		pathToPlayer.Clear();
 		App->objects->DeleteEntity();
 	}
 
@@ -112,9 +108,6 @@ bool j1EnemyLand::PreUpdate()
 	}
 
 	
-	// Update with dt the enemy position all frames
-	PositionUpdate(App->dt);
-
 	// We check after update the speed
 	speedLimitChecker(); 
 
@@ -168,7 +161,8 @@ bool j1EnemyLand::Update(float dt)
 		}
 	}
 	
-	
+	// Update with dt the enemy position all frames
+	PositionUpdate(dt);
 	
 	JumpFallLogic(dt); // gravity and X jump force
 
@@ -187,8 +181,6 @@ bool j1EnemyLand::PostUpdate()
 			App->render->Blit(App->scene->debug_tex, pos.x, pos.y);
 		}
 	}
-
-
 	// Normalized Animations with DeltaTime
 	Draw(App->dt);
 
@@ -199,6 +191,12 @@ bool j1EnemyLand::CleanUp()
 {
 	//Unloading data
 	App->tex->UnLoad(texture);
+
+	collider->to_delete = true;
+
+	pathToPlayer.Clear();
+	
+
 	return true;
 }
 
@@ -502,6 +500,7 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 				elim = true;
 				App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 				App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
+
 			}
 			else 
 			{			

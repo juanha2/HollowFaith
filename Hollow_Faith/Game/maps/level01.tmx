@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="25" tilewidth="16" tileheight="16" nextobjectid="230">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="25" tilewidth="16" tileheight="16" nextobjectid="232">
  <properties>
   <property name="Music" value="audio/music/music1.ogg"/>
  </properties>
@@ -20188,5 +20188,7 @@
   <object id="216" name="7" x="1424" y="224" width="16" height="16"/>
   <object id="224" name="8" x="112" y="320" width="16" height="34"/>
   <object id="228" name="8" x="888.011" y="175.485" width="8.08" height="34"/>
+  <object id="230" name="9" x="64" y="320" width="16" height="34"/>
+  <object id="231" name="10" x="64" y="320" width="16" height="16"/>
  </objectgroup>
 </map>

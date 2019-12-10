@@ -10,6 +10,8 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "j1Input.h"
+#include "j1Audio.h"
+#include "j1Checkpoint.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 
@@ -56,22 +58,23 @@ bool j1FadeToBlack::PostUpdate()
 	{
 		if (now >= total_time)
 		{
-			App->objects->Disable();			
-			App->scene->Disable();
-
+			
+			App->pathfinding->CleanUp();
+			App->objects->CleanUp();
+			App->coll->CleanUp();
 			App->input->blockingInput();
 			App->input->Disable();
 
-			App->coll->CleanUp();
-			App->map->CleanUp();
-					
 			if (App->map->Reset()) {
 				
-				if (App->map->Load(level_to_load.GetString())) {
-				
-					App->scene->Enable();
-					App->objects->Enable();
+				if (App->map->Load(level_to_load.GetString())) {				
 					
+					App->scene->ready_to_load = false;
+					App->scene->sound_repeat = false;
+					
+					App->checkpoint->Start();
+					App->render->camera = App->render->camera_init;
+
 					int w, h;
 					uchar* data = nullptr;
 					if (App->map->CreateWalkabilityMap(w, h, &data))

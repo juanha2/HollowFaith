@@ -17,13 +17,13 @@
 
 j1Enemy::j1Enemy(j1Entity::entityType type) : j1Entity(type)
 {
-	if (App->objects->enemy == nullptr)
-		App->objects->enemy = this;
+
 }
 
 j1Enemy::j1Enemy(j1Entity::entityType type, fPoint pos) : j1Entity(type)
 {
-	position = pos;	
+	position.x = pos.x;
+	position.y = pos.y;
 }
 
 j1Enemy::~j1Enemy() {};

@@ -109,7 +109,7 @@ public:
 	bool Save(pugi::xml_node& file) const;
 
 	void OnCollision(Collider* c1, Collider* c2);
-
+	
 
 private:
 

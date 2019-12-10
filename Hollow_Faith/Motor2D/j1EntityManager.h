@@ -48,7 +48,6 @@ public:
 	p2List<j1Entity*>	Entities;
 
 	j1Player*			player;
-	j1Enemy*			enemy;
 	j1Particles*		particle;
 	j1Bonfire*			bonfire[MAX_BONFIRES];
 

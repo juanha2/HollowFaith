@@ -15,7 +15,7 @@ public:
 
 	// Destructor
 	~j1Checkpoint() ;
-
+	bool Start();
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 

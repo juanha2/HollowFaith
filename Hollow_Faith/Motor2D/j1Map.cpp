@@ -6,6 +6,7 @@
 #include "j1Map.h"
 #include "j1Collision.h"
 #include "j1Window.h"
+#include "j1EntityManager.h"
 
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -97,7 +98,7 @@ bool j1Map::CleanUp()
 	item = data.tilesets.start;
 
 	int count = 0;
-	while (item != NULL)
+	while (item != nullptr)
 	{
 		App->tex->UnLoad(item->data->texture);
 		RELEASE(item->data);
@@ -109,7 +110,7 @@ bool j1Map::CleanUp()
 	p2List_item<MapLayer*>* item2;
 	item2 = data.layers.start;
 
-	while (item2 != NULL)
+	while (item2 != nullptr)
 	{
 		
 		RELEASE(item2->data);
@@ -122,35 +123,29 @@ bool j1Map::CleanUp()
 	item3 = data.objectgroups.start;
 
 
+
 	// Remove all objects
-	while (item3 != NULL) {
+	while (item3 != nullptr) {
 
 		p2List_item<ObjectsData*>* item4;
 		item4 = item3->data->objects.start;
 		
-		while (item4 != NULL) {
+		while (item4 != nullptr) {
 
 			// Remove all colliders
-
-			for (uint i = 0; i < 100; ++i)
-			{
-			
-				if (item4->data->colliders[i] != nullptr)
-				{
-					item4->data->colliders[i]->to_delete = true;				
-				}
-
-			}
 
 			RELEASE(item4->data);
 			item4 = item4->next;
 		}
 		
+		item3->data->objects.clear();
 		RELEASE(item3->data);
 		item3 = item3->next;
 	}
 
 	data.objectgroups.clear();
+
+	App->coll->CleanUp();
 
 	
 	// Clean up the pugui tree*/
@@ -531,20 +526,69 @@ bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
 	int i = 0;
 	for (pugi::xml_node& object = node.child("object"); object && ret; object = object.next_sibling("object"))
 	{
-		ObjectsData* data = new ObjectsData;
+
+		ObjectsData* data = new ObjectsData();
 
 		data->name = object.attribute("name").as_uint();
-		data->x = object.attribute("x").as_uint();
-		data->y = object.attribute("y").as_uint();
-		data->height = object.attribute("height").as_uint();
-		data->width = object.attribute("width").as_uint();		
+		data->x = object.attribute("x").as_float();
+		data->y = object.attribute("y").as_float();
+		data->height = object.attribute("height").as_int();
+		data->width = object.attribute("width").as_int();
 		
 			
-		CreateColliders(data, i); 	
+		SDL_Rect collider_rect;
+
+		collider_rect.x = object.attribute("x").as_int();
+		collider_rect.y = object.attribute("y").as_int();
+		collider_rect.h = data->height;
+		collider_rect.w = data->width;
+
+		//Type of Collider
+
+		if (data->name == 0)
+			App->coll->AddCollider(collider_rect, COLLIDER_NONE);
+
+		if (data->name == 1)
+		{
+			i++;
+			App->coll->AddCollider(collider_rect, COLLIDER_FLOOR);
+		}
+
+		if (data->name == 2)
+			App->coll->AddCollider(collider_rect, COLLIDER_PLATFORM);
+
+		if (data->name == 3)
+			App->coll->AddCollider(collider_rect, COLLIDER_CLIMB);
+
+		if (data->name == 4)
+			App->coll->AddCollider(collider_rect, COLLIDER_DEATH);
+
+		if (data->name == 5)
+			App->coll->AddCollider(collider_rect, COLLIDER_WIN);
+
+		if (data->name == 9)
+		{
+			App->objects->AddEntity(j1Entity::entityType::PLAYER, { data->x,data->y });
+		}
+		if (data->name == 10)
+		{
+			App->objects->AddEntity(j1Entity::entityType::STONE, { data->x,data->y });
+		}
+		if (data->name == 6)
+		{
+			App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { data->x,data->y });
+		}
+		if (data->name == 7)
+		{
+			App->objects->AddEntity(j1Entity::entityType::ENEMY_LAND, { data->x,data->y });
+		}
+		if (data->name == 8)
+		{
+			App->objects->AddEntity(j1Entity::entityType::BONFIRE, { data->x,data->y });
+		}
 		
-		
-		i++;
 		group->objects.add(data);
+
 	}
 
 	return ret;
@@ -604,32 +648,7 @@ bool j1Map::CreateColliders(ObjectsData* data, int i)
 {
 	bool ret = true;
 
-	SDL_Rect collider_rect;
 
-	collider_rect.x = data->x;
-	collider_rect.y = data->y;
-	collider_rect.h = data->height;
-	collider_rect.w = data->width;
-
-	//Type of Collider
-	
-	if (data->name == 0)
-		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_NONE);
-
-	if (data->name == 1)
-		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_FLOOR);
-
-	if (data->name == 2)
-		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_PLATFORM);
-
-	if (data->name == 3)
-		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_CLIMB);
-
-	if (data->name == 4)
-		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_DEATH);
-
-	if (data->name == 5)
-		data->colliders[i] = App->coll->AddCollider(collider_rect, COLLIDER_WIN);
 	
 	return ret;
 }

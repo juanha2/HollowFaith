@@ -61,7 +61,9 @@ bool j1EnemyFly::Start()
 	// Setting initial values
 	current_animation = &fly;
 	ignoreColl = false;
-	originalPos = position;
+
+	originalPos.x = position.x;
+	originalPos.y = position.y;
 	return ret;
 }
 
@@ -73,10 +75,7 @@ bool j1EnemyFly::PreUpdate()
 	if (elim) // When enemy dies
 	{
 		App->audio->PlayFx(10, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
-		App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
-		collider->to_delete = true;
 
-		pathToPlayer.Clear();
 		App->objects->DeleteEntity();
 	}
 
@@ -104,8 +103,7 @@ bool j1EnemyFly::PreUpdate()
 
 	}
 
-	// Update with dt the enemy position all frames
-	PositionUpdate(App->dt);
+
 
 
 	return ret;
@@ -133,6 +131,8 @@ bool j1EnemyFly::Update(float dt)
 		}
 	}
 
+		// Update with dt the enemy position all frames
+	PositionUpdate(App->dt);
 
 	return ret;
 }
@@ -161,6 +161,11 @@ bool j1EnemyFly::CleanUp()
 {
 	//Unloading data
 	App->tex->UnLoad(texture);	
+
+	collider->to_delete = true;
+
+	pathToPlayer.Clear();
+
 	return true;
 }
 
@@ -287,6 +292,8 @@ void j1EnemyFly::OnCollision(Collider* c1, Collider* c2) {
 			elim = true;
 			App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 			App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
+			collider->to_delete = true;
+
 		}
 		else
 		{

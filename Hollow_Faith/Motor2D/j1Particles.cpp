@@ -18,7 +18,9 @@ j1Particles::j1Particles() : j1Entity(entityType::STONE)
 }
 
 j1Particles::~j1Particles()
-{}
+{
+	App->objects->particle = nullptr;
+}
 
 bool j1Particles::Awake(pugi::xml_node& config)
 {

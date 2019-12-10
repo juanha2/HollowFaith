@@ -16,8 +16,6 @@
 #include "j1Entity.h"
 #include "j1Enemy.h"
 #include "j1Checkpoint.h"
-#include "j1GUI.h"
-#include "j1GUIelement.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -35,7 +33,7 @@ bool j1Scene::Awake()
 	LOG("Loading Scene");
 	bool ret = true;
 	   
-	return ret;
+	return ret; 
 }
 
 // Called before the first frame
@@ -44,46 +42,25 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 
 	//Load first level at start
-	if (first)
+	App->objects->CleanUp();
+	p2List_item<Levels*>* levelData = App->map->data.levels.start;
+	App->map->Load(levelData->data->name.GetString());
+	currentmap = 1;		
+
+	int w, h;
+	uchar* data = nullptr;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
 	{
-		p2List_item<Levels*>* levelData = App->map->data.levels.start;
-		App->map->Load(levelData->data->name.GetString());
-		currentmap = 1;
-
-		int w, h;
-		uchar* data = nullptr;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-		{
-			App->pathfinding->SetMap(w, h, data);
-			RELEASE_ARRAY(data);
-		}
-
-		first = false;
+		App->pathfinding->SetMap(w, h, data);
+		RELEASE_ARRAY(data);
 	}
-
-	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
-
-	//We delete and create all entities at the start of the scene
-
-	App->objects->DeleteEntities();
-	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
-	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
-
-
-	App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 0,0 }, { 64,64 }, true, true, { 0,0,64,64 });
-
-	//If we come from a checkpoint, instead of spawning enemies from map, we load them from checkpoint.xml data
-	if (App->checkpoint->checkpoint)		
-		App->checkpoint->LoadCheckPoints();
-	else		
-		SpawnEnemies();
 	
-
+	    //Plays current map music
+	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
 	// We set initial values
 	ready_to_load = false;
-	sound_repeat = false;
-	App->checkpoint->num_checkpoint = 0;			// Checkpoint restart
-	App->render->camera = App->render->camera_init; //Sets camera on inicial position.
+	sound_repeat = false;	
+	
 	return true;
 }
 
@@ -195,14 +172,13 @@ bool j1Scene::PostUpdate()
 // Called before quitting
 bool j1Scene::CleanUp()
 {
-	LOG("Freeing scene");		
-	
+	LOG("Freeing scene");	
+
 	App->audio->UnLoad();
-	App->objects->DeleteEntities();
-	App->pathfinding->CleanUp();	
-	App->tex->UnLoad(debug_tex);	
+	App->pathfinding->CleanUp();
+	App->objects->CleanUp();
 	App->coll->CleanUp();
-	App->tex->CleanUp();
+	App->tex->UnLoad(debug_tex);
 
 	return true;
 }
@@ -242,33 +218,6 @@ bool j1Scene::Load(pugi::xml_node& save)
 	return true;
 }
 
-void j1Scene::SpawnEnemies() {
-
-	BROFILER_CATEGORY("SpawningEnemies", Profiler::Color::PapayaWhip);
-
-	for (p2List_item<ObjectsGroup*>* object = App->map->data.objectgroups.start; object; object = object->next)
-	{
-		if (object->data->name == ("Enemies"))
-		{
-			for (p2List_item<ObjectsData*>* object_data = object->data->objects.start; object_data; object_data = object_data->next)
-			{
-				if (object_data->data->name == 6)
-				{
-					App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { object_data->data->x,object_data->data->y });
-				}
-				if (object_data->data->name == 7)
-				{
-					App->objects->AddEntity(j1Entity::entityType::ENEMY_LAND, { object_data->data->x,object_data->data->y });
-				}
-				if (object_data->data->name == 8)
-				{
-					App->objects->AddEntity(j1Entity::entityType::BONFIRE, { object_data->data->x,object_data->data->y });
-				}
-			}
-		}
-	}
-
-}
 
 void j1Scene::sceneswitch()
 {

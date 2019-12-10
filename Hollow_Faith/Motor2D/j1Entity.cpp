@@ -38,6 +38,6 @@ void j1Entity::PositionUpdate(float dt) // Entity movement * delta time
 
 void j1Entity::CollisionPosUpdate()
 {
-	collider->SetPos((int)position.x, (int)position.y);
+	collider->SetPos(int(round(position.x)), int(round(position.y)));
 }
 

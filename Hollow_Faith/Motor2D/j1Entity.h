@@ -75,9 +75,9 @@ public:
 
 	// - - - - MOBILITY - - - -
 
-	fPoint				speed;
-	fPoint				position;
-	float				Acceleration;
+	fPoint				speed = {0.0f,0.0f};
+	fPoint				position = {0.0f,0.0f};
+	float				Acceleration = 0.0f;
 
 	int					distance;
 

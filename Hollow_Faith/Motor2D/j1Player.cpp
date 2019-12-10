@@ -21,7 +21,9 @@ j1Player::j1Player() : j1Entity(entityType::PLAYER)
 		App->objects->player = this;
 }
 
-j1Player::~j1Player() {};
+j1Player::~j1Player() {
+	App->objects->player = nullptr;
+};
 bool j1Player::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Player Parser");
@@ -95,11 +97,10 @@ bool j1Player::Start()
 
 	else
 	{
-		if (App->checkpoint->checkpoint) 			
-			App->checkpoint->LoadCheckPoints();		
-		
-		else
-			position = startPosLevel1;
+
+
+			position.x = startPosLevel1.x;
+			position.y = startPosLevel1.y;
 	}
 
 	return true;
@@ -109,8 +110,7 @@ bool j1Player::Start()
 bool j1Player::CleanUp()
 {	
 	//Unloading data
-	LOG("CLEANUP PLAYER");
-	App->audio->UnLoad();
+	LOG("CLEANUP PLAYER");	
 	App->tex->UnLoad(texture);
 	death.Reset();
 

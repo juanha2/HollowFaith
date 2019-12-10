@@ -86,9 +86,8 @@ struct ObjectsData
 	uint		name;
 	float		x;
 	float		y;
-	uint		width;
-	uint		height;
-	Collider*	colliders[100] = { nullptr };
+	int		width;
+	int		height;
 	
 };
 

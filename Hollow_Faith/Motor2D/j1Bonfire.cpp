@@ -16,13 +16,14 @@ j1Bonfire::j1Bonfire(fPoint pos, int count, bool actv) : j1Entity(entityType::BO
 		App->objects->bonfire[count] = this;
 
 	//We set initial values
-	position = pos;
 	num_bonfire = count + 1;
 	active = actv;
 
 }
 
-j1Bonfire::~j1Bonfire() {};
+j1Bonfire::~j1Bonfire() {
+	App->objects->bonfire[num_bonfire -1 ] = nullptr;
+};
 
 bool j1Bonfire::Awake(pugi::xml_node& config)
 {
@@ -70,8 +71,6 @@ bool j1Bonfire::CleanUp()
 {
 	//Unloading data
 	App->tex->UnLoad(texture);
-	App->audio->UnLoad();	
-	collider->to_delete = true;
 
 	return true;
 
@@ -79,7 +78,6 @@ bool j1Bonfire::CleanUp()
 // Called each loop iteration
 bool j1Bonfire::PreUpdate(){
 
-	PositionUpdate(App->dt); //We check position each frame
 
 	return true;
 }
@@ -95,7 +93,9 @@ bool j1Bonfire::Update(float dt)
 		distance = abs(App->objects->player->position.x - App->checkpoint->checkpointpos.x);
 		Mix_Volume(1, App->audio->SpatialAudio(100, distance));
 	}
-	
+
+	PositionUpdate(dt);
+
 	return true;
 }
 

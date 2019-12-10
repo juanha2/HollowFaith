@@ -84,6 +84,9 @@ bool j1EntityManager::Update(float dt)
 {
 	BROFILER_CATEGORY("AllEntities_Update", Profiler::Color::Turquoise);
 
+	if (dt > 0.15)
+		dt = 0.15;
+
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
 	while (tmp != nullptr)
@@ -158,8 +161,21 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 	pugi::xml_node EnemyFly = file.child("EnemyFly");
 	pugi::xml_node EnemyLand = file.child("EnemyLand");
 	pugi::xml_node Bonfire = file.child("Bonfire");	
-
 	
+
+	while (tmp != nullptr)
+	{
+		if (tmp->data->type == j1Entity::entityType::PLAYER)
+		{
+			tmp->data->Load(file.child("player"));
+		}
+		if (tmp->data->type == j1Entity::entityType::BONFIRE)
+		{
+			tmp->data->Load(file.child("Bonfire"));
+		}
+		tmp = tmp->next;
+	}
+
 	DeleteEnemies();
 
 	p2SString enemyLand="EnemyLand";
@@ -180,31 +196,6 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 		{
 			AddEntity(j1Entity::entityType::ENEMY_FLY, { iterator.child("position").attribute("x").as_float(),iterator.child("position").attribute("y").as_float() });
 		}
-	}
-
-	count = 1;
-	for (pugi::xml_node iterator = file.child("Bonfire"); iterator; iterator = iterator.next_sibling("Bonfire"))
-	{
-		if (bonfire == iterator.name())
-		{
-			AddEntity(j1Entity::entityType::BONFIRE, { iterator.child("position").attribute("x").as_float(),iterator.child("position").attribute("y").as_float() }
-				,iterator.child("active").attribute("value").as_bool() );			
-			count++;
-		}
-	}
-	count = 0;
-
-	while (tmp != nullptr)
-	{
-		if (tmp->data->type == j1Entity::entityType::PLAYER)
-		{
-			tmp->data->Load(file.child("player"));
-		}
-		if (tmp->data->type == j1Entity::entityType::BONFIRE)
-		{
-			tmp->data->Load(file.child("Bonfire"));
-		}
-		tmp = tmp->next;
 	}
 
 	return ret;
@@ -257,6 +248,10 @@ j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position,
 
 	if (tmp) 
 	{
+		tmp->position.x = position.x;
+		tmp->position.y = position.y;
+
+
 		Entities.add(tmp);
 		tmp->Awake(config_node);
 		tmp->Start();
@@ -305,9 +300,9 @@ void j1EntityManager::DeleteEnemies()
 	{
 		p2List_item<j1Entity*>* tmp2 = tmp;
 
-		if ((tmp->data->type == j1Entity::entityType::ENEMY_FLY) || (tmp->data->type == j1Entity::entityType::ENEMY_LAND)
-			|| (tmp->data->type == j1Entity::entityType::BONFIRE))
-		{			
+		if ((tmp->data->type == j1Entity::entityType::ENEMY_FLY) || (tmp->data->type == j1Entity::entityType::ENEMY_LAND))
+		{		
+			tmp->data->CleanUp();
 			tmp->data->collider->to_delete = true;
 			RELEASE(tmp->data);
 			Entities.del(tmp2);

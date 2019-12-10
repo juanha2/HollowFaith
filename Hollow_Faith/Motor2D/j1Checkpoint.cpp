@@ -18,6 +18,14 @@ bool j1Checkpoint::Awake(pugi::xml_node&) {
 
 	return true;
 }
+bool j1Checkpoint::Start() {
+
+
+	if (checkpoint)
+		LoadCheckPoints();
+
+	return true;
+}
 
 void j1Checkpoint::SaveCheckPoints() {
 
