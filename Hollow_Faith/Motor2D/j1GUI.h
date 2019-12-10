@@ -22,19 +22,20 @@ public:
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool PreUpdate();
-	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
 
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
 
-	bool Draw(float dt);
 
 	j1GUIelement* AddGUIelement(j1GUIelement::GUItype type, fPoint position, bool active = false);
+	SDL_Texture* j1GUI::GetAtlasTexture() const;
 
+private:
 
-
+	SDL_Texture* atlasTexture;
+	p2SString atlasFile;
 };
 
 

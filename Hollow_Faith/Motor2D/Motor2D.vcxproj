@@ -85,6 +85,7 @@
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1Bonfire.cpp" />
+    <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1GUI.cpp" />
     <ClCompile Include="j1GUIbutton.cpp" />
     <ClCompile Include="j1GUIelement.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1Bonfire.h" />
+    <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1GUI.h" />
     <ClInclude Include="j1GUIbutton.h" />
     <ClInclude Include="j1GUIelement.h" />
