@@ -76,6 +76,15 @@
     <ClCompile Include="j1Checkpoint.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1GUI.cpp">
+      <Filter>Desenvolupament  ========\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="j1GUIelement.cpp">
+      <Filter>Desenvolupament  ========\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="j1GUIbutton.cpp">
+      <Filter>Desenvolupament  ========\GUI\Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -174,6 +183,15 @@
     <ClInclude Include="j1Checkpoint.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="j1GUI.h">
+      <Filter>Desenvolupament  ========\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="j1GUIelement.h">
+      <Filter>Desenvolupament  ========\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="j1GUIbutton.h">
+      <Filter>Desenvolupament  ========\GUI\Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -196,6 +214,12 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Objects">
       <UniqueIdentifier>{265f06b7-f6d6-420b-9e6f-b86a55dad9db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\GUI">
+      <UniqueIdentifier>{a740a9eb-8f3d-483f-8b4a-3801ac6c547d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\GUI\Elements">
+      <UniqueIdentifier>{0a6a23da-9b22-40d3-bf08-25eca592dba8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
