@@ -7,22 +7,20 @@
 #include "p2Log.h"
 #include "SDL/include/SDL_render.h"
 
+enum class GUItype
+{
+	GUI_ERROR,
+	GUI_BUTTON,
+	GUI_MAX
+};
+
 
 class j1GUIelement
 {
 
 public:
 
-	enum class GUItype
-	{
-		GUI_ERROR,
-		GUI_BUTTON,
-		GUI_MAX
-	};
-
-public:
-
-	j1GUIelement(GUItype type);
+	j1GUIelement() { };
 	~j1GUIelement();
 
 	virtual bool Awake(pugi::xml_node& config) { return true; };
@@ -51,6 +49,7 @@ public:
 
 	bool enabled = false;
 	bool interactable = false;
+	bool hovering = false;
 
 	SDL_Rect rect = { 0,0,0,0 };
 	SDL_Texture* texture = nullptr;

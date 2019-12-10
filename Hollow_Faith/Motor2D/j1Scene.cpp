@@ -16,6 +16,8 @@
 #include "j1Entity.h"
 #include "j1Enemy.h"
 #include "j1Checkpoint.h"
+#include "j1GUI.h"
+#include "j1GUIelement.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -46,7 +48,7 @@ bool j1Scene::Start()
 	{
 		p2List_item<Levels*>* levelData = App->map->data.levels.start;
 		App->map->Load(levelData->data->name.GetString());
-		currentmap = 1;		
+		currentmap = 1;
 
 		int w, h;
 		uchar* data = nullptr;
@@ -58,7 +60,7 @@ bool j1Scene::Start()
 
 		first = false;
 	}
-	
+
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);    //Plays current map music
 
 	//We delete and create all entities at the start of the scene
@@ -66,11 +68,13 @@ bool j1Scene::Start()
 	App->objects->DeleteEntities();
 	App->objects->AddEntity(j1Entity::entityType::PLAYER, { 0,0 });
 	App->objects->AddEntity(j1Entity::entityType::STONE, { 0,0 });
-	
+
+
+	App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 0,0 }, { 64,64 }, true, true, { 0,0,64,64 });
+
 	//If we come from a checkpoint, instead of spawning enemies from map, we load them from checkpoint.xml data
 	if (App->checkpoint->checkpoint)		
 		App->checkpoint->LoadCheckPoints();
-
 	else		
 		SpawnEnemies();
 	

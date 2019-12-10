@@ -22,6 +22,7 @@ public:
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool PreUpdate();
+	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
 
@@ -29,9 +30,10 @@ public:
 	bool Load(pugi::xml_node&);
 
 
-	j1GUIelement* AddGUIelement(j1GUIelement::GUItype type, fPoint position, bool active = false);
+	j1GUIelement* AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled,  SDL_Rect section);
 	SDL_Texture* j1GUI::GetAtlasTexture() const;
 
+	p2List<j1GUIelement*>	GUIelementList;
 private:
 
 	SDL_Texture* atlasTexture;

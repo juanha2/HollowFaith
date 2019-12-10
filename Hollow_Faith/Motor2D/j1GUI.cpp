@@ -23,7 +23,8 @@ bool j1GUI::Awake(pugi::xml_node& config)
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
-	atlasFile = config.child("atlas").attribute("file").as_string("");
+	//atlasFile = config.child("atlas").attribute("file").as_string("");
+	atlasFile = ("Assets/GUI/button.png");
 
 	return ret;
 }
@@ -40,13 +41,47 @@ bool j1GUI::Start()
 bool j1GUI::PreUpdate()
 {
 	
-	return true;
+	bool ret = true;
+	p2List_item<j1GUIelement*>* tmp = GUIelementList.start;
+	while (tmp != nullptr)
+	{
+		ret = tmp->data->PreUpdate();
+		tmp = tmp->next;
+	}
+
+	return ret;
+
 }
 
 
+bool j1GUI::Update(float dt)
+{
+
+	bool ret = true;
+	p2List_item<j1GUIelement*>* tmp = GUIelementList.start;
+	while (tmp != nullptr)
+	{
+		ret = tmp->data->Update(dt);
+		tmp = tmp->next;
+	}
+
+	return ret;
+
+}
+
 bool j1GUI::PostUpdate()
 {
-	return true;
+
+	bool ret = true;
+
+	p2List_item<j1GUIelement*>* tmp = GUIelementList.start;
+	while (tmp != nullptr)
+	{
+		ret = tmp->data->PostUpdate();
+		tmp = tmp->next;
+	}
+	return ret;
+
 }
 
 
@@ -64,16 +99,31 @@ SDL_Texture* j1GUI::GetAtlasTexture() const
 }
 
 
-j1GUIelement* j1GUI::AddGUIelement(j1GUIelement::GUItype type, fPoint position, bool active)
+j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section)
 {
-	j1GUIelement* tmp;
+	j1GUIelement* tmp = nullptr;
 
 	switch (type)
 	{
-	case j1GUIelement::GUItype::GUI_BUTTON:
-		//tmp = new j1GUIButton();
+
+	case GUItype::GUI_BUTTON:
+		tmp = new j1GUIButton();
 			break;
 
+	}
+
+	if (tmp) 
+	{
+
+		tmp->parent = parent;
+		tmp->globalPosition = globalPosition;
+		tmp->localPosition = localPosition;
+		tmp->interactable = interactable;
+		tmp->enabled = enabled;
+		tmp->rect = section;
+
+
+		GUIelementList.add(tmp)->data->Start();
 	}
 
 

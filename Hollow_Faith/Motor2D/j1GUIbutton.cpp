@@ -1,22 +1,27 @@
 #include "j1GUIButton.h"
 
 
+j1GUIButton::j1GUIButton() {
+
+	this->type = GUItype::GUI_BUTTON;
+
+}
+
+j1GUIButton::~j1GUIButton() {
+
+}
 
 
 bool j1GUIButton::Awake(pugi::xml_node&)
 {
-	this->type = GUItype::GUI_BUTTON;
 
 	return true;
 }
 
-bool j1GUIButton::Start()
-{
-	return true;
-}
 
 bool j1GUIButton::PreUpdate()
 {
+	hovering = OnHover();
 
 	return true;
 }
@@ -28,6 +33,9 @@ bool j1GUIButton::Update(float dt)
 
 bool j1GUIButton::PostUpdate()
 {
+
+	Draw();
+
 	return true;
 }
 
