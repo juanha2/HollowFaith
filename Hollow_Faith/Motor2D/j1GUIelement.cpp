@@ -12,8 +12,38 @@ j1GUIelement::~j1GUIelement()
 {
 }
 
-void j1GUIelement::Draw(float dt)
+bool j1GUIelement::Start()
 {
-	/*App->render->Blit(texture, position.x, position.y,
-		&current_animation->GetCurrentFrame(dt), 1.0, 1.0, flip, NULL, entity_collider.w / 2);*/
+	texture = App->gui->GetAtlasTexture();
+
+
+	return true;
 }
+
+
+void j1GUIelement::Draw()
+{
+	App->render->Blit(texture, globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, NULL);
+}
+
+
+bool j1GUIelement::OnHover()
+{
+	bool ret = false;
+
+	SDL_Point mouse;
+	App->input->GetMousePosition(mouse.x, mouse.y);
+
+	if (SDL_PointInRect(&mouse, &this->rect) && this->enabled && this->interactable)
+		ret = true;
+
+	return ret;
+}
+
+
+void j1GUIelement::OnClick()
+{}
+
+
+void j1GUIelement::OnRelease()
+{}

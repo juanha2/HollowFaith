@@ -24,6 +24,7 @@ class j1FadeToBlack;
 class j1PathFinding;
 class j1EntityManager;
 class j1Checkpoint;
+class j1GUI;
 
 class j1App
 {
@@ -102,6 +103,7 @@ public:
 	j1PathFinding*		pathfinding;
 	j1EntityManager*	objects;
 	j1Checkpoint*		checkpoint;
+	j1GUI*				gui;
 
 	pugi::xml_document	config_file;
 	// - - - - DELTA TIME - - - -

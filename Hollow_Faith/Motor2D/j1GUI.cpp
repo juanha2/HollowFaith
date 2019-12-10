@@ -18,12 +18,12 @@ j1GUI::~j1GUI()
 {}
 
 
-bool j1GUI::Awake(pugi::xml_node& conf)
+bool j1GUI::Awake(pugi::xml_node& config)
 {
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
-	atlasFile = conf.child("atlas").attribute("file").as_string("");
+	atlasFile = config.child("atlas").attribute("file").as_string("");
 
 	return ret;
 }
