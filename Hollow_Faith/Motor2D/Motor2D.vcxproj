@@ -89,6 +89,7 @@
     <ClCompile Include="j1GUI.cpp" />
     <ClCompile Include="j1GUIbutton.cpp" />
     <ClCompile Include="j1GUIelement.cpp" />
+    <ClCompile Include="j1GUIinputBox.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="j1GUI.h" />
     <ClInclude Include="j1GUIbutton.h" />
     <ClInclude Include="j1GUIelement.h" />
+    <ClInclude Include="j1GUIinputBox.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1Particles.h" />

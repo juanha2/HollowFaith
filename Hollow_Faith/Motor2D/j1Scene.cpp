@@ -16,6 +16,7 @@
 #include "j1Entity.h"
 #include "j1Enemy.h"
 #include "j1Checkpoint.h"
+#include "j1GUI.h"
 
 
 j1Scene::j1Scene() : j1Module()
@@ -55,6 +56,9 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	
+
+	App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,50 }, { 0,0 }, true, true, { 0,0,64,64 });
+
 	    //Plays current map music
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
 	// We set initial values
