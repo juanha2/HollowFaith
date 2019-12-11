@@ -37,7 +37,7 @@ void j1GUIelement::Draw()
 
 	App->render->Blit(texture, globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, &rect, 0.0f);
 
-	App->render->DrawQuad({ globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, rect.w, rect.h }, 0, 255, 255, 255, false, true);
+	App->render->DrawQuad({ globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, rect.w, rect.h }, 0, 255, 255, 255, false, false, true);
 }
 
 
@@ -50,8 +50,6 @@ bool j1GUIelement::OnHover()
 
 	SDL_Rect intersect = {globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, rect.w, rect.h };
 
-
-	
 	if (SDL_PointInRect(&mouse, &intersect) && this->enabled && this->interactable)
 		ret = true;
 
