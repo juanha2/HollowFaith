@@ -12,6 +12,7 @@ enum class GUItype
 	GUI_ERROR,
 	GUI_BUTTON,
 	GUI_INPUTBOX,
+	GUI_SCROLLBAR,
 	GUI_MAX
 };
 
