@@ -26,8 +26,8 @@ void j1GUIelement::Draw()
 {
 	if (hovering)
 	{
-		SDL_SetTextureColorMod(texture, 100, 200, 200);
-		SDL_SetTextureAlphaMod(texture, 255);
+		SDL_SetTextureColorMod(texture, 200, 200, 200);
+		SDL_SetTextureAlphaMod(texture, 200);
 	}
 	else
 	{
