@@ -1,6 +1,7 @@
 #include "j1App.h"
 #include "j1GUIButton.h"
 #include "j1Input.h"
+#include "j1EntityManager.h"
 
 
 j1GUIButton::j1GUIButton() {
@@ -55,7 +56,9 @@ bool j1GUIButton::CleanUp()
 void j1GUIButton::OnClick()
 {
 
-	
+	// Check if player is dead to prevent bugs with Fade to Black and dt
+	if(App->objects->player->dead == false)
+		App->pause = !App->pause;
 
 
 }

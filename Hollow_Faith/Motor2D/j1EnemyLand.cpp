@@ -64,6 +64,8 @@ bool j1EnemyLand::Start()
 	collider = new Collider(entity_collider, COLLIDER_ENEMY, this);
 	App->coll->AddColliderEntity(collider);
 
+	
+
 	//Setting initial values
 	current_animation = &idle;
 	ignoreColl = false;
@@ -71,11 +73,15 @@ bool j1EnemyLand::Start()
 	originalPos.x = position.x;
 	originalPos.y = position.y;
 
+	CollisionPosUpdate();
+
 	return ret;
 }
 
 bool j1EnemyLand::PreUpdate()
 {
+
+
 	bool ret = true;
 
 	if (elim) // When enemy dies

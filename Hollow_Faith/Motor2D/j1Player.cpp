@@ -81,6 +81,8 @@ bool j1Player::Start()
 	collider = new Collider(entity_collider, COLLIDER_PLAYER, this);
 	App->coll->AddColliderEntity(collider);	
 
+
+
 	// Setting initial values
 	win = false;
 	dead = false;
@@ -103,6 +105,9 @@ bool j1Player::Start()
 			position.y = startPosLevel1.y;
 	}
 
+
+	CollisionPosUpdate();
+
 	return true;
 }
 
@@ -120,6 +125,7 @@ bool j1Player::CleanUp()
 // Called each loop iteration
 bool j1Player::PreUpdate()
 {	
+
 	
 	if (!dead) {
 		

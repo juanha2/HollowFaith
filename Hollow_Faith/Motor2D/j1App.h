@@ -128,6 +128,8 @@ public:
 	uint32				desiredFrameratecap;
 	
 
+	bool				pause = false;
+
 
 private:
 

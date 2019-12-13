@@ -5,6 +5,7 @@ j1GUIscrollBar::j1GUIscrollBar() {
 
 	this->type = GUItype::GUI_SCROLLBAR;
 
+
 }
 
 j1GUIscrollBar::~j1GUIscrollBar() {

@@ -64,6 +64,8 @@ bool j1EnemyFly::Start()
 
 	originalPos.x = position.x;
 	originalPos.y = position.y;
+
+	CollisionPosUpdate();
 	return ret;
 }
 

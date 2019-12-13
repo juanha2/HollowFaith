@@ -80,6 +80,10 @@ bool j1Scene::Update(float dt)
 
 	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);
 
+	// Check if player is dead to prevent bugs with Fade to Black and dt
+	if(App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && App->objects->player->dead == false)
+		App->pause = !App->pause;
+
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
 	{ // Start at the level 1 begin
 		currentmap = 1;

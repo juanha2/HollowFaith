@@ -51,6 +51,8 @@ bool j1EntityManager::Start()
 
 	//We load every Fx here so each entity doesn't have to repeat loading the same one	
 
+	
+
 	App->audio->LoadFx(jump_fx.GetString());		//1
 	App->audio->LoadFx(death_fx.GetString());		//2
 	App->audio->LoadFx(win1_Fx.GetString());		//3
@@ -72,6 +74,10 @@ bool j1EntityManager::PreUpdate()
 
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
+
+	if (App->dt == 0.0f)
+		return true;
+
 	while (tmp != nullptr)
 	{
 		ret = tmp->data->PreUpdate();
@@ -84,11 +90,18 @@ bool j1EntityManager::Update(float dt)
 {
 	BROFILER_CATEGORY("AllEntities_Update", Profiler::Color::Turquoise);
 
-	if (dt > 0.15)
-		dt = 0.15;
+	
 
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
+
+	if (dt == 0.0f) 
+		return true;
+
+	// Prevent FPS failures
+	if (dt > 0.15)
+		dt = 0.15;
+
 	while (tmp != nullptr)
 	{
 		ret = tmp->data->Update(dt);
