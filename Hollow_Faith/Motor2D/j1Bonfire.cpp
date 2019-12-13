@@ -63,6 +63,7 @@ bool j1Bonfire::Start()
 	ignoreColl = false;
 	alreadyCollided = false;
 
+	CollisionPosUpdate();
 	return ret;
 }
 
