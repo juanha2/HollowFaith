@@ -24,7 +24,7 @@ bool j1GUIelement::Start()
 
 void j1GUIelement::Draw()
 {
-	if (hovering)
+	if (above)
 	{
 		SDL_SetTextureColorMod(texture, 200, 200, 200);
 		SDL_SetTextureAlphaMod(texture, 200);
@@ -41,7 +41,7 @@ void j1GUIelement::Draw()
 }
 
 
-bool j1GUIelement::OnHover()
+bool j1GUIelement::OnAbove()
 {
 	bool ret = false;
 

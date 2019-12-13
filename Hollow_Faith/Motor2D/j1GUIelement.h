@@ -35,7 +35,7 @@ public:
 	virtual bool Save(pugi::xml_node& file) const { return true; };
 	virtual bool Load(pugi::xml_node& file) { return true; };
 
-	bool OnHover();
+	bool OnAbove();
 	virtual void OnClick();
 	virtual void OnRelease();
 
@@ -51,7 +51,7 @@ public:
 
 	bool enabled = false;
 	bool interactable = false;
-	bool hovering = false;
+	bool above = false;
 
 	SDL_Rect rect = { 0,0,0,0 };
 	SDL_Texture* texture = nullptr;

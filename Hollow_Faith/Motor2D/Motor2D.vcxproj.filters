@@ -91,6 +91,9 @@
     <ClCompile Include="j1GUIinputBox.cpp">
       <Filter>Desenvolupament  ========\GUI\Elements</Filter>
     </ClCompile>
+    <ClCompile Include="j1GUIscrollBar.cpp">
+      <Filter>Desenvolupament  ========\GUI\Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -202,6 +205,9 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1GUIinputBox.h">
+      <Filter>Desenvolupament  ========\GUI\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="j1GUIscrollBar.h">
       <Filter>Desenvolupament  ========\GUI\Elements</Filter>
     </ClInclude>
   </ItemGroup>
