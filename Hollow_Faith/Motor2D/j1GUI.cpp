@@ -6,7 +6,9 @@
 #include "j1Input.h"
 
 #include "j1GUIbutton.h"
-
+#include "j1GUIinputBox.h"
+#include "j1GUIlabel.h"
+#include "j1GUIimage.h"
 
 j1GUI::j1GUI() : j1Module()
 {
@@ -24,7 +26,7 @@ bool j1GUI::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	//atlasFile = config.child("atlas").attribute("file").as_string("");
-	atlasFile = ("Assets/GUI/button.png");
+	atlasFile = ("Assets/GUI/atlas.png");
 
 	return ret;
 }
@@ -109,7 +111,15 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 	case GUItype::GUI_BUTTON:
 		tmp = new j1GUIButton();
 			break;
-
+	case GUItype::GUI_INPUTBOX:
+		tmp = new j1GUIinputBox();
+		break;
+	case GUItype::GUI_LABEL:
+		tmp = new j1GUIlabel();
+		break;
+	case GUItype::GUI_IMAGE:
+		tmp = new j1GUIimage();
+		break;
 	}
 
 	if (tmp) 

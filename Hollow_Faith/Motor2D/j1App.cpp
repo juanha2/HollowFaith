@@ -16,6 +16,7 @@
 #include "j1Checkpoint.h"
 #include "j1GUI.h"
 #include "j1App.h"
+#include "j1Fonts.h"
 
 
 // Constructor
@@ -37,6 +38,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new j1PathFinding();
 	checkpoint = new j1Checkpoint();
 	gui = new j1GUI();
+	fonts = new j1Fonts();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -44,6 +46,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(map);
 	AddModule(tex);
+	AddModule(fonts);
 	AddModule(audio);	
 	AddModule(gui);
 	AddModule(pathfinding);

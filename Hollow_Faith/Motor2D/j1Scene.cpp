@@ -17,7 +17,9 @@
 #include "j1Enemy.h"
 #include "j1Checkpoint.h"
 #include "j1GUI.h"
+ 
 
+#include "j1Fonts.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -57,9 +59,9 @@ bool j1Scene::Start()
 	}
 	
 
-	App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,50 }, { 0,0 }, true, true, { 0,0,64,64 });
+	App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 50,50 }, { 0,0 }, true, true, { 0,0,0,0 });
 
-	    //Plays current map music
+	//Plays current map music
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
 	// We set initial values
 	ready_to_load = false;
@@ -77,7 +79,7 @@ bool j1Scene::PreUpdate() {
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-
+	
 	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);
 
 	

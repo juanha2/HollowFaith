@@ -20,6 +20,10 @@
     <fullscreen_window value="false"/>
   </window>
 
+  <fonts>
+    <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12"/>
+  </fonts>
+  
   <objects>
     
     <graphics_player path="Assets/Sprites/Monster.png"/>

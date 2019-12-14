@@ -25,6 +25,7 @@ class j1PathFinding;
 class j1EntityManager;
 class j1Checkpoint;
 class j1GUI;
+class j1Fonts;
 
 class j1App
 {
@@ -104,6 +105,7 @@ public:
 	j1EntityManager*	objects;
 	j1Checkpoint*		checkpoint;
 	j1GUI*				gui;
+	j1Fonts*			fonts;
 
 	pugi::xml_document	config_file;
 	// - - - - DELTA TIME - - - -

@@ -13,6 +13,8 @@ enum class GUItype
 	GUI_BUTTON,
 	GUI_INPUTBOX,
 	GUI_SCROLLBAR,
+	GUI_LABEL,
+	GUI_IMAGE,
 	GUI_MAX
 };
 
@@ -44,7 +46,7 @@ public:
 
 public:
 
-	j1GUIelement* parent = nullptr;;
+	j1GUIelement* parent = nullptr;
 	GUItype type = GUItype::GUI_ERROR;
 	iPoint globalPosition = { 0,0 };
 	iPoint localPosition = { 0,0 };
