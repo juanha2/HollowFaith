@@ -15,6 +15,8 @@ public:
 	~j1GUIlabel();
 
 	bool Awake(pugi::xml_node&);
+	bool PreUpdate();
+	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
 
@@ -24,6 +26,7 @@ public:
 private:
 	
 	SDL_Texture* fontTexture;
+	char text[20];
 };
 
 #endif // !__J1GUILABEL__

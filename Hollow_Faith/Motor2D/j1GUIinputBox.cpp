@@ -27,6 +27,7 @@ bool j1GUIinputBox::Awake(pugi::xml_node&)
 bool j1GUIinputBox::PreUpdate()
 {
 	
+	above = OnAbove();
 
 	return true;
 }
