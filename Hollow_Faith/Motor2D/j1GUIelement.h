@@ -58,7 +58,7 @@ public:
 	SDL_Rect rect = { 0,0,0,0 };
 	SDL_Texture* texture = nullptr;
 
-	
+	bool focus = false;
 
 };
 

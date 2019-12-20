@@ -69,8 +69,15 @@ public:
 	void GetMouseMotion(int& x, int& y);
 	void blockingInput();
 
+	void EnableTextInput();
+	void DisableTextInput();
+	char* GetText();
+
 	int			mouse_x;
 	int			mouse_y;
+	
+	
+	
 
 private:
 	bool		windowEvents[WE_COUNT];
@@ -78,6 +85,8 @@ private:
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
 	int			mouse_motion_x;
 	int			mouse_motion_y;
+	char		text[30];
+	bool		text_input = false;
 	
 };
 

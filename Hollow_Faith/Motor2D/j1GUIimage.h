@@ -15,7 +15,8 @@ public:
 	~j1GUIimage();
 
 	bool Awake(pugi::xml_node&);
-
+		
+	bool PreUpdate();
 	bool PostUpdate();
 
 	bool CleanUp();

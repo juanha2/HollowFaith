@@ -59,7 +59,7 @@ bool j1Scene::Start()
 	}
 	
 
-	App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 50,50 }, { 0,0 }, true, true, { 0,0,0,0 });
+	App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 50,50 }, { 0,0 }, true, true, { 295,343,199,31 });
 
 	//Plays current map music
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);

@@ -30,7 +30,7 @@ public:
 	void OnClick();
 	void OnRelease();
 private:
-	
+		
 	j1GUIelement* text;
 	j1GUIelement* background;	
 };

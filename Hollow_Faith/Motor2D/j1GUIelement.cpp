@@ -15,8 +15,7 @@ j1GUIelement::~j1GUIelement()
 
 bool j1GUIelement::Start()
 {
-	texture = App->gui->GetAtlasTexture();
-
+	//texture = App->gui->GetAtlasTexture();
 
 	return true;
 }
@@ -26,7 +25,7 @@ void j1GUIelement::Draw()
 {
 	if (above)
 	{
-		SDL_SetTextureColorMod(texture, 200, 200, 200);
+		SDL_SetTextureColorMod(texture, 200, 50, 50);
 		SDL_SetTextureAlphaMod(texture, 200);
 	}
 	else

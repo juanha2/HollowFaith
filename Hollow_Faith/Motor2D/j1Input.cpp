@@ -52,23 +52,25 @@ bool j1Input::PreUpdate()
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
-	for(int i = 0; i < MAX_KEYS; ++i)
-	{
-		if(keys[i] == 1)
+	if (!text_input) {
+		for (int i = 0; i < MAX_KEYS; ++i)
 		{
-			if(keyboard[i] == KEY_IDLE)
-				keyboard[i] = KEY_DOWN;
+			if (keys[i] == 1)
+			{
+				if (keyboard[i] == KEY_IDLE)
+					keyboard[i] = KEY_DOWN;
+				else
+					keyboard[i] = KEY_REPEAT;
+			}
 			else
-				keyboard[i] = KEY_REPEAT;
+			{
+				if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+					keyboard[i] = KEY_UP;
+				else
+					keyboard[i] = KEY_IDLE;
+			}
 		}
-		else
-		{
-			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
-				keyboard[i] = KEY_UP;
-			else
-				keyboard[i] = KEY_IDLE;
-		}
-	}
+	}	
 
 	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
@@ -78,44 +80,52 @@ bool j1Input::PreUpdate()
 		if(mouse_buttons[i] == KEY_UP)
 			mouse_buttons[i] = KEY_IDLE;
 	}
-
-	while(SDL_PollEvent(&event) != 0)
-	{
-		switch(event.type)
+	
+	
+		while (SDL_PollEvent(&event) != 0)
 		{
+			switch (event.type)
+			{
 			case SDL_QUIT:
 				windowEvents[WE_QUIT] = true;
-			break;
+				break;
 
 			case SDL_WINDOWEVENT:
-				switch(event.window.event)
+				switch (event.window.event)
 				{
 					//case SDL_WINDOWEVENT_LEAVE:
-					case SDL_WINDOWEVENT_HIDDEN:
-					case SDL_WINDOWEVENT_MINIMIZED:
-					case SDL_WINDOWEVENT_FOCUS_LOST:
+				case SDL_WINDOWEVENT_HIDDEN:
+				case SDL_WINDOWEVENT_MINIMIZED:
+				case SDL_WINDOWEVENT_FOCUS_LOST:
 					windowEvents[WE_HIDE] = true;
 					break;
 
 					//case SDL_WINDOWEVENT_ENTER:
-					case SDL_WINDOWEVENT_SHOWN:
-					case SDL_WINDOWEVENT_FOCUS_GAINED:
-					case SDL_WINDOWEVENT_MAXIMIZED:
-					case SDL_WINDOWEVENT_RESTORED:
+				case SDL_WINDOWEVENT_SHOWN:
+				case SDL_WINDOWEVENT_FOCUS_GAINED:
+				case SDL_WINDOWEVENT_MAXIMIZED:
+				case SDL_WINDOWEVENT_RESTORED:
 					windowEvents[WE_SHOW] = true;
 					break;
 				}
-			break;
+				break;
+			case SDL_TEXTINPUT:
 
+				if(text_input)
+				strcat_s(text, 100, event.text.text);
+
+				LOG("%s", text);
+
+				break;
 			case SDL_MOUSEBUTTONDOWN:
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
 				//LOG("Mouse button %d down", event.button.button-1);
-			break;
+				break;
 
 			case SDL_MOUSEBUTTONUP:
 				mouse_buttons[event.button.button - 1] = KEY_UP;
 				//LOG("Mouse button %d up", event.button.button-1);
-			break;
+				break;
 
 			case SDL_MOUSEMOTION:
 				int scale = App->win->GetScale();
@@ -123,10 +133,10 @@ bool j1Input::PreUpdate()
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
 				mouse_y = event.motion.y / scale;
-			
-			break;
-		}
-	}
+
+				break;
+			}
+		}	
 
 	return true;
 }
@@ -162,4 +172,21 @@ void j1Input::blockingInput() {
 	for (int i = 0; i < MAX_KEYS; ++i)
 		keyboard[i] = KEY_UP;
 	
+}
+
+void j1Input::EnableTextInput() 
+{
+	SDL_StartTextInput();
+	text_input = true;	
+}
+
+void j1Input::DisableTextInput() {
+
+	SDL_StopTextInput();
+	text_input = false;
+}
+
+char* j1Input::GetText() {
+
+	return text;
 }

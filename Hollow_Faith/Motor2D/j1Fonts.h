@@ -32,6 +32,7 @@ public:
 	SDL_Texture* Print(const char* text, SDL_Color color = { 255, 255, 255, 255 }, _TTF_Font* font = NULL);
 
 	bool CalcSize(const char* text, int& width, int& height, _TTF_Font* font = NULL) const;
+	
 
 public:
 
