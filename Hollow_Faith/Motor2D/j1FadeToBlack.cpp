@@ -87,7 +87,7 @@ bool j1FadeToBlack::PostUpdate()
 				black_screen = true;
 			}	
 
-			to_enable->Enable();
+		
 			current_step = fade_step::fade_from_black;
 		}
 	} break;
@@ -100,6 +100,7 @@ bool j1FadeToBlack::PostUpdate()
 		{
 			current_step = fade_step::none;
 			App->input->Enable();
+			to_enable->Enable();
 		}
 			
 	} break;
@@ -130,13 +131,15 @@ bool j1FadeToBlack::FadeToBlack(const char* lvlName, float time)
 }
 
 
-bool j1FadeToBlack::FadeToBlack(j1Module* SceneIn, j1Module* SceneOut)
+bool j1FadeToBlack::FadeToBlack(j1Module* SceneIn, j1Module* SceneOut, float time)
 {
 	bool ret = false;
 
 	if (current_step == fade_step::none)
 	{
-		current_step = fade_step::fade_to_black;		
+		current_step = fade_step::fade_to_black;	
+		start_time = SDL_GetTicks();
+		total_time = (Uint32)(time * 0.5f * 1000.0f);
 		to_enable = SceneIn;
 		to_disable = SceneOut;
 		ret = true;

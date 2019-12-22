@@ -19,7 +19,7 @@ public:
 	//bool Update(float dt);
 	bool PostUpdate();
 	bool FadeToBlack(const char* lvlName, float time = 1.0f);
-	bool FadeToBlack(j1Module* SceneIn, j1Module* SceneOut);
+	bool FadeToBlack(j1Module* SceneIn, j1Module* SceneOut, float time=1.0f);
 	bool IsFading() const;
 	
 	bool black_screen = false;
