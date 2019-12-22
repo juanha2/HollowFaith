@@ -19,6 +19,7 @@ public:
 	//bool Update(float dt);
 	bool PostUpdate();
 	bool FadeToBlack(const char* lvlName, float time = 1.0f);
+	bool FadeToBlack(j1Module* SceneIn, j1Module* SceneOut);
 	bool IsFading() const;
 	
 	bool black_screen = false;
@@ -35,6 +36,8 @@ private:
 
 	} current_step = fade_step::none;
 
+	j1Module* to_enable = nullptr;
+	j1Module* to_disable = nullptr;
 
 	Uint32		start_time = 0;
 	Uint32		total_time = 0;

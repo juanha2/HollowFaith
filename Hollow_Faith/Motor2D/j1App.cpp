@@ -17,6 +17,7 @@
 #include "j1GUI.h"
 #include "j1App.h"
 #include "j1Fonts.h"
+#include "j1IntroScene.h"
 
 
 // Constructor
@@ -39,6 +40,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	checkpoint = new j1Checkpoint();
 	gui = new j1GUI();
 	fonts = new j1Fonts();
+	intro = new j1IntroScene();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -51,14 +53,16 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 	AddModule(pathfinding);
 	AddModule(objects);
-	AddModule(scene);	
+	AddModule(scene,false);
+	AddModule(intro);
 	AddModule(coll);	
 	AddModule(checkpoint);
 	AddModule(fade_to_black);
-
 	
 	// render last to swap buffer
 	AddModule(render);
+
+	
 }
 
 // Destructor
@@ -76,9 +80,9 @@ j1App::~j1App()
 	modules.clear();
 }
 
-void j1App::AddModule(j1Module* module)
+void j1App::AddModule(j1Module* module, bool init)
 {
-	module->Init();
+	module->Init(init);
 	modules.add(module);
 }
 
@@ -133,7 +137,9 @@ bool j1App::Start()
 
 	while(item != NULL && ret == true)
 	{
-		ret = item->data->Start();
+		if(item->data->active)
+			ret = item->data->Start();
+
 		item = item->next;
 	}
 

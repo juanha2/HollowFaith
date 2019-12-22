@@ -14,6 +14,7 @@ j1Input::j1Input() : j1Module()
 	keyboard = new j1KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
+	
 }
 
 // Destructor
@@ -52,7 +53,7 @@ bool j1Input::PreUpdate()
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
-	if (!text_input) {
+	
 		for (int i = 0; i < MAX_KEYS; ++i)
 		{
 			if (keys[i] == 1)
@@ -70,7 +71,7 @@ bool j1Input::PreUpdate()
 					keyboard[i] = KEY_IDLE;
 			}
 		}
-	}	
+		
 
 	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
@@ -113,6 +114,9 @@ bool j1Input::PreUpdate()
 
 				if(text_input)
 				strcat_s(text, 100, event.text.text);
+
+				if (GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+					LOG("YES");
 
 				LOG("%s", text);
 

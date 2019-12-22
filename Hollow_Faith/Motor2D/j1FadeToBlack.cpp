@@ -58,13 +58,13 @@ bool j1FadeToBlack::PostUpdate()
 	{
 		if (now >= total_time)
 		{
-			
+			to_disable->Disable();
 			App->pathfinding->CleanUp();
 			App->objects->CleanUp();
 			App->coll->CleanUp();
 			App->input->blockingInput();
 			App->input->Disable();
-
+			
 			if (App->map->Reset()) {
 				
 				if (App->map->Load(level_to_load.GetString())) {				
@@ -72,9 +72,9 @@ bool j1FadeToBlack::PostUpdate()
 					App->scene->ready_to_load = false;
 					App->scene->sound_repeat = false;
 					
-					App->checkpoint->Start();
+					App->checkpoint->Start();				
 					App->render->camera = App->render->camera_init;
-
+					
 					int w, h;
 					uchar* data = nullptr;
 					if (App->map->CreateWalkabilityMap(w, h, &data))
@@ -86,7 +86,8 @@ bool j1FadeToBlack::PostUpdate()
 
 				black_screen = true;
 			}	
-				
+
+			to_enable->Enable();
 			current_step = fade_step::fade_from_black;
 		}
 	} break;
@@ -126,6 +127,21 @@ bool j1FadeToBlack::FadeToBlack(const char* lvlName, float time)
 	}
 
 	return ret;
+}
+
+
+bool j1FadeToBlack::FadeToBlack(j1Module* SceneIn, j1Module* SceneOut)
+{
+	bool ret = false;
+
+	if (current_step == fade_step::none)
+	{
+		current_step = fade_step::fade_to_black;		
+		to_enable = SceneIn;
+		to_disable = SceneOut;
+		ret = true;
+	}
+	return true;
 }
 
 bool j1FadeToBlack::IsFading() const

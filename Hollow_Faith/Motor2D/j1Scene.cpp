@@ -24,6 +24,7 @@
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
+
 }
 
 // Destructor
@@ -42,6 +43,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	App->win->scale = 2;
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 
 	//Load first level at start
@@ -59,7 +61,7 @@ bool j1Scene::Start()
 	}
 	
 
-	App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 50,50 }, { 0,0 }, true, true, { 295,343,199,31 });
+	//App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 50,50 }, { 0,0 }, true, true, { 295,343,199,31 });
 
 	//Plays current map music
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);

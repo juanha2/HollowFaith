@@ -90,7 +90,12 @@ bool j1GUI::PostUpdate()
 bool j1GUI::CleanUp()
 {
 	LOG("Freeing GUI");
-
+	
+	for (p2List_item<j1GUIelement*>* item = GUIelementList.start; item; item = item->next)
+	{
+		item->data->CleanUp();
+	}
+	GUIelementList.clear();
 	return true;
 }
 
@@ -137,7 +142,7 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 	}
 
 
-	return nullptr;
+	return tmp;
 }
 
 bool j1GUI::Save(pugi::xml_node& file) const {

@@ -1,12 +1,13 @@
 #include "j1App.h"
 #include "j1GUIButton.h"
 #include "j1Input.h"
+#include "j1GUI.h"
 
 
 j1GUIButton::j1GUIButton() {
 
 	this->type = GUItype::GUI_BUTTON;
-	
+	texture = App->gui->GetAtlasTexture();
 }
 
 j1GUIButton::~j1GUIButton() {
@@ -16,6 +17,7 @@ j1GUIButton::~j1GUIButton() {
 
 bool j1GUIButton::Awake(pugi::xml_node&)
 {
+	
 
 	return true;
 }
@@ -41,7 +43,7 @@ bool j1GUIButton::Update(float dt)
 
 bool j1GUIButton::PostUpdate()
 {
-
+	
 	Draw();
 
 	return true;
@@ -54,10 +56,7 @@ bool j1GUIButton::CleanUp()
 
 void j1GUIButton::OnClick()
 {
-
-		App->pause = !App->pause;
-
-
+	focus = true;
 }
 
 void j1GUIButton::OnRelease()

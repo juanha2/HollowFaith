@@ -15,7 +15,7 @@ j1GUIelement::~j1GUIelement()
 
 bool j1GUIelement::Start()
 {
-	//texture = App->gui->GetAtlasTexture();
+	
 
 	return true;
 }

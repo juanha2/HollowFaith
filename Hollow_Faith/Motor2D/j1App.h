@@ -26,6 +26,7 @@ class j1EntityManager;
 class j1Checkpoint;
 class j1GUI;
 class j1Fonts;
+class j1IntroScene;
 
 class j1App
 {
@@ -50,7 +51,7 @@ public:
 	bool CleanUp();
 
 	// Add a new module to handle
-	void AddModule(j1Module* module);
+	void AddModule(j1Module* module, bool init=true);
 
 	// Exposing some properties for reading
 	int GetArgc() const;
@@ -106,6 +107,7 @@ public:
 	j1Checkpoint*		checkpoint;
 	j1GUI*				gui;
 	j1Fonts*			fonts;
+	j1IntroScene*		intro;
 
 	pugi::xml_document	config_file;
 	// - - - - DELTA TIME - - - -
