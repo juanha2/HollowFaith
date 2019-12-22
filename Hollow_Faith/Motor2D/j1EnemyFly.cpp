@@ -179,6 +179,7 @@ bool j1EnemyFly::GeneratingThePath(float auxTimer, float dt, int auxAgroDistance
 	BROFILER_CATEGORY("FlyingEnemy_GENERATING_PathLogic", Profiler::Color::Blue);
 	timer += dt;
 
+	
 	distance = abs(App->objects->player->position.x - position.x); // Always get the distance only in X axis
 
 	if (distance < auxAgroDistance)

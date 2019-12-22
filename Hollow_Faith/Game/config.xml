@@ -24,6 +24,24 @@
     <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12"/>
   </fonts>
   
+  <scene>
+
+    <fx>
+      <jumpFx path="audio/fx/jump.wav"/>
+      <deathFx path="audio/fx/death.wav"/>
+      <win1Fx path="audio/fx/victory1.wav"/>
+      <win2Fx path="audio/fx/victory2.wav"/>
+      <landingFx path="audio/fx/landing.wav"/>
+      <hoverFx path="audio/fx/hoversound.wav"/>
+      <stoneFx path="audio/fx/stone.wav"/>
+
+      <death_enemyFx path="audio/fx/death_enemy.wav"/>
+      <bonfireFx path="audio/fx/bonfire.wav"/>
+      <fuseFx path="audio/fx/fuse.wav"/>
+      <hurtFx path="audio/fx/hurt.wav"/>
+    </fx>
+  </scene>
+  
   <objects>
     
     <graphics_player path="Assets/Sprites/Monster.png"/>
@@ -70,22 +88,8 @@
       <jumpDistance value="130"/>
       <extraJumpForce value="-5"/>
       
-    </enemydata>
-    
-    <fx>
-      <jumpFx path="audio/fx/jump.wav"/>
-      <deathFx path="audio/fx/death.wav"/>
-      <win1Fx path="audio/fx/victory1.wav"/>
-      <win2Fx path="audio/fx/victory2.wav"/>
-      <landingFx path="audio/fx/landing.wav"/>
-      <hoverFx path="audio/fx/hoversound.wav"/>
-      <stoneFx path="audio/fx/stone.wav"/>     
-      
-      <death_enemyFx path="audio/fx/death_enemy.wav"/>
-      <bonfireFx path="audio/fx/bonfire.wav"/>
-      <fuseFx path="audio/fx/fuse.wav"/>
-      <hurtFx path="audio/fx/hurt.wav"/>
-    </fx>
+    </enemydata>  
+   
 
     <animations>
 

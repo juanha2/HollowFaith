@@ -51,18 +51,16 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fonts);
 	AddModule(audio);	
 	AddModule(gui);
-	AddModule(pathfinding);
-	AddModule(objects);
+	AddModule(pathfinding);	
 	AddModule(scene,false);
+	AddModule(objects);
 	AddModule(intro);
 	AddModule(coll);	
 	AddModule(checkpoint);
 	AddModule(fade_to_black);
 	
 	// render last to swap buffer
-	AddModule(render);
-
-	
+	AddModule(render);	
 }
 
 // Destructor
@@ -391,7 +389,7 @@ bool j1App::LoadGameNow()
 
 		while(item != NULL && ret == true)
 		{
-			ret = item->data->Load(root.child(item->data->name.GetString()));
+			ret = item->data->Load(root.child(item->data->name.GetString()));	
 			item = item->next;
 		}
 
@@ -444,3 +442,7 @@ bool j1App::SaveGameNow() const
 
 float j1App::DeltaTime() const { return dt; } // Returns seconds from frames
 
+p2SString j1App::GetLoadString() {
+
+	return load_game;
+}

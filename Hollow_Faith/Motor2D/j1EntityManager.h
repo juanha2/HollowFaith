@@ -51,19 +51,6 @@ public:
 	j1Particles*		particle;
 	j1Bonfire*			bonfire[MAX_BONFIRES];
 
-	p2SString			jump_fx;
-	p2SString			death_fx;
-	p2SString			win1_Fx;
-	p2SString			win2_Fx;
-	p2SString			landing_Fx;
-	p2SString			hover_Fx;
-	p2SString			bounce_Fx;
-	p2SString			stone_Fx;
-	p2SString			fire_Fx;
-	p2SString			fuse_Fx;
-	p2SString			death;
-	p2SString			hurt_Fx;
-	
 	int					count;
 	
 	pugi::xml_node		config_node;

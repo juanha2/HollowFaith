@@ -216,7 +216,7 @@ bool j1EnemyLand::GeneratingThePath(float auxTimer, float dt, int auxAgroDistanc
 
 	timer += dt;
 
-	distance = abs(App->objects->player->position.x - position.x); // Always get the distance only in X axis
+		distance = abs(App->objects->player->position.x - position.x); // Always get the distance only in X axis
 
 	if (distance < auxAgroDistance)
 	{

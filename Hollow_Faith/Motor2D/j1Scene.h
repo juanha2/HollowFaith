@@ -16,7 +16,7 @@ public:
 	virtual ~j1Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -38,6 +38,7 @@ public:
 	bool Load(pugi::xml_node&);
 
 	void sceneswitch();	
+	void LoadMap(int num_map);
 
 public:
 
@@ -51,6 +52,19 @@ public:
 	bool			ready_to_load = false;
 	bool			sound_repeat = false;
 	bool			first = true;
+
+	p2SString			jump_fx;
+	p2SString			death_fx;
+	p2SString			win1_Fx;
+	p2SString			win2_Fx;
+	p2SString			landing_Fx;
+	p2SString			hover_Fx;
+	p2SString			bounce_Fx;
+	p2SString			stone_Fx;
+	p2SString			fire_Fx;
+	p2SString			fuse_Fx;
+	p2SString			death;
+	p2SString			hurt_Fx;
 };
 
 #endif // __j1SCENE_H__

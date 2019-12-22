@@ -26,20 +26,6 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 
-	pugi::xml_node fxIterator = config.child("fx");
-	jump_fx = fxIterator.child("jumpFx").attribute("path").as_string();
-	death_fx = fxIterator.child("deathFx").attribute("path").as_string();
-	win1_Fx = fxIterator.child("win1Fx").attribute("path").as_string();
-	win2_Fx = fxIterator.child("win2Fx").attribute("path").as_string();
-	landing_Fx = fxIterator.child("landingFx").attribute("path").as_string();
-	hover_Fx = fxIterator.child("hoverFx").attribute("path").as_string();
-	stone_Fx = fxIterator.child("stoneFx").attribute("path").as_string();
-	fire_Fx = fxIterator.child("bonfireFx").attribute("path").as_string();
-	fuse_Fx = fxIterator.child("fuseFx").attribute("path").as_string();
-	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
-	hurt_Fx = fxIterator.child("hurtFx").attribute("path").as_string();
-
-
 	config_node = config;
 
 	return ret;
@@ -48,22 +34,6 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 bool j1EntityManager::Start()
 {
 	bool ret = true;
-
-	//We load every Fx here so each entity doesn't have to repeat loading the same one	
-
-	
-
-	App->audio->LoadFx(jump_fx.GetString());		//1
-	App->audio->LoadFx(death_fx.GetString());		//2
-	App->audio->LoadFx(win1_Fx.GetString());		//3
-	App->audio->LoadFx(win2_Fx.GetString());		//4
-	App->audio->LoadFx(landing_Fx.GetString());		//5
-	App->audio->LoadFx(hover_Fx.GetString());		//6	
-	App->audio->LoadFx(stone_Fx.GetString());		//7
-	App->audio->LoadFx(fire_Fx.GetString());		//8
-	App->audio->LoadFx(fuse_Fx.GetString());		//9
-	App->audio->LoadFx(death.GetString());			//10
-	App->audio->LoadFx(hurt_Fx.GetString());		//11
 	
 	return ret;
 }

@@ -62,6 +62,7 @@ public:
 	void LoadGame();
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
+	p2SString GetLoadString();
 
 	float DeltaTime() const;
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;

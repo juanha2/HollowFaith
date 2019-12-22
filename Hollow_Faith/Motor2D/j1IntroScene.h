@@ -35,8 +35,12 @@ public:
 	bool CleanUp();
 
 public:
+
 	SDL_Texture* texture;
-	j1GUIelement* button= nullptr;
+	j1GUIelement* play_button= nullptr;
+	j1GUIelement* continue_button = nullptr;
+
+	bool want_continue = false;
 };
 
 #endif // __j1INTROSCENE_H__

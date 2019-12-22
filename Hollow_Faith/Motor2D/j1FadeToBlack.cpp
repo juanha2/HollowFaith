@@ -14,6 +14,7 @@
 #include "j1Checkpoint.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
+#include "j1IntroScene.h"
 
 
 j1FadeToBlack::j1FadeToBlack(): j1Module()
@@ -59,6 +60,7 @@ bool j1FadeToBlack::PostUpdate()
 		if (now >= total_time)
 		{
 			to_disable->Disable();
+			App->intro->Disable();
 			App->pathfinding->CleanUp();
 			App->objects->CleanUp();
 			App->coll->CleanUp();
@@ -82,6 +84,7 @@ bool j1FadeToBlack::PostUpdate()
 						App->pathfinding->SetMap(w, h, data);
 						RELEASE_ARRAY(data);
 					}
+					App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
 				}
 
 				black_screen = true;
