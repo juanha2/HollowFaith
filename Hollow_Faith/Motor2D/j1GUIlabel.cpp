@@ -7,9 +7,7 @@
 
 j1GUIlabel::j1GUIlabel() 
 {
-	this->type = GUItype::GUI_LABEL;	
-	texture = App->fonts->Print("Your Name: ", { 255,255,255,255 }, App->fonts->default);
-	text = nullptr;
+	this->type = GUItype::GUI_LABEL;
 }
 
 j1GUIlabel::~j1GUIlabel() {
@@ -22,6 +20,13 @@ bool j1GUIlabel::Awake(pugi::xml_node&)
 	
 	return true;
 }
+
+bool j1GUIlabel::Start()
+{
+	texture = App->fonts->Print(parent->text, { 255,255,255,255 }, App->fonts->default);
+	return true;
+}
+
 
 bool j1GUIlabel::PreUpdate() 
 {
@@ -38,9 +43,8 @@ bool j1GUIlabel::Update(float dt)
 bool j1GUIlabel::PostUpdate()
 {
 
-	if (parent->focus)
-	{		
-		
+	if (parent->focus && parent->type== GUItype::GUI_INPUTBOX)
+	{				
 		texture = App->fonts->Print(App->input->GetText(), { 255,255,255,255 }, App->fonts->default);
 		SDL_Rect rect = { globalPosition.x + localPosition.x*7, globalPosition.y + localPosition.y*7,1,30 };		
 		App->render->DrawQuad(rect, 255, 255, 255,255 ,true,false);

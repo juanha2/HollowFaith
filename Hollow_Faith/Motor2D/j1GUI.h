@@ -30,7 +30,7 @@ public:
 	bool Load(pugi::xml_node&);
 
 
-	j1GUIelement* AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled,  SDL_Rect section);
+	j1GUIelement* AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled,  SDL_Rect section, char* text=nullptr);
 	SDL_Texture* j1GUI::GetAtlasTexture() const;
 
 	p2List<j1GUIelement*>	GUIelementList;

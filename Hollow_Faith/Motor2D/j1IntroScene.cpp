@@ -37,8 +37,9 @@ bool j1IntroScene::Start()
 {
 	
 	texture = App->tex->Load("Assets/Sprites/background.png");
-	play_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,50 }, { 0,0 }, true, true, { 4,69,130,37 });
-	continue_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,100 }, { 0,0 }, true, false, { 4,69,130,37 });
+	play_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,50 }, { 0,0 }, true, true, { 4,69,130,37 }, "PLAY");
+	continue_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,100 }, { 0,0 }, true, false, { 4,69,130,37 }, "CONTINUE");
+	exit_button = App->gui-> AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,150 }, { 0,0 }, true, true, { 4,69,130,37 }, "EXIT");
 
 	// Continue Button Logic (if there is not a save_game file, it wont be enable)
 	pugi::xml_document data;
@@ -61,7 +62,7 @@ bool j1IntroScene::PreUpdate() {
 // Called each loop iteration
 bool j1IntroScene::Update(float dt)
 {
-
+	bool ret = true;
 
 	if (play_button->focus) {		
 		App->fade_to_black->FadeToBlack(App->scene, this);
@@ -70,12 +71,15 @@ bool j1IntroScene::Update(float dt)
 	if (continue_button->focus) {
 		want_continue = true;
 		App->fade_to_black->FadeToBlack(App->scene, this);	
-	}		
+	}	
+	if (exit_button->focus) {
+		ret = false;
+	}
 
 	SDL_Rect rect = { 0,0, App->win->screen_surface->w, App->win->screen_surface->h };
 	App->render->Blit(texture, 0, 10, &rect);
 
-	return true;
+	return ret;
 }
 
 // Called each loop iteration

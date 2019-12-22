@@ -15,6 +15,8 @@ public:
 	~j1GUIlabel();
 
 	bool Awake(pugi::xml_node&);
+	bool Start();
+
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
@@ -25,7 +27,6 @@ public:
 
 private:	
 
-	char* text;
 };
 
 #endif // !__J1GUILABEL__

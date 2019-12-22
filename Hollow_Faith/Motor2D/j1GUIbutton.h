@@ -14,6 +14,7 @@ public:
 
 
 	bool Awake(pugi::xml_node&);
+	bool Start();
 
 	bool PreUpdate();
 	bool Update(float dt);
@@ -29,6 +30,10 @@ public:
 
 	void OnClick();
 	void OnRelease();
+
+private:
+
+	j1GUIelement* label = nullptr;
 };
 
 

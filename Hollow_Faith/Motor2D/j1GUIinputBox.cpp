@@ -9,7 +9,7 @@ j1GUIinputBox::j1GUIinputBox() {
 	this->type = GUItype::GUI_INPUTBOX;
 	
 	background = App->gui->AddGUIelement(GUItype::GUI_IMAGE, this, { 50,50 }, { 0,0 }, false, true, { 295,343,199,31 });
-	text = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, { 50,50 }, { 10,8 }, true, true, { 0,0,0,0 });	
+	text = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, { 50,50 }, { 10,8 }, true, true, { 0,0,0,0 }, "YourName");	
 }
 
 j1GUIinputBox::~j1GUIinputBox() {
@@ -19,7 +19,7 @@ j1GUIinputBox::~j1GUIinputBox() {
 
 bool j1GUIinputBox::Awake(pugi::xml_node&)
 {
-
+	
 	return true;
 }
 

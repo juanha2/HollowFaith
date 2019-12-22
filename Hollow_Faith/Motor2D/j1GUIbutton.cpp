@@ -7,7 +7,7 @@
 j1GUIButton::j1GUIButton() {
 
 	this->type = GUItype::GUI_BUTTON;
-	texture = App->gui->GetAtlasTexture();
+	texture = App->gui->GetAtlasTexture();	
 }
 
 j1GUIButton::~j1GUIButton() {
@@ -17,14 +17,21 @@ j1GUIButton::~j1GUIButton() {
 
 bool j1GUIButton::Awake(pugi::xml_node&)
 {
-	
 
 	return true;
 }
 
+bool j1GUIButton::Start()
+{
+	if(text!=nullptr)
+		label = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, globalPosition, localPosition, true, true, { 0,0,0,0 }, text);
+
+	return true;
+}
 
 bool j1GUIButton::PreUpdate()
 {
+
 	above = OnAbove();
 
 	return true;

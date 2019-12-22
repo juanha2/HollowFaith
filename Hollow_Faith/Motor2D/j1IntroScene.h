@@ -39,6 +39,7 @@ public:
 	SDL_Texture* texture;
 	j1GUIelement* play_button= nullptr;
 	j1GUIelement* continue_button = nullptr;
+	j1GUIelement* exit_button = nullptr;
 
 	bool want_continue = false;
 };

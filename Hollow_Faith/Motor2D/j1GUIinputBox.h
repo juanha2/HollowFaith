@@ -31,8 +31,8 @@ public:
 	void OnRelease();
 private:
 		
-	j1GUIelement* text;
-	j1GUIelement* background;	
+	j1GUIelement* text = nullptr;
+	j1GUIelement* background = nullptr;	
 };
 
 

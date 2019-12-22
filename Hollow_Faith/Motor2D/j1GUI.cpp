@@ -106,7 +106,7 @@ SDL_Texture* j1GUI::GetAtlasTexture() const
 }
 
 
-j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section)
+j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text)
 {
 	j1GUIelement* tmp = nullptr;
 
@@ -136,7 +136,7 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 		tmp->interactable = interactable;
 		tmp->enabled = enabled;
 		tmp->rect = section;
-
+		tmp->text = text;
 
 		GUIelementList.add(tmp)->data->Start();
 	}
