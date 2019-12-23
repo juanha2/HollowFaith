@@ -57,7 +57,15 @@ bool j1GUIelement::OnAbove()
 
 
 void j1GUIelement::OnClick()
-{}
+{
+
+	if (listener != nullptr) 
+	{
+		this->listener->GuiObserver(GUI_Event::EVENT_ONCLICK, this);
+	}
+		
+
+}
 
 
 

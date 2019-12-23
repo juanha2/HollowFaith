@@ -39,10 +39,14 @@ bool j1GUIButton::PreUpdate()
 
 bool j1GUIButton::Update(float dt)
 {
-	if (interactable) {
-		if (above)
+	if (interactable) 
+	{
+		if (above) 
+		{
 			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 				OnClick();
+		}
+			
 	}
 
 	return true;
@@ -61,10 +65,6 @@ bool j1GUIButton::CleanUp()
 	return true;
 }
 
-void j1GUIButton::OnClick()
-{
-	focus = true;
-}
 
 void j1GUIButton::OnRelease()
 {

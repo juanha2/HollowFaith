@@ -48,6 +48,7 @@ public:
 public:
 
 	j1GUIelement* parent = nullptr;
+	j1Module* listener = nullptr;
 	GUItype type = GUItype::GUI_ERROR;
 	iPoint globalPosition = { 0,0 };
 	iPoint localPosition = { 0,0 };

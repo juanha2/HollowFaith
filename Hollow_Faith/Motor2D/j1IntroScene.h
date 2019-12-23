@@ -34,6 +34,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void GuiObserver(GUI_Event type, j1GUIelement* element);
+
 public:
 
 	SDL_Texture* texture;
@@ -47,6 +49,7 @@ public:
 	j1GUIelement* settings_ui = nullptr;
 
 	bool want_continue = false;
+	bool want_exit = false;
 };
 
 #endif // __j1INTROSCENE_H__

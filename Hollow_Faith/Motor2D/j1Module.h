@@ -11,6 +11,18 @@
 
 struct Collider;
 class j1App;
+class j1GUIelement;
+
+enum class GUI_Event
+{
+	EVENT_UNKOWNN = -1,
+
+	EVENT_ONCLICK,
+	EVENT_UPCLICK,
+	EVENT_DRAG
+};
+
+
 
 class j1Module
 {
@@ -90,6 +102,10 @@ public:
 			CleanUp();
 		}
 	}
+
+
+	virtual void GuiObserver(GUI_Event type, j1GUIelement* element) {}
+
 	virtual void OnCollision(Collider*, Collider*) {}
 
 public:

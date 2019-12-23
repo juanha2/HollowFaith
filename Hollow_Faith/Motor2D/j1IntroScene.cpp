@@ -38,9 +38,9 @@ bool j1IntroScene::Start()
 	App->win->scale = 2;
 
 	texture = App->tex->Load("Assets/Sprites/background.png");
-	play_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,50 }, { 0,0 }, true, true, { 4,69,130,37 }, "PLAY");
-	continue_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,100 }, { 0,0 }, true, true, { 4,69,130,37 }, "CONTINUE");
-	exit_button = App->gui-> AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,150 }, { 0,0 }, true, true, { 4,69,130,37 }, "EXIT");
+	play_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,50 }, { 0,0 }, true, true, { 4,69,130,37 }, "PLAY", this);
+	continue_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,100 }, { 0,0 }, true, true, { 4,69,130,37 }, "CONTINUE", this);
+	exit_button = App->gui-> AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,150 }, { 0,0 }, true, true, { 4,69,130,37 }, "EXIT", this);
 
 
 	scroll_bar = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 200, 200 }, { 0,0 }, false, true, { 0, 6, 183, 7 });
@@ -51,6 +51,7 @@ bool j1IntroScene::Start()
 	// Continue Button Logic (if there is not a save_game file, it wont be enable)
 	pugi::xml_document data;
 	pugi::xml_parse_result result = data.load_file(App->GetLoadString().GetString());
+
 	if (result == NULL)
 		continue_button->interactable = false;
 	else
@@ -71,23 +72,8 @@ bool j1IntroScene::Update(float dt)
 {
 	bool ret = true;
 
-	if (play_button->focus) {		
-		App->fade_to_black->FadeToBlack(App->scene, this);
-	}
-
-	if (continue_button->focus) {
-		want_continue = true;
-		App->fade_to_black->FadeToBlack(App->scene, this);	
-	}	
-
-	//if (settings_button->focus) {
-
-	//	settings_ui->focus = true;
-	//}
-
-	if (exit_button->focus) {
+	if (want_exit)
 		ret = false;
-	}
 
 	SDL_Rect rect = { 0,0, App->win->screen_surface->w, App->win->screen_surface->h };
 	App->render->Blit(texture, 0, 10, &rect);
@@ -118,4 +104,33 @@ bool j1IntroScene::CleanUp()
 	App->tex->UnLoad(texture);
 	App->audio->UnLoad();
 	return true;
+}
+
+void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element) 
+{
+
+	switch (type) 
+	{
+
+		case GUI_Event::EVENT_ONCLICK: 
+		{
+
+			if (element == play_button) 
+				App->fade_to_black->FadeToBlack(App->scene, this);
+			
+
+			if (element == continue_button) {
+				want_continue = true;
+				App->fade_to_black->FadeToBlack(App->scene, this);
+			}
+				
+			if (element == exit_button)
+				want_exit = true;
+
+
+		}
+
+
+	}
+
 }

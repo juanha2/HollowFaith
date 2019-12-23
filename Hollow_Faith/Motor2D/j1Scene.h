@@ -40,6 +40,8 @@ public:
 	void sceneswitch();	
 	void LoadMap(int num_map);
 
+	//void GuiObserver(GUI_Event type, j1GUIelement* element);
+
 public:
 
 	// - - - - SCENE DATA - - - -
