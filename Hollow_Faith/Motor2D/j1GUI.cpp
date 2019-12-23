@@ -9,6 +9,7 @@
 #include "j1GUIinputBox.h"
 #include "j1GUIlabel.h"
 #include "j1GUIimage.h"
+#include "j1GUIsettings.h"
 
 j1GUI::j1GUI() : j1Module()
 {
@@ -124,6 +125,9 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 		break;
 	case GUItype::GUI_IMAGE:
 		tmp = new j1GUIimage();
+		break;
+	case GUItype::GUI_SETTINGS:
+		tmp = new j1GUIsettings();
 		break;
 	}
 

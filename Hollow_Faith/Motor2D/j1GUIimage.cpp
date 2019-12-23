@@ -22,16 +22,17 @@ bool j1GUIimage::Awake(pugi::xml_node&)
 
 bool j1GUIimage::PreUpdate()
 {
-	if (parent->above) 
-		above = true;
-	else
-		above = false;
+	if(interactable)
+		above = OnAbove();
+
 	return true;
 }
 
 bool j1GUIimage::PostUpdate()
 {	
-	Draw();
+	if(enabled)
+		Draw();
+
 	return true;
 }
 
