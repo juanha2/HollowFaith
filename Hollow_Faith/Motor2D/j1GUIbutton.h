@@ -27,11 +27,16 @@ public:
 	bool Load(pugi::xml_node&) { return true; };
 	bool Save(pugi::xml_node&) const  const { return true; };
 
+	void Dragging();
+	void MovingIt(float dt);
 	void OnRelease();
 
 private:
 
 	j1GUIelement* label = nullptr;
+	iPoint accuratedDrag = { 0,0 };
+
+	bool dragging;
 };
 
 

@@ -29,7 +29,7 @@ public:
 
 	j1Module() : active(false)
 	{}
-
+	
 	void Init(bool init)
 	{
 		active = init;

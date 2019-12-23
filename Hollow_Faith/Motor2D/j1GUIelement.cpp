@@ -35,9 +35,9 @@ void j1GUIelement::Draw()
 		SDL_SetTextureAlphaMod(texture, 255);
 	}
 
-	App->render->Blit(texture, globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, &rect, 0.0f);
+	App->render->Blit(texture, globalPosition.x, globalPosition.y, &rect, 0.0f);
 
-	App->render->DrawQuad({ globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, rect.w, rect.h }, 0, 255, 255, 255, false, false, true);
+	App->render->DrawQuad({ globalPosition.x, globalPosition.y, rect.w, rect.h }, 0, 255, 255, 255, false, false, true);
 }
 
 
@@ -75,4 +75,8 @@ void j1GUIelement::OnRelease()
 
 
 void j1GUIelement::Dragging()
-{}
+{
+
+
+
+}

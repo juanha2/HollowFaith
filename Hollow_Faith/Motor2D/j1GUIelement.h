@@ -55,6 +55,7 @@ public:
 	char* text = nullptr;
 	bool enabled = false;
 	bool interactable = false;
+	bool draggeable = false;
 	bool above = false;
 
 	SDL_Rect rect = { 0,0,0,0 };

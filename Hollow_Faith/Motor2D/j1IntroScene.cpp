@@ -35,7 +35,7 @@ bool j1IntroScene::Awake()
 // Called before the first frame
 bool j1IntroScene::Start()
 {
-	App->win->scale = 1;
+	App->win->scale = 2;
 	App->audio->PlayMusic("audio/music/intro.ogg", 1.0f);
 	texture = App->tex->Load("Assets/Sprites/background.png");
 	App->render->camera = App->render->camera_init;

@@ -24,7 +24,8 @@ bool j1GUIscrollBar::Awake(pugi::xml_node&)
 
 bool j1GUIscrollBar::Start()
 {
-	scrollButton = App->gui->AddGUIelement(GUItype::GUI_BUTTON, this, globalPosition, localPosition, true, true, { 599, 527, 9 , 10 });
+	scrollButton = App->gui->AddGUIelement(GUItype::GUI_BUTTON, this, globalPosition, localPosition, true, true, { 599, 527, 9 , 10 }, nullptr, this->listener, true);
+
 	texture = App->gui->GetAtlasTexture();
 	return true;
 }
