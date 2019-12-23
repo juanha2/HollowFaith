@@ -10,20 +10,21 @@
 	<pathfinding />
 	<scene>
 		<currentmap value="2" />
+		<lifes value="1" />
 	</scene>
 	<objects>
 		<EnemyLand>
-			<position x="161.692902" y="261" />
+			<position x="258.929535" y="296.159973" />
 		</EnemyLand>
 		<EnemyFly>
-			<position x="99.3396683" y="200.376236" />
+			<position x="296.962158" y="71.0378418" />
 		</EnemyFly>
 		<Bonfire num="1">
 			<position x="118.833" y="255" />
 			<active value="true" />
 		</Bonfire>
 		<EnemyLand>
-			<position x="702.968445" y="245" />
+			<position x="720" y="245" />
 		</EnemyLand>
 		<Bonfire num="1">
 			<position x="869" y="111.5" />
@@ -39,7 +40,7 @@
 			<position x="1456" y="341" />
 		</EnemyLand>
 		<player>
-			<position x="557.45697" y="309" />
+			<position x="166.45694" y="261" />
 		</player>
 	</objects>
 	<intro />
@@ -47,6 +48,6 @@
 	<checkpoint />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-636" y="-10" />
+		<camera x="0" y="-10" />
 	</renderer>
 </game_state>

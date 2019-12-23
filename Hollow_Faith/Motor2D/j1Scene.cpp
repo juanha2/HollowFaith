@@ -171,7 +171,6 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
-
 	BROFILER_CATEGORY("Scene_PostUpdate", Profiler::Color::DarkOliveGreen);
 
 	bool ret = true;
@@ -221,7 +220,9 @@ bool j1Scene::CleanUp()
 bool j1Scene::Save(pugi::xml_node& save) const
 {
 	pugi::xml_node current_map = save.append_child("currentmap");
+	pugi::xml_node lifes_node = save.append_child("lifes");
 	current_map.append_attribute("value").set_value(currentmap);
+	lifes_node.append_attribute("value").set_value(lifes);
 
 	return true;
 }
@@ -233,7 +234,8 @@ bool j1Scene::Save(pugi::xml_node& save) const
 bool j1Scene::Load(pugi::xml_node& save)
 {
 	savedcurrentmap = save.child("currentmap").attribute("value").as_int();	
-	
+	lifes= save.child("lifes").attribute("value").as_int();
+
 	if (savedcurrentmap == currentmap && App->intro->want_continue)		
 		LoadMap(currentmap);
 
@@ -329,6 +331,10 @@ void j1Scene::LoadMap(int num_map) {
 	
 	CleanUp();	
 	App->map->Load(App->map->data.levels[num_map - 1]->name.GetString());
+	App->scene->ready_to_load = false;
+	App->scene->sound_repeat = false;
+
+	App->render->camera = App->render->camera_init;
 
 	//Create Walkability Map
 	int w, h;
