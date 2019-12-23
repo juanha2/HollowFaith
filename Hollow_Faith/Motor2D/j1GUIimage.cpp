@@ -31,12 +31,18 @@ bool j1GUIimage::PreUpdate()
 			above = false;
 	}
 
+	if(interactable)
+		above = OnAbove();
+
+
 	return true;
 }
 
 bool j1GUIimage::PostUpdate()
 {	
-	Draw();
+	if(enabled)
+		Draw();
+
 	return true;
 }
 

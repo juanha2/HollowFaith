@@ -15,6 +15,7 @@ enum class GUItype
 	GUI_SCROLLBAR,
 	GUI_LABEL,
 	GUI_IMAGE,
+	GUI_SETTINGS,
 	GUI_MAX
 };
 

@@ -50,7 +50,7 @@ bool j1GUIlabel::PostUpdate()
 		App->render->DrawQuad(rect, 255, 255, 255,255 ,true,false);
 	}
 	
-	if(texture)
+	if(texture && enabled)
 		App->render->Blit(texture, globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, nullptr, 0.0f);
 
 
