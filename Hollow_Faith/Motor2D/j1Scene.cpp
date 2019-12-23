@@ -57,7 +57,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	//Setting initial values
-
+	lifes = 3;
 	App->win->scale = 2;
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");	
 	currentmap = 1;	
@@ -136,6 +136,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 		App->fade_to_black->FadeToBlack(App->intro, this);
 
+
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
@@ -157,7 +158,7 @@ bool j1Scene::Update(float dt)
 		else
 			App->frameratecap = App->desiredFrameratecap;
 	}		
-
+	
 	App->map->Draw();
 
 	int x, y;
@@ -208,6 +209,7 @@ bool j1Scene::CleanUp()
 	App->objects->CleanUp();
 	App->coll->CleanUp();
 	App->tex->UnLoad(debug_tex);
+	App->gui->CleanUp();
 
 	return true;
 }
@@ -257,7 +259,8 @@ bool j1Scene::Load(pugi::xml_node& save)
 
 void j1Scene::sceneswitch()
 {
-	
+	if (App->objects->player != nullptr) {
+
 		// Winning -------------------------
 		if (App->objects->player->win) {
 
@@ -295,18 +298,28 @@ void j1Scene::sceneswitch()
 			if (!sound_repeat) {
 				App->audio->PlayFx(2, 0, App->audio->FXvolume);
 				sound_repeat = true;
+				lifes--;
 			}
+
 
 			if (currentmap == 1)
 				currentmap = 1;
 			else if (currentmap == 2)
 				currentmap = 2;
 
-			for (int i = 1; i <= App->map->data.numLevels; i++) {
-				if (App->scene->currentmap == i)
-					App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
+			if (lifes != 0) {
+				for (int i = 1; i <= App->map->data.numLevels; i++) {
+					if (App->scene->currentmap == i)
+						App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
+				}
 			}
+			else {
+				App->fade_to_black->FadeToBlack(App->intro, this);
+			}
+
 		}
+	}
+		
 	
 	
 

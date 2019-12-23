@@ -55,6 +55,7 @@ public:
 	bool			sound_repeat = false;
 	bool			first = true;
 
+	int					lifes;
 	p2SString			jump_fx;
 	p2SString			death_fx;
 	p2SString			win1_Fx;

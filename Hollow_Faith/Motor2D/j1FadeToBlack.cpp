@@ -66,8 +66,9 @@ bool j1FadeToBlack::PostUpdate()
 			App->coll->CleanUp();
 
 			if (to_enable != App->intro) {
-				App->input->blockingInput();
-				App->input->Disable();
+			/*	App->input->blockingInput();
+				App->input->Disable();*/
+
 				if (App->map->Reset()) {
 
 					if (App->map->Load(level_to_load.GetString())) {
@@ -105,6 +106,7 @@ bool j1FadeToBlack::PostUpdate()
 			current_step = fade_step::none;
 			App->input->Enable();
 			to_enable->Enable();
+						
 		}
 			
 	} break;
