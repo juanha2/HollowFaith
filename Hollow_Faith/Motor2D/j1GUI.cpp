@@ -109,7 +109,7 @@ SDL_Texture* j1GUI::GetAtlasTexture() const
 }
 
 
-j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text, j1Module* listener, bool draggeable)
+j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text, j1Module* listener, bool X_drag, bool Y_drag)
 {
 	j1GUIelement* tmp = nullptr;
 
@@ -141,7 +141,10 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 		tmp->localPosition = localPosition;
 		tmp->listener = listener;
 		tmp->interactable = interactable;
-		tmp->draggeable = draggeable;
+
+		tmp->X_drag = X_drag;
+		tmp->Y_drag = Y_drag;
+
 		tmp->enabled = enabled;
 		tmp->rect = section;
 		tmp->text = text;

@@ -46,11 +46,9 @@ bool j1GUIButton::Update(float dt)
 			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 				OnClick();
 
-
 			if (App->input->GetMouseButtonDown(1) == KEY_REPEAT) 
-			{
-				
-				if(draggeable)
+			{		
+				if(X_drag || Y_drag)
 					dragging = true;
 
 				iPoint mouseClick = { 0,0 };
@@ -64,20 +62,14 @@ bool j1GUIButton::Update(float dt)
 		if (dragging) {
 
 			if (App->input->GetMouseButtonDown(1) == KEY_IDLE || App->input->GetMouseButtonDown(1) == KEY_UP) 
-			{
-				dragging = false;
-			}
+				dragging = false;	
 			else 
 			{
 				Dragging();
 				MovingIt(dt);
 			}
-
-		}
-
-			
+		}			
 	}
-
 	return true;
 }
 
@@ -106,17 +98,28 @@ void j1GUIButton::MovingIt(float dt)
 	App->input->GetMousePosition(MousePos.x, MousePos.y);
 
 	iPoint currentPos =  this->globalPosition;
-	this->globalPosition.x += ((MousePos.x - this->globalPosition.x) - accuratedDrag.x);
-	this->globalPosition.y += ((MousePos.y - this->globalPosition.y) - accuratedDrag.y);
+
+
+	if(X_drag)
+		this->globalPosition.x += ((MousePos.x - this->globalPosition.x) - accuratedDrag.x);
+
+	if(Y_drag)
+		this->globalPosition.y += ((MousePos.y - this->globalPosition.y) - accuratedDrag.y);
 
 
 	if (parent != nullptr)
 	{
-		this->localPosition.x += currentPos.x - this->globalPosition.x;
-		this->localPosition.y += currentPos.y - this->globalPosition.y;
+		if (X_drag)
+			this->localPosition.x += currentPos.x - this->globalPosition.x;
 
-		this->globalPosition.x = parent->globalPosition.x - localPosition.x;
-		this->globalPosition.y = parent->globalPosition.y - localPosition.y;
+		if (Y_drag)
+			this->localPosition.y += currentPos.y - this->globalPosition.y;
+
+		if (X_drag)
+			this->globalPosition.x = parent->globalPosition.x - localPosition.x;
+
+		if (Y_drag)
+			this->globalPosition.y = parent->globalPosition.y - localPosition.y;
 	}
 
 }
