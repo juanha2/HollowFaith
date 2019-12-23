@@ -15,12 +15,11 @@ class j1GUIelement;
 
 enum class GUI_Event
 {
-	EVENT_ERROR,
+	EVENT_UNKOWNN = -1,
 
 	EVENT_ONCLICK,
-	EVENT_DRAG,
-
-	EVENT_MAX
+	EVENT_UPCLICK,
+	EVENT_DRAG
 };
 
 
