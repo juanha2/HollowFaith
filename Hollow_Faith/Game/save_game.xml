@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<game_state>
+	<input />
+	<window />
+	<map />
+	<textures />
+	<fonts />
+	<audio />
+	<gui />
+	<pathfinding />
+	<scene>
+		<currentmap value="2" />
+	</scene>
+	<objects>
+		<EnemyLand>
+			<position x="161.692902" y="261" />
+		</EnemyLand>
+		<EnemyFly>
+			<position x="99.3396683" y="200.376236" />
+		</EnemyFly>
+		<Bonfire num="1">
+			<position x="118.833" y="255" />
+			<active value="true" />
+		</Bonfire>
+		<EnemyLand>
+			<position x="702.968445" y="245" />
+		</EnemyLand>
+		<Bonfire num="1">
+			<position x="869" y="111.5" />
+			<active value="false" />
+		</Bonfire>
+		<EnemyFly>
+			<position x="1075.32996" y="46.6666985" />
+		</EnemyFly>
+		<EnemyFly>
+			<position x="1456" y="64" />
+		</EnemyFly>
+		<EnemyLand>
+			<position x="1456" y="341" />
+		</EnemyLand>
+		<player>
+			<position x="557.45697" y="309" />
+		</player>
+	</objects>
+	<intro />
+	<colliders />
+	<checkpoint />
+	<FadeToBlack />
+	<renderer>
+		<camera x="-636" y="-10" />
+	</renderer>
+</game_state>

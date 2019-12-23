@@ -64,33 +64,34 @@ bool j1FadeToBlack::PostUpdate()
 			App->pathfinding->CleanUp();
 			App->objects->CleanUp();
 			App->coll->CleanUp();
-			App->input->blockingInput();
-			App->input->Disable();
-			
-			if (App->map->Reset()) {
-				
-				if (App->map->Load(level_to_load.GetString())) {				
-					
-					App->scene->ready_to_load = false;
-					App->scene->sound_repeat = false;
-					
-					App->checkpoint->Start();				
-					App->render->camera = App->render->camera_init;
-					
-					int w, h;
-					uchar* data = nullptr;
-					if (App->map->CreateWalkabilityMap(w, h, &data))
-					{
-						App->pathfinding->SetMap(w, h, data);
-						RELEASE_ARRAY(data);
+
+			if (to_enable != App->intro) {
+				App->input->blockingInput();
+				App->input->Disable();
+				if (App->map->Reset()) {
+
+					if (App->map->Load(level_to_load.GetString())) {
+
+						App->scene->ready_to_load = false;
+						App->scene->sound_repeat = false;
+
+						App->checkpoint->Start();
+						App->render->camera = App->render->camera_init;
+
+						int w, h;
+						uchar* data = nullptr;
+						if (App->map->CreateWalkabilityMap(w, h, &data))
+						{
+							App->pathfinding->SetMap(w, h, data);
+							RELEASE_ARRAY(data);
+						}
+						App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
 					}
-					App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
+
+					black_screen = true;
 				}
 
-				black_screen = true;
-			}	
-
-		
+			}			
 			current_step = fade_step::fade_from_black;
 		}
 	} break;

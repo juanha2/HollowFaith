@@ -36,8 +36,10 @@ bool j1IntroScene::Awake()
 bool j1IntroScene::Start()
 {
 	App->win->scale = 1;
-
+	App->audio->PlayMusic("audio/music/intro.ogg", 1.0f);
 	texture = App->tex->Load("Assets/Sprites/background.png");
+	App->render->camera = App->render->camera_init;
+
 	play_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,50 }, { 0,0 }, true, true, { 4,69,130,37 }, "PLAY", this);
 	continue_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,100 }, { 0,0 }, true, true, { 4,69,130,37 }, "CONTINUE", this);
 	exit_button = App->gui-> AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,150 }, { 0,0 }, true, true, { 4,69,130,37 }, "EXIT", this);

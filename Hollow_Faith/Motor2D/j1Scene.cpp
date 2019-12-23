@@ -133,6 +133,9 @@ bool j1Scene::Update(float dt)
 		App->LoadGame();		
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+		App->fade_to_black->FadeToBlack(App->intro, this);
+
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
