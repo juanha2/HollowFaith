@@ -60,5 +60,10 @@ void j1GUIelement::OnClick()
 {}
 
 
+
 void j1GUIelement::OnRelease()
+{}
+
+
+void j1GUIelement::Dragging()
 {}

@@ -2,7 +2,8 @@
 #define __J1GUISCROLLBAR__
 
 #include "j1Module.h"
-#include"j1GUIelement.h"
+#include "j1GUIelement.h"
+#include "j1GUI.h"
 
 
 class j1GUIscrollBar : public j1GUIelement
@@ -29,6 +30,8 @@ public:
 
 	void OnClick();
 	void OnRelease();
+
+	j1GUIelement* scrollButton = nullptr;
 };
 
 

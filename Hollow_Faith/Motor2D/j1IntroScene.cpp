@@ -35,11 +35,14 @@ bool j1IntroScene::Awake()
 // Called before the first frame
 bool j1IntroScene::Start()
 {
-	
+	App->win->scale = 2;
+
 	texture = App->tex->Load("Assets/Sprites/background.png");
 	play_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,50 }, { 0,0 }, true, true, { 4,69,130,37 }, "PLAY");
 	continue_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,100 }, { 0,0 }, true, false, { 4,69,130,37 }, "CONTINUE");
 	exit_button = App->gui-> AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,150 }, { 0,0 }, true, true, { 4,69,130,37 }, "EXIT");
+
+	scroll_bar = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 200, 200 }, { 0,0 }, false, true, { 0, 6, 183, 7 });
 
 	// Continue Button Logic (if there is not a save_game file, it wont be enable)
 	pugi::xml_document data;

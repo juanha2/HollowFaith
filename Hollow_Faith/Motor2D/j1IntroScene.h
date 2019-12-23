@@ -40,6 +40,7 @@ public:
 	j1GUIelement* play_button= nullptr;
 	j1GUIelement* continue_button = nullptr;
 	j1GUIelement* exit_button = nullptr;
+	j1GUIelement* scroll_bar = nullptr;
 
 	bool want_continue = false;
 };

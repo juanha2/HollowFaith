@@ -22,10 +22,15 @@ bool j1GUIimage::Awake(pugi::xml_node&)
 
 bool j1GUIimage::PreUpdate()
 {
-	if (parent->above) 
-		above = true;
-	else
-		above = false;
+
+	if (this->parent != nullptr) 
+	{
+		if (parent->above)
+			above = true;
+		else
+			above = false;
+	}
+
 	return true;
 }
 
