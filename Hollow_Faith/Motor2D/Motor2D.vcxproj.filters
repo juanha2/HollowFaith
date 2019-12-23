@@ -103,9 +103,6 @@
     <ClCompile Include="j1IntroScene.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="j1GUIsettings.cpp">
-      <Filter>Desenvolupament  ========\GUI\Elements</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -230,9 +227,6 @@
     </ClInclude>
     <ClInclude Include="j1IntroScene.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="j1GUIsettings.h">
-      <Filter>Desenvolupament  ========\GUI\Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

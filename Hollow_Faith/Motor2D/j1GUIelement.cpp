@@ -11,6 +11,7 @@
 
 j1GUIelement::~j1GUIelement()
 {
+	
 }
 
 bool j1GUIelement::Start()

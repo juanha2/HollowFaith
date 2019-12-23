@@ -35,19 +35,24 @@ bool j1IntroScene::Awake()
 // Called before the first frame
 bool j1IntroScene::Start()
 {
-	App->win->scale = 2;
+	App->win->scale = 1;
 
 	texture = App->tex->Load("Assets/Sprites/background.png");
 	play_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,50 }, { 0,0 }, true, true, { 4,69,130,37 }, "PLAY", this);
 	continue_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,100 }, { 0,0 }, true, true, { 4,69,130,37 }, "CONTINUE", this);
 	exit_button = App->gui-> AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,150 }, { 0,0 }, true, true, { 4,69,130,37 }, "EXIT", this);
+	   
+	// Settings menu UI elements
+	settings_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 200, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
+	settings_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,200 }, { 0,0 }, true, true, { 4,69,130,37 }, "SETTINGS", this);
+	settings_menu.exit = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 410,60 }, { 0,0 }, true, false, { 513,53,14,14 }, nullptr, this);
+	settings_menu.scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 210, 80 }, { 0,0 }, false, true, { 0, 6, 183, 7 }, nullptr,this);
 
+	// Credits menu UI elements
+	credits_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 50, 300 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
+	credits_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,250 }, { 0,0 }, true, true, { 4,69,130,37 }, "CREDITS", this);
+	credits_menu.exit = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 260,310 }, { 0,0 }, true, false, { 513,53,14,14 }, nullptr, this);	
 
-	scroll_bar = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 200, 200 }, { 0,0 }, false, true, { 0, 6, 183, 7 });
-
-	//settings_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,200 }, { 0,0 }, true, true, { 4,69,130,37 }, "SETTINGS");
-	settings_ui=App->gui->AddGUIelement(GUItype::GUI_SETTINGS, nullptr, { 50,250 }, { 0,0 }, true, true, { 20,324,251,270 }, "SETTINGS");
-	
 	// Continue Button Logic (if there is not a save_game file, it wont be enable)
 	pugi::xml_document data;
 	pugi::xml_parse_result result = data.load_file(App->GetLoadString().GetString());
@@ -99,7 +104,18 @@ bool j1IntroScene::CleanUp()
 	play_button = nullptr;
 	continue_button = nullptr;
 	exit_button = nullptr;
-	settings_button = nullptr;
+
+	//Cleaning Setting menu UI
+	settings_menu.image = nullptr;
+	settings_menu.exit = nullptr;
+	settings_menu.button = nullptr;
+	settings_menu.scroll = nullptr;
+
+	//Cleaning Credits menu UI
+	credits_menu.image = nullptr;
+	credits_menu.exit = nullptr;
+	credits_menu.button = nullptr;
+
 	App->gui->CleanUp();
 	App->tex->UnLoad(texture);
 	App->audio->UnLoad();
@@ -123,14 +139,31 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 				want_continue = true;
 				App->fade_to_black->FadeToBlack(App->scene, this);
 			}
-				
+
+			if (element == settings_menu.button) {
+				settings_menu.image->enabled = true;
+				settings_menu.exit->enabled = true;											
+			}
+
+			if (element == settings_menu.exit) {
+				settings_menu.image->enabled = false;
+				settings_menu.exit->enabled = false;			
+			}
+
+			if (element == credits_menu.button) {
+				credits_menu.image->enabled = true;
+				credits_menu.exit->enabled = true;
+			}
+
+			if (element == credits_menu.exit) {
+				credits_menu.image->enabled = false;
+				credits_menu.exit->enabled = false;
+			}
+
 			if (element == exit_button)
 				want_exit = true;
 
-
 		}
-
-
 	}
 
 }

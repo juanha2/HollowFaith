@@ -26,10 +26,10 @@ bool j1GUIinputBox::Awake(pugi::xml_node&)
 
 bool j1GUIinputBox::PreUpdate()
 {
-	if (focus)
+	/*if (focus)
 		App->input->EnableTextInput();
 	else if (!focus)
-		App->input->DisableTextInput();
+		App->input->DisableTextInput();*/
 
 	above = OnAbove();
 
@@ -58,7 +58,7 @@ bool j1GUIinputBox::CleanUp()
 
 void j1GUIinputBox::OnClick()
 {
-	focus = !focus;
+	//focus = !focus;
 
 }
 

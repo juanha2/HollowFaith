@@ -7,7 +7,7 @@
 j1GUIButton::j1GUIButton() {
 
 	this->type = GUItype::GUI_BUTTON;
-	texture = App->gui->GetAtlasTexture();	
+	texture = App->gui->GetAtlasTexture();
 }
 
 j1GUIButton::~j1GUIButton() {

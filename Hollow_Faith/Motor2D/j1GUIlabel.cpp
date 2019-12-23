@@ -43,12 +43,12 @@ bool j1GUIlabel::Update(float dt)
 bool j1GUIlabel::PostUpdate()
 {
 
-	if (parent->focus && parent->type== GUItype::GUI_INPUTBOX)
+	/*if (parent->focus && parent->type== GUItype::GUI_INPUTBOX)
 	{				
 		texture = App->fonts->Print(App->input->GetText(), { 255,255,255,255 }, App->fonts->default);
 		SDL_Rect rect = { globalPosition.x + localPosition.x*7, globalPosition.y + localPosition.y*7,1,30 };		
 		App->render->DrawQuad(rect, 255, 255, 255,255 ,true,false);
-	}
+	}*/
 	
 	if(texture && enabled)
 		App->render->Blit(texture, globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, nullptr, 0.0f);

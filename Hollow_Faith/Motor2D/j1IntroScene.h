@@ -7,6 +7,21 @@
 struct SDL_Texture;
 class j1GUIelement;
 
+struct SettingsMenu {
+
+	j1GUIelement* image = nullptr;
+	j1GUIelement* exit = nullptr;
+	j1GUIelement* button = nullptr;
+	j1GUIelement* scroll = nullptr;
+};
+
+struct CreditsMenu {
+
+	j1GUIelement* image = nullptr;
+	j1GUIelement* exit = nullptr;
+	j1GUIelement* button = nullptr;
+};
+
 class j1IntroScene : public j1Module
 {
 public:
@@ -43,13 +58,11 @@ public:
 	j1GUIelement* continue_button = nullptr;
 	j1GUIelement* exit_button = nullptr;
 
-	j1GUIelement* scroll_bar = nullptr;
-
-	j1GUIelement* settings_button = nullptr;
-	j1GUIelement* settings_ui = nullptr;
-
 	bool want_continue = false;
 	bool want_exit = false;
+
+	SettingsMenu settings_menu;
+	CreditsMenu credits_menu;
 };
 
 #endif // __j1INTROSCENE_H__

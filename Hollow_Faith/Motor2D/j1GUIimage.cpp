@@ -23,18 +23,6 @@ bool j1GUIimage::Awake(pugi::xml_node&)
 bool j1GUIimage::PreUpdate()
 {
 
-	if (this->parent != nullptr) 
-	{
-		if (parent->above)
-			above = true;
-		else
-			above = false;
-	}
-
-	if(interactable)
-		above = OnAbove();
-
-
 	return true;
 }
 

@@ -93,7 +93,6 @@
     <ClCompile Include="j1GUIinputBox.cpp" />
     <ClCompile Include="j1GUIlabel.cpp" />
     <ClCompile Include="j1GUIscrollBar.cpp" />
-    <ClCompile Include="j1GUIsettings.cpp" />
     <ClCompile Include="j1IntroScene.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -130,7 +129,6 @@
     <ClInclude Include="j1GUIinputBox.h" />
     <ClInclude Include="j1GUIlabel.h" />
     <ClInclude Include="j1GUIscrollBar.h" />
-    <ClInclude Include="j1GUIsettings.h" />
     <ClInclude Include="j1IntroScene.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1EntityManager.h" />
