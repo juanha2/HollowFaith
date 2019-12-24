@@ -60,6 +60,7 @@ public:
 	bool Y_drag = false;
 
 	bool above = false;
+	bool focus = false;
 
 	SDL_Rect rect = { 0,0,0,0 };
 	SDL_Texture* texture = nullptr;

@@ -33,13 +33,22 @@ bool j1GUIscrollBar::Start()
 bool j1GUIscrollBar::PreUpdate()
 {
 	
-	
+	scrollButton->enabled = enabled;
+	above = OnAbove();
+
 	return true;
 }
 
 bool j1GUIscrollBar::Update(float dt)
 {	
-
+	if (interactable) {
+		if (above)
+		{
+			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+				OnClick();
+		}
+	}
+	
 	return true;
 }
 
@@ -61,11 +70,6 @@ bool j1GUIscrollBar::CleanUp()
 	return true;
 }
 
-void j1GUIscrollBar::OnClick()
-{ }
-
-void j1GUIscrollBar::OnRelease()
-{ }
 
 void j1GUIscrollBar::ScrollLimits() {
 

@@ -50,6 +50,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
 	hurt_Fx = fxIterator.child("hurtFx").attribute("path").as_string();
 	   
+
 	return ret; 
 }
 
@@ -62,8 +63,8 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");	
 	currentmap = 1;	
 	ready_to_load = false;
-	sound_repeat = false;
-
+	sound_repeat = false;	
+	
 	//We load every Fx here so each entity doesn't have to repeat loading the same one		
 
 	App->audio->LoadFx(jump_fx.GetString());		//1
@@ -83,7 +84,7 @@ bool j1Scene::Start()
 	else 
 		LoadMap(currentmap);	
 	
-	//App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 50,50 }, { 0,0 }, true, true, { 295,343,199,31 });
+	
 	
 	return true;
 }
@@ -91,13 +92,20 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate() {
 
+	if (lifes == 3)
+		lifes_label->text = "3";
+	if (lifes == 2)
+		lifes_label->text = "2";
+	if (lifes == 1)
+		lifes_label->text = "1";
+
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	
+	bool ret = true;
 	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);
 	
 	if(App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN )
@@ -133,10 +141,6 @@ bool j1Scene::Update(float dt)
 		App->LoadGame();		
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-		App->fade_to_black->FadeToBlack(App->intro, this);
-
-
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
@@ -159,13 +163,27 @@ bool j1Scene::Update(float dt)
 			App->frameratecap = App->desiredFrameratecap;
 	}		
 	
+	//Opening in-game menu
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		menu.image->enabled = !menu.image->enabled;		
+		menu.resume_button->enabled = !menu.resume_button->enabled;
+		menu.return_button->enabled = !menu.return_button->enabled;
+		menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) {
+		input_box->enabled = !input_box->enabled;
+		input_box->focus = true;
+	}
+		
+	
 	App->map->Draw();
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
 
-	return true;
+	return ret;
 }
 
 // Called each loop iteration
@@ -190,8 +208,7 @@ bool j1Scene::PostUpdate()
 
 	App->win->SetTitle(title);
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+
 
 	sceneswitch();
 
@@ -203,12 +220,19 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");	
 
+	lifes_label = nullptr;
 	App->map->CleanUp();	
 	App->pathfinding->CleanUp();
 	App->objects->CleanUp();
 	App->coll->CleanUp();
 	App->tex->UnLoad(debug_tex);
 	App->gui->CleanUp();
+
+	input_box = nullptr;
+	menu.resume_button = nullptr;
+	menu.return_button = nullptr;
+	menu.image = nullptr;
+	menu.volume_scroll = nullptr;
 
 	return true;
 }
@@ -320,20 +344,17 @@ void j1Scene::sceneswitch()
 			}
 
 		}
-	}
-		
-	
-	
+	}	
 
 }
 
 void j1Scene::LoadMap(int num_map) {
-	
-	CleanUp();	
+
+	CleanUp();
 	App->map->Load(App->map->data.levels[num_map - 1]->name.GetString());
 	App->scene->ready_to_load = false;
 	App->scene->sound_repeat = false;
-
+	lifes_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 50,50 }, { 0,0 }, true, true, { 0,0,0,0 }, "3");
 	App->render->camera = App->render->camera_init;
 
 	//Create Walkability Map
@@ -344,9 +365,43 @@ void j1Scene::LoadMap(int num_map) {
 		App->pathfinding->SetMap(w, h, data);
 		RELEASE_ARRAY(data);
 	}
-	
+
 	//Plays current map music
-	App->audio->PlayMusic(App->map->data.music.GetString(),1.0f);
-	
-	App->intro->want_continue = false;
+	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
+
+	App->intro->want_continue = false;	
+
+	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 125, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
+	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 160,150 }, { 0,0 }, true, false, { 4,69,130,36 }, "BACK MAIN MENU", this);
+	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 160,200 }, { 0,0 }, true, false, { 4,69,130,36 }, "RESUME", this);
+	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 160, 250 }, { 0,0 }, true, false, { 0, 6, 183, 7 }, nullptr, this);
+	input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 150,100 }, { 0,0 }, true, false, { 295,343,199,30 }, "HOLA QUE TAL", this);
+}
+
+
+void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
+{
+	switch (type)
+	{
+
+	case GUI_Event::EVENT_ONCLICK:
+	{
+
+		if (element == menu.return_button)
+			App->fade_to_black->FadeToBlack(App->intro, this);
+
+		if (element == menu.resume_button) {
+			menu.image->enabled = !menu.image->enabled;		
+			menu.resume_button->enabled = !menu.resume_button->enabled;
+			menu.return_button->enabled = !menu.return_button->enabled;
+			menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
+		}
+		if (element == menu.volume_scroll) {
+			
+		}
+
+	}	
+
+	}
+
 }

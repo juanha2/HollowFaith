@@ -22,37 +22,29 @@ bool j1GUIlabel::Awake(pugi::xml_node&)
 }
 
 bool j1GUIlabel::Start()
-{
-	texture = App->fonts->Print(parent->text, { 255,255,255,255 }, App->fonts->default);
+{	
+	texture = App->fonts->Print(text);
 	return true;
 }
 
 
 bool j1GUIlabel::PreUpdate() 
 {
-	
+	App->fonts->CalcSize(App->input->GetText().GetString(), rect.w, rect.h);
 	return true;
 }
 
 bool j1GUIlabel::Update(float dt) 
 {	
-
+	
 	return true;
 }
 
 bool j1GUIlabel::PostUpdate()
-{
-
-	/*if (parent->focus && parent->type== GUItype::GUI_INPUTBOX)
-	{				
-		texture = App->fonts->Print(App->input->GetText(), { 255,255,255,255 }, App->fonts->default);
-		SDL_Rect rect = { globalPosition.x + localPosition.x*7, globalPosition.y + localPosition.y*7,1,30 };		
-		App->render->DrawQuad(rect, 255, 255, 255,255 ,true,false);
-	}*/
-	
-	if(texture && enabled)
+{		
+	if (enabled) 			
 		App->render->Blit(texture, globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, nullptr, 0.0f);
-
+			
 
 	return true;
 }

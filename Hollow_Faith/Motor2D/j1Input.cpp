@@ -53,7 +53,7 @@ bool j1Input::PreUpdate()
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
-	
+	if (!text_input) {
 		for (int i = 0; i < MAX_KEYS; ++i)
 		{
 			if (keys[i] == 1)
@@ -71,7 +71,9 @@ bool j1Input::PreUpdate()
 					keyboard[i] = KEY_IDLE;
 			}
 		}
-		
+
+	}
+	
 
 	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
@@ -82,9 +84,9 @@ bool j1Input::PreUpdate()
 			mouse_buttons[i] = KEY_IDLE;
 	}
 	
-	
 		while (SDL_PollEvent(&event) != 0)
 		{
+	
 			switch (event.type)
 			{
 			case SDL_QUIT:
@@ -111,16 +113,20 @@ bool j1Input::PreUpdate()
 				}
 				break;
 			case SDL_TEXTINPUT:
-
-				if(text_input)
-				strcat_s(text, 100, event.text.text);
-
-				if (GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
-					LOG("YES");
-
-				LOG("%s", text);
+								
+				text+=event.text.text;			
+				LOG("%s", text.GetString());
 
 				break;
+
+			case SDL_TEXTEDITING:				
+
+				event.edit.text;
+				event.edit.start;
+				event.edit.length;
+
+				break;
+
 			case SDL_MOUSEBUTTONDOWN:
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
 				//LOG("Mouse button %d down", event.button.button-1);
@@ -180,7 +186,7 @@ void j1Input::blockingInput() {
 
 void j1Input::EnableTextInput() 
 {
-	SDL_StartTextInput();
+	SDL_StartTextInput();	
 	text_input = true;	
 }
 
@@ -190,7 +196,7 @@ void j1Input::DisableTextInput() {
 	text_input = false;
 }
 
-char* j1Input::GetText() {
+p2SString j1Input::GetText() {
 
 	return text;
 }

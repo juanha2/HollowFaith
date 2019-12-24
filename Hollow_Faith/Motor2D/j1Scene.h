@@ -4,7 +4,17 @@
 #include "j1Module.h"
 #include "p2DynArray.h"
 
+
 struct SDL_Texture;
+class j1GUIelement;
+
+struct InGameMenu {
+
+	j1GUIelement* image = nullptr;
+	j1GUIelement* return_button = nullptr;
+	j1GUIelement* resume_button = nullptr;
+	j1GUIelement* volume_scroll = nullptr;
+};
 
 class j1Scene : public j1Module
 {
@@ -40,7 +50,7 @@ public:
 	void sceneswitch();	
 	void LoadMap(int num_map);
 
-	//void GuiObserver(GUI_Event type, j1GUIelement* element);
+	void GuiObserver(GUI_Event type, j1GUIelement* element);
 
 public:
 
@@ -68,6 +78,10 @@ public:
 	p2SString			fuse_Fx;
 	p2SString			death;
 	p2SString			hurt_Fx;
+
+	j1GUIelement*		lifes_label=nullptr;
+	j1GUIelement*		input_box = nullptr;
+	InGameMenu			menu;
 };
 
 #endif // __j1SCENE_H__

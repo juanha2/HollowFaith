@@ -29,8 +29,6 @@ public:
 	bool Save(pugi::xml_node&) const  const { return true; };
 
 	void ScrollLimits();
-	void OnClick();
-	void OnRelease();
 
 	j1GUIelement* scrollButton = nullptr;
 };

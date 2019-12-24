@@ -31,6 +31,8 @@ bool j1GUIButton::Start()
 
 bool j1GUIButton::PreUpdate()
 {
+	if (label != nullptr)
+		label->enabled = enabled;
 
 	above = OnAbove();
 

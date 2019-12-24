@@ -120,7 +120,7 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 		tmp = new j1GUIButton();
 			break;
 	case GUItype::GUI_INPUTBOX:
-		tmp = new j1GUIinputBox();
+		tmp = new j1GUIinputBox(text);
 		break;
 	case GUItype::GUI_LABEL:
 		tmp = new j1GUIlabel();

@@ -35,7 +35,7 @@ bool j1IntroScene::Awake()
 // Called before the first frame
 bool j1IntroScene::Start()
 {
-	App->win->scale = 2;
+	App->win->scale = 1;
 	App->audio->PlayMusic("audio/music/intro.ogg", 1.0f);
 	texture = App->tex->Load("Assets/Sprites/background.png");
 	App->render->camera = App->render->camera_init;
@@ -48,7 +48,7 @@ bool j1IntroScene::Start()
 	settings_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 200, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
 	settings_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 50,200 }, { 0,0 }, true, true, { 4,69,130,37 }, "SETTINGS", this);
 	settings_menu.exit = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 410,60 }, { 0,0 }, true, false, { 513,53,14,14 }, nullptr, this);
-	settings_menu.scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 210, 80 }, { 0,0 }, false, true, { 0, 6, 183, 7 }, nullptr,this);
+	settings_menu.scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 210, 80 }, { 0,0 }, false, false, { 0, 6, 183, 7 }, nullptr,this);
 
 	// Credits menu UI elements
 	credits_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 50, 300 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
@@ -144,12 +144,14 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 
 			if (element == settings_menu.button) {
 				settings_menu.image->enabled = true;
-				settings_menu.exit->enabled = true;											
+				settings_menu.exit->enabled = true;	
+				settings_menu.scroll->enabled = true;
 			}
 
 			if (element == settings_menu.exit) {
 				settings_menu.image->enabled = false;
-				settings_menu.exit->enabled = false;			
+				settings_menu.exit->enabled = false;
+				settings_menu.scroll->enabled = false;
 			}
 
 			if (element == credits_menu.button) {

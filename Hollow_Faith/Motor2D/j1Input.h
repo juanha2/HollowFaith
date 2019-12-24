@@ -71,7 +71,7 @@ public:
 
 	void EnableTextInput();
 	void DisableTextInput();
-	char* GetText();
+	p2SString GetText();
 
 	int			mouse_x;
 	int			mouse_y;
@@ -84,8 +84,8 @@ private:
 	j1KeyState*	keyboard;
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
 	int			mouse_motion_x;
-	int			mouse_motion_y;
-	char		text[30];
+	int			mouse_motion_y;	
+	p2SString	text=" ";
 	bool		text_input = false;
 	
 };
