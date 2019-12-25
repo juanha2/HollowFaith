@@ -52,6 +52,7 @@ bool j1Input::PreUpdate()
 {
 	static SDL_Event event;
 	
+	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
 	if (!text_input) {
@@ -113,20 +114,20 @@ bool j1Input::PreUpdate()
 					break;
 				}
 				break;
+
 			case SDL_TEXTINPUT:
 				
 				if (cursor_position != 0)
 					text.insert(event.text.text, cursor_position);
 				else
-					text+=event.text.text;	
-
-				LOG("%s", text.GetString());
+					text+=event.text.text;				
 
 				break;
 
 			case SDL_KEYDOWN:
 
-				if (text_input) {
+				if (text_input) 
+				{
 					if (event.key.keysym.sym == SDLK_BACKSPACE && text.Length() > 0) {
 						text.Cut(text.Length() - cursor_position-1, text.Length()-cursor_position);
 					}
@@ -135,6 +136,11 @@ bool j1Input::PreUpdate()
 					}
 					if (event.key.keysym.sym == SDLK_RIGHT && text.Length() > 0 && cursor_position>0) {
 						cursor_position--;
+					}
+					if (event.key.keysym.sym == SDLK_RETURN) {
+						cursor_position = 0;
+						final_text = text;
+						text.Clear();					
 					}
 				}				
 
@@ -168,7 +174,7 @@ bool j1Input::PreUpdate()
 				break;
 			}
 		}	
-
+		
 	return true;
 }
 

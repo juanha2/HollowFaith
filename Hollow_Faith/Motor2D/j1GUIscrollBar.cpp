@@ -54,11 +54,9 @@ bool j1GUIscrollBar::Update(float dt)
 }
 
 bool j1GUIscrollBar::PostUpdate()
-{
-	
+{	
 	value = float((-scrollButton->localPosition.x / (-this->rect.w + scrollButton->rect.w)) * 128);
-	LOG("Value %f, Local P %d", value, -scrollButton->localPosition.x);
-
+	//LOG("Value %f, Local P %d", value, -scrollButton->localPosition.x);
 	ScrollLimits();
 
 	if(enabled)

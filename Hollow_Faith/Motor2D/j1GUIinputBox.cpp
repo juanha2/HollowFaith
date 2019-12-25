@@ -32,7 +32,7 @@ bool j1GUIinputBox::Start()
 
 bool j1GUIinputBox::PreUpdate()
 {	
-	string->enabled = enabled;
+	string->enabled = enabled;	
 
 	if (focus) 
 	{
