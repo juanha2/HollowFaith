@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "SDL/include/SDL.h"
+#include "j1Fonts.h"
 
 #define MAX_KEYS 300
 
@@ -113,9 +114,29 @@ bool j1Input::PreUpdate()
 				}
 				break;
 			case SDL_TEXTINPUT:
-								
-				text+=event.text.text;			
+				
+				if (cursor_position != 0)
+					text.insert(event.text.text, cursor_position);
+				else
+					text+=event.text.text;	
+
 				LOG("%s", text.GetString());
+
+				break;
+
+			case SDL_KEYDOWN:
+
+				if (text_input) {
+					if (event.key.keysym.sym == SDLK_BACKSPACE && text.Length() > 0) {
+						text.Cut(text.Length() - cursor_position-1, text.Length()-cursor_position);
+					}
+					if (event.key.keysym.sym == SDLK_LEFT && text.Length() > 0 && cursor_position < text.Length()) {
+						cursor_position++;
+					}
+					if (event.key.keysym.sym == SDLK_RIGHT && text.Length() > 0 && cursor_position>0) {
+						cursor_position--;
+					}
+				}				
 
 				break;
 
@@ -198,5 +219,32 @@ void j1Input::DisableTextInput() {
 
 p2SString j1Input::GetText() {
 
+
 	return text;
 }
+
+int j1Input::GetCursorPosition() {
+
+	int width = 0;
+	int height = 0;
+
+	App->fonts->CalcSize(GetModifiedString().GetString(), width, height);
+
+	return width;
+}
+
+p2SString j1Input::GetModifiedString() 
+{
+
+	if (cursor_position != 0) {
+
+		p2SString new_text(text.GetString());
+		new_text.Cut(text.Length() - cursor_position);
+		LOG("%s", new_text.GetString());
+		return new_text;
+	}
+
+	else
+		return text;
+}
+

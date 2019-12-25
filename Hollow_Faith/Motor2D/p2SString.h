@@ -235,13 +235,13 @@ public:
 		uint len = Length();
 
 		if(end >= len || end == 0)
-			end = len - 1;
+			end = len;
 
 		if(begin > len || end <= begin)
 			return false;
 
 		char* p1 = str + begin;
-		char* p2 = str + end + 1;
+		char* p2 = str + end;
 
 		while(*p1++ = *p2++);
 
@@ -263,6 +263,24 @@ public:
 		for(uint i = 0; i < s + 1; ++i)
 			str[i] = start[i];
 	}
+
+	void insert(char* text, uint position = 0)
+	{					
+		uint new_size = strlen(text) + Length() + 1;
+
+		if (new_size > size)
+		{
+			char* tmp = str;
+			Alloc(new_size);
+			strcpy_s(str, size, tmp);
+			delete[] tmp;
+		}						
+			
+		p2SString new_text(&str[Length() - position]);			
+		this->Cut(Length() - position);			
+		this->operator+=(text);
+		this->operator+=(new_text.GetString());
+	}	
 
 	uint Substitute(const char* src, const char *dst)
 	{

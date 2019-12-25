@@ -71,9 +71,10 @@ bool j1GUIinputBox::PostUpdate()
 	if (enabled) {
 		Draw();
 
+		//Draws the cursor(rectangle) -------------
 		if (focus)
 		{
-			SDL_Rect rect = { (string->globalPosition.x + string->rect.w) * App->win->GetScale() , (string->globalPosition.y + localPosition.y) * App->win->GetScale(), 2,  string->rect.h + 10 };
+			SDL_Rect rect = { (string->globalPosition.x + App->input->GetCursorPosition()) * App->win->GetScale() , (string->globalPosition.y + localPosition.y) * App->win->GetScale(), 2,  string->rect.h + 10 };
 			App->render->DrawQuad(rect, 255, 255, 255, 255, true, false);
 		}
 	}

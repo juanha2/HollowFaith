@@ -71,13 +71,13 @@ public:
 
 	void EnableTextInput();
 	void DisableTextInput();
+	int GetCursorPosition();
+
 	p2SString GetText();
+	p2SString GetModifiedString();
 
 	int			mouse_x;
-	int			mouse_y;
-	
-	
-	
+	int			mouse_y;	
 
 private:
 	bool		windowEvents[WE_COUNT];
@@ -88,6 +88,7 @@ private:
 	p2SString	text=" ";
 	bool		text_input = false;
 	
+	int			cursor_position = 0;
 };
 
 #endif // __j1INPUT_H__
