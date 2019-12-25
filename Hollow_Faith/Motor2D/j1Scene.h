@@ -93,7 +93,7 @@ public:
 
 	j1GUIelement*		lifes_label=nullptr;
 	j1GUIelement*		input_box = nullptr;
-	j1GUIelement*		timerLabel;
+	j1GUIelement*		timerLabel = nullptr;
 
 	InGameMenu			menu;
 	Console				console;
