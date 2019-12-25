@@ -55,10 +55,10 @@ bool j1GUIscrollBar::Update(float dt)
 
 bool j1GUIscrollBar::PostUpdate()
 {	
-	value = float((-scrollButton->localPosition.x / (-this->rect.w + scrollButton->rect.w)) * 128);
-	//LOG("Value %f, Local P %d", value, -scrollButton->localPosition.x);
-	ScrollLimits();
 
+	ScrollLimits();
+	value = -((float(-scrollButton->localPosition.x) / (float(-this->rect.w) + float(scrollButton->rect.w))) * 128);
+	LOG("Value %f, Local P %d", value, -scrollButton->localPosition.x);
 	if(enabled)
 		Draw();
 
