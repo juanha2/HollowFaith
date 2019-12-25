@@ -30,7 +30,9 @@ public:
 
 	void ScrollLimits();
 
+
 	j1GUIelement* scrollButton = nullptr;
+	float value;
 };
 
 
