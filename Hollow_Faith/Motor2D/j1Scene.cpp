@@ -49,7 +49,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	fuse_Fx = fxIterator.child("fuseFx").attribute("path").as_string();
 	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
 	hurt_Fx = fxIterator.child("hurtFx").attribute("path").as_string();
-	   
+
 
 	return ret; 
 }
@@ -58,6 +58,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	//Setting initial values
+	timer = 0;
 	lifes = 3;
 	App->win->scale = 2;
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");	
@@ -84,7 +85,7 @@ bool j1Scene::Start()
 	else 
 		LoadMap(currentmap);	
 	
-	
+	timerLabel = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 100,100 }, { 0,0 }, false, true, { 0,0,0,0 }, timerText, this, false, false);
 	
 	return true;
 }
@@ -107,6 +108,14 @@ bool j1Scene::Update(float dt)
 {
 	bool ret = true;
 	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);
+
+	timer += dt;
+	LOG("%f", timer);
+
+	sprintf_s(timerText, "%f", timer);
+	App->tex->UnLoad(timerLabel->texture);
+	timerLabel->texture = App->fonts->Print(App->input->GetText().GetString());
+	
 	
 	if(App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN )
 		App->pause = !App->pause;

@@ -79,6 +79,10 @@ public:
 	p2SString			death;
 	p2SString			hurt_Fx;
 
+	j1GUIelement* timerLabel;
+	float timer;
+	char timerText[10];
+
 	j1GUIelement*		lifes_label=nullptr;
 	j1GUIelement*		input_box = nullptr;
 	InGameMenu			menu;
