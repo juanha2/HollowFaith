@@ -17,6 +17,7 @@ struct Console
 struct InGameMenu {
 
 	j1GUIelement* image = nullptr;
+	j1GUIelement* exit_button = nullptr;
 	j1GUIelement* return_button = nullptr;
 	j1GUIelement* resume_button = nullptr;
 	j1GUIelement* volume_scroll = nullptr;

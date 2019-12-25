@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "p2DynArray.h"
+#include "p2Animation.h"
 
 struct SDL_Texture;
 class j1GUIelement;
@@ -12,7 +13,8 @@ struct SettingsMenu {
 	j1GUIelement* image = nullptr;
 	j1GUIelement* exit = nullptr;
 	j1GUIelement* button = nullptr;
-	j1GUIelement* scroll = nullptr;
+	j1GUIelement* scroll1 = nullptr;
+	j1GUIelement* scroll2 = nullptr;
 };
 
 struct CreditsMenu {
@@ -53,7 +55,9 @@ public:
 
 public:
 
-	SDL_Texture* texture;
+	SDL_Texture* texture =nullptr;
+	SDL_Texture* title_texture=nullptr;
+	SDL_Texture* rain_texture = nullptr;
 	j1GUIelement* play_button= nullptr;
 	j1GUIelement* continue_button = nullptr;
 	j1GUIelement* exit_button = nullptr;

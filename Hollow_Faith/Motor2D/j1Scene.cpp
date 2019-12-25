@@ -239,6 +239,7 @@ bool j1Scene::CleanUp()
 	menu.resume_button = nullptr;
 	menu.return_button = nullptr;
 	menu.image = nullptr;
+	menu.exit_button = nullptr;
 	menu.volume_scroll = nullptr;
 
 	return true;
@@ -378,10 +379,11 @@ void j1Scene::LoadMap(int num_map) {
 
 	App->intro->want_continue = false;	
 
-	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 125, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
-	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 160,150 }, { 0,0 }, true, false, { 4,69,130,36 }, "BACK MAIN MENU", this);
-	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 160,200 }, { 0,0 }, true, false, { 4,69,130,36 }, "RESUME", this);
-	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 160, 250 }, { 0,0 }, true, false, { 0, 6, 183, 7 }, nullptr, this);
+	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 201, 50 }, { 0,0 }, true, false, { 577, 220, 142, 283 }, nullptr, this);
+	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "MAIN MENU", this);
+	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,200 }, { 0,0 }, true, false, { 733,224,106,30 }, "MAIN MENU", this);
+	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "RESUME", this);
+	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 205, 250 }, { 0,0 }, true, false, { 858, 245, 133, 4 }, nullptr, this);
 	console.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 125, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
 	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 150,100 }, { 0,0 }, true, false, { 295,343,199,30 }, "Commands", this);
 }
