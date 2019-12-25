@@ -25,6 +25,7 @@ bool j1GUIscrollBar::Awake(pugi::xml_node&)
 bool j1GUIscrollBar::Start()
 {
 	scrollButton = App->gui->AddGUIelement(GUItype::GUI_BUTTON, this, globalPosition, localPosition, true, true, { 864, 72, 28 , 32 }, nullptr, this->listener, true, false);
+	scrollButton->globalPosition.y = globalPosition.y - scrollButton->rect.h / 2 + this->rect.h / 2;
 	value = 0;
 
 	texture = App->gui->GetAtlasTexture();
@@ -79,14 +80,14 @@ void j1GUIscrollBar::ScrollLimits() {
 		scrollButton->localPosition.x = 0;
 
 		scrollButton->globalPosition.x = scrollButton->parent->globalPosition.x - scrollButton->localPosition.x;
-		scrollButton->globalPosition.y = scrollButton->parent->globalPosition.y - scrollButton->localPosition.y;
+		//scrollButton->globalPosition.y = scrollButton->parent->globalPosition.y - scrollButton->localPosition.y;
 	}
 	else if (scrollButton->localPosition.x < (-this->rect.w + scrollButton->rect.w))
 	{
 		scrollButton->localPosition.x = -this->rect.w + scrollButton->rect.w;
 
 		scrollButton->globalPosition.x = scrollButton->parent->globalPosition.x - scrollButton->localPosition.x;
-		scrollButton->globalPosition.y = scrollButton->parent->globalPosition.y - scrollButton->localPosition.y;
+		//scrollButton->globalPosition.y = scrollButton->parent->globalPosition.y - scrollButton->localPosition.y;
 	}
 
 }

@@ -115,10 +115,7 @@ bool j1Scene::Update(float dt)
 	sprintf_s(timerText, "%f", timer);
 	App->tex->UnLoad(timerLabel->texture);
 	timerLabel->texture = App->fonts->Print(App->input->GetText().GetString());
-	
-	
-	if(App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN )
-		App->pause = !App->pause;
+
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
 	{ // Start at the level 1 begin
@@ -179,6 +176,7 @@ bool j1Scene::Update(float dt)
 		menu.resume_button->enabled = !menu.resume_button->enabled;
 		menu.return_button->enabled = !menu.return_button->enabled;
 		menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
+		App->pause = !App->pause;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) 
@@ -414,6 +412,7 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			menu.resume_button->enabled = !menu.resume_button->enabled;
 			menu.return_button->enabled = !menu.return_button->enabled;
 			menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
+			App->pause = !App->pause;
 		}
 		if (element == menu.volume_scroll) {
 			
