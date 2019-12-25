@@ -26,7 +26,7 @@ void j1GUIelement::Draw()
 {
 	if (above)
 	{
-		SDL_SetTextureColorMod(texture, 200, 50, 50);
+		SDL_SetTextureColorMod(texture, 176, 12, 174);
 		SDL_SetTextureAlphaMod(texture, 200);
 	}
 	else

@@ -32,16 +32,16 @@ bool j1GUIinputBox::Start()
 
 bool j1GUIinputBox::PreUpdate()
 {	
-	string->enabled = enabled;
+	string->enabled = enabled;	
 
-	if (focus) 
+	if (focus && enabled) 
 	{
 		App->input->EnableTextInput();		
 		App->tex->UnLoad(string->texture);
 		string->texture = App->fonts->Print(App->input->GetText().GetString());
 	}
 
-	else if (!focus)
+	else if (!focus || !enabled)
 		App->input->DisableTextInput();
 
 	above = OnAbove();

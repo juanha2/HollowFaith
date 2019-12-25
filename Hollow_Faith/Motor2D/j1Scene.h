@@ -8,9 +8,16 @@
 struct SDL_Texture;
 class j1GUIelement;
 
+struct Console 
+{
+	j1GUIelement* input_box = nullptr;
+	j1GUIelement* image = nullptr;
+};
+
 struct InGameMenu {
 
 	j1GUIelement* image = nullptr;
+	j1GUIelement* exit_button = nullptr;
 	j1GUIelement* return_button = nullptr;
 	j1GUIelement* resume_button = nullptr;
 	j1GUIelement* volume_scroll = nullptr;
@@ -51,6 +58,7 @@ public:
 	void LoadMap(int num_map);
 
 	void GuiObserver(GUI_Event type, j1GUIelement* element);
+	bool ConsoleLogic();
 
 public:
 
@@ -85,7 +93,12 @@ public:
 
 	j1GUIelement*		lifes_label=nullptr;
 	j1GUIelement*		input_box = nullptr;
+	j1GUIelement*		lifes_label=nullptr;	
+
 	InGameMenu			menu;
+	Console				console;
+
+	bool				console_on = false;
 };
 
 #endif // __j1SCENE_H__

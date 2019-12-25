@@ -79,13 +79,15 @@ public:
 	int			mouse_x;
 	int			mouse_y;	
 
+	p2SString	final_text;
+
 private:
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
 	int			mouse_motion_x;
 	int			mouse_motion_y;	
-	p2SString	text=" ";
+	p2SString	text;
 	bool		text_input = false;
 	
 	int			cursor_position = 0;

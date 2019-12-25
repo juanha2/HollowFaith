@@ -173,18 +173,24 @@ bool j1Scene::Update(float dt)
 	}		
 	
 	//Opening in-game menu
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
+	{
 		menu.image->enabled = !menu.image->enabled;		
 		menu.resume_button->enabled = !menu.resume_button->enabled;
 		menu.return_button->enabled = !menu.return_button->enabled;
 		menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) {
-		input_box->enabled = !input_box->enabled;
-		input_box->focus = true;
-	}
-		
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) 
+	{	
+		console_on = !console_on;
+		console.image->enabled = !console.image->enabled;
+		console.input_box->enabled = !console.input_box->enabled;
+		console.input_box->focus = true;
+	}		
+	
+	if (console_on)
+		ret= ConsoleLogic();
 	
 	App->map->Draw();
 
@@ -237,10 +243,12 @@ bool j1Scene::CleanUp()
 	App->tex->UnLoad(debug_tex);
 	App->gui->CleanUp();
 
-	input_box = nullptr;
+	console.input_box = nullptr;
+	console.image = nullptr;
 	menu.resume_button = nullptr;
 	menu.return_button = nullptr;
 	menu.image = nullptr;
+	menu.exit_button = nullptr;
 	menu.volume_scroll = nullptr;
 
 	return true;
@@ -380,11 +388,13 @@ void j1Scene::LoadMap(int num_map) {
 
 	App->intro->want_continue = false;	
 
-	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 125, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
-	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 160,150 }, { 0,0 }, true, false, { 4,69,130,36 }, "BACK MAIN MENU", this);
-	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 160,200 }, { 0,0 }, true, false, { 4,69,130,36 }, "RESUME", this);
-	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 160, 250 }, { 0,0 }, true, false, { 0, 6, 183, 7 }, nullptr, this);
-	input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 150,100 }, { 0,0 }, true, false, { 295,343,199,30 }, "HOLA QUE TAL", this);
+	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 201, 50 }, { 0,0 }, true, false, { 577, 220, 142, 283 }, nullptr, this);
+	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "MAIN MENU", this);
+	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,200 }, { 0,0 }, true, false, { 733,224,106,30 }, "MAIN MENU", this);
+	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "RESUME", this);
+	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 205, 250 }, { 0,0 }, true, false, { 858, 245, 133, 4 }, nullptr, this);
+	console.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 125, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
+	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 150,100 }, { 0,0 }, true, false, { 295,343,199,30 }, "Commands", this);
 }
 
 
@@ -408,9 +418,26 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 		if (element == menu.volume_scroll) {
 			
 		}
-
 	}	
+	}
+}
 
+bool j1Scene::ConsoleLogic() 
+{
+	bool ret = true;	
+
+	if (App->input->final_text == "list") {
+		LOG("HOLA");
+	}
+	if (App->input->final_text == "god_mode") {
+		console.input_box->focus = false;
+		App->objects->player->godMode = !App->objects->player->godMode;
+	}
+	if (App->input->final_text == "quit") {
+		return false;
 	}
 
+	App->input->final_text.Clear();
+
+	return ret;
 }
