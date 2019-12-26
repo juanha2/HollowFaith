@@ -21,7 +21,7 @@
   </window>
 
   <fonts>
-    <default_font file="fonts/RifficFree-Bold.ttf" size="15"/>
+    <default_font file="fonts/RifficFree-Bold.ttf" size="25"/>
   </fonts>
   
   <scene>

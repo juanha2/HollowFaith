@@ -18,7 +18,7 @@
 #include "j1Checkpoint.h"
 #include "j1GUI.h"
 #include "j1IntroScene.h"
-
+#include <stdio.h>//for the sprintf_s function
 #include "j1Fonts.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -64,8 +64,8 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");	
 	currentmap = 1;	
 	ready_to_load = false;
-	sound_repeat = false;	
-	
+	sound_repeat = false;		
+
 	//We load every Fx here so each entity doesn't have to repeat loading the same one		
 
 	App->audio->LoadFx(jump_fx.GetString());		//1
@@ -85,20 +85,15 @@ bool j1Scene::Start()
 	else 
 		LoadMap(currentmap);	
 	
-	timerLabel = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 100,100 }, { 0,0 }, false, true, { 0,0,0,0 }, timerText, this, false, false);
+	//Adding every UI element
+	AddUIElements();
 	
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate() {
-
-	if (lifes == 3)
-		lifes_label->text = "3";
-	if (lifes == 2)
-		lifes_label->text = "2";
-	if (lifes == 1)
-		lifes_label->text = "1";
+	
 
 	return true;
 }
@@ -109,13 +104,21 @@ bool j1Scene::Update(float dt)
 	bool ret = true;
 	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);
 
+	//Updating all UI Texts
 	timer += dt;
-	LOG("%f", timer);
+	sprintf_s(timerText, "%.2f", timer);
+	App->tex->UnLoad(timer_label->texture);
+	timer_label->text = timerText;
 
-	sprintf_s(timerText, "%f", timer);
-	App->tex->UnLoad(timerLabel->texture);
-	timerLabel->texture = App->fonts->Print(App->input->GetText().GetString());
 
+	sprintf_s(lifesText, "%d", lifes);
+	App->tex->UnLoad(lifes_label->texture);
+	lifes_label->text = lifesText;
+
+	sprintf_s(coinsText, "%d", num_coins);
+	App->tex->UnLoad(coins_label->texture);
+	coins_label->text = coinsText;
+	//------------------------------------
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
 	{ // Start at the level 1 begin
@@ -221,8 +224,6 @@ bool j1Scene::PostUpdate()
 
 	App->win->SetTitle(title);
 
-
-
 	sceneswitch();
 
 	return ret;
@@ -243,12 +244,17 @@ bool j1Scene::CleanUp()
 
 	console.input_box = nullptr;
 	console.image = nullptr;
+	menu.menu_button = nullptr;
 	menu.resume_button = nullptr;
 	menu.return_button = nullptr;
 	menu.image = nullptr;
 	menu.exit_button = nullptr;
 	menu.volume_scroll = nullptr;
-
+	lifes_icon = nullptr;
+	coins_icon = nullptr;
+	coins_label = nullptr;
+	lifes_label = nullptr;
+	timer_label = nullptr;
 	return true;
 }
 
@@ -368,8 +374,7 @@ void j1Scene::LoadMap(int num_map) {
 	CleanUp();
 	App->map->Load(App->map->data.levels[num_map - 1]->name.GetString());
 	App->scene->ready_to_load = false;
-	App->scene->sound_repeat = false;
-	lifes_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 50,50 }, { 0,0 }, true, true, { 0,0,0,0 }, "3");
+	App->scene->sound_repeat = false;	
 	App->render->camera = App->render->camera_init;
 
 	//Create Walkability Map
@@ -383,16 +388,7 @@ void j1Scene::LoadMap(int num_map) {
 
 	//Plays current map music
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
-
 	App->intro->want_continue = false;	
-
-	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 201, 50 }, { 0,0 }, true, false, { 577, 220, 142, 283 }, nullptr, this);
-	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "MAIN MENU", this);
-	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,200 }, { 0,0 }, true, false, { 733,224,106,30 }, "MAIN MENU", this);
-	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "RESUME", this);
-	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 205, 250 }, { 0,0 }, true, false, { 858, 245, 133, 4 }, nullptr, this);
-	console.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 125, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
-	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 150,100 }, { 0,0 }, true, false, { 295,343,199,30 }, "Commands", this);
 }
 
 
@@ -414,8 +410,12 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
 			App->pause = !App->pause;
 		}
-		if (element == menu.volume_scroll) {
-			
+		if (element == menu.menu_button) {
+			menu.image->enabled = !menu.image->enabled;
+			menu.resume_button->enabled = !menu.resume_button->enabled;
+			menu.return_button->enabled = !menu.return_button->enabled;
+			menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
+			App->pause = !App->pause;
 		}
 	}	
 	}
@@ -439,4 +439,21 @@ bool j1Scene::ConsoleLogic()
 	App->input->final_text.Clear();
 
 	return ret;
+}
+
+void j1Scene::AddUIElements() {
+
+	timer_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 200,22 }, { 0,0 }, true, true, { 0,0,0,0 }, timerText, this, false, false);
+	lifes_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 140,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "3");
+	lifes_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 100, 13 }, { 0,0 }, true, true, { 791, 23, 30, 34 }, nullptr, this);
+	coins_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 50,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "0");
+	coins_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 10, 15 }, { 0,0 }, true, true, { 748, 25, 30, 30 }, nullptr, this);
+	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 201, 50 }, { 0,0 }, true, false, { 577, 220, 142, 283 }, nullptr, this);
+	menu.menu_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,13 }, { 0,0 }, true, true, { 831,23,35,35 }, nullptr, this);
+	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "MAIN MENU", this);
+	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "RESUME", this);
+	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 205, 250 }, { 0,0 }, true, false, { 858, 245, 133, 4 }, nullptr, this);
+	console.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 125, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
+	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 150,100 }, { 0,0 }, true, false, { 295,343,199,30 }, "Commands", this);
+
 }

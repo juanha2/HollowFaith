@@ -16,6 +16,7 @@ struct Console
 
 struct InGameMenu {
 
+	j1GUIelement* menu_button = nullptr;
 	j1GUIelement* image = nullptr;
 	j1GUIelement* exit_button = nullptr;
 	j1GUIelement* return_button = nullptr;
@@ -60,6 +61,8 @@ public:
 	void GuiObserver(GUI_Event type, j1GUIelement* element);
 	bool ConsoleLogic();
 
+	void AddUIElements();
+
 public:
 
 	// - - - - SCENE DATA - - - -
@@ -74,6 +77,7 @@ public:
 	bool			first = true;
 
 	int					lifes;
+	int					num_coins = 0;
 	p2SString			jump_fx;
 	p2SString			death_fx;
 	p2SString			win1_Fx;
@@ -90,10 +94,15 @@ public:
 	
 	float				timer;
 	char				timerText[100];
+	char				lifesText[100];
+	char				coinsText[100];
 
 	j1GUIelement*		lifes_label=nullptr;
+	j1GUIelement*		coins_label = nullptr;
+	j1GUIelement*		lifes_icon = nullptr;
+	j1GUIelement*		coins_icon = nullptr;
 	j1GUIelement*		input_box = nullptr;
-	j1GUIelement*		timerLabel = nullptr;
+	j1GUIelement*		timer_label = nullptr;
 
 	InGameMenu			menu;
 	Console				console;

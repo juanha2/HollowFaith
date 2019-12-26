@@ -105,8 +105,7 @@ bool j1FadeToBlack::PostUpdate()
 		{
 			current_step = fade_step::none;
 			App->input->Enable();
-			to_enable->Enable();
-						
+			to_enable->Enable();						
 		}
 			
 	} break;

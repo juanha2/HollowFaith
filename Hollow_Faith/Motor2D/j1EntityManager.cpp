@@ -11,6 +11,7 @@
 #include "j1EnemyLand.h"
 #include "j1Bonfire.h"
 #include "j1Audio.h"
+#include "j1Coins.h"
 
 
 j1EntityManager::j1EntityManager()
@@ -27,6 +28,7 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	config_node = config;
+	
 
 	return ret;
 }
@@ -58,9 +60,7 @@ bool j1EntityManager::PreUpdate()
 }
 bool j1EntityManager::Update(float dt)
 {
-	BROFILER_CATEGORY("AllEntities_Update", Profiler::Color::Turquoise);
-
-	
+	BROFILER_CATEGORY("AllEntities_Update", Profiler::Color::Turquoise);	
 
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
@@ -109,14 +109,14 @@ bool j1EntityManager::CleanUp()
 	}
 
 	App->objects->player = nullptr;
-	App->objects->particle = nullptr;
+	App->objects->particle = nullptr;	
+	App->objects->coins = nullptr;
 
 	for (int i = 0; i <= MAX_BONFIRES; i++) 
 	{
 		if(App->objects->bonfire[i] != nullptr)
 			App->objects->bonfire[i] = nullptr;
-	}
-		
+	}	
 
 	count = 0;
 
@@ -221,6 +221,10 @@ j1Entity* j1EntityManager::AddEntity(j1Entity::entityType type, fPoint position,
 
 	case j1Entity::entityType::STONE:
 		tmp = new j1Particles();
+		break;
+
+	case j1Entity::entityType::COINS:
+		tmp = new j1Coins();
 		break;
 
 	case j1Entity::entityType::BONFIRE:

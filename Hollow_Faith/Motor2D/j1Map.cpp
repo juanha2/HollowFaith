@@ -574,6 +574,10 @@ bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
 		{
 			App->objects->AddEntity(j1Entity::entityType::STONE, { data->x,data->y });
 		}
+		if (data->name == 11)
+		{
+			App->objects->AddEntity(j1Entity::entityType::COINS, { data->x,data->y });
+		}
 		if (data->name == 6)
 		{
 			App->objects->AddEntity(j1Entity::entityType::ENEMY_FLY, { data->x,data->y });

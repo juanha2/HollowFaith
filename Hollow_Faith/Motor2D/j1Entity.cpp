@@ -8,6 +8,7 @@
 
 j1Entity::j1Entity(entityType type) : type(type)
 {
+
 }
 
 j1Entity::~j1Entity()

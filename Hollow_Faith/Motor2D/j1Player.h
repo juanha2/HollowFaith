@@ -68,6 +68,7 @@ public:
 	bool				dead = false;
 	bool				win = false;
 	bool				can_climb = false;
+	   
 	
 	// - - - - - - - - - - - 
 

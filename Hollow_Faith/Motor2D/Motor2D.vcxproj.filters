@@ -103,6 +103,9 @@
     <ClCompile Include="j1IntroScene.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="j1Coins.cpp">
+      <Filter>Desenvolupament  ========\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -227,6 +230,9 @@
     </ClInclude>
     <ClInclude Include="j1IntroScene.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Coins.h">
+      <Filter>Desenvolupament  ========\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

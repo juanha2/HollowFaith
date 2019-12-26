@@ -13,6 +13,7 @@
 #include "j1Particles.h"
 #include "j1EnemyFly.h"
 #include "j1Bonfire.h"
+#include "j1Coins.h"
 
 class j1Entity;
 
@@ -47,12 +48,12 @@ public:
 	
 	p2List<j1Entity*>	Entities;
 
-	j1Player*			player;
-	j1Particles*		particle;
+	j1Player*			player = nullptr;
+	j1Particles*		particle =nullptr;
 	j1Bonfire*			bonfire[MAX_BONFIRES];
-
-	int					count;
-	
+	j1Coins*			coins=nullptr;
+		
+	int					count;	
 	pugi::xml_node		config_node;
 
 };

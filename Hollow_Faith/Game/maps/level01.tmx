@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="25" tilewidth="16" tileheight="16" nextobjectid="232">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="25" tilewidth="16" tileheight="16" nextobjectid="253">
  <properties>
   <property name="Music" value="audio/music/music1.ogg"/>
  </properties>
@@ -20180,6 +20180,26 @@
   <object id="213" name="4" x="320" y="384" width="64" height="16"/>
   <object id="214" name="4" x="416" y="384" width="48" height="16"/>
   <object id="229" name="1" x="0" y="352.5" width="319.5" height="48"/>
+  <object id="232" name="11" x="176" y="320" width="16" height="16"/>
+  <object id="233" name="11" x="193" y="292" width="16" height="16"/>
+  <object id="234" name="11" x="213" y="263.5" width="16" height="16"/>
+  <object id="235" name="11" x="239" y="239.5" width="16" height="16"/>
+  <object id="236" name="11" x="295.5" y="260.5" width="16" height="16"/>
+  <object id="237" name="11" x="268" y="236" width="16" height="16"/>
+  <object id="238" name="11" x="390.5" y="215" width="16" height="16"/>
+  <object id="239" name="11" x="583.5" y="250.5" width="16" height="16"/>
+  <object id="240" name="11" x="610" y="251" width="16" height="16"/>
+  <object id="241" name="11" x="637.5" y="250" width="16" height="16"/>
+  <object id="242" name="11" x="784" y="184" width="16" height="16"/>
+  <object id="243" name="11" x="803.5" y="155" width="16" height="16"/>
+  <object id="244" name="11" x="832.5" y="138" width="16" height="16"/>
+  <object id="245" name="11" x="857.5" y="155.5" width="16" height="16"/>
+  <object id="246" name="11" x="956.5" y="222" width="16" height="16"/>
+  <object id="247" name="11" x="985.5" y="270.5" width="16" height="16"/>
+  <object id="248" name="11" x="1194" y="314.5" width="16" height="16"/>
+  <object id="249" name="11" x="1221" y="314" width="16" height="16"/>
+  <object id="250" name="11" x="1399" y="220.5" width="16" height="16"/>
+  <object id="251" name="11" x="1447" y="220.5" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="Enemies">
   <object id="174" name="6" x="832" y="48" width="16" height="16"/>

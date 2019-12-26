@@ -21,6 +21,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_WIN] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_NONE] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_COINS] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_BONFIRE] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = false;
@@ -29,6 +30,7 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_STONE][COLLIDER_FLOOR] = true;	
 	
 	matrix[COLLIDER_STONE][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_COINS][COLLIDER_PLAYER] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = false;	
@@ -160,6 +162,10 @@ void j1Collision::DebugDraw()
 
 		case COLLIDER_BONFIRE:
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			break;
+
+		case COLLIDER_COINS:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		}
 	}

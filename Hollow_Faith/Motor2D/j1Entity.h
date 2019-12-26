@@ -31,6 +31,7 @@ public:
 		ENEMY_LAND,
 		STONE,
 		BONFIRE,
+		COINS,
 	};
 
 public:
@@ -60,18 +61,20 @@ public:
 
 	entityType			type;
 
-	Collider*			collider;
+	Collider*			collider=nullptr;
 	SDL_Rect			entity_collider;
 
 	p2SString			texture_path;
-	SDL_Texture*		texture;
+	SDL_Texture*		texture=nullptr;
+	
 	SDL_RendererFlip	flip = SDL_RendererFlip::SDL_FLIP_NONE;
+	
 
 	bool				ignoreColl = false;
 	bool				godMode = false;
 
 	bool				elim = false;
-
+	
 
 	// - - - - MOBILITY - - - -
 

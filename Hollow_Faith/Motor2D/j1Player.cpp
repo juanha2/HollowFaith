@@ -12,6 +12,7 @@
 #include "j1Scene.h"
 #include "j1EntityManager.h"
 #include "j1Checkpoint.h"
+#include "j1Coins.h"
 
 
 
@@ -449,12 +450,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				dead = true;
 			}
 			
+
 			if ((c2->type == COLLIDER_WIN))
 			{
 				inputs.add(IN_WALK_RIGHT);
 				win = true;
-			}			
+			}		
 			
+
 			if ((c2->type == COLLIDER_CLIMB))
 			{		
 				if ((position.x + 10 > c2->rect.x && position.x < c2->rect.x + c2->rect.w)

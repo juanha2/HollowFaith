@@ -30,6 +30,7 @@ bool j1GUIlabel::Start()
 
 bool j1GUIlabel::PreUpdate() 
 {
+	CleanUp();
 	App->fonts->CalcSize(App->input->GetText().GetString(), rect.w, rect.h);
 	return true;
 }
@@ -37,6 +38,7 @@ bool j1GUIlabel::PreUpdate()
 bool j1GUIlabel::Update(float dt) 
 {	
 	
+	texture = App->fonts->Print(text);
 	return true;
 }
 
