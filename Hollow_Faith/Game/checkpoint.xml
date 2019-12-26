@@ -3,9 +3,6 @@
 	<EnemyFly>
 		<position x="832" y="48" />
 	</EnemyFly>
-	<EnemyLand>
-		<position x="608" y="320" />
-	</EnemyLand>
 	<EnemyFly>
 		<position x="1056" y="128" />
 	</EnemyFly>
@@ -18,9 +15,9 @@
 	</Bonfire>
 	<Bonfire num="2">
 		<position x="888.010986" y="175.485001" />
-		<active value="false" />
+		<active value="true" />
 	</Bonfire>
 	<player>
-		<position x="112" y="320" />
+		<position x="888.010986" y="175.485001" />
 	</player>
 </game_state>

@@ -49,6 +49,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	fuse_Fx = fxIterator.child("fuseFx").attribute("path").as_string();
 	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
 	hurt_Fx = fxIterator.child("hurtFx").attribute("path").as_string();
+	coin_Fx = fxIterator.child("coinFx").attribute("path").as_string();
 
 
 	return ret; 
@@ -79,6 +80,7 @@ bool j1Scene::Start()
 	App->audio->LoadFx(fuse_Fx.GetString());		//9
 	App->audio->LoadFx(death.GetString());			//10
 	App->audio->LoadFx(hurt_Fx.GetString());		//11
+	App->audio->LoadFx(coin_Fx.GetString());		//12
 
 	if (App->intro->want_continue)		
 		App->LoadGame();			

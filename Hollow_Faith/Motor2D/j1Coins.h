@@ -15,7 +15,8 @@ class j1Coins : public j1Entity
 
 public:
 
-	bool			alreadyCollided;	
+	bool			alreadyCollided;
+	Animation			coin_animation;
 
 public:
 

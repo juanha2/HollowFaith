@@ -27,6 +27,10 @@ bool j1Coins::Awake(pugi::xml_node& config)
 	collider = new Collider({ 0,0,15,15 }, COLLIDER_COINS, this);
 	App->coll->AddColliderEntity(collider);
 
+	// Loading all Animations
+	pugi::xml_node animIterator = config.child("animations").child("animation");
+	coin_animation.load_animation(animIterator, "coins");
+
 	return ret;
 }
 
@@ -38,6 +42,8 @@ bool j1Coins::Start()
 	//Loading texture and collider
 	CollisionPosUpdate();
 	texture = App->tex->Load("Assets/Sprites/coins.png");
+
+	current_animation = &coin_animation;
 	return ret;
 }
 
@@ -69,8 +75,8 @@ bool j1Coins::Update(float dt)
 
 bool j1Coins::PostUpdate() {
 
-	SDL_Rect rect = { 0,0,15,15 };
-	App->render->Blit(texture, position.x, position.y, &rect, 1.0, 1.0, flip, NULL, entity_collider.w / 2);
+	App->render->Blit(texture, position.x, position.y,
+		&current_animation->GetCurrentFrame(App->dt), 1.0, 1.0, flip, NULL, entity_collider.w / 2);
 
 	return true;
 }
@@ -82,6 +88,7 @@ void j1Coins::OnCollision(Collider* c1, Collider* c2) {
 	{
 		if (!alreadyCollided)
 		{
+			App->audio->PlayFx(12, 0,100);
 			elim = true;
 			alreadyCollided = true;
 			App->scene->num_coins++;			

@@ -90,6 +90,7 @@ public:
 	p2SString			fuse_Fx;
 	p2SString			death;
 	p2SString			hurt_Fx;
+	p2SString			coin_Fx;
 
 	
 	float				timer;
