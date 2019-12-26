@@ -113,11 +113,11 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 	// Saving bonfire data when collides with player
 
 	if ((c2->type == COLLIDER_PLAYER))
-	{		
-		App->checkpoint->checkpointpos = position;  
-
+	{	
 		if (!alreadyCollided)
 		{		
+			App->checkpoint->checkpointpos = position;
+			App->checkpoint->checkpointcoins = App->scene->num_coins;
 			App->audio->PlayFx(9, 0, App->audio->SpatialAudio(100, distance * 2));
 			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(200, distance * 2), 1);
 

@@ -50,8 +50,13 @@ bool j1GUIelement::OnAbove()
 
 	SDL_Rect intersect = {globalPosition.x , globalPosition.y, rect.w, rect.h };
 
-	if (SDL_PointInRect(&mouse, &intersect) && this->enabled && this->interactable)
+	if (SDL_PointInRect(&mouse, &intersect) && this->enabled && this->interactable) {
+		if (listener != nullptr)
+		{
+			this->listener->GuiObserver(GUI_Event::EVENT_HOVER, this);
+		}
 		ret = true;
+	}
 
 	return ret;
 }

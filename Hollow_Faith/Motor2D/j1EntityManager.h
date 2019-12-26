@@ -51,7 +51,6 @@ public:
 	j1Player*			player = nullptr;
 	j1Particles*		particle =nullptr;
 	j1Bonfire*			bonfire[MAX_BONFIRES];
-	j1Coins*			coins=nullptr;
 		
 	int					count;	
 	pugi::xml_node		config_node;

@@ -17,11 +17,17 @@ struct Console
 struct InGameMenu {
 
 	j1GUIelement* menu_button = nullptr;
+	j1GUIelement* title = nullptr;
 	j1GUIelement* image = nullptr;
 	j1GUIelement* exit_button = nullptr;
 	j1GUIelement* return_button = nullptr;
 	j1GUIelement* resume_button = nullptr;
 	j1GUIelement* volume_scroll = nullptr;
+	j1GUIelement* music_scroll = nullptr;
+	j1GUIelement* save = nullptr;
+	j1GUIelement* load = nullptr;
+	j1GUIelement* label1 = nullptr;
+	j1GUIelement* label2 = nullptr;
 };
 
 class j1Scene : public j1Module
@@ -62,6 +68,7 @@ public:
 	bool ConsoleLogic();
 
 	void AddUIElements();
+	void EnableDisableMenu();
 
 public:
 
@@ -75,9 +82,11 @@ public:
 	bool			ready_to_load = false;
 	bool			sound_repeat = false;
 	bool			first = true;
+	bool			want_exit = false;
 
 	int					lifes;
 	int					num_coins = 0;
+	
 	p2SString			jump_fx;
 	p2SString			death_fx;
 	p2SString			win1_Fx;
@@ -91,7 +100,6 @@ public:
 	p2SString			death;
 	p2SString			hurt_Fx;
 	p2SString			coin_Fx;
-
 	
 	float				timer;
 	char				timerText[100];

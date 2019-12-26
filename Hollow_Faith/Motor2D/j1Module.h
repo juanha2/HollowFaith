@@ -18,7 +18,8 @@ enum class GUI_Event
 	EVENT_UNKOWNN = -1,
 
 	EVENT_ONCLICK,
-	EVENT_DRAG
+	EVENT_DRAG,
+	EVENT_HOVER
 };
 
 

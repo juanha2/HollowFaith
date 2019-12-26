@@ -36,6 +36,7 @@ public:
 
 	bool				checkpoint = false;
 	fPoint				checkpointpos;
+	int					checkpointcoins;
 	int					num_checkpoint = 0;	
 
 };

@@ -24,7 +24,7 @@ bool j1GUIButton::Awake(pugi::xml_node&)
 bool j1GUIButton::Start()
 {
 	if(text != nullptr)
-		label = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, { globalPosition.x + rect.w/4 -10,globalPosition.y+15 }, localPosition, true, true, { 0,0,0,0 }, text);
+		label = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, { globalPosition.x + rect.w/9,globalPosition.y+12 }, localPosition, true, true, { 0,0,0,0 }, text);
 
 	return true;
 }

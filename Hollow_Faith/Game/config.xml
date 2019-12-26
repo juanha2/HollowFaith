@@ -21,11 +21,10 @@
   </window>
 
   <fonts>
-    <default_font file="fonts/RifficFree-Bold.ttf" size="25"/>
+    <default_font file="fonts/RifficFree-Bold.ttf" size="15"/>
   </fonts>
   
   <scene>
-
     <fx>
       <jumpFx path="audio/fx/jump.wav"/>
       <deathFx path="audio/fx/death.wav"/>
@@ -41,6 +40,7 @@
       <hurtFx path="audio/fx/hurt.wav"/>
       <coinFx path="audio/fx/coin.wav"/>
     </fx>
+  
   </scene>
   
   <objects>

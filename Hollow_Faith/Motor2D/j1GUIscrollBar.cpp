@@ -24,7 +24,7 @@ bool j1GUIscrollBar::Awake(pugi::xml_node&)
 
 bool j1GUIscrollBar::Start()
 {
-	scrollButton = App->gui->AddGUIelement(GUItype::GUI_BUTTON, this, globalPosition, localPosition, true, true, { 864, 72, 28 , 32 }, nullptr, this->listener, true, false);
+	scrollButton = App->gui->AddGUIelement(GUItype::GUI_BUTTON, this, globalPosition, localPosition, true, true, { 432, 36, 14 , 16 }, nullptr, this->listener, true, false);
 	scrollButton->globalPosition.y = globalPosition.y - scrollButton->rect.h / 2 + this->rect.h / 2;
 	value = 0;
 

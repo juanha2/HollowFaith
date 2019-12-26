@@ -109,8 +109,7 @@ bool j1EntityManager::CleanUp()
 	}
 
 	App->objects->player = nullptr;
-	App->objects->particle = nullptr;	
-	App->objects->coins = nullptr;
+	App->objects->particle = nullptr;		
 
 	for (int i = 0; i <= MAX_BONFIRES; i++) 
 	{
@@ -141,10 +140,6 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 {
 	bool ret = true;
 	p2List_item<j1Entity*>* tmp = Entities.start;
-	pugi::xml_node EnemyFly = file.child("EnemyFly");
-	pugi::xml_node EnemyLand = file.child("EnemyLand");
-	pugi::xml_node Bonfire = file.child("Bonfire");	
-	
 
 	while (tmp != nullptr)
 	{
@@ -162,8 +157,8 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 	DeleteEnemies();
 
 	p2SString enemyLand="EnemyLand";
-	p2SString enemyFly="EnemyFly";
-	p2SString bonfire = "Bonfire";
+	p2SString enemyFly="EnemyFly";	
+	p2SString coins = "Coins";
 
 	for (pugi::xml_node iterator = file.child("EnemyLand"); iterator; iterator = iterator.next_sibling("EnemyLand"))
 	{		
@@ -178,6 +173,14 @@ bool j1EntityManager::Load(pugi::xml_node& file)
 		if (enemyFly == iterator.name())
 		{
 			AddEntity(j1Entity::entityType::ENEMY_FLY, { iterator.child("position").attribute("x").as_float(),iterator.child("position").attribute("y").as_float() });
+		}
+	}
+
+	for (pugi::xml_node iterator = file.child("Coins"); iterator; iterator = iterator.next_sibling("Coins"))
+	{
+		if (coins == iterator.name())
+		{
+			AddEntity(j1Entity::entityType::COINS, { iterator.child("position").attribute("x").as_float(),iterator.child("position").attribute("y").as_float() });
 		}
 	}
 
@@ -287,12 +290,13 @@ void j1EntityManager::DeleteEnemies()
 	{
 		p2List_item<j1Entity*>* tmp2 = tmp;
 
-		if ((tmp->data->type == j1Entity::entityType::ENEMY_FLY) || (tmp->data->type == j1Entity::entityType::ENEMY_LAND))
+		if ((tmp->data->type == j1Entity::entityType::ENEMY_FLY) || (tmp->data->type == j1Entity::entityType::ENEMY_LAND)
+			|| (tmp->data->type == j1Entity::entityType::COINS))
 		{		
 			tmp->data->CleanUp();
 			tmp->data->collider->to_delete = true;
 			RELEASE(tmp->data);
-			Entities.del(tmp2);
+			Entities.del(tmp);
 			tmp = tmp->prev;
 		}
 		else

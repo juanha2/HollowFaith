@@ -67,28 +67,10 @@ bool j1Scene::Start()
 	ready_to_load = false;
 	sound_repeat = false;		
 
-	//We load every Fx here so each entity doesn't have to repeat loading the same one		
-
-	App->audio->LoadFx(jump_fx.GetString());		//1
-	App->audio->LoadFx(death_fx.GetString());		//2
-	App->audio->LoadFx(win1_Fx.GetString());		//3
-	App->audio->LoadFx(win2_Fx.GetString());		//4
-	App->audio->LoadFx(landing_Fx.GetString());		//5
-	App->audio->LoadFx(hover_Fx.GetString());		//6	
-	App->audio->LoadFx(stone_Fx.GetString());		//7
-	App->audio->LoadFx(fire_Fx.GetString());		//8
-	App->audio->LoadFx(fuse_Fx.GetString());		//9
-	App->audio->LoadFx(death.GetString());			//10
-	App->audio->LoadFx(hurt_Fx.GetString());		//11
-	App->audio->LoadFx(coin_Fx.GetString());		//12
-
 	if (App->intro->want_continue)		
 		App->LoadGame();			
 	else 
-		LoadMap(currentmap);	
-	
-	//Adding every UI element
-	AddUIElements();
+		LoadMap(currentmap); 
 	
 	return true;
 }
@@ -105,6 +87,9 @@ bool j1Scene::Update(float dt)
 {
 	bool ret = true;
 	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);
+
+	if (want_exit)
+		ret = false;
 
 	//Updating all UI Texts
 	timer += dt;
@@ -175,14 +160,9 @@ bool j1Scene::Update(float dt)
 	}		
 	
 	//Opening in-game menu
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
-	{
-		menu.image->enabled = !menu.image->enabled;		
-		menu.resume_button->enabled = !menu.resume_button->enabled;
-		menu.return_button->enabled = !menu.return_button->enabled;
-		menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
-		App->pause = !App->pause;
-	}
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 	
+		EnableDisableMenu();
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) 
 	{	
@@ -243,23 +223,31 @@ bool j1Scene::CleanUp()
 	App->coll->CleanUp();
 	App->tex->UnLoad(debug_tex);
 	App->gui->CleanUp();
+	App->audio->UnLoad();
 
 	console.input_box = nullptr;
 	console.image = nullptr;
 	menu.menu_button = nullptr;
 	menu.resume_button = nullptr;
 	menu.return_button = nullptr;
+	menu.music_scroll = nullptr;
 	menu.image = nullptr;
+	menu.title = nullptr;
 	menu.exit_button = nullptr;
 	menu.volume_scroll = nullptr;
+	menu.save = nullptr;
+	menu.load = nullptr;
+	menu.label1 = nullptr;
+	menu.label2 = nullptr;
 	lifes_icon = nullptr;
 	coins_icon = nullptr;
 	coins_label = nullptr;
 	lifes_label = nullptr;
 	timer_label = nullptr;
+
+	
 	return true;
 }
-
 
 // ----------------------------------------------------------------------------------
 // Save Game State
@@ -268,9 +256,18 @@ bool j1Scene::Save(pugi::xml_node& save) const
 {
 	pugi::xml_node current_map = save.append_child("currentmap");
 	pugi::xml_node lifes_node = save.append_child("lifes");
+	pugi::xml_node coins_node = save.append_child("coins");
+	pugi::xml_node time_node = save.append_child("time");
 	current_map.append_attribute("value").set_value(currentmap);
-	lifes_node.append_attribute("value").set_value(lifes);
+	lifes_node.append_attribute("value").set_value(lifes);	
+	time_node.append_attribute("value").set_value(timer);
 
+	if (!App->checkpoint->save_checkpoints)
+		coins_node.append_attribute("value").set_value(num_coins);
+
+	else
+		coins_node.append_attribute("value").set_value(App->checkpoint->checkpointcoins);
+	
 	return true;
 }
 
@@ -282,6 +279,8 @@ bool j1Scene::Load(pugi::xml_node& save)
 {
 	savedcurrentmap = save.child("currentmap").attribute("value").as_int();	
 	lifes= save.child("lifes").attribute("value").as_int();
+	timer = save.child("time").attribute("value").as_float();
+	num_coins = save.child("coins").attribute("value").as_int();
 
 	if (savedcurrentmap == currentmap && App->intro->want_continue)		
 		LoadMap(currentmap);
@@ -349,8 +348,7 @@ void j1Scene::sceneswitch()
 				sound_repeat = true;
 				lifes--;
 			}
-
-
+			
 			if (currentmap == 1)
 				currentmap = 1;
 			else if (currentmap == 2)
@@ -379,6 +377,9 @@ void j1Scene::LoadMap(int num_map) {
 	App->scene->sound_repeat = false;	
 	App->render->camera = App->render->camera_init;
 
+	//Adding every UI element
+	AddUIElements();
+
 	//Create Walkability Map
 	int w, h;
 	uchar* data = nullptr;
@@ -391,6 +392,22 @@ void j1Scene::LoadMap(int num_map) {
 	//Plays current map music
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
 	App->intro->want_continue = false;	
+
+	//We load every Fx here so each entity doesn't have to repeat loading the same one	
+	App->audio->LoadFx(jump_fx.GetString());		//1
+	App->audio->LoadFx(death_fx.GetString());		//2
+	App->audio->LoadFx(win1_Fx.GetString());		//3
+	App->audio->LoadFx(win2_Fx.GetString());		//4
+	App->audio->LoadFx(landing_Fx.GetString());		//5
+	App->audio->LoadFx(hover_Fx.GetString());		//6	
+	App->audio->LoadFx(stone_Fx.GetString());		//7
+	App->audio->LoadFx(fire_Fx.GetString());		//8
+	App->audio->LoadFx(fuse_Fx.GetString());		//9
+	App->audio->LoadFx(death.GetString());			//10
+	App->audio->LoadFx(hurt_Fx.GetString());		//11
+	App->audio->LoadFx(coin_Fx.GetString());		//12
+
+	App->audio->LoadFx("audio/fx/button_click.wav");
 }
 
 
@@ -401,23 +418,31 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 
 	case GUI_Event::EVENT_ONCLICK:
 	{
+		App->audio->PlayFx(13, 0, 128);
 
-		if (element == menu.return_button)
+		if (element == menu.return_button) {
+			App->pause = !App->pause;
 			App->fade_to_black->FadeToBlack(App->intro, this);
+		}			
+
+		if (element == menu.exit_button) {
+			App->pause = !App->pause;
+			want_exit = true;
+		}
+
+		if (element == menu.save) 			
+			App->SaveGame();		
+
+		if (element == menu.load) {
+			EnableDisableMenu();
+			App->LoadGame();
+		}		
 
 		if (element == menu.resume_button) {
-			menu.image->enabled = !menu.image->enabled;		
-			menu.resume_button->enabled = !menu.resume_button->enabled;
-			menu.return_button->enabled = !menu.return_button->enabled;
-			menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
-			App->pause = !App->pause;
+			EnableDisableMenu();
 		}
 		if (element == menu.menu_button) {
-			menu.image->enabled = !menu.image->enabled;
-			menu.resume_button->enabled = !menu.resume_button->enabled;
-			menu.return_button->enabled = !menu.return_button->enabled;
-			menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
-			App->pause = !App->pause;
+			EnableDisableMenu();
 		}
 	}	
 	}
@@ -443,19 +468,42 @@ bool j1Scene::ConsoleLogic()
 	return ret;
 }
 
-void j1Scene::AddUIElements() {
-
+void j1Scene::AddUIElements() 
+{		
 	timer_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 200,22 }, { 0,0 }, true, true, { 0,0,0,0 }, timerText, this, false, false);
 	lifes_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 140,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "3");
-	lifes_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 100, 13 }, { 0,0 }, true, true, { 791, 23, 30, 34 }, nullptr, this);
+	lifes_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 100, 13 }, { 0,0 }, true, true, { 491, 37, 30, 31 }, nullptr, this);
 	coins_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 50,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "0");
-	coins_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 10, 15 }, { 0,0 }, true, true, { 748, 25, 30, 30 }, nullptr, this);
-	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 201, 50 }, { 0,0 }, true, false, { 577, 220, 142, 283 }, nullptr, this);
-	menu.menu_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,13 }, { 0,0 }, true, true, { 831,23,35,35 }, nullptr, this);
-	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "MAIN MENU", this);
-	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 220,150 }, { 0,0 }, true, false, { 733,224,106,30 }, "RESUME", this);
-	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 205, 250 }, { 0,0 }, true, false, { 858, 245, 133, 4 }, nullptr, this);
+	coins_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 10, 15 }, { 0,0 }, true, true, { 458, 43, 27, 27 }, nullptr, this);
+	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 160, 60 }, { 0,0 }, true, false, { 288, 144, 198, 282 }, nullptr, this);
+	menu.menu_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,13 }, { 0,0 }, true, true, { 84,164,37,31 }, nullptr, this);
+	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,130 }, { -3,-5 }, true, false, { 283,109,100,22 }, "MAIN MENU", this);
+	menu.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 205,50 }, { 20,-3 }, false, false, { 166,167,109,27 }, "MENU", this);
+	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,100 }, { 10,-5 }, true, false, { 283,109,100,22 }, "RESUME", this);
+	menu.exit_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,220 }, { 20,-5 }, true, false, { 283,109,100,22 }, "EXIT", this);
+	menu.save = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,160 }, { 20,-5 }, true, false, { 283,109,100,22 }, "SAVE", this);
+	menu.load = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,190 }, { 20,-5 }, true, false, { 283,109,100,22 }, "LOAD", this);
+	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 270 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this);
+	menu.music_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 310 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this);
 	console.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 125, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
+	menu.label1= App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 270 }, { 0,-3 }, false, false, { 166,167,109,27 }, "MUSIC", this);
+	menu.label2= App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 310 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);
 	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 150,100 }, { 0,0 }, true, false, { 295,343,199,30 }, "Commands", this);
 
+}
+
+void j1Scene::EnableDisableMenu() {
+
+	menu.image->enabled = !menu.image->enabled;
+	menu.resume_button->enabled = !menu.resume_button->enabled;
+	menu.return_button->enabled = !menu.return_button->enabled;
+	menu.title->enabled = !menu.title->enabled;
+	menu.volume_scroll->enabled = !menu.volume_scroll->enabled;
+	menu.music_scroll->enabled = !menu.music_scroll->enabled;
+	menu.exit_button->enabled = !menu.exit_button->enabled;
+	menu.load->enabled = !menu.load->enabled;
+	menu.save->enabled = !menu.save->enabled;
+	menu.label1->enabled = !menu.label1->enabled;
+	menu.label2->enabled = !menu.label2->enabled;
+	App->pause = !App->pause;
 }

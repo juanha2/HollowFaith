@@ -5,7 +5,7 @@
 #include "SDL\include\SDL_pixels.h"
 
 #define DEFAULT_FONT "fonts/RifficFree-Bold.ttf"
-#define DEFAULT_FONT_SIZE 12
+#define DEFAULT_FONT_SIZE 8
 
 struct SDL_Texture;
 struct _TTF_Font;

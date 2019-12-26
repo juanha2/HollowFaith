@@ -12,12 +12,11 @@
 
 j1Coins::j1Coins() : j1Entity(entityType::COINS)
 {
-	if (App->objects->coins == nullptr)
-		App->objects->coins = this;
+
 }
 
 j1Coins::~j1Coins() {
-	App->objects->coins = nullptr;
+	
 };
 
 bool j1Coins::Awake(pugi::xml_node& config)
@@ -51,9 +50,8 @@ bool j1Coins::Start()
 bool j1Coins::CleanUp()
 {
 	//Unloading data	
-	texture = nullptr;
 	App->tex->UnLoad(texture);
-
+	texture = nullptr;
 	return true;
 }
 
@@ -75,8 +73,7 @@ bool j1Coins::Update(float dt)
 
 bool j1Coins::PostUpdate() {
 
-	App->render->Blit(texture, position.x, position.y,
-		&current_animation->GetCurrentFrame(App->dt), 1.0, 1.0, flip, NULL, entity_collider.w / 2);
+	Draw(App->dt);
 
 	return true;
 }
@@ -85,15 +82,11 @@ bool j1Coins::PostUpdate() {
 void j1Coins::OnCollision(Collider* c1, Collider* c2) {
 	
 	if ((c2->type == COLLIDER_PLAYER))
-	{
-		if (!alreadyCollided)
-		{
-			App->audio->PlayFx(12, 0,100);
-			elim = true;
-			alreadyCollided = true;
-			App->scene->num_coins++;			
-			collider->to_delete = true;
-		}
+	{		
+		App->audio->PlayFx(12, 0,128);
+		elim = true;		
+		App->scene->num_coins++;			
+		collider->to_delete = true;		
 	}
 }
 
@@ -103,7 +96,7 @@ void j1Coins::OnCollision(Collider* c1, Collider* c2) {
 // ----------------------------------------------------------------------------------
 bool j1Coins::Load(pugi::xml_node& data)
 {
-	
+	App->objects->CleanUp();
 	return true;
 }
 
@@ -113,7 +106,10 @@ bool j1Coins::Load(pugi::xml_node& data)
 // ----------------------------------------------------------------------------------
 bool j1Coins::Save(pugi::xml_node& data) const
 {
-	
+	pugi::xml_node coins = data.append_child("Coins");;
+	coins.append_child("position").append_attribute("x") = position.x;
+	coins.child("position").append_attribute("y") = position.y;
+
 	return true;
 
 }
