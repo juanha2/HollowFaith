@@ -70,7 +70,8 @@ bool j1IntroScene::Start()
 // Called each loop iteration
 bool j1IntroScene::PreUpdate() {
 
-	
+	Mix_VolumeMusic(App->audio->MUSICvolume);
+
 	return true;
 }
 
@@ -154,18 +155,18 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 		{		
 
 			if (element == play_button) {
-				App->audio->PlayFx(1, 0, 128);
+				App->audio->PlayFx(1, 0, App->audio->FXvolume);
 				App->fade_to_black->FadeToBlack(App->scene, this);
 			}				
 
 			if (element == continue_button) {
 				want_continue = true;
-				App->audio->PlayFx(1, 0, 128);
+				App->audio->PlayFx(1, 0, App->audio->FXvolume);
 				App->fade_to_black->FadeToBlack(App->scene, this);
 			}
 
 			if (element == settings_menu.button) {
-				App->audio->PlayFx(2, 0, 128);
+				App->audio->PlayFx(2, 0, App->audio->FXvolume);
 				settings_menu.image->enabled = !settings_menu.image->enabled;
 				settings_menu.exit->enabled = !settings_menu.exit->enabled;
 				settings_menu.scroll1->enabled = !settings_menu.scroll1->enabled;
@@ -182,7 +183,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			}
 			
 			if (element == settings_menu.exit) {
-				App->audio->PlayFx(2, 0, 128);
+				App->audio->PlayFx(2, 0, App->audio->FXvolume);
 				settings_menu.image->enabled = false;
 				settings_menu.exit->enabled = false;
 				settings_menu.scroll1->enabled = false;
@@ -193,7 +194,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			}
 
 			if (element == credits_menu.button) {
-				App->audio->PlayFx(2, 0, 128);
+				App->audio->PlayFx(2, 0, App->audio->FXvolume);
 				credits_menu.image->enabled = !credits_menu.image->enabled;
 				credits_menu.exit->enabled = !credits_menu.exit->enabled;
 				credits_menu.title->enabled = !credits_menu.title->enabled;
@@ -209,7 +210,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			}
 
 			if (element == credits_menu.exit) {
-				App->audio->PlayFx(2, 0, 128);
+				App->audio->PlayFx(2, 0, App->audio->FXvolume);
 				credits_menu.image->enabled = false;
 				credits_menu.exit->enabled = false;
 				credits_menu.title->enabled = false;
@@ -218,7 +219,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			}
 
 			if (element == credits_menu.link) {
-				App->audio->PlayFx(2, 0, 128);
+				App->audio->PlayFx(2, 0, App->audio->FXvolume);
 				ShellExecuteA(NULL, "open", "https://juanha2.github.io/HollowFaith/", NULL, NULL, SW_SHOWNORMAL);
 			}				
 
@@ -248,8 +249,8 @@ void j1IntroScene::AddUIElements()
 	settings_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 210, 180 }, { 0,0 }, true, false, { 4,3, 271, 156 }, nullptr, this);
 	settings_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 400,20 }, { 0,0 }, true, true, { 84,164,37,31 }, nullptr, this);
 	settings_menu.exit = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 440,190 }, { 0,0 }, true, false, { 459,16,26,26 }, nullptr, this);
-	settings_menu.scroll1 = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 300, 250 }, { 0,0 }, false, false, { 284, 62, 167, 4 }, nullptr, this);
-	settings_menu.scroll2 = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 300, 300 }, { 0,0 }, false, false, { 284, 62, 167, 4 }, nullptr, this);
+	settings_menu.scroll1 = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 300, 250 }, { 0,0 }, false, false, { 284, 62, 167, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_MUSIC);
+	settings_menu.scroll2 = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 300, 300 }, { 0,0 }, false, false, { 284, 62, 167, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_FX);
 	settings_menu.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 250,170 }, { 0,-3 }, false, false, { 166,167,109,27 }, "SETTINGS", this);
 	settings_menu.label1 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 230, 250 }, { 0,-3 }, false, false, { 166,167,109,27 }, "MUSIC", this);
 	settings_menu.label2 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 230, 300 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);

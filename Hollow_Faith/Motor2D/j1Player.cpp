@@ -529,7 +529,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					
 					speed.y = movementForce.y / 2;
 					c2->callback->elim = true;
-					App->audio->PlayFx(6, 0, App->audio->SpatialAudio(100, c2->callback->distance));
+					App->audio->PlayFx(6, 0, App->audio->SpatialAudio(App->audio->FXvolume, c2->callback->distance));
 					inputs.add(IN_JUMPING);
 					break;
 

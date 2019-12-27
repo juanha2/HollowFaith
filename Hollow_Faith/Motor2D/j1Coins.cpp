@@ -87,7 +87,7 @@ void j1Coins::OnCollision(Collider* c1, Collider* c2) {
 	
 	if ((c2->type == COLLIDER_PLAYER))
 	{		
-		App->audio->PlayFx(12, 0,128);
+		App->audio->PlayFx(12, 0, App->audio->FXvolume);
 		elim = true;		
 		App->scene->num_coins++;			
 		collider->to_delete = true;		

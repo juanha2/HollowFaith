@@ -92,7 +92,7 @@ bool j1Bonfire::Update(float dt)
 		current_animation = &light_on;		
 
 		distance = abs(App->objects->player->position.x - App->checkpoint->checkpointpos.x);
-		Mix_Volume(1, App->audio->SpatialAudio(100, distance));
+		Mix_Volume(1, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 	}
 
 	PositionUpdate(dt);
@@ -118,8 +118,8 @@ void j1Bonfire::OnCollision(Collider* c1, Collider* c2) {
 		{		
 			App->checkpoint->checkpointpos = position;
 			App->checkpoint->checkpointcoins = App->scene->num_coins;
-			App->audio->PlayFx(9, 0, App->audio->SpatialAudio(100, distance * 2));
-			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(200, distance * 2), 1);
+			App->audio->PlayFx(9, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance * 2));
+			App->audio->PlayFx(8, 10, App->audio->SpatialAudio(App->audio->FXvolume, distance * 2), 1);
 
 			App->checkpoint->checkpoint = true;
 			App->checkpoint->num_checkpoint = c1->callback->num_bonfire;					

@@ -11,6 +11,7 @@
 
 class j1Entity;
 
+
 class j1GUI : public j1Module
 {
 
@@ -30,7 +31,7 @@ public:
 	bool Load(pugi::xml_node&);
 
 
-	j1GUIelement* AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled,  SDL_Rect section, char* text = nullptr, j1Module* listener = nullptr, bool X_drag = false, bool Y_drag = false);
+	j1GUIelement* AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled,  SDL_Rect section, char* text = nullptr, j1Module* listener = nullptr, bool X_drag = false, bool Y_drag = false, SCROLL_TYPE scrollType = SCROLL_TYPE::SCROLL_NONE);
 	SDL_Texture* j1GUI::GetAtlasTexture() const;
 
 	p2List<j1GUIelement*>	GUIelementList;

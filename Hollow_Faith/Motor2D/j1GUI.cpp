@@ -109,7 +109,7 @@ SDL_Texture* j1GUI::GetAtlasTexture() const
 }
 
 
-j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text, j1Module* listener, bool X_drag, bool Y_drag)
+j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text, j1Module* listener, bool X_drag, bool Y_drag, SCROLL_TYPE scrollType)
 {
 	j1GUIelement* tmp = nullptr;
 
@@ -129,12 +129,13 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 		tmp = new j1GUIimage();
 		break;
 	case GUItype::GUI_SCROLLBAR:
-		tmp = new j1GUIscrollBar();
+		tmp = new j1GUIscrollBar(scrollType);
 		break;
 	}
 
 	if (tmp) 
 	{
+		
 
 		tmp->parent = parent;
 		tmp->globalPosition = globalPosition;

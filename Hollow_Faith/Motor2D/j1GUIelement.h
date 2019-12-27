@@ -18,6 +18,15 @@ enum class GUItype
 	GUI_MAX
 };
 
+enum class SCROLL_TYPE
+{
+	SCROLL_NONE,
+	SCROLL_MUSIC,
+	SCROLL_FX,
+	SCROLL_BASIC,
+	SCROLL_MAX
+};
+
 
 class j1GUIelement
 {

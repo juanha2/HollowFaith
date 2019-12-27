@@ -89,6 +89,7 @@ bool j1Scene::PreUpdate() {
 		num_coins = 0;
 	}
 
+	Mix_VolumeMusic(App->audio->MUSICvolume);
 	return true;
 }
 
@@ -432,7 +433,7 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 
 	case GUI_Event::EVENT_ONCLICK:
 	{
-		App->audio->PlayFx(14, 0, 128);
+		App->audio->PlayFx(14, 0, App->audio->FXvolume);
 
 		if (element == menu.return_button) {
 			App->pause = !App->pause;
@@ -514,8 +515,8 @@ void j1Scene::AddUIElements()
 	menu.exit_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,220 }, { 20,-5 }, true, false, { 283,109,100,22 }, "EXIT", this);
 	menu.save = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,160 }, { 20,-5 }, true, false, { 283,109,100,22 }, "SAVE", this);
 	menu.load = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,190 }, { 20,-5 }, true, false, { 283,109,100,22 }, "LOAD", this);
-	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 270 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this);
-	menu.music_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 310 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this);
+	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 270 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_MUSIC);
+	menu.music_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 310 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_FX);
 	console.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 160, 60 }, { 0,0 }, true, false, { 288, 144, 198, 200 }, nullptr, this);
 	menu.label1 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 270 }, { 0,-3 }, false, false, { 166,167,109,27 }, "MUSIC", this);
 	menu.label2 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 310 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);

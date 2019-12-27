@@ -38,7 +38,8 @@ public:
 
 	int SpatialAudio(uint volume, int distance);
 
-	int FXvolume = 70;
+	int MUSICvolume = 100;
+	int FXvolume = 100;
 	
 private:
 	p2List<Mix_Chunk*>		fx;
