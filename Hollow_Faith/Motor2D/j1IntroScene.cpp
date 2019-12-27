@@ -32,6 +32,9 @@ bool j1IntroScene::Awake(pugi::xml_node& config)
 	pugi::xml_node fxIterator = config.child("fx");
 	click_Fx1 = fxIterator.child("clickFx1").attribute("path").as_string();
 	click_Fx2 = fxIterator.child("clickFx2").attribute("path").as_string();
+
+	pugi::xml_node animIterator = config.child("animation");
+	fire.load_animation(animIterator, "fire");
 	return ret;
 }
 
@@ -46,7 +49,7 @@ bool j1IntroScene::Start()
 
 	texture = App->tex->Load("Assets/Sprites/background.png");
 	title_texture= App->tex->Load("Assets/Sprites/title.png");
-	rain_texture = App->tex->Load("Assets/Sprites/rain.png");
+	fire_texture = App->tex->Load("Assets/Sprites/fire.png");
 	App->render->camera = App->render->camera_init;	
 
 	AddUIElements();
@@ -59,7 +62,7 @@ bool j1IntroScene::Start()
 		continue_button->interactable = false;
 	else
 		continue_button->interactable = true;
-	//-------------------------------------------------------
+	//-------------------------------------------------------	
 	return true;
 }
 
@@ -79,8 +82,11 @@ bool j1IntroScene::Update(float dt)
 		ret = false;
 	
 	SDL_Rect rect1 = {0,0, 800,200 };
+	SDL_Rect rect2 = { 0,0,67,63 };
 	App->render->Blit(texture, 0, 0);
 	App->render->Blit(title_texture, 40, 40);
+
+	App->render->Blit(fire_texture, 350, 250, &fire.GetCurrentFrame(dt));
 
 	return ret;
 }
@@ -126,7 +132,7 @@ bool j1IntroScene::CleanUp()
 	App->gui->CleanUp();
 	App->tex->UnLoad(texture);
 	App->tex->UnLoad(title_texture);
-	App->tex->UnLoad(rain_texture);
+	App->tex->UnLoad(fire_texture);
 	App->audio->UnLoad();
 	return true;
 }
