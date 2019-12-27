@@ -26,7 +26,8 @@ struct CreditsMenu {
 	j1GUIelement* exit = nullptr;
 	j1GUIelement* button = nullptr;
 	j1GUIelement* title = nullptr;
-	j1GUIelement* scroll = nullptr;
+	j1GUIelement* credits = nullptr;
+	j1GUIelement* link = nullptr;
 };
 
 class j1IntroScene : public j1Module

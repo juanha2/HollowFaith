@@ -348,7 +348,8 @@ void j1Scene::sceneswitch()
 				sound_repeat = true;
 				lifes--;
 			}
-			
+			num_coins = 0;
+
 			if (currentmap == 1)
 				currentmap = 1;
 			else if (currentmap == 2)

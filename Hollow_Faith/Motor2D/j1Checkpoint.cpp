@@ -77,8 +77,7 @@ void j1Checkpoint::LoadCheckPoints()
 	{
 		LOG("Loading CHEKPOITNS state from %s...", load_game.GetString());
 
-		root = data.child("game_state");
-
+		root = data.child("game_state");		
 		App->objects->Load(root);		//We call load method of each entity	
 			
 	}

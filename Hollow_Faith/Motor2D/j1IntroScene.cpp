@@ -116,7 +116,8 @@ bool j1IntroScene::CleanUp()
 	credits_menu.exit = nullptr;
 	credits_menu.button = nullptr;
 	credits_menu.title = nullptr;
-	credits_menu.scroll = nullptr;
+	credits_menu.link = nullptr;
+	credits_menu.credits = nullptr;
 
 	App->gui->CleanUp();
 	App->tex->UnLoad(texture);
@@ -136,7 +137,8 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			App->audio->PlayFx(2, 0, 128);
 
 			if (element == play_button) 
-				App->fade_to_black->FadeToBlack(App->scene, this);			
+				App->fade_to_black->FadeToBlack(App->scene, this);	
+		
 
 			if (element == continue_button) {
 				want_continue = true;
@@ -154,7 +156,8 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 				credits_menu.image->enabled = false;
 				credits_menu.exit->enabled = false;
 				credits_menu.title->enabled = false;
-				credits_menu.scroll->enabled = false;
+				credits_menu.link->enabled = false;
+				credits_menu.credits->enabled = false;
 				
 			}
 			
@@ -172,7 +175,8 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 				credits_menu.image->enabled = !credits_menu.image->enabled;
 				credits_menu.exit->enabled = !credits_menu.exit->enabled;
 				credits_menu.title->enabled = !credits_menu.title->enabled;
-				credits_menu.scroll->enabled = !credits_menu.scroll->enabled;
+				credits_menu.link->enabled = !credits_menu.link->enabled;
+				credits_menu.credits->enabled = !credits_menu.credits->enabled;
 				settings_menu.image->enabled = false;
 				settings_menu.exit->enabled = false;
 				settings_menu.scroll1->enabled = false;
@@ -186,8 +190,13 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 				credits_menu.image->enabled = false;
 				credits_menu.exit->enabled = false;
 				credits_menu.title->enabled = false;
-				credits_menu.scroll->enabled = false;
+				credits_menu.link->enabled = false;
+				credits_menu.credits->enabled = false;
 			}
+
+			if (element == credits_menu.link) {
+				ShellExecuteA(NULL, "open", "https://github.com/juanha2/HollowFaith", NULL, NULL, SW_SHOWNORMAL);
+			}				
 
 			if (element == exit_button)
 				want_exit = true;
@@ -232,6 +241,6 @@ void j1IntroScene::AddUIElements()
 	credits_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,20 }, { 0,0 }, true, true, { 124,165,37,31 }, nullptr, this);
 	credits_menu.exit = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 440,190 }, { 0,0 }, true, false, { 459,16,26,26 }, nullptr, this);
 	credits_menu.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 250,170 }, { 0,-3 }, false, false, { 166,167,109,27 }, "CREDITS", this);
-	credits_menu.scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 452, 225 }, { 0,0 }, false, false, { 530, 12, 4, 102 }, nullptr, this, false, true);
-
+	credits_menu.link = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 325, 120 }, { -5,0 }, true, false, { 283, 75, 159, 31 }, "LINK TO PROJECT!", this);
+	credits_menu.credits = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 215, 200 }, { 0,0 }, true, false, { 9,215, 257, 130 }, nullptr, this);
 }
