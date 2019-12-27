@@ -66,7 +66,7 @@ public:
 
 	SDL_Texture* texture =nullptr;
 	SDL_Texture* title_texture=nullptr;
-	SDL_Texture* rain_texture = nullptr;
+	SDL_Texture* fire_texture = nullptr;
 	j1GUIelement* play_button= nullptr;
 	j1GUIelement* continue_button = nullptr;
 	j1GUIelement* exit_button = nullptr;
@@ -80,6 +80,7 @@ public:
 
 	p2SString			click_Fx1;	
 	p2SString			click_Fx2;
+	Animation			fire;
 };
 
 #endif // __j1INTROSCENE_H__

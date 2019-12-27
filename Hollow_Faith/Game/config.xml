@@ -45,6 +45,17 @@
   </scene>
 
   <intro>
+    <animation name ="fire">
+      <sprite x ="11" y ="9" w ="56" h="52"/>
+      <sprite x ="83" y ="9" w ="56" h="52"/>
+      <sprite x ="150" y ="9" w ="56" h="52"/>
+      <sprite x ="215" y ="9" w ="56" h="52"/>
+      <sprite x ="279" y ="9" w ="56" h="52"/>
+      <sprite x ="343" y ="9" w ="56" h="52"/>
+      <sprite x ="404" y ="9" w ="56" h="52"/>
+
+      <animValues loop="true" speed="0.05f"/>
+    </animation>
     <fx>
       <clickFx1 path="audio/fx/main_click.wav"/>
       <clickFx2 path="audio/fx/button_click.wav"/>

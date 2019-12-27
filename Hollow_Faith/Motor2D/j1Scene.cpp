@@ -50,7 +50,6 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
 	hurt_Fx = fxIterator.child("hurtFx").attribute("path").as_string();
 	coin_Fx = fxIterator.child("coinFx").attribute("path").as_string();
-	life_Fx = fxIterator.child("lifeUpFx").attribute("path").as_string();
 
 
 	return ret; 
@@ -62,7 +61,8 @@ bool j1Scene::Start()
 	//Setting initial values
 	timer = 0;
 	lifes = 3;
-	App->win->scale = 2;	
+	App->win->scale = 2;
+	debug_tex = App->tex->Load("Assets/Sprites/path2.png");	
 	currentmap = 1;	
 	ready_to_load = false;
 	sound_repeat = false;		
@@ -78,16 +78,6 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate() {
 	
-	//At reaching 10 coins, we add a life to Player
-
-	if (num_coins >= 10) {
-		App->audio->PlayFx(13, 0, 128);
-		lifes++;
-		//Add +1 particle 
-		App->objects->particle->AddParticle(App->objects->particle->lifeUp, App->objects->player->position.x,
-			App->objects->player->position.y + App->objects->player->entity_collider.h, SDL_FLIP_NONE, COLLIDER_NONE, 2);
-		num_coins = 0;
-	}
 
 	return true;
 }
@@ -96,16 +86,17 @@ bool j1Scene::PreUpdate() {
 bool j1Scene::Update(float dt)
 {
 	bool ret = true;
-	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);	
+	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);
 
 	if (want_exit)
-		ret = false;	
+		ret = false;
 
 	//Updating all UI Texts
 	timer += dt;
-	sprintf_s(timerText, "%.2f", timer);	
-	App->tex->UnLoad(timer_label->texture);	
-	timer_label->text = timerText;	
+	sprintf_s(timerText, "%.2f", timer);
+	App->tex->UnLoad(timer_label->texture);
+	timer_label->text = timerText;
+
 
 	sprintf_s(lifesText, "%d", lifes);
 	App->tex->UnLoad(lifes_label->texture);
@@ -182,13 +173,13 @@ bool j1Scene::Update(float dt)
 	}		
 	
 	if (console_on)
-		ret= ConsoleLogic();	
+		ret= ConsoleLogic();
+	
+	App->map->Draw();
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	
-	App->map->Draw();	
 
 	return ret;
 }
@@ -234,6 +225,7 @@ bool j1Scene::CleanUp()
 	App->gui->CleanUp();
 	App->audio->UnLoad();
 
+	App->intro->want_continue = false;
 	console.input_box = nullptr;
 	console.image = nullptr;
 	menu.menu_button = nullptr;
@@ -253,8 +245,8 @@ bool j1Scene::CleanUp()
 	coins_label = nullptr;
 	lifes_label = nullptr;
 	timer_label = nullptr;
-	timer_icon = nullptr;
 
+	
 	
 	return true;
 }
@@ -268,15 +260,19 @@ bool j1Scene::Save(pugi::xml_node& save) const
 	pugi::xml_node lifes_node = save.append_child("lifes");
 	pugi::xml_node coins_node = save.append_child("coins");
 	pugi::xml_node time_node = save.append_child("time");
-	current_map.append_attribute("value").set_value(currentmap);
-	lifes_node.append_attribute("value").set_value(lifes);	
-	time_node.append_attribute("value").set_value(timer);
+	current_map.append_attribute("value").set_value(currentmap);	
 
-	if (!App->checkpoint->save_checkpoints)
+	if (!App->checkpoint->save_checkpoints) {
+		time_node.append_attribute("value").set_value(timer);
 		coins_node.append_attribute("value").set_value(num_coins);
+		lifes_node.append_attribute("value").set_value(lifes);
+	}	
 
-	else
+	else {
+		lifes_node.append_attribute("value").set_value(lifes);
 		coins_node.append_attribute("value").set_value(App->checkpoint->checkpointcoins);
+	}
+		
 	
 	return true;
 }
@@ -287,10 +283,13 @@ bool j1Scene::Save(pugi::xml_node& save) const
 // ----------------------------------------------------------------------------------
 bool j1Scene::Load(pugi::xml_node& save)
 {
-	savedcurrentmap = save.child("currentmap").attribute("value").as_int();	
-	lifes= save.child("lifes").attribute("value").as_int();
+	savedcurrentmap = save.child("currentmap").attribute("value").as_int();
+
+	if(!App->checkpoint->checkpoint)
+		lifes= save.child("lifes").attribute("value").as_int();	
+
 	timer = save.child("time").attribute("value").as_float();
-	num_coins = save.child("coins").attribute("value").as_int();
+	num_coins = save.child("coins").attribute("value").as_int();	
 
 	if (savedcurrentmap == currentmap && App->intro->want_continue)		
 		LoadMap(currentmap);
@@ -356,10 +355,9 @@ void j1Scene::sceneswitch()
 			if (!sound_repeat) {
 				App->audio->PlayFx(2, 0, App->audio->FXvolume);
 				sound_repeat = true;
-				lifes--;
-			}
-			num_coins = 0;
-
+				lifes--;				
+			}	
+		
 			if (currentmap == 1)
 				currentmap = 1;
 			else if (currentmap == 2)
@@ -386,7 +384,7 @@ void j1Scene::LoadMap(int num_map) {
 	App->map->Load(App->map->data.levels[num_map - 1]->name.GetString());
 	App->scene->ready_to_load = false;
 	App->scene->sound_repeat = false;	
-	App->render->camera = App->render->camera_init;
+	App->render->camera = App->render->camera_init;		
 
 	//Adding every UI element
 	AddUIElements();
@@ -402,7 +400,7 @@ void j1Scene::LoadMap(int num_map) {
 
 	//Plays current map music
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
-	App->intro->want_continue = false;	
+	//App->intro->want_continue = false;	
 
 	//We load every Fx here so each entity doesn't have to repeat loading the same one	
 	App->audio->LoadFx(jump_fx.GetString());		//1
@@ -417,10 +415,8 @@ void j1Scene::LoadMap(int num_map) {
 	App->audio->LoadFx(death.GetString());			//10
 	App->audio->LoadFx(hurt_Fx.GetString());		//11
 	App->audio->LoadFx(coin_Fx.GetString());		//12
-	App->audio->LoadFx(life_Fx.GetString());		//13
-	
+
 	App->audio->LoadFx("audio/fx/button_click.wav");
-	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 }
 
 
@@ -431,7 +427,7 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 
 	case GUI_Event::EVENT_ONCLICK:
 	{
-		App->audio->PlayFx(14, 0, 128);
+		App->audio->PlayFx(13, 0, 128);
 
 		if (element == menu.return_button) {
 			App->pause = !App->pause;
@@ -483,12 +479,11 @@ bool j1Scene::ConsoleLogic()
 
 void j1Scene::AddUIElements() 
 {		
-	timer_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 220,22 }, { 0,0 }, true, true, { 0,0,0,0 }, timerText, this, false, false);
-	timer_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 180, 13 }, { 0,0 }, true, true, { 460, 111, 27, 31 }, nullptr, this);
-	lifes_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 146,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "3");
-	lifes_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 100, 13 }, { 0,0 }, true, true, { 458, 78, 41, 31 }, nullptr, this);
-	coins_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 55,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "0");
-	coins_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 10, 15 }, { 0,0 }, true, true, { 458, 43, 40, 27 }, nullptr, this);
+	timer_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 200,22 }, { 0,0 }, true, true, { 0,0,0,0 }, timerText, this, false, false);
+	lifes_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 140,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "3");
+	lifes_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 100, 13 }, { 0,0 }, true, true, { 491, 37, 30, 31 }, nullptr, this);
+	coins_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 50,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "0");
+	coins_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 10, 15 }, { 0,0 }, true, true, { 458, 43, 27, 27 }, nullptr, this);
 	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 160, 60 }, { 0,0 }, true, false, { 288, 144, 198, 282 }, nullptr, this);
 	menu.menu_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,13 }, { 0,0 }, true, true, { 84,164,37,31 }, nullptr, this);
 	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,130 }, { -3,-5 }, true, false, { 283,109,100,22 }, "MAIN MENU", this);
