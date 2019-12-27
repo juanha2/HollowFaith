@@ -246,7 +246,7 @@ void j1IntroScene::AddUIElements()
 	exit_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { x_pos,300 }, { 0,0 }, true, true, { 281,6,127,36 }, "EXIT", this);
 
 	// Settings menu UI elements
-	settings_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 210, 180 }, { 0,0 }, true, false, { 4,3, 271, 156 }, nullptr, this);
+	settings_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 210, 180 }, { 0,0 }, false, false, { 4,3, 271, 156 }, nullptr, this);
 	settings_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 400,20 }, { 0,0 }, true, true, { 84,164,37,31 }, nullptr, this);
 	settings_menu.exit = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 440,190 }, { 0,0 }, true, false, { 459,16,26,26 }, nullptr, this);
 	settings_menu.scroll1 = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 300, 250 }, { 0,0 }, false, false, { 284, 62, 167, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_MUSIC);
@@ -256,7 +256,7 @@ void j1IntroScene::AddUIElements()
 	settings_menu.label2 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 230, 300 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);
 
 	// Credits menu UI elements
-	credits_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 210, 180 }, { 0,0 }, true, false, { 4,3, 271, 156 }, nullptr, this);
+	credits_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 210, 180 }, { 0,0 }, false, false, { 4,3, 271, 156 }, nullptr, this);
 	credits_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,20 }, { 0,0 }, true, true, { 124,165,37,31 }, nullptr, this);
 	credits_menu.exit = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 440,190 }, { 0,0 }, true, false, { 459,16,26,26 }, nullptr, this);
 	credits_menu.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 250,170 }, { 0,-3 }, false, false, { 166,167,109,27 }, "CREDITS", this);
