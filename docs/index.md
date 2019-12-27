@@ -10,9 +10,9 @@
 <h2  align="center" id="hollow-faith-trailer">Hollow Faith: Trailer</h2>
 
 <iframe width="510" height="412"
-src="https://www.youtube.com/embed/2Z4m4lnjxkY" frameborder="0" allowfullscreen>
+src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </iframe>
-<p>You can also enjoy the trailer by  <a href="">clicking here.</a></p>
+<p>You can also enjoy the trailer by  <a href="https://drive.google.com/open?id=1WSQBV5l0FuWW0jMDmDEWp5pAttX_yvbt">clicking here.</a></p>
 
 <br><br>
 

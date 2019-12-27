@@ -225,7 +225,7 @@ void j1Input::DisableTextInput() {
 
 p2SString j1Input::GetText() {
 
-
+	
 	return text;
 }
 
@@ -246,7 +246,6 @@ p2SString j1Input::GetModifiedString()
 
 		p2SString new_text(text.GetString());
 		new_text.Cut(text.Length() - cursor_position);
-		LOG("%s", new_text.GetString());
 		return new_text;
 	}
 
