@@ -107,6 +107,7 @@ bool j1Player::Start()
 	}
 
 
+
 	CollisionPosUpdate();
 
 	return true;

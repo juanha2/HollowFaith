@@ -81,7 +81,6 @@ public:
 	Particle	stone;
 	Particle	death;
 
-
 	// - - - - DESTROY - - -
 
 	bool		elim;

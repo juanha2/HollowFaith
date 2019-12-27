@@ -473,6 +473,22 @@ bool j1Scene::ConsoleLogic()
 		console.input_box->focus = false;
 		App->objects->player->godMode = !App->objects->player->godMode;
 	}
+	if (App->input->GetText() == "FPS")
+	{
+			
+	}
+	
+	if (App->input->final_text == "map1") {
+		currentmap = 1;
+		App->checkpoint->checkpoint = false;
+		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
+	}
+
+	if (App->input->final_text == "map2") {
+		App->checkpoint->checkpoint = false;
+		currentmap = 2;
+		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
+	}
 	if (App->input->final_text == "quit") {
 		return false;
 	}
