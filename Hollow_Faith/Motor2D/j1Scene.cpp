@@ -50,9 +50,10 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	death = fxIterator.child("death_enemyFx").attribute("path").as_string();
 	hurt_Fx = fxIterator.child("hurtFx").attribute("path").as_string();
 	coin_Fx = fxIterator.child("coinFx").attribute("path").as_string();
+	life_Fx = fxIterator.child("lifeUpFx").attribute("path").as_string();
 
 
-	return ret; 
+	return ret;
 }
 
 // Called before the first frame
@@ -62,22 +63,31 @@ bool j1Scene::Start()
 	timer = 0;
 	lifes = 3;
 	App->win->scale = 2;
-	debug_tex = App->tex->Load("Assets/Sprites/path2.png");	
-	currentmap = 1;	
+	currentmap = 1;
 	ready_to_load = false;
-	sound_repeat = false;		
+	sound_repeat = false;
 
-	if (App->intro->want_continue)		
-		App->LoadGame();			
-	else 
-		LoadMap(currentmap); 
-	
+	if (App->intro->want_continue)
+		App->LoadGame();
+	else
+		LoadMap(currentmap);
+
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate() {
-	
+
+	//At reaching 10 coins, we add a life to Player
+
+	if (num_coins >= 10) {
+		App->audio->PlayFx(13, 0, 128);
+		lifes++;
+		//Add +1 particle 
+		App->objects->particle->AddParticle(App->objects->particle->lifeUp, App->objects->player->position.x,
+			App->objects->player->position.y + App->objects->player->entity_collider.h, SDL_FLIP_NONE, COLLIDER_NONE, 2);
+		num_coins = 0;
+	}
 
 	return true;
 }
@@ -97,7 +107,6 @@ bool j1Scene::Update(float dt)
 	App->tex->UnLoad(timer_label->texture);
 	timer_label->text = timerText;
 
-
 	sprintf_s(lifesText, "%d", lifes);
 	App->tex->UnLoad(lifes_label->texture);
 	lifes_label->text = lifesText;
@@ -107,34 +116,34 @@ bool j1Scene::Update(float dt)
 	coins_label->text = coinsText;
 	//------------------------------------
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{ // Start at the level 1 begin
 		currentmap = 1;
 		App->checkpoint->checkpoint = false;
-		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
+		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{ // Start at the level 2 begin
 		App->checkpoint->checkpoint = false;
 		currentmap = 2;
-		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap-1]->name.GetString(), 1.0f);
+		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{ // Start at the current level begin
 		App->checkpoint->checkpoint = false;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{ // Save State
-		App->SaveGame();		
+		App->SaveGame();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{ // Load State				
-		App->LoadGame();		
+		App->LoadGame();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
@@ -148,38 +157,39 @@ bool j1Scene::Update(float dt)
 	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->objects->player->godMode == true)
 	{ // Turn Off God mode
 		App->objects->player->godMode = false;
-	}	
+	}
 
 	//Changing frameratecap
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 	{
 		if (App->frameratecap == App->desiredFrameratecap)
 			App->frameratecap = 1000;
 		else
 			App->frameratecap = App->desiredFrameratecap;
-	}		
-	
-	//Opening in-game menu
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 	
-		EnableDisableMenu();
-	
+	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) 
-	{	
+	//Opening in-game menu
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && !console_on)
+		EnableDisableMenu();
+
+
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN && !menu.image->enabled)
+	{
+		App->pause = !App->pause;
 		console_on = !console_on;
 		console.image->enabled = !console.image->enabled;
 		console.input_box->enabled = !console.input_box->enabled;
 		console.input_box->focus = true;
-	}		
-	
+	}
+
 	if (console_on)
-		ret= ConsoleLogic();
-	
-	App->map->Draw();
+		ret = ConsoleLogic();
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+
+	App->map->Draw();
 
 	return ret;
 }
@@ -193,16 +203,16 @@ bool j1Scene::PostUpdate()
 	SDL_Rect rect = { 0,0, App->win->screen_surface->w / App->win->scale, App->win->screen_surface->h / App->win->scale };
 
 	bool capped;
-	
+
 	if (App->frameratecap == App->desiredFrameratecap)
 		capped = true;
 	else
 		capped = false;
-	
+
 
 	static char title[256];
 	sprintf_s(title, 256, "%s || Actual FPS: %i | Av.FPS: %.2f | Last Frame MS: %02u | VSYNC: %d | Frames Cap: %d",
-		App->GetTitle(), App->frames_on_last_update , App->avg_fps, App->last_frame_ms, App->render->vsync, capped);
+		App->GetTitle(), App->frames_on_last_update, App->avg_fps, App->last_frame_ms, App->render->vsync, capped);
 
 	App->win->SetTitle(title);
 
@@ -214,10 +224,10 @@ bool j1Scene::PostUpdate()
 // Called before quitting
 bool j1Scene::CleanUp()
 {
-	LOG("Freeing scene");	
+	LOG("Freeing scene");
 
 	lifes_label = nullptr;
-	App->map->CleanUp();	
+	App->map->CleanUp();
 	App->pathfinding->CleanUp();
 	App->objects->CleanUp();
 	App->coll->CleanUp();
@@ -225,7 +235,6 @@ bool j1Scene::CleanUp()
 	App->gui->CleanUp();
 	App->audio->UnLoad();
 
-	App->intro->want_continue = false;
 	console.input_box = nullptr;
 	console.image = nullptr;
 	menu.menu_button = nullptr;
@@ -245,9 +254,9 @@ bool j1Scene::CleanUp()
 	coins_label = nullptr;
 	lifes_label = nullptr;
 	timer_label = nullptr;
+	timer_icon = nullptr;
 
-	
-	
+
 	return true;
 }
 
@@ -260,20 +269,16 @@ bool j1Scene::Save(pugi::xml_node& save) const
 	pugi::xml_node lifes_node = save.append_child("lifes");
 	pugi::xml_node coins_node = save.append_child("coins");
 	pugi::xml_node time_node = save.append_child("time");
-	current_map.append_attribute("value").set_value(currentmap);	
+	current_map.append_attribute("value").set_value(currentmap);
+	lifes_node.append_attribute("value").set_value(lifes);
+	time_node.append_attribute("value").set_value(timer);
 
-	if (!App->checkpoint->save_checkpoints) {
-		time_node.append_attribute("value").set_value(timer);
+	if (!App->checkpoint->save_checkpoints)
 		coins_node.append_attribute("value").set_value(num_coins);
-		lifes_node.append_attribute("value").set_value(lifes);
-	}	
 
-	else {
-		lifes_node.append_attribute("value").set_value(lifes);
+	else
 		coins_node.append_attribute("value").set_value(App->checkpoint->checkpointcoins);
-	}
-		
-	
+
 	return true;
 }
 
@@ -284,32 +289,29 @@ bool j1Scene::Save(pugi::xml_node& save) const
 bool j1Scene::Load(pugi::xml_node& save)
 {
 	savedcurrentmap = save.child("currentmap").attribute("value").as_int();
-
-	if(!App->checkpoint->checkpoint)
-		lifes= save.child("lifes").attribute("value").as_int();	
-
+	lifes = save.child("lifes").attribute("value").as_int();
 	timer = save.child("time").attribute("value").as_float();
-	num_coins = save.child("coins").attribute("value").as_int();	
+	num_coins = save.child("coins").attribute("value").as_int();
 
-	if (savedcurrentmap == currentmap && App->intro->want_continue)		
+	if (savedcurrentmap == currentmap && App->intro->want_continue)
 		LoadMap(currentmap);
 
 	// If we want to load from a different map, we change scene.
-	else if (savedcurrentmap != currentmap) 
+	else if (savedcurrentmap != currentmap)
 	{
 		currentmap = savedcurrentmap;
 		different_map = true;
-		
+
 		if (!App->intro->want_continue) {
 			App->objects->player->ignoreColl = true;
 			App->objects->player->speed = { 0,0 };
 			App->objects->player->gravityForce = 0.0f;
 			App->fade_to_black->FadeToBlack(App->map->data.levels[savedcurrentmap - 1]->name.GetString(), 1.0f);
-		}			
-		else 
-			LoadMap(currentmap);			
-	}		
-	
+		}
+		else
+			LoadMap(currentmap);
+	}
+
 	return true;
 }
 
@@ -355,9 +357,10 @@ void j1Scene::sceneswitch()
 			if (!sound_repeat) {
 				App->audio->PlayFx(2, 0, App->audio->FXvolume);
 				sound_repeat = true;
-				lifes--;				
-			}	
-		
+				lifes--;
+			}
+			num_coins = 0;
+
 			if (currentmap == 1)
 				currentmap = 1;
 			else if (currentmap == 2)
@@ -374,7 +377,7 @@ void j1Scene::sceneswitch()
 			}
 
 		}
-	}	
+	}
 
 }
 
@@ -383,8 +386,8 @@ void j1Scene::LoadMap(int num_map) {
 	CleanUp();
 	App->map->Load(App->map->data.levels[num_map - 1]->name.GetString());
 	App->scene->ready_to_load = false;
-	App->scene->sound_repeat = false;	
-	App->render->camera = App->render->camera_init;		
+	App->scene->sound_repeat = false;
+	App->render->camera = App->render->camera_init;
 
 	//Adding every UI element
 	AddUIElements();
@@ -400,7 +403,7 @@ void j1Scene::LoadMap(int num_map) {
 
 	//Plays current map music
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
-	//App->intro->want_continue = false;	
+	App->intro->want_continue = false;
 
 	//We load every Fx here so each entity doesn't have to repeat loading the same one	
 	App->audio->LoadFx(jump_fx.GetString());		//1
@@ -415,8 +418,10 @@ void j1Scene::LoadMap(int num_map) {
 	App->audio->LoadFx(death.GetString());			//10
 	App->audio->LoadFx(hurt_Fx.GetString());		//11
 	App->audio->LoadFx(coin_Fx.GetString());		//12
+	App->audio->LoadFx(life_Fx.GetString());		//13
 
 	App->audio->LoadFx("audio/fx/button_click.wav");
+	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 }
 
 
@@ -427,39 +432,39 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 
 	case GUI_Event::EVENT_ONCLICK:
 	{
-		App->audio->PlayFx(13, 0, 128);
+		App->audio->PlayFx(14, 0, 128);
 
 		if (element == menu.return_button) {
 			App->pause = !App->pause;
 			App->fade_to_black->FadeToBlack(App->intro, this);
-		}			
+		}
 
 		if (element == menu.exit_button) {
 			App->pause = !App->pause;
 			want_exit = true;
 		}
 
-		if (element == menu.save) 			
-			App->SaveGame();		
+		if (element == menu.save)
+			App->SaveGame();
 
 		if (element == menu.load) {
 			EnableDisableMenu();
 			App->LoadGame();
-		}		
+		}
 
 		if (element == menu.resume_button) {
 			EnableDisableMenu();
 		}
-		if (element == menu.menu_button) {
+		if (element == menu.menu_button && !console_on) {
 			EnableDisableMenu();
 		}
-	}	
+	}
 	}
 }
 
-bool j1Scene::ConsoleLogic() 
+bool j1Scene::ConsoleLogic()
 {
-	bool ret = true;	
+	bool ret = true;
 
 	if (App->input->final_text == "list") {
 		LOG("HOLA");
@@ -477,13 +482,14 @@ bool j1Scene::ConsoleLogic()
 	return ret;
 }
 
-void j1Scene::AddUIElements() 
-{		
-	timer_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 200,22 }, { 0,0 }, true, true, { 0,0,0,0 }, timerText, this, false, false);
-	lifes_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 140,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "3");
-	lifes_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 100, 13 }, { 0,0 }, true, true, { 491, 37, 30, 31 }, nullptr, this);
-	coins_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 50,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "0");
-	coins_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 10, 15 }, { 0,0 }, true, true, { 458, 43, 27, 27 }, nullptr, this);
+void j1Scene::AddUIElements()
+{
+	timer_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 220,22 }, { 0,0 }, true, true, { 0,0,0,0 }, timerText, this, false, false);
+	timer_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 180, 13 }, { 0,0 }, true, true, { 460, 111, 27, 31 }, nullptr, this);
+	lifes_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 146,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "3");
+	lifes_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 100, 13 }, { 0,0 }, true, true, { 458, 78, 41, 31 }, nullptr, this);
+	coins_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 55,22 }, { 0,0 }, true, true, { 0,0,0,0 }, "0");
+	coins_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 10, 15 }, { 0,0 }, true, true, { 458, 43, 40, 27 }, nullptr, this);
 	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 160, 60 }, { 0,0 }, true, false, { 288, 144, 198, 282 }, nullptr, this);
 	menu.menu_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,13 }, { 0,0 }, true, true, { 84,164,37,31 }, nullptr, this);
 	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,130 }, { -3,-5 }, true, false, { 283,109,100,22 }, "MAIN MENU", this);
@@ -494,10 +500,10 @@ void j1Scene::AddUIElements()
 	menu.load = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,190 }, { 20,-5 }, true, false, { 283,109,100,22 }, "LOAD", this);
 	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 270 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this);
 	menu.music_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 310 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this);
-	console.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 125, 50 }, { 0,0 }, true, false, { 20, 324, 251, 270 }, nullptr, this);
-	menu.label1= App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 270 }, { 0,-3 }, false, false, { 166,167,109,27 }, "MUSIC", this);
-	menu.label2= App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 310 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);
-	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 150,100 }, { 0,0 }, true, false, { 295,343,199,30 }, "Commands", this);
+	console.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 160, 60 }, { 0,0 }, true, false, { 288, 144, 198, 200 }, nullptr, this);
+	menu.label1 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 270 }, { 0,-3 }, false, false, { 166,167,109,27 }, "MUSIC", this);
+	menu.label2 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 310 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);
+	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 168,220 }, { 0,0 }, true, false, { 11,359,182,26 }, nullptr, this);
 
 }
 
