@@ -36,6 +36,7 @@ private:
 	j1GUIelement* label = nullptr;
 	iPoint accuratedDrag = { 0,0 };
 
+
 	bool dragging;
 };
 

@@ -41,37 +41,49 @@ bool j1GUIButton::PreUpdate()
 
 bool j1GUIButton::Update(float dt)
 {
-	if (interactable) 
+
+	if (!decorative)
 	{
-		if (above) 
+		if (interactable)
 		{
-			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
-				OnClick();
+			if (above)
+			{
+				if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+					OnClick();
 
-			if (App->input->GetMouseButtonDown(1) == KEY_REPEAT) 
-			{		
-				if(X_drag || Y_drag)
-					dragging = true;
+				if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+				{
+					if (X_drag || Y_drag)
+						dragging = true;
 
-				iPoint mouseClick = { 0,0 };
-				App->input->GetMousePosition(mouseClick.x, mouseClick.y);
-				accuratedDrag = { mouseClick.x - (this->globalPosition.x), mouseClick.y - (this->globalPosition.y) };
+					iPoint mouseClick = { 0,0 };
+					App->input->GetMousePosition(mouseClick.x, mouseClick.y);
+					accuratedDrag = { mouseClick.x - (this->globalPosition.x), mouseClick.y - (this->globalPosition.y) };
 
+				}
+
+			}
+
+			if (dragging) {
+
+				if (App->input->GetMouseButtonDown(1) == KEY_IDLE || App->input->GetMouseButtonDown(1) == KEY_UP)
+					dragging = false;
+				else
+				{
+					Dragging();
+					MovingIt(dt);
+				}
 			}
 
 		}
-
-		if (dragging) {
-
-			if (App->input->GetMouseButtonDown(1) == KEY_IDLE || App->input->GetMouseButtonDown(1) == KEY_UP) 
-				dragging = false;	
-			else 
-			{
-				Dragging();
-				MovingIt(dt);
-			}
-		}			
+		else
+		{
+			label->color.r = 60;
+			label->color.g = 60;
+			label->color.b = 60;
+		}
 	}
+
 	return true;
 }
 

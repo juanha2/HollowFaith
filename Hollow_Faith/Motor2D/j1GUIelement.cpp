@@ -31,15 +31,22 @@ void j1GUIelement::Draw()
 	}
 	else if (!above && interactable)
 	{
-		SDL_SetTextureColorMod(texture, 125, 125, 125);
+		SDL_SetTextureColorMod(texture, 160, 160, 160);
 		SDL_SetTextureAlphaMod(texture, 255);
 	}
 
-	if (!interactable) 
+	if (!interactable && this->type != GUItype::GUI_BUTTON)
 	{
 		SDL_SetTextureColorMod(texture, 255, 255, 255);
 		SDL_SetTextureAlphaMod(texture, 255);
 	}
+	else if (!interactable && this->type == GUItype::GUI_BUTTON && !decorative) 
+	{
+		SDL_SetTextureColorMod(texture, 255, 255, 255);
+		SDL_SetTextureAlphaMod(texture, 50);
+	
+	}
+
 
 	App->render->Blit(texture, globalPosition.x, globalPosition.y, &rect, 0.0f, 0.0f);
 
