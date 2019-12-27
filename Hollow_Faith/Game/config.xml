@@ -39,9 +39,18 @@
       <fuseFx path="audio/fx/fuse.wav"/>
       <hurtFx path="audio/fx/hurt.wav"/>
       <coinFx path="audio/fx/coin.wav"/>
+      <lifeUpFx path="audio/fx/life_up.wav"/>
     </fx>
   
   </scene>
+
+  <intro>
+    <fx>
+      <clickFx1 path="audio/fx/main_click.wav"/>
+      <clickFx2 path="audio/fx/button_click.wav"/>
+    </fx>
+
+  </intro>
   
   <objects>
     
@@ -104,6 +113,11 @@
         <animValues loop="false" speed="0.4f"/>
       </animation>
 
+      <animation name ="lifeUp">
+        <sprite x ="97" y ="7" w ="27" h="22"/>
+        <animValues loop="false" speed="0.4f"/>
+      </animation>
+      
       <animation name ="dustRunning">
         <sprite x ="225" y ="241" w ="17" h="14"/>
         <sprite x ="258" y ="245" w ="13" h="11"/>

@@ -8,76 +8,148 @@
 	<audio />
 	<pathfinding />
 	<scene>
-		<currentmap value="1" />
-		<lifes value="2" />
-		<coins value="12" />
-		<time value="10.1230049" />
+		<currentmap value="2" />
+		<lifes value="3" />
+		<coins value="0" />
+		<time value="3.45599914" />
 	</scene>
 	<objects>
-		<Bonfire num="1">
-			<position x="112" y="320" />
-			<active value="true" />
-		</Bonfire>
-		<Bonfire num="1">
-			<position x="888.010986" y="175.485001" />
+		<EnemyLand>
+			<position x="272.083008" y="325" />
+		</EnemyLand>
+		<EnemyFly>
+			<position x="304" y="64" />
+		</EnemyFly>
+		<Bonfire num="0">
+			<position x="118.833" y="255" />
 			<active value="false" />
 		</Bonfire>
+		<EnemyLand>
+			<position x="720" y="245" />
+		</EnemyLand>
+		<Bonfire num="0">
+			<position x="869" y="111.5" />
+			<active value="false" />
+		</Bonfire>
+		<EnemyFly>
+			<position x="1075.32996" y="46.6666985" />
+		</EnemyFly>
+		<EnemyFly>
+			<position x="1456" y="64" />
+		</EnemyFly>
+		<EnemyLand>
+			<position x="1456" y="341" />
+		</EnemyLand>
 		<player>
-			<position x="377.451843" y="213" />
+			<position x="34.0538902" y="261" />
 		</player>
-		<EnemyLand>
-			<position x="608" y="309" />
-		</EnemyLand>
-		<EnemyLand>
-			<position x="1424" y="213" />
-		</EnemyLand>
-		<EnemyFly>
-			<position x="832" y="48" />
-		</EnemyFly>
-		<EnemyFly>
-			<position x="1056" y="128" />
-		</EnemyFly>
 		<Coins>
-			<position x="239" y="239.5" />
+			<position x="128" y="224" />
 		</Coins>
 		<Coins>
-			<position x="583.5" y="250.5" />
+			<position x="149.332993" y="198" />
 		</Coins>
 		<Coins>
-			<position x="610" y="251" />
+			<position x="174" y="176.332993" />
 		</Coins>
 		<Coins>
-			<position x="637.5" y="250" />
+			<position x="224" y="128" />
 		</Coins>
 		<Coins>
-			<position x="784" y="184" />
+			<position x="309.083008" y="127.75" />
 		</Coins>
 		<Coins>
-			<position x="803.5" y="155" />
+			<position x="336" y="128" />
 		</Coins>
 		<Coins>
-			<position x="832.5" y="138" />
+			<position x="251.75" y="127.25" />
 		</Coins>
 		<Coins>
-			<position x="857.5" y="155.5" />
+			<position x="336" y="80" />
 		</Coins>
 		<Coins>
-			<position x="956.5" y="222" />
+			<position x="224" y="80" />
 		</Coins>
 		<Coins>
-			<position x="985.5" y="270.5" />
+			<position x="252.25" y="80" />
 		</Coins>
 		<Coins>
-			<position x="1194" y="314.5" />
+			<position x="308" y="80" />
 		</Coins>
 		<Coins>
-			<position x="1221" y="314" />
+			<position x="373.666992" y="170.332993" />
 		</Coins>
 		<Coins>
-			<position x="1399" y="220.5" />
+			<position x="399.334015" y="194.666" />
 		</Coins>
 		<Coins>
-			<position x="1447" y="220.5" />
+			<position x="424.334015" y="220.332993" />
+		</Coins>
+		<Coins>
+			<position x="662.333984" y="254" />
+		</Coins>
+		<Coins>
+			<position x="634.666992" y="284.333008" />
+		</Coins>
+		<Coins>
+			<position x="772.333984" y="179.332993" />
+		</Coins>
+		<Coins>
+			<position x="746.333984" y="179.332993" />
+		</Coins>
+		<Coins>
+			<position x="1001.66998" y="176" />
+		</Coins>
+		<Coins>
+			<position x="1026" y="142.666" />
+		</Coins>
+		<Coins>
+			<position x="1052" y="113.666" />
+		</Coins>
+		<Coins>
+			<position x="1080.32996" y="87.6662979" />
+		</Coins>
+		<Coins>
+			<position x="1118.32996" y="95.9997025" />
+		</Coins>
+		<Coins>
+			<position x="1150" y="119.666" />
+		</Coins>
+		<Coins>
+			<position x="1287.32996" y="234.666" />
+		</Coins>
+		<Coins>
+			<position x="1288" y="261" />
+		</Coins>
+		<Coins>
+			<position x="1288" y="288.665985" />
+		</Coins>
+		<Coins>
+			<position x="1472" y="272" />
+		</Coins>
+		<Coins>
+			<position x="1472" y="240" />
+		</Coins>
+		<Coins>
+			<position x="1472" y="208" />
+		</Coins>
+		<Coins>
+			<position x="1472" y="144" />
+		</Coins>
+		<Coins>
+			<position x="1472" y="80" />
+		</Coins>
+		<Coins>
+			<position x="1472" y="112" />
+		</Coins>
+		<Coins>
+			<position x="1360" y="96" />
+		</Coins>
+		<Coins>
+			<position x="280.25" y="128" />
+		</Coins>
+		<Coins>
+			<position x="281" y="79.75" />
 		</Coins>
 	</objects>
 	<gui />
@@ -86,6 +158,6 @@
 	<checkpoint />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-276" y="-10" />
+		<camera x="0" y="-10" />
 	</renderer>
 </game_state>

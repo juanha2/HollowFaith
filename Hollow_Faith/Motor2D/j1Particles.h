@@ -76,6 +76,7 @@ public:
 
 	Particle*	active[MAX_ACTIVE_PARTICLES];
 	Particle	dustJumping;
+	Particle	lifeUp;
 	Particle	dustRunning;
 	Particle	stone;
 	Particle	death;

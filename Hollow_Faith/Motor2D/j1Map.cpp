@@ -523,7 +523,7 @@ bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
 	bool ret = true;
 
 	group->name.create(node.attribute("name").as_string());
-	int i = 0;
+	
 	for (pugi::xml_node& object = node.child("object"); object && ret; object = object.next_sibling("object"))
 	{
 
@@ -533,8 +533,7 @@ bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
 		data->x = object.attribute("x").as_float();
 		data->y = object.attribute("y").as_float();
 		data->height = object.attribute("height").as_int();
-		data->width = object.attribute("width").as_int();
-		
+		data->width = object.attribute("width").as_int();		
 			
 		SDL_Rect collider_rect;
 
@@ -548,11 +547,8 @@ bool j1Map::LoadObjects(pugi::xml_node& node, ObjectsGroup* group) {
 		if (data->name == 0)
 			App->coll->AddCollider(collider_rect, COLLIDER_NONE);
 
-		if (data->name == 1)
-		{
-			i++;
-			App->coll->AddCollider(collider_rect, COLLIDER_FLOOR);
-		}
+		if (data->name == 1)			
+			App->coll->AddCollider(collider_rect, COLLIDER_FLOOR);		
 
 		if (data->name == 2)
 			App->coll->AddCollider(collider_rect, COLLIDER_PLATFORM);

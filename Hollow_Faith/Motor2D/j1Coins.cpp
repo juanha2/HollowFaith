@@ -22,9 +22,7 @@ j1Coins::~j1Coins() {
 bool j1Coins::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
-	pugi::xml_node dataIterator = config.child("data");	
-	collider = new Collider({ 0,0,15,15 }, COLLIDER_COINS, this);
-	App->coll->AddColliderEntity(collider);
+	pugi::xml_node dataIterator = config.child("data");		
 
 	// Loading all Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
@@ -38,11 +36,16 @@ bool j1Coins::Awake(pugi::xml_node& config)
 bool j1Coins::Start()
 {
 	bool ret = true;
+	
 	//Loading texture and collider
-	CollisionPosUpdate();
+	
 	texture = App->tex->Load("Assets/Sprites/coins.png");
+	// Loading Texture and collider
+	collider = new Collider({ 0,0,15,15 }, COLLIDER_COINS, this);
+	App->coll->AddColliderEntity(collider);
 
 	current_animation = &coin_animation;
+	CollisionPosUpdate();
 	return ret;
 }
 
@@ -73,7 +76,8 @@ bool j1Coins::Update(float dt)
 
 bool j1Coins::PostUpdate() {
 
-	Draw(App->dt);
+	if(texture!=nullptr)
+		Draw(App->dt);
 
 	return true;
 }

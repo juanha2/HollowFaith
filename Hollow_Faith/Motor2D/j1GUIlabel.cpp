@@ -36,9 +36,8 @@ bool j1GUIlabel::PreUpdate()
 }
 
 bool j1GUIlabel::Update(float dt) 
-{	
-	
-	texture = App->fonts->Print(text);
+{		
+	texture = App->fonts->Print(text, color);
 	return true;
 }
 

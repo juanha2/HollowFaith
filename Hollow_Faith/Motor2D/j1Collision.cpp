@@ -114,7 +114,6 @@ bool j1Collision::PostUpdate()
 void j1Collision::DebugDraw()
 {
 
-
 	if (App->scene->debug == false)
 		return;
 

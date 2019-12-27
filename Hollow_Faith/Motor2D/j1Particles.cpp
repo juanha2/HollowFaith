@@ -34,7 +34,7 @@ bool j1Particles::Awake(pugi::xml_node& config)
 	defaultParticleLife = particlesdata.child("defaultParticleLife").attribute("value").as_uint();	
 	stoneLife = particlesdata.child("stoneLife").attribute("value").as_uint();
 	deathlife = particlesdata.child("deathlife").attribute("value").as_uint();
-
+	
 	// Loading Particle Animations
 	pugi::xml_node animIterator = config.child("animations").child("animation");
 
@@ -46,6 +46,8 @@ bool j1Particles::Awake(pugi::xml_node& config)
 	stone.life = stoneLife;
 	death.anim.load_animation(animIterator, "death");
 	death.life = deathlife;
+	lifeUp.anim.load_animation(animIterator, "lifeUp");
+	lifeUp.life = deathlife;
 
 	for (int i = 0; i < MAX_ACTIVE_PARTICLES; i++)
 	{
@@ -202,6 +204,9 @@ bool Particle::Update()
 	//If particles is a STONE, we set its speed.y to make a parabolic movement.
 	if(id == 1)
 		speed.y += App->objects->player->gravityForce * (App->dt * DT_CALIBRATED);
+
+	if(id == 2)
+		speed.y -= App->objects->player->gravityForce * (App->dt * DT_CALIBRATED);
 
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);

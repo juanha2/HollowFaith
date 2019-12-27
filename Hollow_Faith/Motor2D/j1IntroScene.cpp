@@ -29,7 +29,9 @@ bool j1IntroScene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Intro Scene");
 	bool ret = true;	
-	
+	pugi::xml_node fxIterator = config.child("fx");
+	click_Fx1 = fxIterator.child("clickFx1").attribute("path").as_string();
+	click_Fx2 = fxIterator.child("clickFx2").attribute("path").as_string();
 	return ret;
 }
 
@@ -38,8 +40,10 @@ bool j1IntroScene::Start()
 {
 	App->win->scale = 2;
 	App->audio->PlayMusic("audio/music/intro.ogg", 1.0f);
-	App->audio->LoadFx("audio/fx/button_hover.wav");		
-	App->audio->LoadFx("audio/fx/button_click.wav");
+		
+	App->audio->LoadFx(click_Fx1.GetString());
+	App->audio->LoadFx(click_Fx2.GetString());
+
 	texture = App->tex->Load("Assets/Sprites/background.png");
 	title_texture= App->tex->Load("Assets/Sprites/title.png");
 	rain_texture = App->tex->Load("Assets/Sprites/rain.png");
@@ -133,19 +137,21 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 	switch (type) 
 	{
 		case GUI_Event::EVENT_ONCLICK: 
-		{
-			App->audio->PlayFx(2, 0, 128);
+		{		
 
-			if (element == play_button) 
-				App->fade_to_black->FadeToBlack(App->scene, this);	
-		
+			if (element == play_button) {
+				App->audio->PlayFx(1, 0, 128);
+				App->fade_to_black->FadeToBlack(App->scene, this);
+			}				
 
 			if (element == continue_button) {
 				want_continue = true;
+				App->audio->PlayFx(1, 0, 128);
 				App->fade_to_black->FadeToBlack(App->scene, this);
 			}
 
 			if (element == settings_menu.button) {
+				App->audio->PlayFx(2, 0, 128);
 				settings_menu.image->enabled = !settings_menu.image->enabled;
 				settings_menu.exit->enabled = !settings_menu.exit->enabled;
 				settings_menu.scroll1->enabled = !settings_menu.scroll1->enabled;
@@ -162,6 +168,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			}
 			
 			if (element == settings_menu.exit) {
+				App->audio->PlayFx(2, 0, 128);
 				settings_menu.image->enabled = false;
 				settings_menu.exit->enabled = false;
 				settings_menu.scroll1->enabled = false;
@@ -172,6 +179,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			}
 
 			if (element == credits_menu.button) {
+				App->audio->PlayFx(2, 0, 128);
 				credits_menu.image->enabled = !credits_menu.image->enabled;
 				credits_menu.exit->enabled = !credits_menu.exit->enabled;
 				credits_menu.title->enabled = !credits_menu.title->enabled;
@@ -187,6 +195,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			}
 
 			if (element == credits_menu.exit) {
+				App->audio->PlayFx(2, 0, 128);
 				credits_menu.image->enabled = false;
 				credits_menu.exit->enabled = false;
 				credits_menu.title->enabled = false;
@@ -195,6 +204,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			}
 
 			if (element == credits_menu.link) {
+				App->audio->PlayFx(2, 0, 128);
 				ShellExecuteA(NULL, "open", "https://github.com/juanha2/HollowFaith", NULL, NULL, SW_SHOWNORMAL);
 			}				
 
@@ -205,13 +215,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 
 		case GUI_Event::EVENT_HOVER:
 		{
-			if (!already_played) {
-				
-				if (element == exit_button) {
-					App->audio->PlayFx(1, 0, 128);
-					already_played = true;
-				}
-			}						
+								
 		}		
 	}
 

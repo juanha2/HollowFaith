@@ -100,8 +100,10 @@ public:
 	p2SString			death;
 	p2SString			hurt_Fx;
 	p2SString			coin_Fx;
+	p2SString			life_Fx;
 	
 	float				timer;
+	float				life_timer;
 	char				timerText[100];
 	char				lifesText[100];
 	char				coinsText[100];
@@ -111,7 +113,8 @@ public:
 	j1GUIelement*		lifes_icon = nullptr;
 	j1GUIelement*		coins_icon = nullptr;
 	j1GUIelement*		input_box = nullptr;
-	j1GUIelement*		timer_label = nullptr;
+	j1GUIelement*		timer_label = nullptr;	
+	j1GUIelement*		timer_icon = nullptr;
 
 	InGameMenu			menu;
 	Console				console;

@@ -78,7 +78,8 @@ public:
 	SettingsMenu settings_menu;
 	CreditsMenu credits_menu;
 
-	
+	p2SString			click_Fx1;	
+	p2SString			click_Fx2;
 };
 
 #endif // __j1INTROSCENE_H__
