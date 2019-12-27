@@ -24,6 +24,8 @@ bool j1GUIelement::Start()
 
 void j1GUIelement::Draw()
 {
+	BROFILER_CATEGORY("GUI_Drawing", Profiler::Color::DarkKhaki);
+
 	if (above && interactable)
 	{
 		SDL_SetTextureColorMod(texture, 255, 255, 255);
