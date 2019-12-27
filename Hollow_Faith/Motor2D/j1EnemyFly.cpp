@@ -77,7 +77,7 @@ bool j1EnemyFly::PreUpdate()
 	if (elim) // When enemy dies
 	{
 		App->audio->PlayFx(10, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
-
+		App->scene->score += 500;
 		App->objects->DeleteEntity();
 	}
 

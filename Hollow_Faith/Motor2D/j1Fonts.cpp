@@ -3,7 +3,7 @@
 #include "j1App.h"
 #include "j1Textures.h"
 #include "j1Fonts.h"
-
+#include "j1Window.h"
 #include "SDL\include\SDL.h"
 #include "SDL_TTF/include/SDL_ttf.h"
 #pragma comment( lib, "SDL_ttf/libx86/SDL2_ttf.lib" )
@@ -76,7 +76,11 @@ TTF_Font* const j1Fonts::Load(const char* path, int size)
 SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 {
 	SDL_Texture* ret = NULL;
-	SDL_Surface* surface = TTF_RenderText_Blended((font) ? font : default, text, color);
+
+	if(font==nullptr)
+		font = default;
+
+	SDL_Surface* surface = TTF_RenderUTF8_Blended_Wrapped((font) ? font : font, text, color, App->win->width);
 
 	if (surface == NULL)
 	{
@@ -94,12 +98,22 @@ SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
 // calculate size of a text
 bool j1Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* font) const
 {
+	if (font == NULL)
+		font = default;
+
 	bool ret = false;
 
-	if (TTF_SizeText((font) ? font : default, text, &width, &height) != 0)
-		LOG("Unable to calc size of text surface! SDL_ttf Error: %s\n", TTF_GetError());
-	else
-		ret = true;
+	SDL_Surface* surface = TTF_RenderUTF8_Blended_Wrapped((font) ? font : font, text, { 255,255,255,255 }, App->win->width);
+
+	if (surface)
+	{
+		width = surface->w;
+		height = surface->h;
+	}
+
+	SDL_FreeSurface(surface);
+
+
 
 	return ret;
 }

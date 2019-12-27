@@ -62,6 +62,7 @@ bool j1Scene::Start()
 	//Setting initial values
 	timer = 0;
 	lifes = 3;
+	score = 0;
 	App->win->scale = 2;
 	currentmap = 1;
 	ready_to_load = false;
@@ -115,6 +116,10 @@ bool j1Scene::Update(float dt)
 	sprintf_s(coinsText, "%d", num_coins);
 	App->tex->UnLoad(coins_label->texture);
 	coins_label->text = coinsText;
+
+	sprintf_s(scoreText, "%0.8d", score);
+	App->tex->UnLoad(score_label->texture);
+	score_label->text = scoreText;
 	//------------------------------------
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -170,21 +175,15 @@ bool j1Scene::Update(float dt)
 	}
 
 	//Opening in-game menu
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && !console_on)
-		EnableDisableMenu();
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && !console.image->enabled)
+			EnableDisableMenu();
 
+	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && !menu.image->enabled)
+		EnableDisableConsole();	
 
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN && !menu.image->enabled)
-	{
-		App->pause = !App->pause;
-		console_on = !console_on;
-		console.image->enabled = !console.image->enabled;
-		console.input_box->enabled = !console.input_box->enabled;
-		console.input_box->focus = true;
-	}
-
-	if (console_on)
+	if (console.input_box->focus)
 		ret = ConsoleLogic();
+
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -256,7 +255,7 @@ bool j1Scene::CleanUp()
 	lifes_label = nullptr;
 	timer_label = nullptr;
 	timer_icon = nullptr;
-
+	score_label = nullptr;
 
 	return true;
 }
@@ -361,7 +360,7 @@ void j1Scene::sceneswitch()
 				lifes--;
 			}
 			num_coins = 0;
-
+			score = 0;
 			if (currentmap == 1)
 				currentmap = 1;
 			else if (currentmap == 2)
@@ -456,7 +455,7 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 		if (element == menu.resume_button) {
 			EnableDisableMenu();
 		}
-		if (element == menu.menu_button && !console_on) {
+		if (element == menu.menu_button && !console.image->enabled) {
 			EnableDisableMenu();
 		}
 	}
@@ -521,7 +520,7 @@ void j1Scene::AddUIElements()
 	menu.label1 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 270 }, { 0,-3 }, false, false, { 166,167,109,27 }, "MUSIC", this);
 	menu.label2 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 310 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);
 	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 168,220 }, { 0,0 }, true, false, { 11,359,182,26 }, nullptr, this);
-
+	score_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 325,22 }, { 0,0 }, true, true, { 0,0,0,0 }, nullptr, this, false, false);
 }
 
 void j1Scene::EnableDisableMenu() {
@@ -537,5 +536,14 @@ void j1Scene::EnableDisableMenu() {
 	menu.save->enabled = !menu.save->enabled;
 	menu.label1->enabled = !menu.label1->enabled;
 	menu.label2->enabled = !menu.label2->enabled;
+	App->pause = !App->pause;
+}
+
+void j1Scene::EnableDisableConsole()
+{
+	App->input->text.Clear();
+	console.input_box->focus = !console.input_box->focus;
+	console.input_box->enabled = !console.input_box->enabled;
+	console.image->enabled = !console.image->enabled;
 	App->pause = !App->pause;
 }

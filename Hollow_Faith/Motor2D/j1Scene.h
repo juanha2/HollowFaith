@@ -69,6 +69,7 @@ public:
 
 	void AddUIElements();
 	void EnableDisableMenu();
+	void EnableDisableConsole();
 
 public:
 
@@ -86,6 +87,7 @@ public:
 
 	int					lifes;
 	int					num_coins = 0;
+	int					score; 
 	
 	p2SString			jump_fx;
 	p2SString			death_fx;
@@ -105,6 +107,7 @@ public:
 	float				timer;
 	float				life_timer;
 	char				timerText[100];
+	char				scoreText[100];
 	char				lifesText[100];
 	char				coinsText[100];
 
@@ -115,11 +118,11 @@ public:
 	j1GUIelement*		input_box = nullptr;
 	j1GUIelement*		timer_label = nullptr;	
 	j1GUIelement*		timer_icon = nullptr;
+	j1GUIelement*		score_label = nullptr;
 
 	InGameMenu			menu;
 	Console				console;
 
-	bool				console_on = false;
 };
 
 #endif // __j1SCENE_H__

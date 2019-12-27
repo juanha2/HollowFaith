@@ -64,6 +64,7 @@ bool j1GUIinputBox::Update(float dt)
 		if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			OnClick();
 	}	
+
 	else {
 		if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			focus=false;
@@ -81,7 +82,7 @@ bool j1GUIinputBox::PostUpdate()
 		//Draws the cursor(rectangle) -------------
 		if (focus)
 		{
-			SDL_Rect rect = { (string->globalPosition.x + App->input->GetCursorPosition()) * App->win->GetScale() , 
+			SDL_Rect rect = { (string->globalPosition.x + App->input->GetCursorPosition()) * App->win->GetScale(), 
 				(string->globalPosition.y + localPosition.y) * App->win->GetScale() + 6, 2,  string->rect.h + 10 };
 			App->render->DrawQuad(rect, 255, 255, 255, 255, true, false);
 		}

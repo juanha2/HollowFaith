@@ -23,6 +23,7 @@ bool j1GUIlabel::Awake(pugi::xml_node&)
 
 bool j1GUIlabel::Start()
 {		
+	//App->fonts->CalcSize(App->input->GetText().GetString(), rect.w, rect.h);
 	return true;
 }
 

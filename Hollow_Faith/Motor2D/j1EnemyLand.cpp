@@ -80,13 +80,12 @@ bool j1EnemyLand::Start()
 
 bool j1EnemyLand::PreUpdate()
 {
-
-
 	bool ret = true;
 
 	if (elim) // When enemy dies
 	{
-		collider->to_delete = true;
+		App->scene->score += 500;
+		App->audio->PlayFx(10, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));		
 		App->objects->DeleteEntity();
 	}
 
@@ -97,13 +96,13 @@ bool j1EnemyLand::PreUpdate()
 		if (timeConsec <= 0.10f)
 		{
 			SDL_SetTextureColorMod(texture, 255, 0, 0);
+			SDL_SetTextureColorMod(texture, 255, 0, 0);
 			speed.y = movementForce.y / 3;
 
 			if (flip == SDL_FLIP_NONE)
 				speed.x = movementForce.y;
 			else
-				speed.x = -movementForce.y;
-	
+				speed.x = -movementForce.y;	
 		}
 		else 
 		{
@@ -506,7 +505,7 @@ void j1EnemyLand::OnCollision(Collider* c1, Collider* c2) {
 				elim = true;
 				App->audio->PlayFx(8, 0, App->audio->SpatialAudio(App->audio->FXvolume, distance));
 				App->objects->particle->AddParticle(App->objects->particle->death, position.x, position.y, flip, COLLIDER_NONE);
-
+				
 			}
 			else 
 			{			

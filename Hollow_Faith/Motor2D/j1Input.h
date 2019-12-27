@@ -8,6 +8,7 @@
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
+class j1GUIelement;
 
 enum j1EventWindow
 {
@@ -80,16 +81,17 @@ public:
 	int			mouse_y;	
 
 	p2SString	final_text;
+	p2SString	text;
 
 private:
+
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
 	int			mouse_motion_x;
 	int			mouse_motion_y;	
-	p2SString	text;
-	bool		text_input = false;
 	
+	bool		text_input = false;	
 	int			cursor_position = 0;
 };
 
