@@ -1,6 +1,6 @@
-<h1  align="center" id="our-samurai-shodown">Hollow Faith: 2D Plataform Game</h1>
+<h1  align="center" id="hollow-faith-2d">Hollow Faith: 2D Plataform Game</h1>
 
-<p>Welcome to the webpage of <a href="https://github.com/AaronGCProg/SamuraiShodown-XMatStudio">Samurai Shodown from X-Mat Studio</a></p>
+<p>Welcome to the webpage of <a href="https://github.com/juanha2/HollowFaith">Hollow Faith by Aarón Guerrero & Juan Hernández</a></p>
 
 <p align="justify">Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM during the "development of videogames" subject. The first level gives you time to adapt to the mechanics, in the second level those skills will be put to test.</p>
 
