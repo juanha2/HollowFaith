@@ -98,6 +98,11 @@ bool j1IntroScene::PostUpdate()
 {
 	bool ret = true;	
 
+	static char title[256];
+	sprintf_s(title, 256, "%s || MAIN MENU", App->GetTitle());
+
+	App->win->SetTitle(title);
+
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 	
