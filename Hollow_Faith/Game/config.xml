@@ -23,6 +23,10 @@
   <fonts>
     <default_font file="fonts/RifficFree-Bold.ttf" size="15"/>
   </fonts>
+
+  <gui>
+    <atlas file="Assets/GUI/atlas.png"/>
+  </gui>
   
   <scene>
     <fx>

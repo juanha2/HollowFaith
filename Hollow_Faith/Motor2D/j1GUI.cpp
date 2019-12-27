@@ -28,8 +28,7 @@ bool j1GUI::Awake(pugi::xml_node& config)
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
-	//atlasFile = config.child("atlas").attribute("file").as_string("");
-	atlasFile = ("Assets/GUI/atlas.png");
+	atlasFile = config.child("atlas").attribute("file").as_string();
 
 	return ret;
 }
@@ -45,7 +44,8 @@ bool j1GUI::Start()
 
 bool j1GUI::PreUpdate()
 {
-	
+	BROFILER_CATEGORY("GUI_PreUpdate", Profiler::Color::Azure);
+
 	bool ret = true;
 	p2List_item<j1GUIelement*>* tmp = GUIelementList.start;
 	while (tmp != nullptr)
@@ -61,6 +61,7 @@ bool j1GUI::PreUpdate()
 
 bool j1GUI::Update(float dt)
 {
+	BROFILER_CATEGORY("GUI_Update", Profiler::Color::BlanchedAlmond);
 
 	bool ret = true;
 	p2List_item<j1GUIelement*>* tmp = GUIelementList.start;
@@ -76,6 +77,7 @@ bool j1GUI::Update(float dt)
 
 bool j1GUI::PostUpdate()
 {
+	BROFILER_CATEGORY("GUI_PostUpdate", Profiler::Color::Beige);
 
 	bool ret = true;
 
@@ -111,6 +113,8 @@ SDL_Texture* j1GUI::GetAtlasTexture() const
 
 j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text, j1Module* listener, bool X_drag, bool Y_drag, SCROLL_TYPE scrollType, bool decor)
 {
+	BROFILER_CATEGORY("Creation_of_new_GUI_element", Profiler::Color::AliceBlue);
+
 	j1GUIelement* tmp = nullptr;
 
 	switch (type)
