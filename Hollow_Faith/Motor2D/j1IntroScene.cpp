@@ -41,6 +41,7 @@ bool j1IntroScene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1IntroScene::Start()
 {
+	
 	App->win->scale = 2;
 	App->audio->PlayMusic("audio/music/intro.ogg", 1.0f);
 		
@@ -83,8 +84,9 @@ bool j1IntroScene::Update(float dt)
 	
 	SDL_Rect rect1 = {0,0, 800,200 };
 	SDL_Rect rect2 = { 0,0,67,63 };
-	App->render->Blit(texture, 0, 0);
-	App->render->Blit(title_texture, 40, 40);
+	
+	App->render->Blit(texture, 0, 0);		
+	App->render->Blit(title_texture, 40, 40);	
 
 	App->render->Blit(fire_texture, 350, 250, &fire.GetCurrentFrame(dt));
 
@@ -103,7 +105,7 @@ bool j1IntroScene::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
-
+	
 	
 	return ret;
 }
@@ -138,6 +140,7 @@ bool j1IntroScene::CleanUp()
 	App->tex->UnLoad(texture);
 	App->tex->UnLoad(title_texture);
 	App->tex->UnLoad(fire_texture);
+
 	App->audio->UnLoad();
 	return true;
 }
@@ -216,7 +219,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 
 			if (element == credits_menu.link) {
 				App->audio->PlayFx(2, 0, 128);
-				ShellExecuteA(NULL, "open", "https://github.com/juanha2/HollowFaith", NULL, NULL, SW_SHOWNORMAL);
+				ShellExecuteA(NULL, "open", "https://juanha2.github.io/HollowFaith/", NULL, NULL, SW_SHOWNORMAL);
 			}				
 
 			if (element == exit_button)
@@ -224,7 +227,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 
 		}
 
-		case GUI_Event::EVENT_HOVER:
+		case GUI_Event::EVENT_DRAG:
 		{
 								
 		}		
@@ -256,6 +259,6 @@ void j1IntroScene::AddUIElements()
 	credits_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,20 }, { 0,0 }, true, true, { 124,165,37,31 }, nullptr, this);
 	credits_menu.exit = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 440,190 }, { 0,0 }, true, false, { 459,16,26,26 }, nullptr, this);
 	credits_menu.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 250,170 }, { 0,-3 }, false, false, { 166,167,109,27 }, "CREDITS", this);
-	credits_menu.link = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 325, 120 }, { -5,0 }, true, false, { 283, 75, 159, 31 }, "LINK TO PROJECT!", this);
+	credits_menu.link = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 325, 120 }, { -5,0 }, true, false, { 283, 75, 159, 31 }, "LINK OUR WEB!", this);
 	credits_menu.credits = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 215, 200 }, { 0,0 }, true, false, { 9,215, 257, 130 }, nullptr, this);
 }

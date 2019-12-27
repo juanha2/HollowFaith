@@ -25,7 +25,7 @@ bool j1GUIinputBox::Awake(pugi::xml_node&)
 
 bool j1GUIinputBox::Start()
 {
-	string = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, globalPosition, { 0,3 }, true, enabled, { localPosition.x,localPosition.y,50,50 }, text);
+	string = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, globalPosition, { 0,6 }, true, enabled, { localPosition.x,localPosition.y,50,50 }, text);
 	return true;
 }
 
@@ -35,11 +35,7 @@ bool j1GUIinputBox::PreUpdate()
 	string->enabled = enabled;	
 
 	if (focus && enabled) 
-	{
-		App->input->EnableTextInput();		
-		App->tex->UnLoad(string->texture);
-		string->texture = App->fonts->Print(App->input->GetText().GetString());
-	}
+		App->input->EnableTextInput();
 
 	else if (!focus || !enabled)
 		App->input->DisableTextInput();
@@ -69,12 +65,16 @@ bool j1GUIinputBox::Update(float dt)
 bool j1GUIinputBox::PostUpdate()
 {	
 	if (enabled) {
-		Draw();
+		Draw();		
+		
+		App->tex->UnLoad(string->texture);
+		string->texture = App->fonts->Print(App->input->GetText().GetString());
 
 		//Draws the cursor(rectangle) -------------
 		if (focus)
 		{
-			SDL_Rect rect = { (string->globalPosition.x + App->input->GetCursorPosition()) * App->win->GetScale() , (string->globalPosition.y + localPosition.y) * App->win->GetScale(), 2,  string->rect.h + 10 };
+			SDL_Rect rect = { (string->globalPosition.x + App->input->GetCursorPosition()) * App->win->GetScale() , 
+				(string->globalPosition.y + localPosition.y) * App->win->GetScale() + 6, 2,  string->rect.h + 10 };
 			App->render->DrawQuad(rect, 255, 255, 255, 255, true, false);
 		}
 	}

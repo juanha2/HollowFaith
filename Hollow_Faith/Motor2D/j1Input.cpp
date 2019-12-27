@@ -213,7 +213,7 @@ void j1Input::blockingInput() {
 
 void j1Input::EnableTextInput() 
 {
-	SDL_StartTextInput();	
+	SDL_StartTextInput();
 	text_input = true;	
 }
 
