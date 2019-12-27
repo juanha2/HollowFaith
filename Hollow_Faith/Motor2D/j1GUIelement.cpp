@@ -26,12 +26,12 @@ void j1GUIelement::Draw()
 {
 	if (above)
 	{
-		SDL_SetTextureColorMod(texture, 176, 12, 174);
-		SDL_SetTextureAlphaMod(texture, 200);
+		SDL_SetTextureColorMod(texture, 255, 255, 255);
+		SDL_SetTextureAlphaMod(texture, 255);
 	}
 	else
 	{
-		SDL_SetTextureColorMod(texture, 255, 255, 255);
+		SDL_SetTextureColorMod(texture, 125, 125, 125);
 		SDL_SetTextureAlphaMod(texture, 255);
 	}
 
