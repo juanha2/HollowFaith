@@ -37,12 +37,12 @@ src="https://www.youtube.com/embed/2Z4m4lnjxkY" frameborder="0" allowfullscreen>
   <tr>
     <td> <a href="https://github.com/AaronGCProg">Aarón Guerrero</a></td>
     <td>Code</td> 
-    <td><img src="https://raw.githubusercontent.com/AaronGCProg/SamuraiShodown-XMatStudio/master/docs/aaronPortrait.png" alt="Aaron" class="inline"></td>
+    <td><img src="https://raw.githubusercontent.com/juanha2/HollowFaith/master/docs/aaronPortrait.png" alt="Aaron" class="inline"></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/juanha2">Juán Hernández</a></td>
+    <td><a href="https://github.com/juanha2">Juan Hernández</a></td>
     <td>Code</td> 
-    <td><img src="" alt="Juan" class="inline"></td>
+    <td><img src="https://raw.githubusercontent.com/juanha2/HollowFaith/master/docs/juanPortrait.png" alt="Juan" class="inline"></td>
   </tr>
 </table>
 </center>
