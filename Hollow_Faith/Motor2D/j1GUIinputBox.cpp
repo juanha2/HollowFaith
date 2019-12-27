@@ -47,6 +47,17 @@ bool j1GUIinputBox::PreUpdate()
 
 bool j1GUIinputBox::Update(float dt)
 {
+	if (enabled) 
+	{
+		if (App->input->GetText().Length()!=0) {
+			App->tex->UnLoad(string->texture);
+			string->texture = App->fonts->Print(App->input->GetText().GetString());
+		}	
+		else {
+			App->tex->UnLoad(string->texture);
+			string->texture = App->fonts->Print(" ");
+		}
+	}
 
 	if (above) 
 	{
@@ -65,10 +76,7 @@ bool j1GUIinputBox::Update(float dt)
 bool j1GUIinputBox::PostUpdate()
 {	
 	if (enabled) {
-		Draw();		
-		
-		App->tex->UnLoad(string->texture);
-		string->texture = App->fonts->Print(App->input->GetText().GetString());
+		Draw();				
 
 		//Draws the cursor(rectangle) -------------
 		if (focus)

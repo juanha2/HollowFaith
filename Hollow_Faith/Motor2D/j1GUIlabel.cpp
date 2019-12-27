@@ -22,8 +22,7 @@ bool j1GUIlabel::Awake(pugi::xml_node&)
 }
 
 bool j1GUIlabel::Start()
-{	
-	texture = App->fonts->Print(text);
+{		
 	return true;
 }
 
@@ -37,13 +36,15 @@ bool j1GUIlabel::PreUpdate()
 
 bool j1GUIlabel::Update(float dt) 
 {		
-	texture = App->fonts->Print(text, color);
+	if(text!=nullptr)
+		texture = App->fonts->Print(text, color);
+
 	return true;
 }
 
 bool j1GUIlabel::PostUpdate()
 {		
-	if (enabled) 			
+	if (enabled && texture!=nullptr) 			
 		App->render->Blit(texture, globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, nullptr, 0.0f);
 			
 
