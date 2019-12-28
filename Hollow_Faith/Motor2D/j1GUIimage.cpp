@@ -1,6 +1,5 @@
 #include "j1GUIimage.h"
 #include "j1App.h"
-#include "j1Textures.h"
 
 
 j1GUIimage::j1GUIimage() {
@@ -37,7 +36,6 @@ bool j1GUIimage::PostUpdate()
 
 bool j1GUIimage::CleanUp()
 {
-	//App->tex->UnLoad(texture);
 	return true;
 }
 

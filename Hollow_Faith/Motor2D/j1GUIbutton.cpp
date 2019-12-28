@@ -2,7 +2,7 @@
 #include "j1GUIButton.h"
 #include "j1Input.h"
 #include "j1GUI.h"
-#include "j1Textures.h"
+
 
 j1GUIButton::j1GUIButton() {
 
@@ -97,7 +97,6 @@ bool j1GUIButton::PostUpdate()
 
 bool j1GUIButton::CleanUp()
 {
-	//App->tex->UnLoad(texture);
 	return true;
 }
 

@@ -2,20 +2,17 @@
 <game_state>
 	<Bonfire num="1">
 		<position x="112" y="320" />
-		<active value="true" />
+		<active value="false" />
 	</Bonfire>
 	<Bonfire num="2">
 		<position x="888.010986" y="175.485001" />
-		<active value="false" />
+		<active value="true" />
 	</Bonfire>
 	<player>
-		<position x="112" y="320" />
+		<position x="888.010986" y="175.485001" />
 	</player>
 	<EnemyLand>
-		<position x="608" y="320" />
-	</EnemyLand>
-	<EnemyLand>
-		<position x="1424" y="224" />
+		<position x="1424" y="213" />
 	</EnemyLand>
 	<EnemyFly>
 		<position x="832" y="48" />
@@ -24,46 +21,7 @@
 		<position x="1056" y="128" />
 	</EnemyFly>
 	<Coins>
-		<position x="176" y="320" />
-	</Coins>
-	<Coins>
-		<position x="193" y="292" />
-	</Coins>
-	<Coins>
-		<position x="213" y="263.5" />
-	</Coins>
-	<Coins>
-		<position x="239" y="239.5" />
-	</Coins>
-	<Coins>
-		<position x="295.5" y="260.5" />
-	</Coins>
-	<Coins>
-		<position x="268" y="236" />
-	</Coins>
-	<Coins>
-		<position x="390.5" y="215" />
-	</Coins>
-	<Coins>
 		<position x="583.5" y="250.5" />
-	</Coins>
-	<Coins>
-		<position x="610" y="251" />
-	</Coins>
-	<Coins>
-		<position x="637.5" y="250" />
-	</Coins>
-	<Coins>
-		<position x="784" y="184" />
-	</Coins>
-	<Coins>
-		<position x="803.5" y="155" />
-	</Coins>
-	<Coins>
-		<position x="832.5" y="138" />
-	</Coins>
-	<Coins>
-		<position x="857.5" y="155.5" />
 	</Coins>
 	<Coins>
 		<position x="956.5" y="222" />

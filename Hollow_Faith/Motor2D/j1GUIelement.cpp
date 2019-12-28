@@ -56,10 +56,9 @@ void j1GUIelement::Draw()
 		SDL_SetTextureAlphaMod(texture, 255);
 	}
 
-	if (texture)
-		App->render->Blit(texture, globalPosition.x, globalPosition.y, &rect, 0.0f, 0.0f);
+	App->render->Blit(texture, globalPosition.x, globalPosition.y, &rect, 0.0f, 0.0f);
 
-	if (App->scene->debugUI)
+	if(App->scene->debug)
 		App->render->DrawQuad({ globalPosition.x, globalPosition.y, rect.w, rect.h }, 0, 255, 255, 255, false, false, true);
 }
 

@@ -78,8 +78,9 @@ public:
 	p2SString GetModifiedString();
 
 	int			mouse_x;
-	int			mouse_y;
+	int			mouse_y;	
 
+	p2SString	final_text;
 	p2SString	text;
 
 private:

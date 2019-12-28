@@ -10,26 +10,13 @@
 	<scene>
 		<currentmap value="1" />
 		<lifes value="3" />
-		<coins value="1" />
-		<time value="2.56099963" />
-		<score value="50" />
+		<coins value="5" />
+		<time value="2.84499931" />
+		<score value="250" />
 	</scene>
-	<:anonymous />
 	<objects>
 		<Coins>
-			<position x="193" y="292" />
-		</Coins>
-		<Coins>
-			<position x="213" y="263.5" />
-		</Coins>
-		<Coins>
-			<position x="239" y="239.5" />
-		</Coins>
-		<Coins>
-			<position x="295.5" y="260.5" />
-		</Coins>
-		<Coins>
-			<position x="268" y="236" />
+			<position x="176" y="320" />
 		</Coins>
 		<Coins>
 			<position x="390.5" y="215" />
@@ -94,7 +81,7 @@
 			<active value="false" />
 		</Bonfire>
 		<player>
-			<position x="173.557999" y="311.799988" />
+			<position x="291.231659" y="261" />
 		</player>
 	</objects>
 	<gui />
@@ -103,6 +90,6 @@
 	<checkpoint />
 	<FadeToBlack />
 	<renderer>
-		<camera x="0" y="-10" />
+		<camera x="-104" y="-10" />
 	</renderer>
 </game_state>

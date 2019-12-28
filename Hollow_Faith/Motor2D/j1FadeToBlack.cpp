@@ -15,7 +15,6 @@
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 #include "j1IntroScene.h"
-#include "j1Console.h"
 
 
 j1FadeToBlack::j1FadeToBlack(): j1Module()
@@ -62,7 +61,6 @@ bool j1FadeToBlack::PostUpdate()
 		{
 			to_disable->Disable();
 			App->intro->Disable();
-			App->console->Disable();
 			App->pathfinding->CleanUp();
 			App->objects->CleanUp();
 			App->coll->CleanUp();
@@ -107,8 +105,7 @@ bool j1FadeToBlack::PostUpdate()
 		{
 			current_step = fade_step::none;
 			App->input->Enable();
-			to_enable->Enable();	
-			App->console->Enable();
+			to_enable->Enable();						
 		}
 			
 	} break;
