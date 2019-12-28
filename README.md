@@ -20,7 +20,7 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 
 ### Console:
 - º: Open/Close Console 
-## Commands:
+#### Commands:
 - list: display the list of commands
 - god_mode: toggles god mode on/off
 - quit: exits the game
