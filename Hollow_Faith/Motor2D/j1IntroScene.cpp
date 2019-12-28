@@ -28,7 +28,8 @@ j1IntroScene::~j1IntroScene()
 bool j1IntroScene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Intro Scene");
-	bool ret = true;	
+	bool ret = true;		
+
 	pugi::xml_node fxIterator = config.child("fx");
 	click_Fx1 = fxIterator.child("clickFx1").attribute("path").as_string();
 	click_Fx2 = fxIterator.child("clickFx2").attribute("path").as_string();
@@ -42,6 +43,8 @@ bool j1IntroScene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1IntroScene::Start()
 {	
+	App->SaveGame();
+
 	App->win->scale = 2;
 	App->audio->PlayMusic("audio/music/intro.ogg", 1.0f);
 		
@@ -61,8 +64,11 @@ bool j1IntroScene::Start()
 
 	if (result == NULL)
 		continue_button->interactable = false;
-	else
+	else {
 		continue_button->interactable = true;
+		App->LoadGame();
+	}
+		
 	//-------------------------------------------------------	
 	return true;
 }
@@ -309,4 +315,24 @@ void j1IntroScene::AddUIElements()
 	highscore_menu.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 250,160 }, { 0,-3 }, false, false, { 533,78,129,32 }, "HIGHSCORES!", this, false, false, SCROLL_TYPE::SCROLL_NONE, true);
 	highscore_menu.label1= App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 230, 240 }, { 0,-3 }, false, false, { 166,167,109,27 }, "BEST TIME:", this);
 	highscore_menu.label2 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 230, 290 }, { 0,-3 }, false, false, { 166,167,109,27 }, "BEST SCORE:", this);
+}
+
+bool j1IntroScene::Save(pugi::xml_node& save) const
+{
+	pugi::xml_node time_node = save.append_child("time");
+	pugi::xml_node score_node = save.append_child("score");	
+	time_node.append_attribute("value").set_value(final_time);
+	score_node.append_attribute("value").set_value(final_score);
+	return true;
+}
+
+
+// ----------------------------------------------------------------------------------
+// Load Game State
+// ----------------------------------------------------------------------------------
+bool j1IntroScene::Load(pugi::xml_node& save)
+{
+	final_time = save.child("time").attribute("value").as_float();	
+	final_score = save.child("score").attribute("value").as_float();
+	return true;
 }
