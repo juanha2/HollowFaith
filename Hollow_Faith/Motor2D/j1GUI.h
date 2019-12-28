@@ -11,7 +11,6 @@
 
 class j1Entity;
 
-
 class j1GUI : public j1Module
 {
 
@@ -26,7 +25,8 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
-
+	bool DeleteElements();
+	bool DeleteConsole();
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
 	

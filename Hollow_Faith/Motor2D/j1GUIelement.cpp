@@ -106,3 +106,7 @@ void j1GUIelement::Dragging()
 {
 
 }
+
+void j1GUIelement::PrintText(const char* txt) {
+
+}

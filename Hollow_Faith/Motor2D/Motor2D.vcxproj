@@ -80,6 +80,7 @@
     <ClCompile Include="j1Checkpoint.cpp" />
     <ClCompile Include="j1Coins.cpp" />
     <ClCompile Include="j1Collision.cpp" />
+    <ClCompile Include="j1Console.cpp" />
     <ClCompile Include="j1Enemy.cpp" />
     <ClCompile Include="j1EnemyFly.cpp" />
     <ClCompile Include="j1EnemyLand.cpp" />
@@ -89,6 +90,7 @@
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1GUI.cpp" />
     <ClCompile Include="j1GUIbutton.cpp" />
+    <ClCompile Include="j1GUIconsole.cpp" />
     <ClCompile Include="j1GUIelement.cpp" />
     <ClCompile Include="j1GUIimage.cpp" />
     <ClCompile Include="j1GUIinputBox.cpp" />
@@ -117,6 +119,7 @@
     <ClInclude Include="j1Checkpoint.h" />
     <ClInclude Include="j1Coins.h" />
     <ClInclude Include="j1Collision.h" />
+    <ClInclude Include="j1Console.h" />
     <ClInclude Include="j1Enemy.h" />
     <ClInclude Include="j1EnemyFly.h" />
     <ClInclude Include="j1EnemyLand.h" />
@@ -126,6 +129,7 @@
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1GUI.h" />
     <ClInclude Include="j1GUIbutton.h" />
+    <ClInclude Include="j1GUIconsole.h" />
     <ClInclude Include="j1GUIelement.h" />
     <ClInclude Include="j1GUIimage.h" />
     <ClInclude Include="j1GUIinputBox.h" />

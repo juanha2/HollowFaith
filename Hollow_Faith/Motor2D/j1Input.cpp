@@ -6,6 +6,7 @@
 #include "SDL/include/SDL.h"
 #include "j1Fonts.h"
 #include "j1Scene.h"
+#include "j1Console.h"
 
 #define MAX_KEYS 300
 
@@ -140,12 +141,12 @@ bool j1Input::PreUpdate()
 					}
 					if (event.key.keysym.sym == SDLK_RETURN) {
 						cursor_position = 0;
-						final_text = text;
+						LOG("%s",text.GetString());
 						text.Clear();					
 					}
-					if (event.key.keysym.sym == SDLK_BACKQUOTE) {
-						text.Clear();
-						App->scene->EnableDisableConsole();						
+					if (event.key.keysym.sym == SDLK_BACKQUOTE) {					
+						App->console->EnableDisableConsole();
+						text.Clear();											
 						cursor_position = 0;					
 					}
 				}				
@@ -219,6 +220,7 @@ void j1Input::DisableTextInput() {
 
 	SDL_StopTextInput();
 	text_input = false;
+	App->input->text.Clear();
 }
 
 p2SString j1Input::GetText() {

@@ -15,6 +15,7 @@ enum class GUItype
 	GUI_SCROLLBAR,
 	GUI_LABEL,
 	GUI_IMAGE,
+	GUI_CONSOLE,
 	GUI_MAX
 };
 
@@ -51,6 +52,7 @@ public:
 	virtual void OnRelease();
 	virtual void Dragging();
 	void Draw();
+	virtual void PrintText(const char* txt);
 
 
 public:

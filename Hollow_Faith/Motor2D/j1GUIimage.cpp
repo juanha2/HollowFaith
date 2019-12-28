@@ -1,6 +1,6 @@
 #include "j1GUIimage.h"
 #include "j1App.h"
-
+#include "j1Render.h"
 
 j1GUIimage::j1GUIimage() {
 
@@ -28,7 +28,10 @@ bool j1GUIimage::PreUpdate()
 
 bool j1GUIimage::PostUpdate()
 {	
-	if(enabled)
+	if (parent && enabled && parent->type == GUItype::GUI_CONSOLE)
+		App->render->DrawQuad(rect, 0, 0, 0, 255, true, false);
+
+	else if(enabled)
 		Draw();
 
 	return true;

@@ -27,6 +27,7 @@ class j1Checkpoint;
 class j1GUI;
 class j1Fonts;
 class j1IntroScene;
+class j1Console;
 
 class j1App
 {
@@ -109,6 +110,7 @@ public:
 	j1GUI*				gui;
 	j1Fonts*			fonts;
 	j1IntroScene*		intro;
+	j1Console*			console;
 
 	pugi::xml_document	config_file;
 	// - - - - DELTA TIME - - - -

@@ -25,7 +25,7 @@ bool j1GUIinputBox::Awake(pugi::xml_node&)
 
 bool j1GUIinputBox::Start()
 {
-	string = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, globalPosition, { 0,6 }, true, enabled, { localPosition.x,localPosition.y,50,50 }, text);
+	string = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, globalPosition, { 0,10 }, true, enabled, { localPosition.x,localPosition.y,50,50 }, text);
 	return true;
 }
 
@@ -77,13 +77,13 @@ bool j1GUIinputBox::Update(float dt)
 bool j1GUIinputBox::PostUpdate()
 {	
 	if (enabled) {
-		Draw();				
+		App->render->DrawQuad(rect,255,255,255,255,false, false);				
 
 		//Draws the cursor(rectangle) -------------
 		if (focus)
 		{
 			SDL_Rect rect = { (string->globalPosition.x + App->input->GetCursorPosition()) * App->win->GetScale(), 
-				(string->globalPosition.y + localPosition.y) * App->win->GetScale() + 6, 2,  string->rect.h + 10 };
+				(string->globalPosition.y + localPosition.y) * App->win->GetScale() , 2,  string->rect.h-4  };
 			App->render->DrawQuad(rect, 255, 255, 255, 255, true, false);
 		}
 	}

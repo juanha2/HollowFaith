@@ -8,12 +8,6 @@
 struct SDL_Texture;
 class j1GUIelement;
 
-struct Console 
-{
-	j1GUIelement* input_box = nullptr;
-	j1GUIelement* image = nullptr;
-};
-
 struct InGameMenu {
 
 	j1GUIelement* menu_button = nullptr;
@@ -75,11 +69,9 @@ public:
 	void LoadMap(int num_map);
 
 	void GuiObserver(GUI_Event type, j1GUIelement* element);
-	bool ConsoleLogic();
 
 	void AddUIElements();
 	void EnableDisableMenu();
-	void EnableDisableConsole();
 	void EnableDisableVictoryMenu();
 
 public:
@@ -134,8 +126,7 @@ public:
 	j1GUIelement*		score_label = nullptr;
 	j1GUIelement*		score_icon = nullptr;
 
-	InGameMenu			menu;
-	Console				console;
+	InGameMenu			menu;	
 	CompleteMenu		complete;
 };
 

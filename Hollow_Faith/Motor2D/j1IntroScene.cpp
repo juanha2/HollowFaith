@@ -35,13 +35,14 @@ bool j1IntroScene::Awake(pugi::xml_node& config)
 
 	pugi::xml_node animIterator = config.child("animation");
 	fire.load_animation(animIterator, "fire");
-	final_time = 0;
+	//final_time = 0;
 	return ret;
 }
 
 // Called before the first frame
 bool j1IntroScene::Start()
 {	
+	
 	App->win->scale = 2;
 	App->audio->PlayMusic("audio/music/intro.ogg", 1.0f);
 		
@@ -72,13 +73,19 @@ bool j1IntroScene::PreUpdate() {
 
 	Mix_VolumeMusic(App->audio->MUSICvolume);
 
-	sprintf_s(scoreText, "%0.5d", final_score);
+	sprintf_s(scoreText, "%d", final_score);
 	App->tex->UnLoad(highscore_menu.best_score->texture);
-	highscore_menu.best_score->text = scoreText;
+	highscore_menu.best_score->texture = nullptr;
+	highscore_menu.best_score->texture = App->fonts->Print(scoreText);
+	App->fonts->CalcSize(scoreText, highscore_menu.best_score->rect.w, highscore_menu.best_score->rect.h);
+
 
 	sprintf_s(timerText, "%.2f", final_time);
 	App->tex->UnLoad(highscore_menu.best_time->texture);
-	highscore_menu.best_time->text = timerText;
+	highscore_menu.best_time->texture = nullptr;
+	highscore_menu.best_time->texture = App->fonts->Print(timerText);
+	App->fonts->CalcSize(timerText, highscore_menu.best_time->rect.w, highscore_menu.best_time->rect.h);
+
 
 	return true;
 }
@@ -150,7 +157,7 @@ bool j1IntroScene::CleanUp()
 	highscore_menu.label1 = nullptr;
 	highscore_menu.label2 = nullptr;
 		
-	App->gui->CleanUp();
+	App->gui->DeleteElements();
 	App->tex->UnLoad(texture);
 	App->tex->UnLoad(title_texture);
 	App->tex->UnLoad(fire_texture);

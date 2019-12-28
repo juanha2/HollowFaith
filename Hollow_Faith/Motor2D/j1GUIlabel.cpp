@@ -8,6 +8,7 @@
 j1GUIlabel::j1GUIlabel() 
 {
 	this->type = GUItype::GUI_LABEL;
+	 
 }
 
 j1GUIlabel::~j1GUIlabel() {
@@ -23,22 +24,24 @@ bool j1GUIlabel::Awake(pugi::xml_node&)
 
 bool j1GUIlabel::Start()
 {		
-	//App->fonts->CalcSize(App->input->GetText().GetString(), rect.w, rect.h);
+
+	if(text && strlen(text)>2)
+		texture = App->fonts->Print(text, color);
+
 	return true;
 }
 
 
 bool j1GUIlabel::PreUpdate() 
-{
-	CleanUp();
-	App->fonts->CalcSize(App->input->GetText().GetString(), rect.w, rect.h);
+{	
+	
 	return true;
 }
 
 bool j1GUIlabel::Update(float dt) 
 {		
-	if(text!=nullptr)
-		texture = App->fonts->Print(text, color);
+	/*if(text!=nullptr)
+		texture = App->fonts->Print(text, color);*/
 
 	return true;
 }

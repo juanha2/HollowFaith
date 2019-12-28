@@ -9,6 +9,7 @@
 #include "j1GUIinputBox.h"
 #include "j1GUIlabel.h"
 #include "j1GUIimage.h"
+#include "j1GUIconsole.h"
 
 #include "j1GUIscrollBar.h"
 
@@ -104,6 +105,46 @@ bool j1GUI::CleanUp()
 	return true;
 }
 
+bool j1GUI::DeleteElements()
+{
+	LOG("Freeing GUI");
+
+	for (p2List_item<j1GUIelement*>* item = GUIelementList.start; item; item = item->next)
+	{
+		if (item->data->type != GUItype::GUI_CONSOLE) {
+			item->data->CleanUp();
+			RELEASE(item->data);
+			GUIelementList.del(item);
+		}			
+	}
+	
+	return true;
+}
+
+bool j1GUI::DeleteConsole()
+{
+	LOG("Freeing GUI");
+
+	for (p2List_item<j1GUIelement*>* item = GUIelementList.start; item; item = item->next)
+	{		
+		if (item->data->parent!=nullptr && item->data->parent->type == GUItype::GUI_CONSOLE) {
+			item->data->CleanUp();
+			RELEASE(item->data);
+			GUIelementList.del(item);
+		}
+	}
+
+	for (p2List_item<j1GUIelement*>* item = GUIelementList.start; item; item = item->next)
+	{
+		if (item->data->type == GUItype::GUI_CONSOLE) {
+			item->data->CleanUp();
+			RELEASE(item->data);
+			GUIelementList.del(item);
+		}
+	}
+
+	return true;
+}
 
 SDL_Texture* j1GUI::GetAtlasTexture() const
 {
@@ -134,6 +175,9 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 		break;
 	case GUItype::GUI_SCROLLBAR:
 		tmp = new j1GUIscrollBar(scrollType);
+		break;
+	case GUItype::GUI_CONSOLE:
+		tmp = new j1GUIconsole();
 		break;
 	}
 
