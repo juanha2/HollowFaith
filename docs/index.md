@@ -49,9 +49,10 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </table>
 </center>
 
+<h1  align="center" id="how-to-play">How to Play it?</h1>
 
+<center>
 <h2  align="center" id="game-inputs">Game Inputs</h2>
-
 <table style="width:100%">
   <tr>
     <th>Input</th>
@@ -65,28 +66,71 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
     <td> Space </td>
     <td> Jump </td> 
   </tr>
+    <tr>
+    <td> HOLD Space </td>
+    <td> Hover </td> 
+  </tr>
+    <tr>
+    <td> K </td>
+    <td> Throw a Rock </td> 
+  </tr>
+    <tr>
+    <td> º </td>
+    <td> Open/Close Console </td> 
+  </tr>
 </table>
 </center>
+
+<center>
+<h2  align="center" id="game-inputs">Console Commands</h2>
+<table style="width:100%">
+  <tr>
+    <th>Command</th>
+    <th>Action</th> 
+  </tr>
+  <tr>
+    <td> list </td>
+    <td> Display the list of commands </td> 
+  </tr>
+  <tr>
+    <td> god_mode </td>
+    <td> Toggles god mode on/off </td> 
+  </tr>
+    <tr>
+    <td> quit </td>
+    <td> Exits the game </td> 
+  </tr>
+    <tr>
+    <td> FPS<number> </td>
+    <td> Change FPS cap with some safe limits (30-120)</td> 
+  </tr>
+    <tr>
+    <td> map<map_name> </td>
+    <td> Load another map </td> 
+  </tr>
+</table>
+</center>
+
 
 <br><br>
 
 <details> 
   <summary> GAME LICENSE </summary>
-<br><br><br>
- ####MIT License
-<br><br><br>
-####Copyright (c) [2019] [Aarón Guerrero Cruz / Juan Hernández Almagro]
-<br><br><br>
+<br><br>
+MIT License
+<br>
+Copyright (c) [2019] [Aarón Guerrero Cruz / Juan Hernández Almagro]
+<br>
 <p align="justify">Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:</p>
-<br><br>
+<br>
 <p align="justify">The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.</p>
-<br><br>
+<br>
 <p align="justify">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
