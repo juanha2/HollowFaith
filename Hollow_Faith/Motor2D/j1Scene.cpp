@@ -279,9 +279,11 @@ bool j1Scene::Save(pugi::xml_node& save) const
 	pugi::xml_node lifes_node = save.append_child("lifes");
 	pugi::xml_node coins_node = save.append_child("coins");
 	pugi::xml_node time_node = save.append_child("time");
+	pugi::xml_node score_node = save.append_child("score");
 	current_map.append_attribute("value").set_value(currentmap);
 	lifes_node.append_attribute("value").set_value(lifes);
 	time_node.append_attribute("value").set_value(timer);
+	score_node.append_attribute("value").set_value(score);
 
 	if (!App->checkpoint->save_checkpoints)
 		coins_node.append_attribute("value").set_value(num_coins);
@@ -302,6 +304,7 @@ bool j1Scene::Load(pugi::xml_node& save)
 	lifes = save.child("lifes").attribute("value").as_int();
 	timer = save.child("time").attribute("value").as_float();
 	num_coins = save.child("coins").attribute("value").as_int();
+	score = save.child("score").attribute("value").as_float();
 
 	if (savedcurrentmap == currentmap && App->intro->want_continue)
 		LoadMap(currentmap);
@@ -369,8 +372,7 @@ void j1Scene::sceneswitch()
 				lifes--;
 			}
 
-			num_coins = 0;
-			score = 0;
+			num_coins = 0;		
 
 			if (currentmap == 1)
 				currentmap = 1;
@@ -492,8 +494,7 @@ bool j1Scene::ConsoleLogic()
 	if (App->input->GetText() == "FPS")
 	{
 			
-	}
-	
+	}	
 	if (App->input->final_text == "map1") {
 		currentmap = 1;
 		App->checkpoint->checkpoint = false;
@@ -574,6 +575,7 @@ void j1Scene::EnableDisableConsole()
 
 void j1Scene::EnableDisableVictoryMenu() {
 
+	
 	App->pause = !App->pause;
 	complete.image->enabled = !complete.image->enabled;
 	complete.exit_button->enabled = !complete.exit_button->enabled;

@@ -388,11 +388,16 @@ bool j1App::LoadGameNow()
 		p2List_item<j1Module*>* item = modules.start;
 		ret = true;
 
-		while(item != NULL && ret == true)
-		{
-			ret = item->data->Load(root.child(item->data->name.GetString()));	
-			item = item->next;
+		if (!intro->active) {
+			while (item != NULL && ret == true)
+			{
+				ret = item->data->Load(root.child(item->data->name.GetString()));
+				item = item->next;
+			}
 		}
+		else {
+			intro->Load(root.child(intro->name.GetString()));
+		}		
 
 		data.reset();
 		if(ret == true)
@@ -421,11 +426,16 @@ bool j1App::SaveGameNow() const
 
 	p2List_item<j1Module*>* item = modules.start;
 
-	while(item != NULL && ret == true)
-	{
-		ret = item->data->Save(root.append_child(item->data->name.GetString()));
-		item = item->next;
+	if (!intro->active) {
+		while (item != NULL && ret == true)
+		{
+			ret = item->data->Save(root.append_child(item->data->name.GetString()));
+			item = item->next;
+		}
 	}
+	else
+		intro->Save(root.append_child(intro->name.GetString()));
+	
 
 	if(ret == true)
 	{
