@@ -6,7 +6,7 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 ## How to play:
 
 ### General
-- ESC: Close Game
+- ESC: Open Menu in Scene, or Close game in Main Menu.
 ### Keyboard:
 - A: Move left
 - D: Move right
@@ -18,6 +18,18 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 
 - K: Throw a rock to hit the enemies. (You need two hits to eliminate them)
 
+### Console:
+- º: Open/Close Console 
+## Commands:
+- list: display the list of commands
+- god_mode: toggles god mode on/off
+- quit: exits the game
+- FPS<number>: change FPS cap with some safe limits (30-120)
+- map<map_name>: load another map
+
+
+## Find our project Web Page in: 
+https://juanha2.github.io/HollowFaith/
 
 ## Find this project's repository in:
 https://github.com/juanha2/HollowFaith
@@ -52,7 +64,7 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 
 ## Innovations:
 
-### 1rst Pack Innovations:
+### 1rst Pack Innovations (NP)
 - Animation loading from XML
 - Particle effects system
 - Procedural collision system
@@ -61,12 +73,17 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 - Music path from Tiled Map editor
 - Only blit current Camera Tiles
 
-### 2nd Pack Innovations:
+### 2nd Pack Innovations (100 %)
+- Enemies spawns loading from TMX
 - Extra feature: Throw a rock with parabolic path
 - Skills with cooldown (Rock)
 - Checkpoints autosave
 - Spatial Audio
 - Land Enemies know when they need jump with Pathfinding
+
+### 3r Pack Innovations
+- Saved High Score & Best Time
+
 
 ## Member contributions
 
@@ -83,6 +100,10 @@ Juan Hernández Almagro
 - Creation of entity system
 - Checkpoints logic
 - UML Entities
+- Implementation of Score & Life systems
+- Implementation base of main menu & game menu
+- UI Image, Inputbox & Label
+
 
 Aarón Guerrero Cruz
 - Creation of player time/movement logic system
@@ -98,6 +119,11 @@ Aarón Guerrero Cruz
 - Delta Time (Cap frames and balancing it)
 - Enemies behavior
 - Brofiler Implementation at the Code
+- GUI Manager
+- GUI Elements system
+- UI Button & Scrollbar
+- Gameplay Trailer
+- Web Page
 
 
 ## Debug functionality:
@@ -106,6 +132,7 @@ Aarón Guerrero Cruz
 - F3 ​Start from current level
 - F5 ​Save the current state
 - F6 ​Load the previous state
+- F8 Debug UI
 - F9 ​See paths and colliders
 - F10 ​God Mode
 - F11 ​Cap/Uncap Frames
