@@ -3,6 +3,13 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 
 *All feedback has been applied at the project. Thanks for it.
 
+
+## Find our project Web Page in: 
+https://juanha2.github.io/HollowFaith/
+
+## Find this project's repository in:
+https://github.com/juanha2/HollowFaith
+
 ## How to play:
 
 ### General
@@ -20,27 +27,34 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 
 ### Console:
 - º: Open/Close Console 
-## Commands:
+#### Commands:
 - list: display the list of commands
 - god_mode: toggles god mode on/off
 - quit: exits the game
 - FPS<number>: change FPS cap with some safe limits (30-120)
 - map<map_name>: load another map
 
+### Debug functionality:
+- F1 ​Start from level 1
+- F2 ​Start from level 2
+- F3 ​Start from current level
+- F5 ​Save the current state
+- F6 ​Load the previous state
+- F8 Debug UI
+- F9 ​See paths and colliders
+- F10 ​God Mode
+- F11 ​Cap/Uncap Frames
 
-## Find our project Web Page in: 
-https://juanha2.github.io/HollowFaith/
 
-## Find this project's repository in:
-https://github.com/juanha2/HollowFaith
-
-## Credits
+## Authors
 - Aarón Guerrero Cruz
 > Github profile: https://github.com/AaronGCProg
 
 - Juan Hernández Almagro
 > Github profile: https://github.com/juanha2
 
+
+## Resources
 - Art from:
 
 https://craftpix.net/freebies/free-pixel-art-tiny-hero-sprites/?utm_source=dribbble.com&utm_medium=myself&utm_campaign=sprite
@@ -87,7 +101,7 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 
 ## Member contributions
 
-Juan Hernández Almagro
+#### Juan Hernández Almagro
 - Creation of the maps
 - Implemented colliders from Tiled
 - Implemented animations 
@@ -105,7 +119,7 @@ Juan Hernández Almagro
 - UI Image, Inputbox & Label
 
 
-Aarón Guerrero Cruz
+#### Aarón Guerrero Cruz
 - Creation of player time/movement logic system
 - Implemented collision logic system
 - Implemented animation logic system
@@ -125,17 +139,6 @@ Aarón Guerrero Cruz
 - Gameplay Trailer
 - Web Page
 
-
-## Debug functionality:
-- F1 ​Start from level 1
-- F2 ​Start from level 2
-- F3 ​Start from current level
-- F5 ​Save the current state
-- F6 ​Load the previous state
-- F8 Debug UI
-- F9 ​See paths and colliders
-- F10 ​God Mode
-- F11 ​Cap/Uncap Frames
 
 ## License:
 MIT License
