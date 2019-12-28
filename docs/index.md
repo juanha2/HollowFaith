@@ -109,15 +109,10 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
     <td> Open/Close Console </td> 
   </tr>
 </table>
-</center>
-<br><br>
 
+<br><br>
 <h2  align="center" id="game-inputs">Console Commands</h2>
-
-  
-
 <br><br>
-
 <table style="width:100%">
   <tr>
     <th>Command</th>
