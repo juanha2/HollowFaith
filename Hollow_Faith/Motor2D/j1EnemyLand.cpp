@@ -111,7 +111,6 @@ bool j1EnemyLand::PreUpdate()
 			hurtedConsec = false;
 		}		
 	}
-
 	
 	// We check after update the speed
 	speedLimitChecker(); 

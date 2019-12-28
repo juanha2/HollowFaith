@@ -260,6 +260,6 @@ void j1IntroScene::AddUIElements()
 	credits_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,20 }, { 0,0 }, true, true, { 124,165,37,31 }, nullptr, this);
 	credits_menu.exit = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 440,190 }, { 0,0 }, true, false, { 459,16,26,26 }, nullptr, this);
 	credits_menu.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 250,170 }, { 0,-3 }, false, false, { 166,167,109,27 }, "CREDITS", this, false, false, SCROLL_TYPE::SCROLL_NONE, true);
-	credits_menu.link = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 325, 120 }, { -5,0 }, true, false, { 283, 75, 159, 31 }, "LINK OUR WEB!", this);
+	credits_menu.link = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 325, 120 }, { -5,0 }, true, false, { 283, 75, 159, 31 }, "LINK TO OUR WEB!", this);
 	credits_menu.credits = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 215, 200 }, { 0,0 }, true, false, { 9,215, 257, 130 }, nullptr, this);
 }

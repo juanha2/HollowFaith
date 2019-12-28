@@ -63,6 +63,7 @@ bool j1Scene::Start()
 	timer = 0;
 	lifes = 3;
 	score = 0;
+	num_coins = 0;
 	App->win->scale = 2;
 	currentmap = 1;
 	ready_to_load = false;
@@ -324,6 +325,7 @@ void j1Scene::sceneswitch()
 		if (App->objects->player->win) {
 
 			App->objects->player->ignoreColl = true;
+			App->checkpoint->checkpoint = false;
 
 			if (currentmap == 1)
 			{
@@ -332,22 +334,20 @@ void j1Scene::sceneswitch()
 					sound_repeat = true;
 				}
 				currentmap = 2;
+				for (int i = 1; i <= App->map->data.numLevels; i++) {
+					if (currentmap == i)
+						App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
+				}
 			}
 			else if (currentmap == 2)
 			{
 				if (!sound_repeat) {
 					App->audio->PlayFx(4, 0, App->audio->FXvolume);
 					sound_repeat = true;
+					App->fade_to_black->FadeToBlack(App->intro, this);
 				}
-				currentmap = 1;
-			}
-
-			App->checkpoint->checkpoint = false;
-
-			for (int i = 1; i <= App->map->data.numLevels; i++) {
-				if (currentmap == i)
-					App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
-			}
+				//currentmap = 1;
+			}				
 
 		}
 		// Losing -------------------------
