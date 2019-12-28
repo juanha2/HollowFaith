@@ -52,6 +52,30 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </center>
 
 <br><br>
+<h2  align="center" id="main-core-subsystems">Main Core Subsystems</h2>
+
+Entities Manager and Entities Elements - GUI Manager and GUI Elements
+
+<details> 
+  <summary> Extra Features: Innovation </summary>
+- Animation loading from XML<br>
+- Particle effects system<br>
+- Procedural collision system<br>
+- New mechanics: Climb and hover!<br>
+- Parallax made from Tiled<br>
+- Music path from Tiled Map editor<br>
+- Only blit current Camera Tiles<br>
+- Enemies spawns loading from TMX<br>
+- Extra feature: Throw a rock with parabolic path<br>
+- Skills with cooldown (Rock)<br>
+- Checkpoints autosave<br>
+- Spatial Audio<br>
+- Land Enemies know when they need jump with Pathfinding<br>
+- High Score & Best Time<br>
+
+</details>
+
+<br><br>
 
 <center>
   
@@ -131,6 +155,10 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
     <th>Input</th>
     <th>Action</th> 
   </tr>
+    <tr>
+    <td> ESC </td>
+    <td> Open Menu at Game Scene or Close game at Main Menu </td> 
+  </tr>
   <tr>
     <td> WASD </td>
     <td> Classical Movement </td> 
@@ -202,7 +230,7 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
     <td> Save the current state </td> 
   </tr>
    <tr>
-    <td> F6; </td>
+    <td> F6 </td>
     <td> Load the previous state </td> 
   </tr>
    <tr>
