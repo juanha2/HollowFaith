@@ -26,18 +26,18 @@ void j1GUIelement::Draw()
 {
 	BROFILER_CATEGORY("GUI_Drawing", Profiler::Color::DarkKhaki);
 
-	if (above && interactable)
-	{
-		SDL_SetTextureColorMod(texture, 255, 255, 255);
-		SDL_SetTextureAlphaMod(texture, 255);
-	}
-	else if (!above && interactable)
+	if (above && interactable && !decorative)
 	{
 		SDL_SetTextureColorMod(texture, 160, 160, 160);
 		SDL_SetTextureAlphaMod(texture, 255);
 	}
+	else if (!above && interactable && !decorative)
+	{
+		SDL_SetTextureColorMod(texture, 255, 255, 255);
+		SDL_SetTextureAlphaMod(texture, 255);
+	}
 
-	if (!interactable && this->type != GUItype::GUI_BUTTON)
+	if (!interactable && this->type != GUItype::GUI_BUTTON && !decorative)
 	{
 		SDL_SetTextureColorMod(texture, 255, 255, 255);
 		SDL_SetTextureAlphaMod(texture, 255);
@@ -49,6 +49,12 @@ void j1GUIelement::Draw()
 	
 	}
 
+
+	if (decorative) 
+	{
+		SDL_SetTextureColorMod(texture, 255, 255, 255);
+		SDL_SetTextureAlphaMod(texture, 255);
+	}
 
 	App->render->Blit(texture, globalPosition.x, globalPosition.y, &rect, 0.0f, 0.0f);
 
