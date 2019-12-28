@@ -1,40 +1,3 @@
-input[id^="spoiler"]{
- display: none;
-}
-input[id^="spoiler"] + label {
-  display: block;
-  width: 200px;
-  margin: 0 auto;
-  padding: 5px 20px;
-  background: #e1a;
-  color: #fff;
-  text-align: center;
-  font-size: 24px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all .6s;
-}
-input[id^="spoiler"]:checked + label {
-  color: #333;
-  background: #ccc;
-}
-input[id^="spoiler"] ~ .spoiler {
-  width: 90%;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-  margin: 10px auto 0; 
-  padding: 10px; 
-  background: #eee;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: all .6s;
-}
-input[id^="spoiler"]:checked + label + .spoiler{
-  height: auto;
-  opacity: 1;
-  padding: 10px;
-}
 
 
 <h1  align="center" id="hollow-faith-2d">Hollow Faith: 2D Plataform Game</h1>
@@ -89,9 +52,28 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 
 <br><br>
 
-<div class="spoiler">
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu sodales tortor, posuere mattis nunc. Integer eget sapien ullamcorper diam mollis laoreet. Praesent dignissim id urna at malesuada. Etiam id nisl vitae ante vestibulum volutpat. 
-  <br/><br/>
-  Etiam congue, neque a commodo iaculis, nisl massa varius felis, eget commodo eros mauris vitae felis. Pellentesque sed nisi bibendum, faucibus lectus id, varius metus. Vestibulum lacinia vehicula justo, ut molestie magna tincidunt nec. Suspendisse sit amet sagittis enim.
-</div>
+<details> 
+  <summary> LICENSE </summary>
+  MIT License
+
+Copyright (c) [2019] [Aarón Guerrero Cruz / Juan Hernández Almagro]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</details>
 
