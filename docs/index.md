@@ -76,6 +76,50 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </table>
 </center>
 
+<br>
+<details> 
+  <summary> Aarón Guerrero - Individual Work </summary>
+- Creation of player time/movement logic system<br>
+- Implemented collision logic system<br>
+- Implemented animation logic system<br>
+- Implemented particles logic system<br>
+- Implemented camara movement logic system<br>
+- Added XML Animation method<br>
+- Added particles effects in-game<br>
+- Added debug functions<br>
+- Hover mechanic<br>
+- Pathfinding Logic and Sub-systems<br>
+- Delta Time (Cap frames and balancing it)<br>
+- Enemies behavior<br>
+- Brofiler Implementation at the Code<br>
+- GUI Manager<br>
+- GUI Elements system<br>
+- UI Button & Scrollbar<br>
+- Gameplay Trailer<br>
+- Web Page<br>
+
+</details>
+
+<br>
+<details> 
+  <summary> Juan Hernández - Individual Work </summary>
+- Creation of the maps<br>
+- Implemented colliders from Tiled<br>
+- Implemented animations <br>
+- Implemented transitions between maps <br>
+- Win/Lose Condition<br>
+- Added music and sfx<br>
+- Camera limits<br>
+- Blit only current map tiles<br>
+- Climb mechanic<br>
+- Creation of entity system<br>
+- Checkpoints logic<br>
+- UML Entities<br>
+- Implementation of Score & Life systems<br>
+- Implementation base of main menu & game menu<br>
+- UI Image, Inputbox & Label<br>
+</details>
+
 <br><br><br>
 
 <h1  align="center" id="how-to-play">How to Play it?</h1>
@@ -135,5 +179,46 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
    <tr>
     <td> map&lt;map_namer&gt; </td>
     <td> Load another map </td> 
+  </tr>
+</table>
+
+<br><br>
+<h2  align="center" id="game-inputs">Console Commands</h2>
+<table style="width:100%">
+  <tr>
+    <th>Key</th>
+    <th>Debug Functionality</th> 
+  </tr>
+  <tr>
+    <td> F1 - F2 </td>
+    <td> Start from level 1 - 2 </td> 
+  </tr>
+  <tr>
+   <td> F3 </td>
+    <td> Start from current level </td> 
+  </tr>
+   <tr>
+    <td> F5 </td>
+    <td> Save the current state </td> 
+  </tr>
+   <tr>
+    <td> F6; </td>
+    <td> Load the previous state </td> 
+  </tr>
+   <tr>
+    <td> F8 </td>
+    <td> Debug UI </td> 
+  </tr>
+     <tr>
+    <td> F9 </td>
+    <td> Debug pathfinding and colliders </td> 
+  </tr>
+     <tr>
+    <td> F10 </td>
+    <td> God Mode </td> 
+  </tr>
+   <tr>
+    <td> F11 </td>
+    <td> Cap/Uncap Frames </td> 
   </tr>
 </table>
