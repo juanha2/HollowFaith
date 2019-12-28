@@ -80,6 +80,7 @@ public:
 	Particle	dustRunning;
 	Particle	stone;
 	Particle	death;
+	Particle	scoreUp;
 
 	// - - - - DESTROY - - -
 

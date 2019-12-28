@@ -111,7 +111,7 @@ SDL_Texture* j1GUI::GetAtlasTexture() const
 }
 
 
-j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text, j1Module* listener, bool X_drag, bool Y_drag, SCROLL_TYPE scrollType, bool decor)
+j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text, j1Module* listener, bool X_drag, bool Y_drag, SCROLL_TYPE scrollType, bool decor, SDL_Color colors)
 {
 	BROFILER_CATEGORY("Creation_of_new_GUI_element", Profiler::Color::AliceBlue);
 
@@ -153,6 +153,7 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 		tmp->enabled = enabled;
 		tmp->rect = section;
 		tmp->text = text;
+		tmp->color = colors;
 
 		GUIelementList.add(tmp)->data->Start();
 	}

@@ -48,6 +48,8 @@ bool j1Particles::Awake(pugi::xml_node& config)
 	death.life = deathlife;
 	lifeUp.anim.load_animation(animIterator, "lifeUp");
 	lifeUp.life = deathlife;
+	scoreUp.anim.load_animation(animIterator, "scoreUp");
+	scoreUp.life = deathlife;
 
 	for (int i = 0; i < MAX_ACTIVE_PARTICLES; i++)
 	{

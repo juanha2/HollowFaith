@@ -51,7 +51,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	hurt_Fx = fxIterator.child("hurtFx").attribute("path").as_string();
 	coin_Fx = fxIterator.child("coinFx").attribute("path").as_string();
 	life_Fx = fxIterator.child("lifeUpFx").attribute("path").as_string();
-
+	score_Fx = fxIterator.child("scoreUp").attribute("path").as_string();
 
 	return ret;
 }
@@ -118,9 +118,10 @@ bool j1Scene::Update(float dt)
 	App->tex->UnLoad(coins_label->texture);
 	coins_label->text = coinsText;
 
-	sprintf_s(scoreText, "%0.8d", score);
+	sprintf_s(scoreText, "%0.5d", score);
 	App->tex->UnLoad(score_label->texture);
 	score_label->text = scoreText;
+
 	//------------------------------------
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -181,6 +182,9 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && !menu.image->enabled)
 		EnableDisableConsole();	
+
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+		EnableDisableVictoryMenu();
 
 	if (console.input_box->focus)
 		ret = ConsoleLogic();
@@ -257,7 +261,12 @@ bool j1Scene::CleanUp()
 	timer_label = nullptr;
 	timer_icon = nullptr;
 	score_label = nullptr;
-
+	score_icon = nullptr;
+	complete.image = nullptr;
+	complete.exit_button = nullptr;
+	complete.title = nullptr;
+	complete.timer = nullptr;
+	complete.score = nullptr;
 	return true;
 }
 
@@ -344,7 +353,7 @@ void j1Scene::sceneswitch()
 				if (!sound_repeat) {
 					App->audio->PlayFx(4, 0, App->audio->FXvolume);
 					sound_repeat = true;
-					App->fade_to_black->FadeToBlack(App->intro, this);
+					EnableDisableVictoryMenu();
 				}
 				//currentmap = 1;
 			}				
@@ -359,8 +368,10 @@ void j1Scene::sceneswitch()
 				sound_repeat = true;
 				lifes--;
 			}
+
 			num_coins = 0;
 			score = 0;
+
 			if (currentmap == 1)
 				currentmap = 1;
 			else if (currentmap == 2)
@@ -372,7 +383,7 @@ void j1Scene::sceneswitch()
 						App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
 				}
 			}
-			else {
+			else {				
 				App->fade_to_black->FadeToBlack(App->intro, this);
 			}
 
@@ -419,6 +430,7 @@ void j1Scene::LoadMap(int num_map) {
 	App->audio->LoadFx(hurt_Fx.GetString());		//11
 	App->audio->LoadFx(coin_Fx.GetString());		//12
 	App->audio->LoadFx(life_Fx.GetString());		//13
+	App->audio->LoadFx(score_Fx.GetString());		//14
 
 	App->audio->LoadFx("audio/fx/button_click.wav");
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
@@ -432,7 +444,7 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 
 	case GUI_Event::EVENT_ONCLICK:
 	{
-		App->audio->PlayFx(14, 0, App->audio->FXvolume);
+		App->audio->PlayFx(15, 0, App->audio->FXvolume);
 
 		if (element == menu.return_button) {
 			App->pause = !App->pause;
@@ -452,12 +464,16 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 			App->LoadGame();
 		}
 
-		if (element == menu.resume_button) {
+		if (element == menu.resume_button) 
 			EnableDisableMenu();
-		}
-		if (element == menu.menu_button && !console.image->enabled) {
+		
+		if (element == menu.menu_button && !console.image->enabled) 
 			EnableDisableMenu();
-		}
+		
+		if (element == complete.exit_button) {
+			EnableDisableVictoryMenu();
+			App->fade_to_black->FadeToBlack(App->intro, this);
+		}				
 	}
 	}
 }
@@ -506,10 +522,13 @@ void j1Scene::AddUIElements()
 	lifes_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 100, 13 }, { 0,0 }, false, true, { 458, 78, 41, 31 }, nullptr, this);
 	coins_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 55,22 }, { 0,0 }, false, true, { 0,0,0,0 }, "0");
 	coins_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 10, 15 }, { 0,0 }, false, true, { 458, 43, 40, 27 }, nullptr, this);
+	score_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 325,22 }, { 0,0 }, true, true, { 0,0,0,0 }, nullptr, this, false, false);
+	score_icon = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 273, 11 }, { 0,0 }, false, true, { 169, 162, 49, 34 }, nullptr, this);
+
 	menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 160, 60 }, { 0,0 }, false, false, { 288, 144, 198, 282 }, nullptr, this);
 	menu.menu_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 450,13 }, { 0,0 }, true, true, { 84,164,37,31 }, nullptr, this);
 	menu.return_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,130 }, { -3,-5 }, true, false, { 283,109,100,22 }, "MAIN MENU", this);
-	menu.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 205,50 }, { 20,-3 }, false, false, { 166,167,109,27 }, "MENU", this, false, false, SCROLL_TYPE::SCROLL_NONE, true);
+	menu.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 195,50 }, { 28,0 }, false, false, { 533,78,129,32 }, "MENU", this, false, false, SCROLL_TYPE::SCROLL_NONE, true);
 	menu.resume_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,100 }, { 10,-5 }, true, false, { 283,109,100,22 }, "RESUME", this);
 	menu.exit_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,220 }, { 20,-5 }, true, false, { 283,109,100,22 }, "EXIT", this);
 	menu.save = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,160 }, { 20,-5 }, true, false, { 283,109,100,22 }, "SAVE", this);
@@ -520,7 +539,12 @@ void j1Scene::AddUIElements()
 	menu.label1 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 270 }, { 0,-3 }, false, false, { 166,167,109,27 }, "MUSIC", this);
 	menu.label2 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 310 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);
 	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 168,220 }, { 0,0 }, true, false, { 11,359,182,26 }, nullptr, this);
-	score_label = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 325,22 }, { 0,0 }, true, true, { 0,0,0,0 }, nullptr, this, false, false);
+	
+	complete.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 145, 60 }, { 0,0 }, false, false, { 492, 140, 240, 288 }, nullptr, this);
+	complete.exit_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 205,290 }, { 23,0 }, true, false, { 281,6,127,36 }, "CLOSE", this);
+	complete.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 200,75 }, { 12,0 }, false, false, { 533,78,129,32 }, "VICTORY!!", this, false, false, SCROLL_TYPE::SCROLL_NONE, true);
+	complete.timer = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 205,120 }, { 40,18 }, false, false, { 507,5,104,68 }, timerText, this, false, false, SCROLL_TYPE::SCROLL_NONE, true, { 20,252,13 });
+	complete.score = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 205,200 }, { 30,18 }, false, false, { 614,3,102,69 }, scoreText, this, false, false, SCROLL_TYPE::SCROLL_NONE, true, { 20,252,13 });
 }
 
 void j1Scene::EnableDisableMenu() {
@@ -546,4 +570,20 @@ void j1Scene::EnableDisableConsole()
 	console.input_box->enabled = !console.input_box->enabled;
 	console.image->enabled = !console.image->enabled;
 	App->pause = !App->pause;
+}
+
+void j1Scene::EnableDisableVictoryMenu() {
+
+	App->pause = !App->pause;
+	complete.image->enabled = !complete.image->enabled;
+	complete.exit_button->enabled = !complete.exit_button->enabled;
+	complete.title->enabled = !complete.title->enabled;
+	complete.timer->enabled = !complete.timer->enabled;
+	complete.score->enabled = !complete.score->enabled;	
+	
+	//BEST SCORES AND TIME LOGIC--------------------------------
+	if(score > App->intro->final_score)
+		App->intro->final_score = score;
+	if(App->intro->final_time==0 || timer < App->intro->final_time)
+		App->intro->final_time = timer;	
 }

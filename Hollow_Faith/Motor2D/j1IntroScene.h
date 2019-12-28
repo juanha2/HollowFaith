@@ -21,13 +21,22 @@ struct SettingsMenu {
 };
 
 struct CreditsMenu {
-
-	j1GUIelement* image = nullptr;
-	j1GUIelement* exit = nullptr;
+	
 	j1GUIelement* button = nullptr;
 	j1GUIelement* title = nullptr;
 	j1GUIelement* credits = nullptr;
 	j1GUIelement* link = nullptr;
+};
+
+struct HighscoreMenu {
+
+	j1GUIelement* title = nullptr;
+	j1GUIelement* best_score = nullptr;
+	j1GUIelement* best_time = nullptr;
+	j1GUIelement* button = nullptr;
+	j1GUIelement* label1 = nullptr;
+	j1GUIelement* label2 = nullptr;
+
 };
 
 class j1IntroScene : public j1Module
@@ -77,10 +86,18 @@ public:
 
 	SettingsMenu settings_menu;
 	CreditsMenu credits_menu;
+	HighscoreMenu highscore_menu;
 
 	p2SString			click_Fx1;	
 	p2SString			click_Fx2;
 	Animation			fire;
+
+
+	char				timerText[100];
+	char				scoreText[100];
+
+	float				final_time;
+	int					final_score;
 };
 
 #endif // __j1INTROSCENE_H__

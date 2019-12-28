@@ -44,6 +44,7 @@
       <hurtFx path="audio/fx/hurt.wav"/>
       <coinFx path="audio/fx/coin.wav"/>
       <lifeUpFx path="audio/fx/life_up.wav"/>
+      <scoreUp path="audio/fx/scoreUp.wav"/>
     </fx>
   
   </scene>
@@ -117,7 +118,7 @@
    
 
     <animations>
-
+      
       <animation name ="dustJumping">
         <sprite x ="8" y ="247" w ="13" h="5"/>
         <sprite x ="37" y ="249" w ="19" h="5"/>
@@ -130,6 +131,11 @@
 
       <animation name ="lifeUp">
         <sprite x ="97" y ="7" w ="27" h="22"/>
+        <animValues loop="false" speed="0.4f"/>
+      </animation>
+
+      <animation name ="scoreUp">
+        <sprite x ="130" y ="7" w ="57" h="22"/>
         <animValues loop="false" speed="0.4f"/>
       </animation>
       

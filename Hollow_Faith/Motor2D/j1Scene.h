@@ -30,6 +30,16 @@ struct InGameMenu {
 	j1GUIelement* label2 = nullptr;
 };
 
+struct CompleteMenu {
+
+	j1GUIelement* image = nullptr;
+	j1GUIelement* exit_button = nullptr;
+	j1GUIelement* title = nullptr;
+	j1GUIelement* timer = nullptr;
+	j1GUIelement* score = nullptr;
+};
+
+
 class j1Scene : public j1Module
 {
 public:
@@ -70,6 +80,7 @@ public:
 	void AddUIElements();
 	void EnableDisableMenu();
 	void EnableDisableConsole();
+	void EnableDisableVictoryMenu();
 
 public:
 
@@ -86,9 +97,10 @@ public:
 	bool			want_exit = false;
 
 	int					lifes;
-	int					num_coins = 0;
+	int					num_coins = 0;	
 	int					score; 
 	
+
 	p2SString			jump_fx;
 	p2SString			death_fx;
 	p2SString			win1_Fx;
@@ -103,6 +115,7 @@ public:
 	p2SString			hurt_Fx;
 	p2SString			coin_Fx;
 	p2SString			life_Fx;
+	p2SString			score_Fx;
 	
 	float				timer;
 	float				life_timer;
@@ -119,10 +132,11 @@ public:
 	j1GUIelement*		timer_label = nullptr;	
 	j1GUIelement*		timer_icon = nullptr;
 	j1GUIelement*		score_label = nullptr;
+	j1GUIelement*		score_icon = nullptr;
 
 	InGameMenu			menu;
 	Console				console;
-
+	CompleteMenu		complete;
 };
 
 #endif // __j1SCENE_H__
