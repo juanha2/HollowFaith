@@ -112,7 +112,6 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 
 <br><br>
 <h2  align="center" id="game-inputs">Console Commands</h2>
-<br><br>
 <table style="width:100%">
   <tr>
     <th>Command</th>
@@ -131,7 +130,7 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
     <td> Exits the game </td> 
   </tr>
    <tr>
-    <td> FPS<number> </td>
+    <td> FPS(number)</code> </td>
     <td> Change FPS cap with some safe limits (30-120)</td> 
   </tr>
    <tr>
