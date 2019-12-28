@@ -141,7 +141,7 @@ bool j1Input::PreUpdate()
 					}
 					if (event.key.keysym.sym == SDLK_RETURN) {
 						cursor_position = 0;
-						LOG("%s",text.GetString());
+						App->console->ReceiveText(text.GetString());
 						text.Clear();					
 					}
 					if (event.key.keysym.sym == SDLK_BACKQUOTE) {					

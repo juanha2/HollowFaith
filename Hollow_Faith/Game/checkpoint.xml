@@ -4,85 +4,25 @@
 		<position x="118.833" y="255" />
 		<active value="true" />
 	</Bonfire>
+	<EnemyLand>
+		<position x="720" y="256" />
+	</EnemyLand>
 	<Bonfire num="2">
 		<position x="869" y="111.5" />
-		<active value="false" />
+		<active value="true" />
 	</Bonfire>
-	<player>
-		<position x="118.833" y="255" />
-	</player>
-	<EnemyLand>
-		<position x="272.083008" y="325" />
-	</EnemyLand>
-	<EnemyLand>
-		<position x="720" y="245" />
-	</EnemyLand>
-	<EnemyLand>
-		<position x="1456" y="341" />
-	</EnemyLand>
-	<EnemyFly>
-		<position x="304" y="64" />
-	</EnemyFly>
 	<EnemyFly>
 		<position x="1075.32996" y="46.6666985" />
 	</EnemyFly>
 	<EnemyFly>
 		<position x="1456" y="64" />
 	</EnemyFly>
-	<Coins>
-		<position x="128" y="224" />
-	</Coins>
-	<Coins>
-		<position x="149.332993" y="198" />
-	</Coins>
-	<Coins>
-		<position x="174" y="176.332993" />
-	</Coins>
-	<Coins>
-		<position x="224" y="128" />
-	</Coins>
-	<Coins>
-		<position x="309.083008" y="127.75" />
-	</Coins>
-	<Coins>
-		<position x="336" y="128" />
-	</Coins>
-	<Coins>
-		<position x="251.75" y="127.25" />
-	</Coins>
-	<Coins>
-		<position x="336" y="80" />
-	</Coins>
-	<Coins>
-		<position x="224" y="80" />
-	</Coins>
-	<Coins>
-		<position x="252.25" y="80" />
-	</Coins>
-	<Coins>
-		<position x="308" y="80" />
-	</Coins>
-	<Coins>
-		<position x="373.666992" y="170.332993" />
-	</Coins>
-	<Coins>
-		<position x="399.334015" y="194.666" />
-	</Coins>
-	<Coins>
-		<position x="424.334015" y="220.332993" />
-	</Coins>
-	<Coins>
-		<position x="662.333984" y="254" />
-	</Coins>
-	<Coins>
-		<position x="634.666992" y="284.333008" />
-	</Coins>
-	<Coins>
-		<position x="772.333984" y="179.332993" />
-	</Coins>
-	<Coins>
-		<position x="746.333984" y="179.332993" />
-	</Coins>
+	<EnemyLand>
+		<position x="1456" y="352" />
+	</EnemyLand>
+	<player>
+		<position x="869" y="111.5" />
+	</player>
 	<Coins>
 		<position x="1001.66998" y="176" />
 	</Coins>
@@ -130,11 +70,5 @@
 	</Coins>
 	<Coins>
 		<position x="1360" y="96" />
-	</Coins>
-	<Coins>
-		<position x="280.25" y="128" />
-	</Coins>
-	<Coins>
-		<position x="281" y="79.75" />
 	</Coins>
 </game_state>
