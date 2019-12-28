@@ -81,6 +81,8 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </table>
 </center>
 
+<br><br>
+
 <center>
 <h2  align="center" id="game-inputs">Console Commands</h2>
 <table style="width:100%">
@@ -111,16 +113,15 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </table>
 </center>
 
-
 <br><br>
 
 <details> 
   <summary> GAME LICENSE </summary>
 <br><br>
 MIT License
-<br>
+<br><br>
 Copyright (c) [2019] [Aarón Guerrero Cruz / Juan Hernández Almagro]
-<br>
+<br><br>
 <p align="justify">Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
