@@ -231,7 +231,7 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	lifes_label = nullptr;
+	
 	App->map->CleanUp();
 	App->pathfinding->CleanUp();
 	App->objects->CleanUp();
@@ -267,6 +267,7 @@ bool j1Scene::CleanUp()
 	complete.title = nullptr;
 	complete.timer = nullptr;
 	complete.score = nullptr;
+
 	return true;
 }
 
@@ -279,9 +280,11 @@ bool j1Scene::Save(pugi::xml_node& save) const
 	pugi::xml_node lifes_node = save.append_child("lifes");
 	pugi::xml_node coins_node = save.append_child("coins");
 	pugi::xml_node time_node = save.append_child("time");
+	pugi::xml_node score_node = save.append_child("score");
 	current_map.append_attribute("value").set_value(currentmap);
 	lifes_node.append_attribute("value").set_value(lifes);
 	time_node.append_attribute("value").set_value(timer);
+	score_node.append_attribute("value").set_value(score);
 
 	if (!App->checkpoint->save_checkpoints)
 		coins_node.append_attribute("value").set_value(num_coins);
@@ -302,6 +305,7 @@ bool j1Scene::Load(pugi::xml_node& save)
 	lifes = save.child("lifes").attribute("value").as_int();
 	timer = save.child("time").attribute("value").as_float();
 	num_coins = save.child("coins").attribute("value").as_int();
+	score = save.child("score").attribute("value").as_int();
 
 	if (savedcurrentmap == currentmap && App->intro->want_continue)
 		LoadMap(currentmap);
