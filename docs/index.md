@@ -6,8 +6,7 @@
 
 <p align="justify">Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM during the "development of videogames" subject. The first level gives you time to adapt to the mechanics, in the second level those skills will be put to test.</p>
 
-<br><br>
-
+<br>
 <details> 
   <summary> GAME LICENSE </summary>
 <br><br>
@@ -130,11 +129,11 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
     <td> Exits the game </td> 
   </tr>
    <tr>
-    <td> FPS(number) </td>
+    <td> FPS&lt;number&gt; </td>
     <td> Change FPS cap with some safe limits (30-120) </td> 
   </tr>
    <tr>
-    <td> map(map_name) </td>
+    <td> map&lt;map_namer&gt; </td>
     <td> Load another map </td> 
   </tr>
 </table>
