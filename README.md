@@ -46,13 +46,15 @@ https://github.com/juanha2/HollowFaith
 - F11 ​Cap/Uncap Frames
 
 
-## Credits
+## Authors
 - Aarón Guerrero Cruz
 > Github profile: https://github.com/AaronGCProg
 
 - Juan Hernández Almagro
 > Github profile: https://github.com/juanha2
 
+
+## Resources
 - Art from:
 
 https://craftpix.net/freebies/free-pixel-art-tiny-hero-sprites/?utm_source=dribbble.com&utm_medium=myself&utm_campaign=sprite
