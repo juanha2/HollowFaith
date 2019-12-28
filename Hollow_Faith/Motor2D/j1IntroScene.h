@@ -69,9 +69,7 @@ public:
 	void GuiObserver(GUI_Event type, j1GUIelement* element);
 
 	void AddUIElements();
-
-	bool Save(pugi::xml_node&) const;
-	bool Load(pugi::xml_node&);
+	
 
 public:
 
