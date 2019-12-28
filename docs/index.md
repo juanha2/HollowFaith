@@ -49,9 +49,12 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </table>
 </center>
 
+<br><br><br>
+
 <h1  align="center" id="how-to-play">How to Play it?</h1>
 
 <center>
+  
 <h2  align="center" id="game-inputs">Game Inputs</h2>
 <table style="width:100%">
   <tr>
@@ -66,24 +69,22 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
     <td> Space </td>
     <td> Jump </td> 
   </tr>
-    <tr>
+   <tr>
     <td> HOLD Space </td>
     <td> Hover </td> 
   </tr>
-    <tr>
+   <tr>
     <td> K </td>
     <td> Throw a Rock </td> 
   </tr>
-    <tr>
+   <tr>
     <td> º </td>
     <td> Open/Close Console </td> 
   </tr>
 </table>
-</center>
 
 <br><br>
 
-<center>
 <h2  align="center" id="game-inputs">Console Commands</h2>
 <table style="width:100%">
   <tr>
@@ -95,25 +96,28 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
     <td> Display the list of commands </td> 
   </tr>
   <tr>
-    <td> god_mode </td>
+   <td> god_mode </td>
     <td> Toggles god mode on/off </td> 
   </tr>
-    <tr>
+   <tr>
     <td> quit </td>
     <td> Exits the game </td> 
   </tr>
-    <tr>
+   <tr>
     <td> FPS<number> </td>
     <td> Change FPS cap with some safe limits (30-120)</td> 
   </tr>
-    <tr>
+   <tr>
     <td> map<map_name> </td>
     <td> Load another map </td> 
   </tr>
 </table>
+  
 </center>
 
 <br><br>
+
+
 
 <details> 
   <summary> GAME LICENSE </summary>
