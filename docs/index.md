@@ -131,10 +131,10 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
   </tr>
    <tr>
     <td> FPS(number) </td>
-    <td> Change FPS cap with some safe limits (30-120)</td> 
+    <td> Change FPS cap with some safe limits (30-120) </td> 
   </tr>
    <tr>
-    <td> map<map_name> </td>
+    <td> map(map_name) </td>
     <td> Load another map </td> 
   </tr>
 </table>
