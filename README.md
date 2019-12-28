@@ -3,6 +3,13 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 
 *All feedback has been applied at the project. Thanks for it.
 
+
+## Find our project Web Page in: 
+https://juanha2.github.io/HollowFaith/
+
+## Find this project's repository in:
+https://github.com/juanha2/HollowFaith
+
 ## How to play:
 
 ### General
@@ -27,12 +34,17 @@ Hollow Faith is a 2d arcade platformer game developed by 2 students in CITM duri
 - FPS<number>: change FPS cap with some safe limits (30-120)
 - map<map_name>: load another map
 
+### Debug functionality:
+- F1 ​Start from level 1
+- F2 ​Start from level 2
+- F3 ​Start from current level
+- F5 ​Save the current state
+- F6 ​Load the previous state
+- F8 Debug UI
+- F9 ​See paths and colliders
+- F10 ​God Mode
+- F11 ​Cap/Uncap Frames
 
-## Find our project Web Page in: 
-https://juanha2.github.io/HollowFaith/
-
-## Find this project's repository in:
-https://github.com/juanha2/HollowFaith
 
 ## Credits
 - Aarón Guerrero Cruz
@@ -125,17 +137,6 @@ Aarón Guerrero Cruz
 - Gameplay Trailer
 - Web Page
 
-
-## Debug functionality:
-- F1 ​Start from level 1
-- F2 ​Start from level 2
-- F3 ​Start from current level
-- F5 ​Save the current state
-- F6 ​Load the previous state
-- F8 Debug UI
-- F9 ​See paths and colliders
-- F10 ​God Mode
-- F11 ​Cap/Uncap Frames
 
 ## License:
 MIT License
