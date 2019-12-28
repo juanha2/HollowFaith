@@ -50,15 +50,33 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </center>
 
 
+<h2  align="center" id="game-inputs">Game Inputs</h2>
+
+<table style="width:100%">
+  <tr>
+    <th>Input</th>
+    <th>Action</th> 
+  </tr>
+  <tr>
+    <td> WASD </td>
+    <td> Classical Movement </td> 
+  </tr>
+  <tr>
+    <td> Space </td>
+    <td> Jump </td> 
+  </tr>
+</table>
+</center>
+
 <br><br>
 
 <details> 
-  <summary> LICENSE </summary>
- <br><br>
+  <summary> GAME LICENSE </summary>
+<br><br><br>
  ####MIT License
-<br><br>
+<br><br><br>
 ####Copyright (c) [2019] [Aarón Guerrero Cruz / Juan Hernández Almagro]
-<br><br>
+<br><br><br>
 <p align="justify">Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
