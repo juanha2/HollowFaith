@@ -81,7 +81,6 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 
 <h1  align="center" id="how-to-play">How to Play it?</h1>
 
-<center>
   
 <h2  align="center" id="game-inputs">Game Inputs</h2>
 <table style="width:100%">
@@ -142,7 +141,6 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </table>
   
 </center>
-
 <br><br>
 
 
