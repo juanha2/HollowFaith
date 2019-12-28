@@ -109,13 +109,38 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
     <td> Open/Close Console </td> 
   </tr>
 </table>
-
+</center>
 <br><br>
 
 <h2  align="center" id="game-inputs">Console Commands</h2>
 
   
-</center>
+
 <br><br>
 
-
+<table style="width:100%">
+  <tr>
+    <th>Command</th>
+    <th>Action</th> 
+  </tr>
+  <tr>
+    <td> list </td>
+    <td> Display the list of commands </td> 
+  </tr>
+  <tr>
+   <td> god_mode </td>
+    <td> Toggles god mode on/off </td> 
+  </tr>
+   <tr>
+    <td> quit </td>
+    <td> Exits the game </td> 
+  </tr>
+   <tr>
+    <td> FPS<number> </td>
+    <td> Change FPS cap with some safe limits (30-120)</td> 
+  </tr>
+   <tr>
+    <td> map<map_name> </td>
+    <td> Load another map </td> 
+  </tr>
+</table>
