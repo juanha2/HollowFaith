@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Input.h"
 #include "j1Audio.h"
+#include "j1Textures.h"
 
 
 j1GUIscrollBar::j1GUIscrollBar(SCROLL_TYPE scrollTypeInput) {
@@ -99,6 +100,7 @@ bool j1GUIscrollBar::PostUpdate()
 
 bool j1GUIscrollBar::CleanUp()
 {
+	//App->tex->UnLoad(texture);
 	return true;
 }
 

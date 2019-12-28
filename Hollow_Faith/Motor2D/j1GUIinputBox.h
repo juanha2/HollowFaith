@@ -12,7 +12,7 @@ class j1GUIinputBox : public j1GUIelement
 public:
 
 
-	j1GUIinputBox(char* text);
+	j1GUIinputBox(const char* text);
 	~j1GUIinputBox();
 
 	bool Awake(pugi::xml_node&);

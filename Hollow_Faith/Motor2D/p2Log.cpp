@@ -1,4 +1,7 @@
 #include "p2Log.h"
+#include "j1App.h"
+#include "j1Console.h"
+#include "j1GUIelement.h"
 
 void log(const char file[], int line, const char* format, ...)
 {
@@ -8,8 +11,13 @@ void log(const char file[], int line, const char* format, ...)
 
 	// Construct the string from variable arguments
 	va_start(ap, format);
-	vsprintf_s(tmp_string, 4096, format, ap);
+	vsprintf_s(tmp_string, 4096, format, ap);	
 	va_end(ap);
 	sprintf_s(tmp_string2, 4096, "\n%s(%d) : %s", file, line, tmp_string);
+
+	if(App && App->console->active)	
+			App->console->PrintText(tmp_string);
+	
+
 	OutputDebugString(tmp_string2);
 }

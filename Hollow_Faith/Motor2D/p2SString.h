@@ -348,6 +348,25 @@ public:
 		return ret;
 	}
 
+	uint FindFirst(const char* string) const
+	{
+		uint ret = 0;
+
+		if (string != NULL)
+		{
+			uint len = strlen(string);
+
+			for (uint i = 0; i < size - len; ++i)
+			{
+				if (strncmp(string, &str[i], len) == 0)
+				{
+					return i;
+				}
+			}
+		}
+
+		return ret;
+	}
 	/**
 	* Paste a substring into buffer
 	*/

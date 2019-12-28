@@ -8,12 +8,6 @@
 struct SDL_Texture;
 class j1GUIelement;
 
-struct Console 
-{
-	j1GUIelement* input_box = nullptr;
-	j1GUIelement* image = nullptr;
-};
-
 struct InGameMenu {
 
 	j1GUIelement* menu_button = nullptr;
@@ -74,19 +68,24 @@ public:
 	void sceneswitch();	
 	void LoadMap(int num_map);
 
-	void GuiObserver(GUI_Event type, j1GUIelement* element);
-	bool ConsoleLogic();
+	void GuiObserver(GUI_Event type, j1GUIelement* element);	
 
 	void AddUIElements();
+
 	void EnableDisableMenu();
-	void EnableDisableConsole();
+	
 	void EnableDisableVictoryMenu();
+
+	void ChangeMap(int num);
+
 
 public:
 
 	// - - - - SCENE DATA - - - -
-
+	
 	bool			debug = false;
+	bool			debugUI = false;
+
 	SDL_Texture*	debug_tex;
 	int				currentmap;
 	int				savedcurrentmap;
@@ -116,14 +115,16 @@ public:
 	p2SString			coin_Fx;
 	p2SString			life_Fx;
 	p2SString			score_Fx;
-	
+	p2SString			click_Fx;
+	p2SString			debug_texture;
+
 	float				timer;
 	float				life_timer;
 	char				timerText[100];
 	char				scoreText[100];
 	char				lifesText[100];
 	char				coinsText[100];
-
+	
 	j1GUIelement*		lifes_label=nullptr;
 	j1GUIelement*		coins_label = nullptr;
 	j1GUIelement*		lifes_icon = nullptr;
@@ -134,8 +135,7 @@ public:
 	j1GUIelement*		score_label = nullptr;
 	j1GUIelement*		score_icon = nullptr;
 
-	InGameMenu			menu;
-	Console				console;
+	InGameMenu			menu;	
 	CompleteMenu		complete;
 };
 

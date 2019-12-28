@@ -20,6 +20,7 @@
 #include "j1IntroScene.h"
 #include <stdio.h>//for the sprintf_s function
 #include "j1Fonts.h"
+#include "j1Console.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -52,6 +53,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	coin_Fx = fxIterator.child("coinFx").attribute("path").as_string();
 	life_Fx = fxIterator.child("lifeUpFx").attribute("path").as_string();
 	score_Fx = fxIterator.child("scoreUp").attribute("path").as_string();
+	click_Fx = fxIterator.child("clickFx2").attribute("path").as_string();
+	debug_texture = config.child("debug_texture").attribute("path").as_string();
 
 	return ret;
 }
@@ -67,13 +70,14 @@ bool j1Scene::Start()
 	App->win->scale = 2;
 	currentmap = 1;
 	ready_to_load = false;
-	sound_repeat = false;
+	sound_repeat = false;	
 
 	if (App->intro->want_continue)
 		App->LoadGame();
 	else
 		LoadMap(currentmap);
-
+	
+	
 	return true;
 }
 
@@ -177,24 +181,21 @@ bool j1Scene::Update(float dt)
 	}
 
 	//Opening in-game menu
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && !console.image->enabled)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && (!complete.image->enabled))
 			EnableDisableMenu();
 
-	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && !menu.image->enabled)
-		EnableDisableConsole();	
-
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN && !menu.image->enabled )
 		EnableDisableVictoryMenu();
 
-	if (console.input_box->focus)
-		ret = ConsoleLogic();
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		debugUI = !debugUI;
 
 
+	App->map->Draw();
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-
-	App->map->Draw();
+	
 
 	return ret;
 }
@@ -204,7 +205,8 @@ bool j1Scene::PostUpdate()
 {
 	BROFILER_CATEGORY("Scene_PostUpdate", Profiler::Color::DarkOliveGreen);
 
-	bool ret = true;
+	bool ret = true;	
+
 	SDL_Rect rect = { 0,0, App->win->screen_surface->w / App->win->scale, App->win->screen_surface->h / App->win->scale };
 
 	bool capped;
@@ -213,7 +215,6 @@ bool j1Scene::PostUpdate()
 		capped = true;
 	else
 		capped = false;
-
 
 	static char title[256];
 	sprintf_s(title, 256, "%s || Actual FPS: %i | Av.FPS: %.2f | Last Frame MS: %02u | VSYNC: %d | Frames Cap: %d",
@@ -231,7 +232,6 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
-	
 	App->map->CleanUp();
 	App->pathfinding->CleanUp();
 	App->objects->CleanUp();
@@ -239,9 +239,7 @@ bool j1Scene::CleanUp()
 	App->tex->UnLoad(debug_tex);
 	App->gui->CleanUp();
 	App->audio->UnLoad();
-
-	console.input_box = nullptr;
-	console.image = nullptr;
+	
 	menu.menu_button = nullptr;
 	menu.resume_button = nullptr;
 	menu.return_button = nullptr;
@@ -399,13 +397,17 @@ void j1Scene::sceneswitch()
 void j1Scene::LoadMap(int num_map) {
 
 	CleanUp();
+	App->intro->want_continue = false;
+	App->pause = false;
+
+	//Loading map
 	App->map->Load(App->map->data.levels[num_map - 1]->name.GetString());
 	App->scene->ready_to_load = false;
 	App->scene->sound_repeat = false;
 	App->render->camera = App->render->camera_init;
-
+	
 	//Adding every UI element
-	AddUIElements();
+	AddUIElements();	
 
 	//Create Walkability Map
 	int w, h;
@@ -417,8 +419,7 @@ void j1Scene::LoadMap(int num_map) {
 	}
 
 	//Plays current map music
-	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
-	App->intro->want_continue = false;
+	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);	
 
 	//We load every Fx here so each entity doesn't have to repeat loading the same one	
 	App->audio->LoadFx(jump_fx.GetString());		//1
@@ -435,9 +436,11 @@ void j1Scene::LoadMap(int num_map) {
 	App->audio->LoadFx(coin_Fx.GetString());		//12
 	App->audio->LoadFx(life_Fx.GetString());		//13
 	App->audio->LoadFx(score_Fx.GetString());		//14
+	App->audio->LoadFx(click_Fx.GetString());		//15
+	debug_tex = App->tex->Load(debug_texture.GetString());
 
-	App->audio->LoadFx("audio/fx/button_click.wav");
-	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
+	
+	
 }
 
 
@@ -471,10 +474,10 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 		if (element == menu.resume_button) 
 			EnableDisableMenu();
 		
-		if (element == menu.menu_button && !console.image->enabled) 
+		if (element == menu.menu_button && !complete.image->enabled) 
 			EnableDisableMenu();
 		
-		if (element == complete.exit_button) {
+		if (element == complete.exit_button) {			
 			EnableDisableVictoryMenu();
 			App->fade_to_black->FadeToBlack(App->intro, this);
 		}				
@@ -482,41 +485,6 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 	}
 }
 
-bool j1Scene::ConsoleLogic()
-{
-	bool ret = true;
-
-	if (App->input->final_text == "list") {
-		LOG("HOLA");
-	}
-	if (App->input->final_text == "god_mode") {
-		console.input_box->focus = false;
-		App->objects->player->godMode = !App->objects->player->godMode;
-	}
-	if (App->input->GetText() == "FPS")
-	{
-			
-	}
-	
-	if (App->input->final_text == "map1") {
-		currentmap = 1;
-		App->checkpoint->checkpoint = false;
-		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
-	}
-
-	if (App->input->final_text == "map2") {
-		App->checkpoint->checkpoint = false;
-		currentmap = 2;
-		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
-	}
-	if (App->input->final_text == "quit") {
-		return false;
-	}
-
-	App->input->final_text.Clear();
-
-	return ret;
-}
 
 void j1Scene::AddUIElements()
 {
@@ -539,16 +507,17 @@ void j1Scene::AddUIElements()
 	menu.load = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,190 }, { 20,-5 }, true, false, { 283,109,100,22 }, "LOAD", this);
 	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 270 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_MUSIC);
 	menu.music_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 310 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_FX);
-	console.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 160, 60 }, { 0,0 }, false, false, { 288, 144, 198, 200 }, nullptr, this);
+	
 	menu.label1 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 270 }, { 0,-3 }, false, false, { 166,167,109,27 }, "MUSIC", this);
 	menu.label2 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 310 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);
-	console.input_box = App->gui->AddGUIelement(GUItype::GUI_INPUTBOX, nullptr, { 168,220 }, { 0,0 }, true, false, { 11,359,182,26 }, nullptr, this);
+	
 	
 	complete.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 145, 60 }, { 0,0 }, false, false, { 492, 140, 240, 288 }, nullptr, this);
 	complete.exit_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 205,290 }, { 23,0 }, true, false, { 281,6,127,36 }, "CLOSE", this);
 	complete.title = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 200,75 }, { 12,0 }, false, false, { 533,78,129,32 }, "VICTORY!!", this, false, false, SCROLL_TYPE::SCROLL_NONE, true);
 	complete.timer = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 205,120 }, { 40,18 }, false, false, { 507,5,104,68 }, timerText, this, false, false, SCROLL_TYPE::SCROLL_NONE, true, { 20,252,13 });
 	complete.score = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 205,200 }, { 30,18 }, false, false, { 614,3,102,69 }, scoreText, this, false, false, SCROLL_TYPE::SCROLL_NONE, true, { 20,252,13 });
+
 }
 
 void j1Scene::EnableDisableMenu() {
@@ -567,27 +536,35 @@ void j1Scene::EnableDisableMenu() {
 	App->pause = !App->pause;
 }
 
-void j1Scene::EnableDisableConsole()
-{
-	App->input->text.Clear();
-	console.input_box->focus = !console.input_box->focus;
-	console.input_box->enabled = !console.input_box->enabled;
-	console.image->enabled = !console.image->enabled;
-	App->pause = !App->pause;
-}
+//void j1Scene::EnableDisableConsole()
+//{	
+//	console.input_box->focus = true;
+//	console.input_box->enabled = !console.input_box->enabled;
+//	console.image->enabled = !console.image->enabled;
+//	App->input->text.Clear();
+//	App->pause = !App->pause;
+//}
 
 void j1Scene::EnableDisableVictoryMenu() {
 
-	App->pause = !App->pause;
-	complete.image->enabled = !complete.image->enabled;
-	complete.exit_button->enabled = !complete.exit_button->enabled;
-	complete.title->enabled = !complete.title->enabled;
-	complete.timer->enabled = !complete.timer->enabled;
-	complete.score->enabled = !complete.score->enabled;	
+	App->pause = true;
+	complete.image->enabled = true;
+	complete.exit_button->enabled = true;
+	complete.title->enabled = true;
+	complete.timer->enabled = true;
+	complete.score->enabled = true;
 	
 	//BEST SCORES AND TIME LOGIC--------------------------------
 	if(score > App->intro->final_score)
 		App->intro->final_score = score;
 	if(App->intro->final_time==0 || timer < App->intro->final_time)
 		App->intro->final_time = timer;	
+}
+
+void j1Scene::ChangeMap(int num) {
+
+	currentmap = num;
+	App->checkpoint->checkpoint = false;	
+	App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);	
+
 }

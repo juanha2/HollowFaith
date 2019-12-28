@@ -154,7 +154,6 @@ bool j1IntroScene::CleanUp()
 	App->tex->UnLoad(texture);
 	App->tex->UnLoad(title_texture);
 	App->tex->UnLoad(fire_texture);
-
 	App->audio->UnLoad();
 	return true;
 }

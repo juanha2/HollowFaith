@@ -29,6 +29,7 @@
   </gui>
   
   <scene>
+    <debug_texture path="Assets/Sprites/path2.png"/>
     <fx>
       <jumpFx path="audio/fx/jump.wav"/>
       <deathFx path="audio/fx/death.wav"/>
@@ -45,6 +46,7 @@
       <coinFx path="audio/fx/coin.wav"/>
       <lifeUpFx path="audio/fx/life_up.wav"/>
       <scoreUp path="audio/fx/scoreUp.wav"/>
+      <clickFx2 path="audio/fx/button_click.wav"/>
     </fx>
   
   </scene>

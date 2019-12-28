@@ -6,7 +6,7 @@
 #include "j1Textures.h"
 #include "j1Window.h"
 
-j1GUIinputBox::j1GUIinputBox(char* text) 
+j1GUIinputBox::j1GUIinputBox(const char* text) 
 {
 	this->type = GUItype::GUI_INPUTBOX;	
 	texture = App->gui->GetAtlasTexture();	
@@ -94,6 +94,7 @@ bool j1GUIinputBox::PostUpdate()
 
 bool j1GUIinputBox::CleanUp()
 {
+	//App->tex->UnLoad(texture);
 	return true;
 }
 

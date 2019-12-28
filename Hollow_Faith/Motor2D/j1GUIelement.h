@@ -62,7 +62,7 @@ public:
 	iPoint localPosition = { 0,0 };
 
 	SDL_Color color = { 255,255,255 };
-	char* text = nullptr;	
+	const char* text = nullptr;	
 	bool enabled = false;
 	bool interactable = false;
 
