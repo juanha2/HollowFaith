@@ -147,8 +147,8 @@ Entities Manager and Entities Elements - GUI Manager and GUI Elements
 <br><br><br>
 
 <h1  align="center" id="how-to-play">How to Play it?</h1>
+<br>
 
-  
 <h2  align="center" id="game-inputs">Game Inputs</h2>
 <table style="width:100%">
   <tr>
@@ -211,11 +211,11 @@ Entities Manager and Entities Elements - GUI Manager and GUI Elements
 </table>
 
 <br><br>
-<h2  align="center" id="game-inputs">Console Commands</h2>
+<h2  align="center" id="game-inputs">Debug Functionality</h2>
 <table style="width:100%">
   <tr>
     <th>Key</th>
-    <th>Debug Functionality</th> 
+    <th>Functionality</th> 
   </tr>
   <tr>
     <td> F1 - F2 </td>
