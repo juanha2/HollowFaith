@@ -99,7 +99,7 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 
 ## Member contributions
 
-Juan Hernández Almagro
+#### Juan Hernández Almagro
 - Creation of the maps
 - Implemented colliders from Tiled
 - Implemented animations 
@@ -117,7 +117,7 @@ Juan Hernández Almagro
 - UI Image, Inputbox & Label
 
 
-Aarón Guerrero Cruz
+#### Aarón Guerrero Cruz
 - Creation of player time/movement logic system
 - Implemented collision logic system
 - Implemented animation logic system
