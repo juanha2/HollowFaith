@@ -96,7 +96,7 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 - Land Enemies know when they need jump with Pathfinding
 
 ### 3r Pack Innovations
-- Saved High Score & Best Time
+- High Score & Best Time
 
 
 ## Member contributions
