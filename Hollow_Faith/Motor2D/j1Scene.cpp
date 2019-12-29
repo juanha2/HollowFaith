@@ -71,6 +71,10 @@ bool j1Scene::Start()
 	ready_to_load = false;
 	sound_repeat = false;
 
+	//Adding every UI element
+	AddUIElements();
+
+
 	//If want to continue, we load, otherwise we load initial map
 	if (App->intro->want_continue)
 		App->LoadGame();
@@ -416,8 +420,7 @@ void j1Scene::LoadMap(int num_map)
 	App->scene->sound_repeat = false;
 	App->render->camera = App->render->camera_init;
 
-	//Adding every UI element
-	AddUIElements();		
+			
 
 	//Create Walkability Map
 	int w, h;
@@ -456,7 +459,7 @@ void j1Scene::LoadMap(int num_map)
 	App->console->CreateCommand(j1Command::commandType::GOD_MODE, "god_mode", this, 2, 2);
 	App->console->CreateCommand(j1Command::commandType::QUIT, "quit", this, 2, 2);
 	App->console->CreateCommand(j1Command::commandType::FPS_CAP, "FPS num", this, 2, 2);
-
+	
 }
 
 bool j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, p2SString name)
