@@ -117,6 +117,7 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 - Implementation of Score & Life systems
 - Implementation base of main menu & game menu
 - UI Image, Inputbox & Label
+- Console
 
 
 #### Aarón Guerrero Cruz
@@ -138,6 +139,7 @@ https://freesound.org/people/elijahdanie/sounds/487436/
 - UI Button & Scrollbar
 - Gameplay Trailer
 - Web Page
+- UML GUI
 
 
 ## License:
