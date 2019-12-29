@@ -276,7 +276,6 @@ bool j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element, p2SString 
 
 			if (element == exit_button)
 				want_exit = true;
-
 		}
 
 	}

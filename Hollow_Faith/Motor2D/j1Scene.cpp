@@ -507,12 +507,15 @@ bool j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, 
 				App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 				LOG("LOADING %s", txt.GetString());
 			}
-			if (txt == "level02.tmx") {
+			else if (txt == "level02.tmx") {
 				currentmap = 2;
 				App->checkpoint->checkpoint = false;
 				App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 				LOG("LOADING %s", txt.GetString());
-			}			
+			}		
+			else {
+				LOG("CANNOT LOAD MAP %s", txt.GetString());
+			}
 		}
 		if (name == "god_mode") {
 			App->objects->player->godMode = !App->objects->player->godMode;
