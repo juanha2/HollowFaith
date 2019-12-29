@@ -18,9 +18,9 @@
 #include "j1Checkpoint.h"
 #include "j1GUI.h"
 #include "j1IntroScene.h"
-#include <stdio.h>//for the sprintf_s function
 #include "j1Fonts.h"
 #include "j1Console.h"
+#include <stdio.h>//for the sprintf_s function
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -71,6 +71,7 @@ bool j1Scene::Start()
 	ready_to_load = false;
 	sound_repeat = false;
 
+	//If want to continue, we load, otherwise we load initial map
 	if (App->intro->want_continue)
 		App->LoadGame();
 	else
@@ -83,11 +84,9 @@ bool j1Scene::Start()
 bool j1Scene::PreUpdate() {
 
 	//At reaching 10 coins, we add a life to Player
-
 	if (num_coins >= 10) {
 		App->audio->PlayFx(13, 0, 128);
-		lifes++;
-		//Add +1 particle 
+		lifes++;		
 		App->objects->particle->AddParticle(App->objects->particle->lifeUp, App->objects->player->position.x,
 			App->objects->player->position.y + App->objects->player->entity_collider.h, SDL_FLIP_NONE, COLLIDER_NONE, 2);
 		num_coins = 0;
@@ -101,10 +100,7 @@ bool j1Scene::PreUpdate() {
 bool j1Scene::Update(float dt)
 {
 	bool ret = true;
-	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);
-
-	if (want_exit)
-		ret = false;
+	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Olive);	
 
 	//Updating all UI Texts
 	timer += dt;
@@ -134,48 +130,55 @@ bool j1Scene::Update(float dt)
 
 	//------------------------------------
 
+	//DEBUG COMMANDS----------------------------------
+
+	// Start at the level 1 begin
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{ // Start at the level 1 begin
+	{ 
 		currentmap = 1;		
 		App->checkpoint->checkpoint = false;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 	}
 
+	// Start at the level 2 begin
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{ // Start at the level 2 begin
+	{ 
 		App->checkpoint->checkpoint = false;
 		currentmap = 2;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 	}
 
+	// Start at the current level begin
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-	{ // Start at the current level begin
+	{ 
 		App->checkpoint->checkpoint = false;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{ // Save State
+	// Save State
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)	
 		App->SaveGame();
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-	{ // Load State				
+	
+	// Load State	
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)	 			
 		App->LoadGame();
-	}
+	
+	// GUI MASKS	
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		App->gui->debugUI = !App->gui->debugUI;
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
+	// Turn On God mode
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->objects->player->godMode == false)
-	{ // Turn On God mode
+	{ 
 		App->objects->player->godMode = true;
 		App->objects->player->ignoreColl = true;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->objects->player->godMode == true)
-	{ // Turn Off God mode
-		App->objects->player->godMode = false;
-	}
+	// Turn Off God mode
+	else if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && App->objects->player->godMode == true)	 
+		App->objects->player->godMode = false;	
 
 	//Changing frameratecap
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
@@ -185,13 +188,12 @@ bool j1Scene::Update(float dt)
 		else
 			App->frameratecap = App->desiredFrameratecap;
 	}
+	
+	//------------------------------------------------------
 
 	//Opening in-game menu
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-			EnableDisableMenu();
-
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
-		EnableDisableVictoryMenu();	
+		EnableDisableMenu();
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -217,7 +219,6 @@ bool j1Scene::PostUpdate()
 	else
 		capped = false;
 
-
 	static char title[256];
 	sprintf_s(title, 256, "%s || Actual FPS: %i | Av.FPS: %.2f | Last Frame MS: %02u | VSYNC: %d | Frames Cap: %d",
 		App->GetTitle(), App->frames_on_last_update, App->avg_fps, App->last_frame_ms, App->render->vsync, capped);
@@ -230,6 +231,7 @@ bool j1Scene::PostUpdate()
 		ret = false;
 		return ret;
 	}
+
 	return ret;
 }
 
@@ -247,6 +249,7 @@ bool j1Scene::CleanUp()
 	App->audio->UnLoad();	
 	App->console->DeleteCommands();
 
+	//Removing all UI elements
 	menu.menu_button = nullptr;
 	menu.resume_button = nullptr;
 	menu.return_button = nullptr;
@@ -363,8 +366,7 @@ void j1Scene::sceneswitch()
 					App->audio->PlayFx(4, 0, App->audio->FXvolume);
 					sound_repeat = true;
 					EnableDisableVictoryMenu();
-				}
-				//currentmap = 1;
+				}				
 			}				
 
 		}
@@ -392,22 +394,24 @@ void j1Scene::sceneswitch()
 						App->fade_to_black->FadeToBlack(App->map->data.levels[i - 1]->name.GetString(), 2.0f);
 				}
 			}
-			else {				
+			else 				
 				App->fade_to_black->FadeToBlack(App->intro, this);
-			}
+			
 
 		}
 	}
 
 }
 
-void j1Scene::LoadMap(int num_map) {
-	   
-
+void j1Scene::LoadMap(int num_map) 
+{
+	  
 	App->map->CleanUp();
 	App->pathfinding->CleanUp();
 	App->objects->CleanUp();
+
 	App->map->Load(App->map->data.levels[num_map - 1]->name.GetString());
+
 	App->scene->ready_to_load = false;
 	App->scene->sound_repeat = false;
 	App->render->camera = App->render->camera_init;
@@ -423,6 +427,8 @@ void j1Scene::LoadMap(int num_map) {
 		App->pathfinding->SetMap(w, h, data);
 		RELEASE_ARRAY(data);
 	}
+
+	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
 
 	//Plays current map music
 	App->audio->PlayMusic(App->map->data.music.GetString(), 1.0f);
@@ -444,8 +450,7 @@ void j1Scene::LoadMap(int num_map) {
 	App->audio->LoadFx(life_Fx.GetString());		//13
 	App->audio->LoadFx(score_Fx.GetString());		//14
 
-	App->audio->LoadFx("audio/fx/button_click.wav");
-	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
+	App->audio->LoadFx("audio/fx/button_click.wav");	
 
 	//Creating Console Commands
 	App->console->CreateCommand(j1Command::commandType::LOAD_MAP, "map path", this, 2, 2);
@@ -508,10 +513,7 @@ bool j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, 
 				App->checkpoint->checkpoint = false;
 				App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 				LOG("LOADING %s", txt.GetString());
-			}
-			else {
-				LOG("COULD NOT LOAD MAP %s", txt.GetString());
-			}
+			}			
 		}
 		if (name == "god_mode") {
 			App->objects->player->godMode = !App->objects->player->godMode;
@@ -571,8 +573,7 @@ void j1Scene::AddUIElements()
 	menu.save = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,160 }, { 20,-5 }, true, false, { 283,109,100,22 }, "SAVE", this);
 	menu.load = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 210,190 }, { 20,-5 }, true, false, { 283,109,100,22 }, "LOAD", this);
 	menu.volume_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 270 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_MUSIC);
-	menu.music_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 310 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_FX);
-	
+	menu.music_scroll = App->gui->AddGUIelement(GUItype::GUI_SCROLLBAR, nullptr, { 220, 310 }, { 0,0 }, false, false, { 284, 62, 120, 4 }, nullptr, this, true, false, SCROLL_TYPE::SCROLL_FX);	
 	menu.label1 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 270 }, { 0,-3 }, false, false, { 166,167,109,27 }, "MUSIC", this);
 	menu.label2 = App->gui->AddGUIelement(GUItype::GUI_LABEL, nullptr, { 170, 310 }, { 0,-3 }, false, false, { 166,167,109,27 }, "FX'S", this);	
 	
@@ -610,8 +611,7 @@ void j1Scene::EnableDisableVictoryMenu()
 	complete.exit_button->enabled = !complete.exit_button->enabled;
 	complete.title->enabled = !complete.title->enabled;
 	complete.timer->enabled = !complete.timer->enabled;
-	complete.score->enabled = !complete.score->enabled;	
-	
+	complete.score->enabled = !complete.score->enabled;		
 
 	//BEST SCORES AND TIME LOGIC--------------------------------
 	if(score > App->intro->final_score)

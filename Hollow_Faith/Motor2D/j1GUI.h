@@ -34,13 +34,16 @@ public:
 	j1GUIelement* AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text = nullptr, j1Module* listener = nullptr, bool X_drag = false, bool Y_drag = false, SCROLL_TYPE scrollType = SCROLL_TYPE::SCROLL_NONE, bool decor = false, SDL_Color color = { 255,255,255 });
 	SDL_Texture* j1GUI::GetAtlasTexture() const;
 
-	p2List<j1GUIelement*>	GUIelementList;
+public:
 
+	p2List<j1GUIelement*>	GUIelementList;
+	bool		debugUI = false;
 
 private:
 
 	SDL_Texture* atlasTexture;
 	p2SString atlasFile;
+	
 };
 
 

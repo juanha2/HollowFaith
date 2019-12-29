@@ -3,7 +3,6 @@
 #include "j1Input.h"
 #include "j1GUI.h"
 
-
 j1GUIButton::j1GUIButton() {
 
 	this->type = GUItype::GUI_BUTTON;
@@ -23,6 +22,7 @@ bool j1GUIButton::Awake(pugi::xml_node&)
 
 bool j1GUIButton::Start()
 {
+	//Button with texts
 	if(text != nullptr)
 		label = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, { globalPosition.x + rect.w/9,globalPosition.y+12 }, localPosition, true, true, { 0,0,0,0 }, text, nullptr,false,false,SCROLL_TYPE::SCROLL_NONE,false,color);
 
@@ -100,11 +100,6 @@ bool j1GUIButton::CleanUp()
 	return true;
 }
 
-void j1GUIButton::Dragging()
-{
-
-}
-
 void j1GUIButton::MovingIt(float dt)
 {
 
@@ -135,10 +130,5 @@ void j1GUIButton::MovingIt(float dt)
 		if (Y_drag)
 			this->globalPosition.y = parent->globalPosition.y - localPosition.y;
 	}
-
-}
-
-void j1GUIButton::OnRelease()
-{
 
 }

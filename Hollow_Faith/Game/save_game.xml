@@ -10,17 +10,34 @@
 	<scene>
 		<currentmap value="1" />
 		<lifes value="3" />
-		<coins value="5" />
-		<time value="3.15699911" />
-		<score value="250" />
+		<coins value="7" />
+		<time value="6.80999422" />
+		<score value="350" />
 	</scene>
 	<objects>
-		<Coins>
-			<position x="295.5" y="260.5" />
-		</Coins>
-		<Coins>
-			<position x="390.5" y="215" />
-		</Coins>
+		<Bonfire num="1">
+			<position x="112" y="320" />
+			<active value="true" />
+		</Bonfire>
+		<Bonfire num="1">
+			<position x="888.010986" y="175.485001" />
+			<active value="false" />
+		</Bonfire>
+		<player>
+			<position x="402.705444" y="213" />
+		</player>
+		<EnemyLand>
+			<position x="608" y="309" />
+		</EnemyLand>
+		<EnemyLand>
+			<position x="1424" y="213" />
+		</EnemyLand>
+		<EnemyFly>
+			<position x="832" y="48" />
+		</EnemyFly>
+		<EnemyFly>
+			<position x="1056" y="128" />
+		</EnemyFly>
 		<Coins>
 			<position x="583.5" y="250.5" />
 		</Coins>
@@ -60,29 +77,6 @@
 		<Coins>
 			<position x="1447" y="220.5" />
 		</Coins>
-		<EnemyFly>
-			<position x="832" y="48" />
-		</EnemyFly>
-		<EnemyLand>
-			<position x="608" y="309" />
-		</EnemyLand>
-		<EnemyFly>
-			<position x="1056" y="128" />
-		</EnemyFly>
-		<EnemyLand>
-			<position x="1424" y="213" />
-		</EnemyLand>
-		<Bonfire num="1">
-			<position x="112" y="320" />
-			<active value="true" />
-		</Bonfire>
-		<Bonfire num="1">
-			<position x="888.010986" y="175.485001" />
-			<active value="false" />
-		</Bonfire>
-		<player>
-			<position x="273.974579" y="261" />
-		</player>
 	</objects>
 	<gui />
 	<intro />
@@ -91,6 +85,6 @@
 	<console />
 	<FadeToBlack />
 	<renderer>
-		<camera x="-69" y="-10" />
+		<camera x="-327" y="-10" />
 	</renderer>
 </game_state>

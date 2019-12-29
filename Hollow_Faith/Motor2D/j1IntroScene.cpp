@@ -36,14 +36,13 @@ bool j1IntroScene::Awake(pugi::xml_node& config)
 
 	pugi::xml_node animIterator = config.child("animation");
 	fire.load_animation(animIterator, "fire");
-	//final_time = 0;
+	
 	return ret;
 }
 
 // Called before the first frame
 bool j1IntroScene::Start()
-{	
-	
+{		
 	App->win->scale = 2;
 	App->audio->PlayMusic("audio/music/intro.ogg", 1.0f);
 		
@@ -74,6 +73,7 @@ bool j1IntroScene::PreUpdate() {
 
 	Mix_VolumeMusic(App->audio->MUSICvolume);
 
+	//Updating HIGSCORE labels---------------------------------------------------------
 	sprintf_s(scoreText, "%d", final_score);
 	App->tex->UnLoad(highscore_menu.best_score->texture);
 	highscore_menu.best_score->texture = nullptr;
@@ -86,7 +86,7 @@ bool j1IntroScene::PreUpdate() {
 	highscore_menu.best_time->texture = nullptr;
 	highscore_menu.best_time->texture = App->fonts->Print(timerText);
 	App->fonts->CalcSize(timerText, highscore_menu.best_time->rect.w, highscore_menu.best_time->rect.h);
-
+	//-----------------------------------------------------------------------------------
 
 	return true;
 }
@@ -96,15 +96,15 @@ bool j1IntroScene::Update(float dt)
 {
 	bool ret = true;
 	
+	// GUI MASKS	
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+		App->gui->debugUI = !App->gui->debugUI;
+
 	if (want_exit)
-		ret = false;
-	
-	SDL_Rect rect1 = {0,0, 800,200 };
-	SDL_Rect rect2 = { 0,0,67,63 };
+		ret = false;	
 	
 	App->render->Blit(texture, 0, 0);		
 	App->render->Blit(title_texture, 40, 40);	
-
 	App->render->Blit(fire_texture, 350, 250, &fire.GetCurrentFrame(dt));
 
 	return ret;
@@ -121,8 +121,7 @@ bool j1IntroScene::PostUpdate()
 	App->win->SetTitle(title);
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-	
+		ret = false;	
 	
 	return ret;
 }
@@ -131,6 +130,8 @@ bool j1IntroScene::PostUpdate()
 bool j1IntroScene::CleanUp()
 {
 	LOG("Freeing intro scene");
+
+	//Cleaning main buttons
 	play_button = nullptr;
 	continue_button = nullptr;
 	exit_button = nullptr;
@@ -174,7 +175,6 @@ bool j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element, p2SString 
 	{
 		case GUI_Event::EVENT_ONCLICK: 
 		{		
-
 			if (element == play_button) {
 				App->audio->PlayFx(1, 0, App->audio->FXvolume);
 				App->fade_to_black->FadeToBlack(App->scene, this);
@@ -276,10 +276,6 @@ bool j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element, p2SString 
 
 		}
 
-		case GUI_Event::EVENT_DRAG:
-		{
-								
-		}		
 	}
 	return true;
 }
@@ -293,7 +289,6 @@ void j1IntroScene::AddUIElements()
 	continue_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { x_pos,240 }, { 0,0 }, true, true, { 281,6,127,36 }, "CONTINUE", this);
 	exit_button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { x_pos,300 }, { 0,0 }, true, true, { 281,6,127,36 }, "EXIT", this);
 	
-
 	// Settings menu UI elements
 	settings_menu.image = App->gui->AddGUIelement(GUItype::GUI_IMAGE, nullptr, { 210, 180 }, { 0,0 }, false, false, { 4,3, 271, 156 }, nullptr, this);
 	settings_menu.button = App->gui->AddGUIelement(GUItype::GUI_BUTTON, nullptr, { 400,20 }, { 0,0 }, true, true, { 84,164,37,31 }, nullptr, this);

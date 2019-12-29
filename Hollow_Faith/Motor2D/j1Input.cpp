@@ -130,6 +130,7 @@ bool j1Input::PreUpdate()
 
 			case SDL_KEYDOWN:
 
+				//CURSOR POSITION LOGIC
 				if (text_input) 
 				{
 					if (event.key.keysym.sym == SDLK_BACKSPACE && text.Length() > 0) {

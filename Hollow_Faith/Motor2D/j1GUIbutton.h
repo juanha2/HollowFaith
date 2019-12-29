@@ -12,7 +12,6 @@ public:
 	j1GUIButton();
 	~j1GUIButton();
 
-
 	bool Awake(pugi::xml_node&);
 	bool Start();
 
@@ -22,21 +21,16 @@ public:
 
 	bool CleanUp();
 
-
-
 	bool Load(pugi::xml_node&) { return true; };
 	bool Save(pugi::xml_node&) const  const { return true; };
 
-	void Dragging();
 	void MovingIt(float dt);
-	void OnRelease();
+	
 
 private:
 
 	j1GUIelement* label = nullptr;
 	iPoint accuratedDrag = { 0,0 };
-
-
 	bool dragging;
 };
 

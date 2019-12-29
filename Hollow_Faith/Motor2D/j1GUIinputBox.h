@@ -15,24 +15,18 @@ public:
 	j1GUIinputBox(char* text);
 	~j1GUIinputBox();
 
-	bool Awake(pugi::xml_node&);
 	bool Start();
 
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
 
-	bool CleanUp();
-
-	bool Load(pugi::xml_node&) { return true; };
-	bool Save(pugi::xml_node&) const  const { return true; };
-	
+	bool CleanUp();	
 	void OnClick();
-	void OnRelease();
+
 private:
-		
+
 	j1GUIelement* string = nullptr;
-	j1GUIelement* background = nullptr;	
 };
 
 

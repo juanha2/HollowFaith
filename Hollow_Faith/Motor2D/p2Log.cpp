@@ -16,5 +16,5 @@ void log(const char file[], int line, const char* format, ...)
 	OutputDebugString(tmp_string2);
 
 	if (App && App->console->console)
-		App->console->PrintText(tmp_string);
+		App->console->ReceiveText(tmp_string);
 }

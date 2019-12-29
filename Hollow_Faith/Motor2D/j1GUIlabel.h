@@ -14,11 +14,7 @@ public:
 	j1GUIlabel();
 	~j1GUIlabel();
 
-	bool Awake(pugi::xml_node&);
-	bool Start();
-
-	bool PreUpdate();
-	bool Update(float dt);
+	bool Start();	
 	bool PostUpdate();
 	bool CleanUp();
 

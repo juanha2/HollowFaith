@@ -7,41 +7,15 @@
 
 j1GUIlabel::j1GUIlabel() 
 {
-	this->type = GUItype::GUI_LABEL;
-	 
+	this->type = GUItype::GUI_LABEL;	 
 }
 
-j1GUIlabel::~j1GUIlabel() {
-
-}
-
-
-bool j1GUIlabel::Awake(pugi::xml_node&)
-{
-	
-	return true;
-}
+j1GUIlabel::~j1GUIlabel() {}
 
 bool j1GUIlabel::Start()
 {		
-
 	if(text && strlen(text)>2)
 		texture = App->fonts->Print(text, color);
-
-	return true;
-}
-
-
-bool j1GUIlabel::PreUpdate() 
-{	
-	
-	return true;
-}
-
-bool j1GUIlabel::Update(float dt) 
-{		
-	/*if(text!=nullptr)
-		texture = App->fonts->Print(text, color);*/
 
 	return true;
 }
@@ -49,8 +23,7 @@ bool j1GUIlabel::Update(float dt)
 bool j1GUIlabel::PostUpdate()
 {		
 	if (enabled && texture!=nullptr) 			
-		App->render->Blit(texture, globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, nullptr, 0.0f);
-			
+		App->render->Blit(texture, globalPosition.x + localPosition.x, globalPosition.y + localPosition.y, nullptr, 0.0f);			
 
 	return true;
 }

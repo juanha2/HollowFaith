@@ -5,8 +5,8 @@
 
 class j1GUIelement;
 
-
-class j1Command {
+class j1Command 
+{
 
 public:
 	enum commandType
@@ -30,16 +30,11 @@ public:
 public:
 
 	commandType		type;
-	const char* name = nullptr;
-	
-	int			max_arguments;
-	int			min_arguments;
-	j1Module* listener = nullptr;
-	const char* description = nullptr;
-	p2SString	first_name;
+	const char*		name = nullptr;		
+	j1Module*		listener = nullptr;
+	p2SString		first_name;
 	
 };
-
 
 class j1Console : public j1Module
 {
@@ -52,23 +47,20 @@ public:
 	bool Start();
 	bool Awake(pugi::xml_node&);
 	bool PreUpdate();
-	bool Update(float dt);
-	bool PostUpdate();
 	bool CleanUp();
+
 	void EnableDisableConsole();
 	void DeleteCommands();
-
-	void PrintText(const char* txt);
-	
+	void ReceiveText(const char* txt);
 	void CreateCommand(j1Command::commandType type, const char* command, j1Module* callback, uint min_arg, uint max_args);
 	bool ExecuteCommand(const char* txt);
 	bool GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, p2SString name);
-public:
-	
-	int				not_found;
-	j1GUIelement* console = nullptr;
-	
-	p2List<j1Command*>	commands;
+
+public:	
+
+	j1GUIelement*			console = nullptr;
+	p2List<j1Command*>		commands;
+	int						not_found;	
 };
 
 #endif // __j1Console_H__

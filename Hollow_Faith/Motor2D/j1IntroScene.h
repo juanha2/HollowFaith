@@ -69,8 +69,7 @@ public:
 
 	bool GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, p2SString name);
 
-	void AddUIElements();
-	
+	void AddUIElements();	
 
 public:
 
@@ -92,7 +91,6 @@ public:
 	p2SString			click_Fx1;	
 	p2SString			click_Fx2;
 	Animation			fire;
-
 
 	char				timerText[100];
 	char				scoreText[100];

@@ -86,7 +86,7 @@ public:
 	bool			different_map = false;
 	bool			ready_to_load = false;
 	bool			sound_repeat = false;
-	bool			first = true;
+
 	bool			want_exit = false;
 
 	int					lifes;
@@ -117,6 +117,7 @@ public:
 	char				lifesText[100];
 	char				coinsText[100];
 
+	//GUI elements
 	j1GUIelement*		lifes_label=nullptr;
 	j1GUIelement*		coins_label = nullptr;
 	j1GUIelement*		lifes_icon = nullptr;

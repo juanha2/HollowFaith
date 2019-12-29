@@ -16,24 +16,18 @@ j1GUIinputBox::~j1GUIinputBox() {
 
 }
 
-
-bool j1GUIinputBox::Awake(pugi::xml_node&)
-{
-	
-	return true;
-}
-
 bool j1GUIinputBox::Start()
 {
+	//Adding input box's string
 	string = App->gui->AddGUIelement(GUItype::GUI_LABEL, this, globalPosition, { 0,10 }, true, enabled, { localPosition.x,localPosition.y,50,50 }, text);
 	return true;
 }
-
 
 bool j1GUIinputBox::PreUpdate()
 {	
 	string->enabled = enabled;	
 
+	//If it's focused, enable TEXT INPUT
 	if (focus && enabled) 
 		App->input->EnableTextInput();
 
@@ -47,6 +41,7 @@ bool j1GUIinputBox::PreUpdate()
 
 bool j1GUIinputBox::Update(float dt)
 {
+	//Setting texture of the string written
 	if (enabled) 
 	{
 		if (App->input->GetText().Length()!=0) {
@@ -59,17 +54,16 @@ bool j1GUIinputBox::Update(float dt)
 		}
 	}
 
+	//Setting focus of input box
 	if (above) 
 	{
 		if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			OnClick();
 	}	
-
 	else {
 		if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
 			focus=false;
-	}
-	
+	}	
 
 	return true;
 }
@@ -77,9 +71,11 @@ bool j1GUIinputBox::Update(float dt)
 bool j1GUIinputBox::PostUpdate()
 {	
 	if (enabled) {
+
+		//Draws the rectangle to write in
 		App->render->DrawQuad(rect,255,255,255,255,false, false);				
 
-		//Draws the cursor(rectangle) -------------
+		//Draws the cursor(rectangle)
 		if (focus)
 		{
 			SDL_Rect rect = { (string->globalPosition.x + App->input->GetCursorPosition()) * App->win->GetScale(), 
@@ -87,7 +83,6 @@ bool j1GUIinputBox::PostUpdate()
 			App->render->DrawQuad(rect, 255, 255, 255, 255, true, false);
 		}
 	}
-	
 
 	return true;
 }
@@ -100,10 +95,5 @@ bool j1GUIinputBox::CleanUp()
 void j1GUIinputBox::OnClick()
 {
 	focus = true;	
-	
 }
 
-void j1GUIinputBox::OnRelease()
-{
-
-}
