@@ -37,7 +37,7 @@ SOFTWARE.</p>
 <br><br>
 
 <h2  align="center" id="hollow-faith-trailer">Hollow Faith: Trailer</h2>
-
+This video is not recorded at the most advanced stage of development.
 <iframe width="510" height="412"
 src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 </iframe>
