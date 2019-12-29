@@ -75,7 +75,7 @@ bool j1GUIelement::OnAbove()
 	if (SDL_PointInRect(&mouse, &intersect) && this->enabled && this->interactable) {
 		if (listener != nullptr)
 		{
-			this->listener->GuiObserver(GUI_Event::EVENT_HOVER, this);
+			this->listener->GuiObserver(GUI_Event::EVENT_HOVER, this, nullptr, nullptr);
 		}
 		ret = true;
 	}
@@ -89,7 +89,7 @@ void j1GUIelement::OnClick()
 
 	if (listener != nullptr) 
 	{
-		this->listener->GuiObserver(GUI_Event::EVENT_ONCLICK, this);
+		this->listener->GuiObserver(GUI_Event::EVENT_ONCLICK, this, nullptr, nullptr);
 	}		
 
 }

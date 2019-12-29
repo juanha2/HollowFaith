@@ -12,6 +12,7 @@
 struct Collider;
 class j1App;
 class j1GUIelement;
+class j1Command;
 
 enum class GUI_Event
 {
@@ -19,7 +20,8 @@ enum class GUI_Event
 
 	EVENT_ONCLICK,
 	EVENT_DRAG,
-	EVENT_HOVER
+	EVENT_HOVER,
+	EVENT_CONSOLE
 };
 
 
@@ -104,7 +106,7 @@ public:
 	}
 
 
-	virtual void GuiObserver(GUI_Event type, j1GUIelement* element) {}
+	virtual bool GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt = "", p2SString name = "") { return true; }
 
 	virtual void OnCollision(Collider*, Collider*) {}
 

@@ -53,7 +53,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	coin_Fx = fxIterator.child("coinFx").attribute("path").as_string();
 	life_Fx = fxIterator.child("lifeUpFx").attribute("path").as_string();
 	score_Fx = fxIterator.child("scoreUp").attribute("path").as_string();
-
+	
+	
 	return ret;
 }
 
@@ -135,7 +136,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{ // Start at the level 1 begin
-		currentmap = 1;
+		currentmap = 1;		
 		App->checkpoint->checkpoint = false;
 		App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
 	}
@@ -225,6 +226,10 @@ bool j1Scene::PostUpdate()
 
 	sceneswitch();
 
+	if (want_exit) {
+		ret = false;
+		return ret;
+	}
 	return ret;
 }
 
@@ -240,6 +245,7 @@ bool j1Scene::CleanUp()
 	App->tex->UnLoad(debug_tex);
 	App->gui->DeleteElements();
 	App->audio->UnLoad();	
+	App->console->DeleteCommands();
 
 	menu.menu_button = nullptr;
 	menu.resume_button = nullptr;
@@ -396,6 +402,7 @@ void j1Scene::sceneswitch()
 }
 
 void j1Scene::LoadMap(int num_map) {
+	   
 
 	App->map->CleanUp();
 	App->pathfinding->CleanUp();
@@ -439,10 +446,16 @@ void j1Scene::LoadMap(int num_map) {
 
 	App->audio->LoadFx("audio/fx/button_click.wav");
 	debug_tex = App->tex->Load("Assets/Sprites/path2.png");
+
+	//Creating Console Commands
+	App->console->CreateCommand(j1Command::commandType::LOAD_MAP, "map path", this, 2, 2);
+	App->console->CreateCommand(j1Command::commandType::GOD_MODE, "god_mode", this, 2, 2);
+	App->console->CreateCommand(j1Command::commandType::QUIT, "quit", this, 2, 2);
+	App->console->CreateCommand(j1Command::commandType::FPS_CAP, "FPS num", this, 2, 2);
+
 }
 
-
-void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
+bool j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, p2SString name)
 {
 	switch (type)
 	{
@@ -478,9 +491,64 @@ void j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element)
 		if (element == complete.exit_button) {
 			EnableDisableVictoryMenu();
 			App->fade_to_black->FadeToBlack(App->intro, this);
-		}				
+		}
+		break;
+	}
+	case GUI_Event::EVENT_CONSOLE:
+	{
+		if (name == "map") {
+			if (txt == "level01.tmx") {
+				currentmap = 1;
+				App->checkpoint->checkpoint = false;
+				App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
+				LOG("LOADING %s", txt.GetString());
+			}
+			if (txt == "level02.tmx") {
+				currentmap = 2;
+				App->checkpoint->checkpoint = false;
+				App->fade_to_black->FadeToBlack(App->map->data.levels[currentmap - 1]->name.GetString(), 1.0f);
+				LOG("LOADING %s", txt.GetString());
+			}
+			else {
+				LOG("COULD NOT LOAD MAP %s", txt.GetString());
+			}
+		}
+		if (name == "god_mode") {
+			App->objects->player->godMode = true;
+			App->objects->player->ignoreColl = true;
+			LOG("god_mode");
+		}
+
+		if (name == "quit") {
+			LOG("QUITTING");
+			return false;
+		}
+
+		if (name == "FPS"){
+			
+			sscanf_s(txt.GetString(), "%d", &FPScap);
+
+			if (FPScap > 120) {
+				App->frameratecap = 120;
+				App->desiredFrameratecap = 120;
+			}		
+
+			if (FPScap < 30) {
+				App->frameratecap = 30;
+				App->desiredFrameratecap = 30;
+			}
+			
+			if (FPScap >= 30 && FPScap <= 120) {
+				App->frameratecap = FPScap;
+				App->desiredFrameratecap = FPScap;
+			}		
+
+			LOG("CURRENT FPS: %i", App->frameratecap);
+		}
+		break;
 	}
 	}
+	return true;
 }
 
 void j1Scene::AddUIElements()

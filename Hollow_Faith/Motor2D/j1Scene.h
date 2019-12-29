@@ -7,6 +7,7 @@
 
 struct SDL_Texture;
 class j1GUIelement;
+class j1Command;
 
 struct InGameMenu {
 
@@ -68,7 +69,7 @@ public:
 	void sceneswitch();	
 	void LoadMap(int num_map);
 
-	void GuiObserver(GUI_Event type, j1GUIelement* element);
+	bool GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, p2SString name);
 
 	void AddUIElements();
 	void EnableDisableMenu();
@@ -91,7 +92,7 @@ public:
 	int					lifes;
 	int					num_coins = 0;	
 	int					score; 
-	
+	int					FPScap;
 
 	p2SString			jump_fx;
 	p2SString			death_fx;
