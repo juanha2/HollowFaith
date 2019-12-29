@@ -7,6 +7,7 @@
 
 struct SDL_Texture;
 class j1GUIelement;
+class j1Command;
 
 struct SettingsMenu {
 
@@ -66,7 +67,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void GuiObserver(GUI_Event type, j1GUIelement* element);
+	bool GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, p2SString name);
 
 	void AddUIElements();
 	

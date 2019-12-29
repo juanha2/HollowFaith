@@ -14,6 +14,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "p2Animation.h"
+#include "j1Console.h"
 
 j1IntroScene::j1IntroScene() : j1Module()
 {
@@ -166,7 +167,7 @@ bool j1IntroScene::CleanUp()
 	return true;
 }
 
-void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element) 
+bool j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, p2SString name)
 {
 
 	switch (type) 
@@ -280,7 +281,7 @@ void j1IntroScene::GuiObserver(GUI_Event type, j1GUIelement* element)
 								
 		}		
 	}
-
+	return true;
 }
 
 void j1IntroScene::AddUIElements() 

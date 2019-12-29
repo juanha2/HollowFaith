@@ -20,17 +20,23 @@ public:
 	};
 
 public:
+
 	j1Command();
 	~j1Command();
+
+	bool Start();	
 	bool CleanUp();
 
 public:
 
 	commandType		type;
 	const char* name = nullptr;
+	
 	int			max_arguments;
 	int			min_arguments;
 	j1Module* listener = nullptr;
+	const char* description = nullptr;
+	p2SString	first_name;
 	
 };
 
@@ -50,19 +56,18 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	void EnableDisableConsole();
+	void DeleteCommands();
 
 	void PrintText(const char* txt);
-	void ReceiveText(const char* txt);
-	bool ConsoleLogic();
-
-	void CreateCommand(j1Command::commandType type, const char* command, j1Module* callback, uint min_arg, uint max_args);
-
-public:
-	p2SString		consoleString;
 	
+	void CreateCommand(j1Command::commandType type, const char* command, j1Module* callback, uint min_arg, uint max_args);
+	bool ExecuteCommand(const char* txt);
+	bool GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, p2SString name);
+public:
+	
+	int				not_found;
 	j1GUIelement* console = nullptr;
-	bool		want_exit = false;
-
+	
 	p2List<j1Command*>	commands;
 };
 

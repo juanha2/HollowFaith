@@ -52,6 +52,8 @@ bool j1Input::Start()
 // Called each loop iteration
 bool j1Input::PreUpdate()
 {
+	bool ret = true;
+
 	static SDL_Event event;
 	
 	
@@ -141,11 +143,14 @@ bool j1Input::PreUpdate()
 					}
 					if (event.key.keysym.sym == SDLK_RETURN) {
 						cursor_position = 0;
-						App->console->ReceiveText(text.GetString());
+						ret = App->console->ExecuteCommand(text.GetString());
+						if (!ret) {
+							App->console->EnableDisableConsole();
+						}
 						text.Clear();					
 					}
 					if (event.key.keysym.sym == SDLK_BACKQUOTE) {					
-						App->console->EnableDisableConsole();
+						App->console->EnableDisableConsole();						
 						text.Clear();											
 						cursor_position = 0;					
 					}
@@ -174,7 +179,7 @@ bool j1Input::PreUpdate()
 			}
 		}	
 		
-	return true;
+	return ret;
 }
 
 // Called before quitting
