@@ -109,7 +109,8 @@ public:
 	p2SString			coin_Fx;
 	p2SString			life_Fx;
 	p2SString			score_Fx;
-	
+	p2SString			button_Fx;
+
 	float				timer;
 	float				life_timer;
 	char				timerText[100];

@@ -53,7 +53,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	coin_Fx = fxIterator.child("coinFx").attribute("path").as_string();
 	life_Fx = fxIterator.child("lifeUpFx").attribute("path").as_string();
 	score_Fx = fxIterator.child("scoreUp").attribute("path").as_string();
-	
+	button_Fx = fxIterator.child("buttonFx").attribute("path").as_string();
 	
 	return ret;
 }
@@ -449,8 +449,7 @@ void j1Scene::LoadMap(int num_map)
 	App->audio->LoadFx(coin_Fx.GetString());		//12
 	App->audio->LoadFx(life_Fx.GetString());		//13
 	App->audio->LoadFx(score_Fx.GetString());		//14
-
-	App->audio->LoadFx("audio/fx/button_click.wav");	
+	App->audio->LoadFx(button_Fx.GetString());		//15
 
 	//Creating Console Commands
 	App->console->CreateCommand(j1Command::commandType::LOAD_MAP, "map path", this, 2, 2);

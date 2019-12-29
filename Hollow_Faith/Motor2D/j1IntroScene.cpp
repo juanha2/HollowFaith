@@ -36,7 +36,11 @@ bool j1IntroScene::Awake(pugi::xml_node& config)
 
 	pugi::xml_node animIterator = config.child("animation");
 	fire.load_animation(animIterator, "fire");
-	
+
+	music = config.child("music").attribute("path").as_string();
+	background_tex = config.child("background").attribute("path").as_string();
+	title_tex = config.child("title").attribute("path").as_string();
+	fire_tex = config.child("fire").attribute("path").as_string();
 	return ret;
 }
 
@@ -44,14 +48,13 @@ bool j1IntroScene::Awake(pugi::xml_node& config)
 bool j1IntroScene::Start()
 {		
 	App->win->scale = 2;
-	App->audio->PlayMusic("audio/music/intro.ogg", 1.0f);
-		
+	App->audio->PlayMusic(music.GetString(), 1.0f);		
 	App->audio->LoadFx(click_Fx1.GetString());
 	App->audio->LoadFx(click_Fx2.GetString());
 
-	texture = App->tex->Load("Assets/Sprites/background.png");
-	title_texture= App->tex->Load("Assets/Sprites/title.png");
-	fire_texture = App->tex->Load("Assets/Sprites/fire.png");
+	texture = App->tex->Load(background_tex.GetString());
+	title_texture= App->tex->Load(title_tex.GetString());
+	fire_texture = App->tex->Load(fire_tex.GetString());
 	App->render->camera = App->render->camera_init;	
 
 	AddUIElements();

@@ -45,11 +45,17 @@
       <coinFx path="audio/fx/coin.wav"/>
       <lifeUpFx path="audio/fx/life_up.wav"/>
       <scoreUp path="audio/fx/scoreUp.wav"/>
+      <buttonFx path= "audio/fx/button_click.wav"/>    
     </fx>
   
   </scene>
 
   <intro>
+    <music path = "audio/music/intro.ogg"/>
+    <background path= "Assets/Sprites/background.png"/>
+    <title path= "Assets/Sprites/title.png"/>
+    <fire path= "Assets/Sprites/fire.png"/>
+    
     <animation name ="fire">
       <sprite x ="11" y ="9" w ="56" h="52"/>
       <sprite x ="83" y ="9" w ="56" h="52"/>

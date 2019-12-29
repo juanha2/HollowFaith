@@ -90,6 +90,11 @@ public:
 
 	p2SString			click_Fx1;	
 	p2SString			click_Fx2;
+	p2SString			music;
+	p2SString			background_tex;
+	p2SString			title_tex;
+	p2SString			fire_tex;
+
 	Animation			fire;
 
 	char				timerText[100];
