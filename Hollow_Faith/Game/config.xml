@@ -2,7 +2,7 @@
 
 <config>
   <app>
-    <title>Hollow Faith v0.68</title>
+    <title>Hollow Faith v1.00</title>
     <organization>Juan Hernández and Aarón Guerrero</organization>
     <frameratecap value ="30"/>
   </app>
