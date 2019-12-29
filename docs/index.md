@@ -47,7 +47,7 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 
 <center>
 
-<font size="6"><a href="https://www.youtube.com/watch?v=2Z4m4lnjxkY">Download our game Build</a></font>
+<font size="6"><a href="https://github.com/juanha2/HollowFaith/releases/download/v1.00/HollowFaith_v1.00.zip">Download our game Build</a></font>
 
 </center>
 
