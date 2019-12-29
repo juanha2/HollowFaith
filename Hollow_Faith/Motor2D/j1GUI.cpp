@@ -29,6 +29,7 @@ bool j1GUI::Awake(pugi::xml_node& config)
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
+	//Get the global GUI texture path
 	atlasFile = config.child("atlas").attribute("file").as_string();
 
 	return ret;
@@ -37,12 +38,13 @@ bool j1GUI::Awake(pugi::xml_node& config)
 
 bool j1GUI::Start()
 {
+	//Load the global GUI texture
 	atlasTexture = App->tex->Load(atlasFile.GetString());
 
 	return true;
 }
 
-
+//PreUpdates all GUI elements
 bool j1GUI::PreUpdate()
 {
 	BROFILER_CATEGORY("GUI_PreUpdate", Profiler::Color::Azure);
@@ -59,7 +61,7 @@ bool j1GUI::PreUpdate()
 
 }
 
-
+//Updates all GUI elements
 bool j1GUI::Update(float dt)
 {
 	BROFILER_CATEGORY("GUI_Update", Profiler::Color::BlanchedAlmond);
@@ -76,6 +78,7 @@ bool j1GUI::Update(float dt)
 
 }
 
+//PostUpdates all GUI elements
 bool j1GUI::PostUpdate()
 {
 	BROFILER_CATEGORY("GUI_PostUpdate", Profiler::Color::Beige);
@@ -92,7 +95,7 @@ bool j1GUI::PostUpdate()
 
 }
 
-
+//Clean Up the list of all out GUI elements
 bool j1GUI::CleanUp()
 {
 	LOG("Freeing GUI");
@@ -146,12 +149,11 @@ bool j1GUI::DeleteConsole()
 	return true;
 }
 
+// Return the global GUI texture
 SDL_Texture* j1GUI::GetAtlasTexture() const
-{
-	return atlasTexture;
-}
+{ return atlasTexture; }
 
-
+// Create a new GUI element with all our desired values
 j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint globalPosition, iPoint localPosition, bool interactable, bool enabled, SDL_Rect section, char* text, j1Module* listener, bool X_drag, bool Y_drag, SCROLL_TYPE scrollType, bool decor, SDL_Color colors)
 {
 	BROFILER_CATEGORY("Creation_of_new_GUI_element", Profiler::Color::AliceBlue);
@@ -160,7 +162,6 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 
 	switch (type)
 	{
-
 	case GUItype::GUI_BUTTON:
 		tmp = new j1GUIButton();
 			break;
@@ -182,8 +183,7 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 	}
 
 	if (tmp) 
-	{
-		
+	{	
 		tmp->parent = parent;
 		tmp->globalPosition = globalPosition;
 		tmp->localPosition = localPosition;
@@ -201,18 +201,10 @@ j1GUIelement* j1GUI::AddGUIelement(GUItype type, j1GUIelement* parent, iPoint gl
 
 		GUIelementList.add(tmp)->data->Start();
 	}
-
-
 	return tmp;
 }
 
-bool j1GUI::Save(pugi::xml_node& file) const {
-
-	return true;
-}
+bool j1GUI::Save(pugi::xml_node& file) const { return true;}
 
 
-bool j1GUI::Load(pugi::xml_node& file) {
-
-	return true;
-}
+bool j1GUI::Load(pugi::xml_node& file) { return true;}

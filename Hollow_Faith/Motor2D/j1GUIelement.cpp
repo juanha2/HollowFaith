@@ -10,21 +10,17 @@
 
 
 j1GUIelement::~j1GUIelement()
-{
-	
-}
+{ }
 
 bool j1GUIelement::Start()
-{
-	
-
-	return true;
-}
+{ return true; }
 
 
 void j1GUIelement::Draw()
 {
 	BROFILER_CATEGORY("GUI_Drawing", Profiler::Color::DarkKhaki);
+
+	// All the visual feedback from the state of the GUI
 
 	if (above && interactable && !decorative)
 	{
@@ -46,9 +42,7 @@ void j1GUIelement::Draw()
 	{
 		SDL_SetTextureColorMod(texture, 255, 255, 255);
 		SDL_SetTextureAlphaMod(texture, 50);
-	
 	}
-
 
 	if (decorative) 
 	{
@@ -62,7 +56,7 @@ void j1GUIelement::Draw()
 		App->render->DrawQuad({ globalPosition.x, globalPosition.y, rect.w, rect.h }, 0, 255, 255, 255, false, false, true);
 }
 
-
+// Detects when the mouse is above any GUI element and sends the info to the observer.
 bool j1GUIelement::OnAbove()
 {
 	bool ret = false;
@@ -83,7 +77,7 @@ bool j1GUIelement::OnAbove()
 	return ret;
 }
 
-
+// Detects when click to any GUI element and sends the info to the observer.
 void j1GUIelement::OnClick()
 {
 

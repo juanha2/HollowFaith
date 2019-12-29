@@ -12,27 +12,24 @@ j1GUIscrollBar::j1GUIscrollBar(SCROLL_TYPE scrollTypeInput) {
 	scrollType = scrollTypeInput;
 }
 
-j1GUIscrollBar::~j1GUIscrollBar() {
-
-}
+j1GUIscrollBar::~j1GUIscrollBar() {}
 
 
 bool j1GUIscrollBar::Awake(pugi::xml_node&)
-{
-
-	return true;
-}
+{return true;}
 
 
 bool j1GUIscrollBar::Start()
 {
 
 	
-
+	// Creates the draggeable button into the scroll bar with a value.
 	scrollButton = App->gui->AddGUIelement(GUItype::GUI_BUTTON, this, globalPosition, localPosition, true, true, { 432, 36, 14 , 16 }, nullptr, this->listener, true, false);
 	scrollButton->globalPosition.y = globalPosition.y - scrollButton->rect.h / 2 + this->rect.h / 2;
 	value = 0;
 
+
+	// Check what kind of scroll bar is to get the value from X var.
 	if (this->scrollType == SCROLL_TYPE::SCROLL_FX) 
 	{
 		value = App->audio->FXvolume;
@@ -48,14 +45,13 @@ bool j1GUIscrollBar::Start()
 		scrollButton->globalPosition.x = this->globalPosition.x - scrollButton->localPosition.x;
 	}
 
-
+	// Get the global GUI texture
 	texture = App->gui->GetAtlasTexture();
 	return true;
 }
 
 bool j1GUIscrollBar::PreUpdate()
 {
-	
 	scrollButton->enabled = enabled;
 	above = OnAbove();
 
@@ -77,9 +73,12 @@ bool j1GUIscrollBar::Update(float dt)
 
 bool j1GUIscrollBar::PostUpdate()
 {	
+	// Check our desired limits and get the value from our position with a max of 128. (The volume)
 	ScrollLimits();
 	value = -((float(-scrollButton->localPosition.x) / (float(-this->rect.w) + float(scrollButton->rect.w))) * 128);
 
+
+	// Send the value to the module Audio.
 	if (this->scrollType == SCROLL_TYPE::SCROLL_FX)
 	{
 		App->audio->FXvolume = value;
@@ -105,19 +104,19 @@ bool j1GUIscrollBar::CleanUp()
 
 void j1GUIscrollBar::ScrollLimits() {
 
+	// We don't need to put Y axis limits, because we're not using it.
+
 	if (scrollButton->localPosition.x > 0)
 	{
 		scrollButton->localPosition.x = 0;
 
 		scrollButton->globalPosition.x = scrollButton->parent->globalPosition.x - scrollButton->localPosition.x;
-		//scrollButton->globalPosition.y = scrollButton->parent->globalPosition.y - scrollButton->localPosition.y;
 	}
 	else if (scrollButton->localPosition.x < (-this->rect.w + scrollButton->rect.w))
 	{
 		scrollButton->localPosition.x = -this->rect.w + scrollButton->rect.w;
 
 		scrollButton->globalPosition.x = scrollButton->parent->globalPosition.x - scrollButton->localPosition.x;
-		//scrollButton->globalPosition.y = scrollButton->parent->globalPosition.y - scrollButton->localPosition.y;
 	}
 
 }

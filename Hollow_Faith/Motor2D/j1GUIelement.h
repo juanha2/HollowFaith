@@ -47,33 +47,32 @@ public:
 	virtual bool Save(pugi::xml_node& file) const { return true; };
 	virtual bool Load(pugi::xml_node& file) { return true; };
 
-	bool OnAbove();
 	virtual void OnClick();
 	virtual void OnRelease();
 	virtual void Dragging();
-	void Draw();
 	virtual void PrintText(const char* txt);
 
+	void Draw();
+	bool OnAbove();
 
 public:
 
 	j1GUIelement* parent = nullptr;
 	j1Module* listener = nullptr;
 	GUItype type = GUItype::GUI_ERROR;
+
 	iPoint globalPosition = { 0,0 };
 	iPoint localPosition = { 0,0 };
 
 	SDL_Color color = { 255,255,255 };
-	char* text = nullptr;	
+	char* text = nullptr;
+
 	bool enabled = false;
 	bool interactable = false;
-
 	bool X_drag = false;
 	bool Y_drag = false;
-
 	bool above = false;
 	bool focus = false;
-
 	bool decorative = false;
 
 	SDL_Rect rect = { 0,0,0,0 };
