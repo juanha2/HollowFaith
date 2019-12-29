@@ -514,8 +514,8 @@ bool j1Scene::GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, 
 			}
 		}
 		if (name == "god_mode") {
-			App->objects->player->godMode = true;
-			App->objects->player->ignoreColl = true;
+			App->objects->player->godMode = !App->objects->player->godMode;
+			App->objects->player->ignoreColl = !App->objects->player->ignoreColl;
 			LOG("god_mode");
 		}
 

@@ -65,7 +65,7 @@ public:
 	bool GuiObserver(GUI_Event type, j1GUIelement* element, p2SString txt, p2SString name);
 public:
 	
-	
+	int				not_found;
 	j1GUIelement* console = nullptr;
 	
 	p2List<j1Command*>	commands;

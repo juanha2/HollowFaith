@@ -86,36 +86,42 @@ bool j1Console::ExecuteCommand(const char* txt) {
 
 	while (command != nullptr)
 	{	
+	
 		if (consoleString == command->data->first_name)
-		{					
+		{
 			consoleString = txt;
 
 			switch (command->data->type) {
 
 			case j1Command::commandType::LOAD_MAP:
 				consoleString.Cut(0, consoleString.FindFirst(" ") + 1);
-				command->data->listener->GuiObserver(GUI_Event::EVENT_CONSOLE, nullptr, consoleString, command->data->first_name);				
+				command->data->listener->GuiObserver(GUI_Event::EVENT_CONSOLE, nullptr, consoleString, command->data->first_name);
 				break;
 			case j1Command::commandType::FPS_CAP:
 				consoleString.Cut(0, consoleString.FindFirst(" ") + 1);
-				command->data->listener->GuiObserver(GUI_Event::EVENT_CONSOLE, nullptr, consoleString, command->data->first_name);				
+				command->data->listener->GuiObserver(GUI_Event::EVENT_CONSOLE, nullptr, consoleString, command->data->first_name);
 				break;
-			case j1Command::commandType::LIST:				
-				command->data->listener->GuiObserver(GUI_Event::EVENT_CONSOLE, nullptr, consoleString, command->data->first_name);				
+			case j1Command::commandType::LIST:
+				command->data->listener->GuiObserver(GUI_Event::EVENT_CONSOLE, nullptr, consoleString, command->data->first_name);
 				break;
 			case j1Command::commandType::QUIT:
 				ret = command->data->listener->GuiObserver(GUI_Event::EVENT_CONSOLE, nullptr, consoleString, command->data->first_name);
 				break;
 			case j1Command::commandType::GOD_MODE:
-				command->data->listener->GuiObserver(GUI_Event::EVENT_CONSOLE, nullptr, consoleString, command->data->first_name);			
-				break;		
+				command->data->listener->GuiObserver(GUI_Event::EVENT_CONSOLE, nullptr, consoleString, command->data->first_name);
+				break;
 			}
 			break;
-		}	
-		
+		}
+		else
+			not_found++;
+
 		command = command->next;
 	}
 
+	if (not_found == commands.count()) {
+		LOG("WRONG COMMAND! TYPE 'list' TO SEE ALL COMMANDS");
+	}
 	consoleString.Clear();
 
 	return ret;
