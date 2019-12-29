@@ -121,7 +121,7 @@ Entities Manager and Entities Elements - GUI Manager and GUI Elements
 - UI Button & Scrollbar<br>
 - Gameplay Trailer<br>
 - Web Page<br>
-
+- UML GUI
 </details>
 
 <br>
@@ -142,6 +142,7 @@ Entities Manager and Entities Elements - GUI Manager and GUI Elements
 - Implementation of Score & Life systems<br>
 - Implementation base of main menu & game menu<br>
 - UI Image, Inputbox & Label<br>
+ - Console
 </details>
 
 <br><br><br>
