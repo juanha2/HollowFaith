@@ -54,7 +54,9 @@ src="https://www.youtube.com/embed/7baUOVYobgs" frameborder="0" allowfullscreen>
 <br><br>
 <h2  align="center" id="main-core-subsystems">Main Core Subsystems</h2>
 
-Entities Manager and Entities Elements - GUI Manager and GUI Elements
+This game is made with the libraries from <a href="https://www.libsdl.org/download-2.0.php">SDL 2.0</a> and <a href="https://pugixml.org/">PuguiXML</a>. We have a Entities System with the same structure as GUI System. Both have a Manager who execute the different stages of all their elements and keep a list for the control of all. In addition, they have their "Entity" or "GUI Element" from which all enemies or other entities inherit, or in the case of the GUI, the different types of buttons, scrollbar, inputbox.
+
+If you want to see the structure of these systems more detailed in UML, <a href="https://github.com/juanha2/HollowFaith/tree/master/Hollow_Faith/UML">click here.</a>
 
 <details> 
   <summary> Extra Features: Innovation </summary>
